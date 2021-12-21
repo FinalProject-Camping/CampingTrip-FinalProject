@@ -61,12 +61,12 @@
 @media screen and (min-width: 1240px) and (max-width: 1999px) { body, html { font-size: 17px; } }
 @media screen and (min-width: 2000px) { body, html { font-size: 19px; } } */
 
-@media screen and (max-width: 575px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important; padding:5%; padding-top:0%;} .content { height: 380px; border: 5px solid #FFFFFF;} .content-img{height:72%; width:100%;} .content-inner{height:27%; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .carousel-img{height: 110px;} .side-btn-three{font-size:19pt;} .date{float:right;}}
-@media screen and (min-width: 576px) and (max-width: 767px) { .mainbody{ font-size: 16px; } #list{font-size:13px !important; padding:2%; padding-top:0%;} .content { height: 220px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .carousel-img{height: 140px;} .id{display: none;} .side-btn-three{font-size:19pt;}}
-@media screen and (min-width: 768px) and (max-width: 991px) { .mainbody{font-size:16px;} #list{font-size:13px !important; padding:2%; padding-top:0%;} .content { height: 170px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .carousel-img{height: 140px;} .id{display:none;} .side-btn-three{font-size:19pt;} }
-@media screen and (min-width: 992px) and (max-width: 1199px) { .mainbody{ font-size: 17px; } #list{font-size:15px !important;} .content { height: 330px;} .content-img{height:70%; width:100%;} .content-inner{height:29%; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .carousel-img{height: 170px;} .side-btn-three{font-size:20pt;} .date{float:right;} #mainbody > .row{margin-left:2%; margin-right:2%;}}
-@media screen and (min-width: 1200px) and (max-width: 1399px) { .mainbody{ font-size: 17px; } #list{font-size:15px !important;} .element{margin-bottom: 1%;} .content { height: 360px; margin: 2%; margin-top:0%;} .content-img{height:72%; width:100%;} .content-inner{height:27%; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .carousel-img{height: 200px;} .side-btn-three{font-size:20pt;} .date{float:right;} #mainbody > .row{margin-left:4%; margin-right:4%;}}
-@media screen and (min-width: 1400px) { .mainbody{ font-size: 18px; } #list{font-size:16px !important;} .element{margin-bottom: 2%;}  .content { height: 410px; margin:4%; margin-top:0%;} .content-img{height:72%; width:100%;} .content-inner{height:27%; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .carousel-img{height: 210px;} .side-btn-three{font-size:21pt;} .date{float:right;} #mainbody > .row{margin-left:5%; margin-right:5%;}}
+@media screen and (max-width: 575px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important; padding:5%; padding-top:0%;} .content { height: 380px; border: 5px solid #FFFFFF;} .content-img{height:72%; width:100%;} .content-inner{height:27%; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;}}
+@media screen and (min-width: 576px) and (max-width: 767px) { .mainbody{ font-size: 16px; } #list{font-size:13px !important; padding:2%; padding-top:0%;} .content { height: 220px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display: none;} }
+@media screen and (min-width: 768px) and (max-width: 991px) { .mainbody{font-size:16px;} #list{font-size:13px !important; padding:2%; padding-top:0%;} .content { height: 170px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display:none;} }
+@media screen and (min-width: 992px) and (max-width: 1199px) { .mainbody{ font-size: 17px; } #list{font-size:15px !important;} .content { height: 330px;} .content-img{height:70%; width:100%;} .content-inner{height:29%; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} #mainbody > .row{margin-left:2%; margin-right:2%;}}
+@media screen and (min-width: 1200px) and (max-width: 1399px) { .mainbody{ font-size: 17px; } #list{font-size:15px !important;} .element{margin-bottom: 1%;} .content { height: 360px; margin: 2%; margin-top:0%;} .content-img{height:72%; width:100%;} .content-inner{height:27%; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} #mainbody > .row{margin-left:4%; margin-right:4%;}}
+@media screen and (min-width: 1400px) { .mainbody{ font-size: 18px; } #list{font-size:16px !important;} .element{margin-bottom: 2%;}  .content { height: 410px; margin:4%; margin-top:0%;} .content-img{height:72%; width:100%;} .content-inner{height:27%; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} #mainbody > .row{margin-left:5%; margin-right:5%;}}
 @media screen and (max-width: 991px) {.side-btn{margin-top: 15px;} }
 @media screen and (min-width: 991px) {#suggest > input{margin-top:15px;} }
 
@@ -94,6 +94,7 @@ body{background-color: #f8f9fa;}
 	border: none;
 	border-radius: 25px;
 	vertical-align: middle;
+	width:12%;
 	height: 99%;
 	padding-right: 10px;
 	padding-left: 10px;
@@ -135,6 +136,7 @@ body{background-color: #f8f9fa;}
 	color : white;
 }
 
+.side-btn-three{height:50px; padding-left: 15px; padding-right: 15px;}
 .btn-gray{background-color: #FFFFFF; border: solid 2px gray; color : gray; border-radius: 5px; padding-right:3%; padding-left:3%; padding-top:1.5%; padding-bottom:1.5%; font-weight: bold;}
 .btn-gray:hover{transition: all 0.3s; border: solid 2px gray; background-color: gray; color : white;}
 
@@ -298,16 +300,6 @@ let offsetArr = new Array();
 		
 	});
 	
-	function myList(){
-		//로그인이 없을경우 안되게
-		if(sessionId == ''){
-			toastr.options.positionClass = "toast-top-right";
-			toastr.warning("로그인 해주세요");
-			return;
-		}
-		//location.href='mylist.do?userid=' + sessionId;
-	}
-	
 	function addProduct(){
 		//로그인이 없거나 페널티가 있는경우 안되게
 		if(sessionId == ''){
@@ -357,14 +349,14 @@ let offsetArr = new Array();
 		
 		if(issale == 'y'){
 			issale_span.style.setProperty('color','rgb(0, 191, 121)');
-			issale_span.innerHTML = '[판매중] ';
+			issale_span.innerHTML = '[판매] ';
 		}else if(issale == 'n'){
 			issale_span.style.setProperty('color','gray');
-			issale_span.innerHTML = '[거래완료] ';
+			issale_span.innerHTML = '[완료] ';
 			img.style.setProperty('opacity','0.3');
 		}else{
-			issale_span.style.setProperty('color','#F89406');
-			issale_span.innerHTML = '[예약중] ';
+			issale_span.style.setProperty('color','#ff8a3d');
+			issale_span.innerHTML = '[예약] ';
 			img.style.setProperty('opacity','0.3');
 		}
 		var title_span = document.createElement('span');
@@ -374,7 +366,14 @@ let offsetArr = new Array();
 		
 		var price_span = document.createElement('span');
 		price_span.style.setProperty('font-weight','bold');
-		price_span.innerHTML = convertPrice(price)+'원 <br>';
+		if(issale != 'n'){
+			price_span.style.setProperty('color','#ff8a3d');
+			price_span.innerHTML = convertPrice(price)+'원 <br>';
+		}else{
+			price_span.style.setProperty('color','gray');
+			price_span.innerHTML = '거래 완료 <br>';
+		}
+		
 		
 		var hearthitdiv = document.createElement('div');
 		hearthitdiv.setAttribute('class', 'heart');
@@ -578,49 +577,10 @@ let offsetArr = new Array();
 	</div>
 	
 	<div class="container mainbody" id="lnb">
-		<!-- 슬라이드 		
-		<div class="row">
-			<div class="col-xs-12">
-			
-			<div id="carouselExampleDark" class="carousel carousel-dark slide img-thumbnail rounded" data-bs-ride="carousel">
-			  <div class="carousel-indicators">
-			    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-			    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-			    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-			  </div>
-			  <div class="carousel-inner">
-			    <div class="carousel-item active" data-bs-interval="10000">
-			      <img src="https://static.wixstatic.com/media/4411e8_d4bd43630aab4d188165eb150a350063~mv2.jpg" class="carousel-img d-block w-100" alt="...">
-			      <div class="carousel-caption d-none d-md-block">
-			      </div>
-			    </div>
-			    <div class="carousel-item" data-bs-interval="2000">
-			      <img src="https://static.wixstatic.com/media/4411e8_d4bd43630aab4d188165eb150a350063~mv2.jpg" class="carousel-img d-block w-100" alt="...">
-			      <div class="carousel-caption d-none d-md-block">
-			      </div>
-			    </div>
-			    <div class="carousel-item">
-			      <img src="https://static.wixstatic.com/media/4411e8_d4bd43630aab4d188165eb150a350063~mv2.jpg" class="carousel-img d-block w-100" alt="...">
-			      <div class="carousel-caption d-none d-md-block">
-			      </div>
-			    </div>
-			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
-			</div>
-			
-			</div>
-		</div>-->
 		
 		<!-- 검색창 & 버튼 -->
 		<div class="row">
-			<div class="col-lg-6">
+			<div class="col-lg-6 col-11">
 				<form class="box" action="javascript:searchProduct(document.getElementById('search-bar').value);">
 					<div id="searchgroup">
 						<span class="align-middle"><input type="search" id="search-bar" name="search" placeholder="검색하실 물품명을 입력하세요." autocomplete="off"></span>
@@ -629,17 +589,60 @@ let offsetArr = new Array();
 				</form>
 			</div>
 			
-			<div class="col-lg-6" style="text-align: right;">
-				<button type="button" class="side-btn side-btn-three" onclick="" style="height:50px; padding-left: 15px; padding-right: 15px;" data-bs-toggle="modal" data-bs-target="#geolocation" data-bs-placement="bottom" title="위치를 기반으로 상품을 탐색합니다"><span class="align-middle fas fa-compass"></span></button> &nbsp;
-				<button type="button" class="side-btn side-btn-three" onclick="myList();" style="height:50px; padding-left: 15px; padding-right: 15px;"><span class="align-middle fas fa-user"></span></button> &nbsp;
-				<button type="button" class="side-btn side-btn-three" onclick="addProduct();" style="height:50px; padding-left: 15px; padding-right: 15px;"><span class="align-middle fas fa-plus-circle"></span></button>
+			<div class="col-lg-6 col-1" style="text-align: right;">
+				<!-- size lg -->
+				<div class="btn-group" id="side-lg" style="display:none;">
+					<button type="button" class="side-btn side-btn-three" data-bs-toggle="modal" data-bs-target="#geolocation" data-bs-placement="bottom" title="위치를 기반으로 상품을 탐색합니다"><span class="align-middle fas fa-compass fa-lg"></span><span class="align-middle"> 위치 조회</span></button> &nbsp;
+					<button type="button" class="side-btn side-btn-three" onclick="addProduct();"><span class="align-middle fas fa-plus-circle fa-lg"></span><span class="align-middle"> 상품 추가</span></button> &nbsp;
+				
+					<button type="button" class="side-btn side-btn-three dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">카테고리 선택</button>
+					<ul class="dropdown-menu dropdown-menu-end" style="background-color: #f8f9fa;">
+						<li><button class="dropdown-item" type="button">전체 게시글</button></li>
+						<li><button class="dropdown-item" type="button">캠핑용품</button></li>
+						<li><button class="dropdown-item" type="button">기타</button></li>
+						<li><button class="dropdown-item" type="button">먹거리/무료나눔</button></li>
+					</ul>
+				</div>
+				<!-- size under lg -->
+				<div class="btn-group align-middle h-100" id="side-mobile" style="display:none; text-align: center;">
+					<button type="button" class="h-100" style="border: none; background-color: white;" data-bs-toggle="dropdown" aria-expanded="false"><span class="align-middle fas fa-bars fa-2x" style="color:darkgray"></span></button>
+					<ul class="dropdown-menu dropdown-menu-end" style="background-color: #f8f9fa;">
+						<li><button class="dropdown-item" type="button" onclick="addProduct();">상품 추가하기</button></li>
+						<li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#geolocation" data-bs-placement="bottom">위치 조회하기</button></li>
+						<li><hr class="dropdown-divider"></li>
+						<li><button class="dropdown-item" type="button">전체 게시글</button></li>
+						<li><button class="dropdown-item" type="button">캠핑용품</button></li>
+						<li><button class="dropdown-item" type="button">기타</button></li>
+						<li><button class="dropdown-item" type="button">먹거리/무료나눔</button></li>
+					</ul>
+				</div>
+				
+				<script type="text/javascript">
+					document.addEventListener("DOMContentLoaded", ()=>{
+						if(window.innerWidth < 992){
+							document.getElementById('side-mobile').style.display = 'block';
+						}else{
+							document.getElementById('side-lg').style.display = 'block';
+						}
+					});
+					$(window).resize(function(){
+						if(window.innerWidth < 992){
+							document.getElementById('side-mobile').style.display = 'block';
+							document.getElementById('side-lg').style.display = 'none';
+						}else{
+							document.getElementById('side-mobile').style.display = 'none';
+							document.getElementById('side-lg').style.display = 'block';
+						}
+					});
+				</script>
+
 			</div>
 		</div>
 		
 		<div class="row">
 			<div class="col-xs-12">
 				<div id="suggest" style="text-align: left; display:none;" class="col-lg-12">
-					<input type="button" class="side-btn" value="전체보기" onclick="searchProduct(this.value)" style="margin-right:0.8%; border: solid 1px rgb(173, 88, 66); background-color: rgb(173, 88, 66); color : white;"><!-- select초기화 -->
+					<b>추천 검색어</b>
 					<input type="button" class="side-btn" value="캠핑 난로" onclick="searchProduct(this.value)" style="margin-right:0.8%;">
 					<input type="button" class="side-btn" value="캠핑 의자" onclick="searchProduct(this.value)" style="margin-right:0.8%;">
 					<input type="button" class="side-btn" value="아이스박스" onclick="searchProduct(this.value)" style="margin-right:0.8%;">
