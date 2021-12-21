@@ -115,6 +115,8 @@ body{background-color: #f8f9fa;}
 	border: 2px solid darkgray;
 	margin-bottom: 20px;
 	border-radius: 5px;
+	padding-left: 2px;
+	padding-right: 2px;
 }
 
 .side-btn{
@@ -696,7 +698,7 @@ let offsetArr = new Array();
             } else {
                 $('#top').fadeOut();
             }
-            $("#suggest").hide(200); // 원래 400
+            $("#suggest").hide(200); // 원래 400 
             $("#search-bar").blur();
         });
         $("#top").click(function() {
