@@ -6,8 +6,10 @@
 <configuration>
 
 <typeAliases>
+	<typeAlias type="com.camp.dto.CampDto" alias="campDto"/>
 </typeAliases>
 
 <mappers>
+	<mapper resource="/mybatis/camping-mapper.xml"/>
 </mappers>
 </configuration>
