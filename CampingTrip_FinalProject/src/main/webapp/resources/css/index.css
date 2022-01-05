@@ -262,9 +262,10 @@
 
 /* main_content02 */
 .main_content02 {
-	margin: 30px;
+	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
 }
 
 .main_content02 h1 {
@@ -288,14 +289,24 @@
 	margin-bottom: 200px;
 }
 
+.card-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: 30px;
+}
+
 .card {
 	position: relative;
 	background: #fff;
-	max-width: 350px;
-	width: 350px;
-	margin: 20px;
-	border-radius: 2px;
-	box-shadow: 0 5px 25px rgb(1 1 1/ 10%);
+	max-width: 325px;
+	width: 325px;
+	height: auto;
+	margin: 25px;
+	box-shadow: 0 5px 25px rgb(1 1 1/ 20%);
+	border-radius: 10px;
+	overflow: hidden;
 }
 
 .card-image {
@@ -358,30 +369,56 @@
 }
 
 .pagination {
-	position: absolute;
-	height: 350px;
-	width: 140vh;
+	height: 150px;
+	width: 50%;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	text-align: center;
+	margin: 30px 30px 60px;
+	user-select: none;
 }
 
-.prev-btn, .next-btn {
-	z-index: 999;
-	font-size: 2em;
-	color: white;
-	background: #FF8A33;
-	border-radius: 100%;
-	padding: 10px;
+.pagination li {
+	display: inline-block;
+	margin: 5px;
+	box-shadow: 0 5px 25px rgb(1 1 1/ 10%);
+}
+
+.pagination li a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 1.2em;
+	line-height: 45px;
+}
+
+.previous-page, .next-page {
+	background: #d49466;
+	width: 80px;
+	border-radius: 45px;
+	cursor: pointer;
+	transition: 0.3s ease;
+}
+
+.previous-page:hover {
+	transform: translateX(-5px);
+}
+
+.next-page:hover {
+	transform: translateX(5px);
+}
+
+.current-page, .dots {
+	background: #ccc;
+	width: 45px;
+	border-radius: 50%;
 	cursor: pointer;
 }
 
-.prev-btn {
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
+.active {
+	background: #d49466;
 }
 
-.next-btn {
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
+.disable {
+	background: #ccc;
 }
