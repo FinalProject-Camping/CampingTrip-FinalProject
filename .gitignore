@@ -10,7 +10,6 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-META-INF/
 MANIFEST.MF
 # External tool builders
 .externalToolBuilders/
