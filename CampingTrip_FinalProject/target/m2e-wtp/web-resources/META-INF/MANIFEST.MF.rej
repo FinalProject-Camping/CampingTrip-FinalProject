@@ -1,0 +1,9 @@
+diff a/CampingTrip_FinalProject/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF b/CampingTrip_FinalProject/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF	(rejected hunks)
+@@ -1,5 +1,5 @@
+ Manifest-Version: 1.0
+-Built-By: user
+-Build-Jdk: 11.0.11
++Built-By: jwcom
++Build-Jdk: 11.0.13
+ Created-By: Maven Integration for Eclipse
+ 
