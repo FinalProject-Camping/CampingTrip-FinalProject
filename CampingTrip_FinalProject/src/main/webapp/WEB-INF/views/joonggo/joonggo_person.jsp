@@ -60,14 +60,14 @@
 		list.forEach( data => {
 						
 			var hitdata = 
-				'<div class="popular-hit-ele col-lg-4 col-6" style="margin-bottom:30px;">'+
+				'<div class="col-lg-4 col-6" style="margin-bottom:30px;">'+
 				'<div style="cursor:pointer;" onclick="location.href=`selectone.do?seq='+ data.seq +'`" >'+		
 				'<div class="img-thumbnail" style="height:270px;">'+
 				'<div style="height:70%; border-radius: 8px; background-image:url('+ data.imglist.split(',')[0] +'); background-position: center; background-size: cover;">'+
 				'</div>'+
 				'<div style="height:29%; width:100%;">'+
 				'<h5 class="title" style="margin-top:5px;">'+ data.title +'</h5>'+
-				'<div class="bold"><span>'+ data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +'</span> 원</div>'+
+				'<div><b><span>'+ data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +'</span> 원</b></div>'+
 				'<div>'+
 				'<span class="place"></span>&nbsp;&nbsp;'+
 				'<span class="distance" style="color:#ff8a3d;"></span>'+

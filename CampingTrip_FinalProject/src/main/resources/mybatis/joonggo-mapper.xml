@@ -133,7 +133,7 @@
 	</update>
 	
 	<select id="selectone" resultType="joonggoDto" parameterType="int">
-		SELECT J.*, U.MYEMAIL, U.MYPHONE
+		SELECT J.*, U.MYEMAIL EMAIL, U.MYPHONE PHONE
 		FROM JOONGGO J, MYMEMBER U
 		WHERE J.ID = U.MYID
 		AND J.SEQ = #{seq}
