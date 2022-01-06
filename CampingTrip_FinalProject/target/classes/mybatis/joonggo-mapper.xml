@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myjoonggo"> <!-- interface dao에 적어둔 namespace와 동일 -->
+
+	<resultMap type="joonggoDto" id="joonggoMap">
+		<result property="seq" column="SEQ"/>
+		<result property="id" column="ID"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="regdate" column="REGDATE"/>
+		<result property="title" column="TITLE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="category" column="CATEGORY"/>
+		<result property="price" column="PRICE"/>
+		<result property="place" column="PLACE"/>
+		<result property="tag" column="TAG"/>
+		<result property="quality" column="QUALITY"/>
+		<result property="delivery" column="DELIVERY"/>
+		<result property="agree" column="AGREE"/>
+		<result property="trade" column="TRADE"/>
+		<result property="hit" column="HIT"/>
+		<result property="heart" column="HEART"/>
+		<result property="imglist" column="IMGLIST"/>
+	</resultMap>
+	
+	<resultMap type="renewDto" id="renewMap">
+		<result property="renewseq" column="RENEWSEQ"/>
+		<result property="renewdate" column="RENEWDATE"/>
+		<result property="joonggoseq" column="JOONGGOSEQ"/>
+	</resultMap>
+
+	<resultMap type="heartDto" id="heartMap">
+		<result property="heartdate" column="HEARTDATE"/>
+		<result property="heartid" column="HEARTID"/>
+		<result property="joonggoseq" column="JOONGGOSEQ"/>
+	</resultMap>
+	
+	
+	<select id="selectList" parameterType="String" resultMap="joonggoMap">
+		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT 
+		FROM ( select * from joonggo order by regdate desc )
+		<where>
+			<if test='regexp != ""'>
+				(
+				(REGEXP_LIKE(TITLE, #{regexp}))
+				OR
+				(REGEXP_LIKE(CONTENT, #{regexp}))
+				OR
+				(REGEXP_LIKE(TAG, #{regexp}))
+				)
+			</if>
+			<if test='true'>
+				AND ROWNUM <![CDATA[<=]]> 10
+			</if>
+		</where>	
+	</select>
+	
+	<select id="selectCategory" parameterType="hashmap" resultMap="joonggoMap">
+		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT 
+		FROM ( select * from joonggo order by regdate desc )
+		<where>
+			<if test='regexp != ""'>
+				(
+				(REGEXP_LIKE(TITLE, #{regexp}))
+				OR
+				(REGEXP_LIKE(CONTENT, #{regexp}))
+				OR
+				(REGEXP_LIKE(TAG, #{regexp}))
+				)
+			</if>
+			<if test='status != ""'>
+				AND TRADE = #{status}
+			</if>
+			<if test='category.size != 0'>
+				AND CATEGORY IN
+				<foreach collection="category" item="item" open="(" close=")" separator=",">
+					#{item}
+				</foreach>
+			</if>
+			<if test='true'>
+				AND ROWNUM <![CDATA[<=]]> 10
+			</if>
+		</where>
+	</select>
+	
+	<select id="moreResult" parameterType="hashmap" resultMap="joonggoMap">
+		SELECT *
+		FROM (SELECT ROWNUM AS NUM, J.* FROM (
+			  SELECT * FROM JOONGGO 
+			  <where>
+			  <if test='regexp != ""'>
+				  (
+				  (REGEXP_LIKE(TITLE, #{regexp}))
+				  OR
+				  (REGEXP_LIKE(CONTENT, #{regexp}))
+				  OR
+				  (REGEXP_LIKE(TAG, #{regexp}))
+				  )
+				</if>
+			  <if test='status != ""'>
+				  AND TRADE = #{status}
+			  </if>
+			  <if test='category.size != 0'>
+				  AND CATEGORY IN
+				  <foreach collection="category" item="item" open="(" close=")" separator=",">
+					  #{item}
+				  </foreach>
+			  </if>
+			  </where>
+			  ORDER BY REGDATE DESC) J)
+		WHERE NUM between (#{page} * 9 + 1) AND ((#{page}+1) * 9 + 1)
+	</select>
+	
+	<insert id="insert" parameterType="joonggoDto">
+		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
+			SELECT JOONGGOSEQ.NEXTVAL FROM DUAL		
+		</selectKey>
+		INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
+		VALUES(#{seq}, #{id}, SYSDATE, #{title}, #{content}, #{category}, #{price}, #{place}, #{tag}, #{quality}, #{delivery}, #{agree}, #{imglist} )
+	</insert>
+	
+	<insert id="recordhitdata" parameterType="int">
+		INSERT INTO HITDATA
+		VALUES(HITSEQ.NEXTVAL, SYSDATE, #{seq})
+	</insert>
+	
+	<update id="updateviewcnt" parameterType="int">
+		UPDATE JOONGGO
+		SET HIT = HIT + 1 
+		WHERE SEQ = #{seq}
+	</update>
+	
+	<select id="selectone" resultType="joonggoDto" parameterType="int">
+		SELECT J.*, U.MYEMAIL, U.MYPHONE
+		FROM JOONGGO J, MYMEMBER U
+		WHERE J.ID = U.MYID
+		AND J.SEQ = #{seq}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM JOONGGO
+		WHERE SEQ = #{seq}
+	</delete>
+	
+	<update id="update" parameterType="joonggoDto">
+		UPDATE JOONGGO
+		SET TITLE = #{title},
+			CONTENT = #{content},
+			CATEGORY = #{category},
+			PRICE = #{price},
+			PLACE = #{place},
+			TAG = #{tag},
+			QUALITY = #{quality},
+			DELIVERY = #{delivery},
+			AGREE = #{agree},
+			TRADE = #{trade},
+			IMGLIST = #{imglist}
+		WHERE SEQ = #{seq}
+	</update>
+	
+	<select id="popularhit" resultMap="joonggoMap" parameterType="int">
+		SELECT *
+		FROM HITDATA_VIEW
+		WHERE ROWNUM <![CDATA[<=]]> 20
+		AND SEQ != #{seq}
+	</select>
+	
+	<select id="confirmrenew" resultMap="renewMap" parameterType="int">
+		SELECT *
+		FROM RENEWAL
+		WHERE JOONGGOSEQ = #{seq}
+		ORDER BY RENEWDATE DESC
+	</select>
+	
+	<update id="updaterenew" parameterType="int">
+		UPDATE JOONGGO
+		SET REGDATE = SYSDATE
+		WHERE SEQ = #{seq}
+	</update>
+	
+	<insert id="insertrenew" parameterType="int">
+		INSERT INTO RENEWAL
+		VALUES(RENEWSEQ.NEXTVAL, SYSDATE, #{seq})
+	</insert>
+	
+	<insert id="addheart" parameterType="hashmap">
+		INSERT INTO JOONGGO_HEART
+		VALUES(SYSDATE, #{heartid}, #{seq})
+	</insert>
+	
+	<update id="upheart" parameterType="hashmap">
+		UPDATE JOONGGO
+		SET HEART = HEART + 1
+		WHERE SEQ = #{seq}
+	</update>
+	
+	<delete id="rmheart" parameterType="hashmap">
+		DELETE FROM JOONGGO_HEART
+		WHERE HEARTID = #{heartid}
+		AND JOONGGOSEQ = #{seq}
+	</delete>
+	
+	<update id="downheart" parameterType="hashmap">
+		UPDATE JOONGGO
+		SET HEART = HEART - 1
+		WHERE SEQ = #{seq}
+	</update>
+	
+	<select id="confirmheart" resultMap="heartMap" parameterType="hashmap">
+		SELECT *
+		FROM JOONGGO_HEART
+		WHERE HEARTID = #{heartid}
+		AND JOONGGOSEQ = #{seq}
+	</select>
+	
+	<select id="person" parameterType="String" resultMap="joonggoMap">
+		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT 
+		FROM JOONGGO
+		WHERE ID = #{id}
+		ORDER BY REGDATE DESC
+	</select>
+	
+	
+	
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

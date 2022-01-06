@@ -5,11 +5,13 @@
 <configuration>
 	
 	<typeAliases> <!-- 별칭 -->
-
+		<typeAlias type="com.camping.controller.model.joonggo.dto.joonggo" alias="joonggoDto"/>
+		<typeAlias type="com.camping.controller.model.joonggo.dto.renew" alias="renewDto"/>
+		<typeAlias type="com.camping.controller.model.joonggo.dto.heart" alias="heartDto"/>
 	</typeAliases>
 	
 	<mappers> <!-- mybatis mapper 등록 -->
-
+		<mapper resource="/mybatis/joonggo-mapper.xml"/>
 	</mappers>
 
 </configuration>
