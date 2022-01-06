@@ -1,10 +1,10 @@
-package com.camp.biz;
+package com.camping.controller.model.camp.biz;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.camp.dao.CampDao;
-import com.camp.dto.CampDto;
+import com.camping.controller.model.camp.dao.CampDao;
+import com.camping.controller.model.camp.dto.CampDto;
 
 @Service
 public class CampBiz {

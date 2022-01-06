@@ -1,10 +1,10 @@
-package com.camp.dao;
+package com.camping.controller.model.camp.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.camp.dto.CampDto;
+import com.camping.controller.model.camp.dto.CampDto;
 
 @Repository
 public class CampDao {
