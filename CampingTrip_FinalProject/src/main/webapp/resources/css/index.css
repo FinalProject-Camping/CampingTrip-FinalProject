@@ -1,0 +1,424 @@
+@charset "UTF-8";
+
+/* slider */
+.slider_start {
+	margin: 0;
+	padding: 0;
+	height: 55vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #FFDCC1;
+}
+
+.slider {
+	width: 800px;
+	height: 500px;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.slides {
+	width: 500%;
+	height: 500px;
+	display: flex;
+}
+
+.slides input {
+	display: none;
+}
+
+.slide {
+	width: 20%;
+	transition: 2s;
+}
+
+.slide img {
+	width: 800px;
+	height: 500px;
+}
+
+/*css for manual slide navigation*/
+.navigation-manual {
+	position: absolute;
+	width: 800px;
+	margin-top: -40px;
+	display: flex;
+	justify-content: center;
+}
+
+.manual-btn {
+	border: 2px solid #FF8A33;
+	padding: 5px;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: 1s;
+}
+
+.manual-btn:not(:last-child) {
+	margin-right: 40px;
+}
+
+.manual-btn:hover {
+	background: #FF8A33;
+}
+
+#radio1:checked ~.first {
+	margin-left: 0;
+}
+
+#radio2:checked ~.first {
+	margin-left: -20%;
+}
+
+#radio3:checked ~.first {
+	margin-left: -40%;
+}
+
+#radio4:checked ~.first {
+	margin-left: -60%;
+}
+
+/*css for automatic navigation*/
+.navigation-auto {
+	position: absolute;
+	display: flex;
+	width: 800px;
+	justify-content: center;
+	margin-top: 460px;
+}
+
+.navigation-auto div {
+	border: 2px solid #FF8A33;
+	padding: 5px;
+	border-radius: 10px;
+	transition: 1s;
+}
+
+.navigation-auto div:not(:last-child) {
+	margin-right: 40px;
+}
+
+#radio1:checked ~.navigation-auto .auto-btn1 {
+	background: #FF8A33;
+}
+
+#radio2:checked ~.navigation-auto .auto-btn2 {
+	background: #FF8A33;
+}
+
+#radio3:checked ~.navigation-auto .auto-btn3 {
+	background: #FF8A33;
+}
+
+#radio4:checked ~.navigation-auto .auto-btn4 {
+	background: #FF8A33;
+}
+
+/* main_content01 */
+.main_content01 {
+	margin: 30px;
+}
+
+.main_content01 h1 {
+	color: red;
+	text-align: center;
+	font-size: 40px;
+	margin-top: 100px;
+}
+
+.main_content01 h1 div {
+	font-size: 20px;
+	color: #000;
+	margin-top: 10px;
+}
+
+.row {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.image {
+	background: #50A7FF;
+	position: relative;
+	flex: 1;
+	max-width: 460px;
+	height: 300px;
+	margin: 20px;
+	overflow: hidden;
+}
+
+.image img {
+	opacity: 0.8;
+	position: relative;
+	vertical-align: top;
+	transition: 0.6s;
+	transition-property: opacity;
+}
+
+.image:hover img {
+	opacity: 1;
+}
+
+.image .details {
+	z-index: 1;
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: #fff;
+	width: 100%;
+	height: 100%;
+}
+
+.image .details h2 {
+	text-align: center;
+	font-size: 35px;
+	text-transform: uppercase;
+	font-weight: 300;
+	margin-top: 70px;
+	transition: 0.4s;
+	transition-property: transform;
+}
+
+.image .details h2 span {
+	font-weight: 900;
+}
+
+.image:hover .details h2 {
+	transform: translateY(-30px);
+}
+
+.image .details p {
+	margin: 30px 30px 0 30px;
+	font-size: 18px;
+	font-weight: 600;
+	text-align: center;
+	opacity: 0;
+	transition: 0.6s;
+	transition-property: opacity, transform;
+}
+
+.image:hover .details p {
+	opacity: 1;
+	transform: translateY(-40px);
+}
+
+.more {
+	position: absolute;
+	background: rgba(255, 255, 255, 0.8);
+	width: 94%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px;
+	bottom: -60px;
+	transition: 0.6s;
+	transition-property: bottom;
+}
+
+.image:hover .more {
+	bottom: 0;
+}
+
+.more .read-more {
+	color: #000;
+	text-decoration: none;
+	font-size: 20px;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.more .read-more span {
+	font-weight: 900;
+}
+
+.more .icon-links i {
+	color: #000;
+	font-size: 20px;
+}
+
+.more .icon-links a:not(:last-child) i {
+	margin-right: 20px;
+}
+
+/* Responsive CSS */
+@media ( max-width : 1080px) {
+	.image {
+		flex: 100%;
+		max-width: 480px;
+	}
+}
+
+@media ( max-width : 400px) {
+	.image .details p {
+		font-size: 16px;
+	}
+	.more .read-more, .more .icon-links a i {
+		font-size: 18px;
+	}
+}
+
+/* main_content02 */
+.main_content02 {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+.main_content02 h1 {
+	color: #86D865;
+	text-align: center;
+	font-size: 40px;
+	margin-top: 200px;
+}
+
+.main_content02 h1 div {
+	font-size: 20px;
+	color: #000;
+	margin-top: 10px;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-bottom: 200px;
+}
+
+.card-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: 30px;
+}
+
+.card {
+	position: relative;
+	background: #fff;
+	max-width: 325px;
+	width: 325px;
+	height: auto;
+	margin: 25px;
+	box-shadow: 0 5px 25px rgb(1 1 1/ 20%);
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.card-image {
+	max-height: 200px;
+	overflow: hidden;
+}
+
+.card-image img {
+	max-width: 100%;
+	height: auto;
+}
+
+.card-info {
+	position: relative;
+	color: #222;
+	padding: 20px;
+}
+
+.card-info h3 {
+	font-size: 1.4em;
+	font-weight: 700;
+	margin-bottom: 10px;
+}
+
+.card-info h4 {
+	color: #999;
+	font-weight: 400;
+}
+
+.card-info p {
+	font-size: 1em;
+	margin-bottom: 15px;
+	color: #FF5733;
+	font-weight: bold;
+}
+
+.card-info .card-mediaIcons {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.card-info .card-mediaIcons a {
+	color: #999;
+	font-size: 1.4em;
+	margin: 0 10px;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+	border-radius: 50%;
+	transition: color 0.3s ease;
+}
+
+.card-info .card-mediaIcons a:hover {
+	color: #222;
+}
+
+.pagination {
+	height: 150px;
+	width: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	text-align: center;
+	margin: 30px 30px 60px;
+	user-select: none;
+}
+
+.pagination li {
+	display: inline-block;
+	margin: 5px;
+	box-shadow: 0 5px 25px rgb(1 1 1/ 10%);
+}
+
+.pagination li a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 1.2em;
+	line-height: 45px;
+}
+
+.previous-page, .next-page {
+	background: #d49466;
+	width: 80px;
+	border-radius: 45px;
+	cursor: pointer;
+	transition: 0.3s ease;
+}
+
+.previous-page:hover {
+	transform: translateX(-5px);
+}
+
+.next-page:hover {
+	transform: translateX(5px);
+}
+
+.current-page, .dots {
+	background: #ccc;
+	width: 45px;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.active {
+	background: #d49466;
+}
+
+.disable {
+	background: #ccc;
+}
