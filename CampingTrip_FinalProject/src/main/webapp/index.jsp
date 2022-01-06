@@ -435,7 +435,7 @@ setInterval(function () {
         </div>
     </div>
     
-	/* 페이징 자바스크립트 코드 */
+	
     <script type="text/javascript">
         function getPageList(totalPages, page, maxLength){
           function range(start, end){
