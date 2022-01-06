@@ -11,7 +11,7 @@ local.properties
 .loadpath
 .recommenders
 META-INF/
-
+MANIFEST.MF
 # External tool builders
 .externalToolBuilders/
 
