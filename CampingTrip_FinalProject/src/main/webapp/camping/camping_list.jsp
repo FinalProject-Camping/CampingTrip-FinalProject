@@ -56,6 +56,9 @@
 .pagination{
 	margin-left:45%;	
 }
+.camping_info{
+	cursor:pointer;
+}
 </style>
 
 <script type="text/javascript">
@@ -244,11 +247,11 @@
         	<div class="camping_pic col-auto d-none d-lg-block">
           		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
 			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
+        	<div class="camping_info col p-4 d-flex flex-column position-static" onclick="location.href='camping_detail.jsp'">
+          		<h3 class="camping_name mb-0">KH 캠핑지</h3>
           		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
           		<br><br>
-          		<span class="camping_price">₩150,000</span>
+          		<span class="camping_price">₩200,000</span>
         	</div>
       	</div>
       	<div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">

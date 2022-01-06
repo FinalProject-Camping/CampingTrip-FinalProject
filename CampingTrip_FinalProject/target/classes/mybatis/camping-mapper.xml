@@ -2,8 +2,13 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="camping">
+<mapper namespace="camp">
   <select id="selectBlog" resultType="campDto">
     select * from camp where id = #{id}
   </select>
+  <insert id="insert" parameterType="CampDto">
+  	INSERT INTO CAMP
+  	VALUES(CAMPSEQ.NEXTVAL,#{writer},#{name},#{camp_type},#{address},#{address_detail},
+  	#{service},#{intro},#{rule},#{phone},#{email},0,SYSDATE)
+  </insert>
 </mapper>

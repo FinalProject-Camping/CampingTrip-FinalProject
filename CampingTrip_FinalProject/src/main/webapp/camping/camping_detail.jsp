@@ -221,6 +221,12 @@
 		});
 
 	}
+	function open_calendar(){
+		
+		var options = 'top=10, left=10, width=800, height=700, status=no, menubar=no, toolbar=no, resizable=no';
+		openWin = window.open("camp_calendar.jsp", "calendar", options);
+		
+	}
 </script>
 </head>
 <body>
@@ -265,9 +271,9 @@
 				</div>
 			</div>
 			<div class="camping_brief_info col-md-6">
-				<h1 class="camping_name mb-0">캠핑명</h1>
+				<h1 class="camping_name mb-0">kh캠핑지</h1>
 				<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-				<div class="camping_intro mb-0">킴팽지 소개</div>
+				<div class="camping_intro mb-0">편안하고 아늑한 서비스</div>
 			</div>
 		</div>
 		<div class="detail_content row">
@@ -298,7 +304,7 @@
 								<div class="input-group">
 									<input type="text" class="form-control" name="date"
 										id="input_calendar">
-									<button class="btn btn-success" id="calendar_btn">
+									<button class="btn btn-success" id="calendar_btn" onclick="open_calendar()">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 											fill="currentColor" class="bi bi-calendar3"
 											viewBox="0 0 16 16">
