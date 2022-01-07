@@ -222,7 +222,16 @@
 		ORDER BY REGDATE DESC
 	</select>
 	
-	
+	<select id="selectList_main" resultMap="joonggoMap">
+		SELECT J.* 
+		FROM(
+		SELECT REGDATE, IMGLIST, SEQ, TITLE, PRICE, PLACE
+		FROM JOONGGO
+		WHERE TRADE = 'Y'
+		AND DELIVERY != 'C'
+		ORDER BY REGDATE DESC) J
+		WHERE ROWNUM <![CDATA[<=]]> 18
+	</select>
 	
 	
 	

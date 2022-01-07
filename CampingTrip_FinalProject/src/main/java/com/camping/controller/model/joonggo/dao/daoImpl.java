@@ -277,6 +277,18 @@ public class daoImpl implements dao{
 		}
 		return res;
 	}
+
+	@Override
+	public List<joonggo> selectlist_main() {
+		List<joonggo> res = new ArrayList<joonggo>();
+		
+		try {
+			res = sqlSession.selectList(NAMESPACE + "selectList_main");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 	
 
 
