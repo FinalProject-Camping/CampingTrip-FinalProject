@@ -28,5 +28,6 @@ public interface dao {
 	public int downheart(Map<String,Object> map);
 	public heart confirmheart(Map<String,Object> map);
 	public List<joonggo> person(String id);
+	public List<joonggo> selectlist_main();
 	
 }

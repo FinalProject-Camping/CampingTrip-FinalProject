@@ -181,246 +181,7 @@ setInterval(function () {
         <h1><i class="fas fa-bullhorn"></i> NEW ! <div>새로 등록된 중고물품</div></h1>
         <div class="container">
             <div class="card-content">
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods01.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods02.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods03.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods04.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods05.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods06.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods01.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods02.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods03.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods04.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods05.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods06.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods01.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods02.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods03.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods04.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods05.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods06.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods01.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods02.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods03.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods04.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods05.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods06.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods01.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods02.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods03.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods04.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods05.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image loading"><img src="resources/img/camping_goods06.PNG" alt=""></div>
-                    <div class="card-info">
-                        <h3 class="card-title loading"><span>캠핑 장작 및 화로 장작</span></h3>
-                        <h4 class="card-location"><span>경기도 부천시 원미구 중동</span></h4>
-                        <p class="card-price"><span>7,000원</span></p>
-                    </div>
-                </div>
+
             </div>
                 <div class="pagination">
                     <li class="page-item previous-page disable"><a class="page-link">이전</a></li>
@@ -437,6 +198,31 @@ setInterval(function () {
     
 	
     <script type="text/javascript">
+	    document.addEventListener("DOMContentLoaded", ()=>{
+			$.ajax({
+				url:"selectlist_main.do",
+				async:false,
+				method: "post",
+				success:function(datalist){ 
+					var list = $.parseJSON(datalist.data);	
+					var doc = document.querySelector('.card-content');			
+					list.forEach( data => {
+									
+						var html = 
+			                '<div class="card">'+
+			                '<div class="card-image loading"><img src="'+ data.imglist.split(',')[0] +'" alt=""></div>'+
+			                '<div class="card-info">'+
+			                '<h3 class="card-title loading"><span>'+ data.title +'</span></h3>'+
+			                '<h4 class="card-location"><span>'+ data.place +'</span></h4>'+
+			                '<p class="card-price"><span>'+data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' 원</span></p>'+
+			                '</div></div>';
+						doc.innerHTML += html;
+					});
+				}
+			});    
+		})    
+
+    
         function getPageList(totalPages, page, maxLength){
           function range(start, end){
             return Array.from(Array(end - start + 1), (_, i) => i + start);

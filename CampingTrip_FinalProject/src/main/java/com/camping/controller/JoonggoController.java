@@ -190,6 +190,34 @@ public class JoonggoController {
 	    return maps;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/selectlist_main.do",method=RequestMethod.POST)
+	public Map<String, Object> selectlist_main(){
+		logger.info("selectlist_main");
+		
+		List<joonggo> list = biz.selectlist_main();
+		
+		Map<String,Object> maps = new HashMap<String,Object>();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String toJson = null;
+		try {
+			toJson = mapper.writeValueAsString(list);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    maps.put("data",toJson);
+	    
+	    return maps;
+	}
+	
+	
+	
+	
 	
 	@RequestMapping("/error.do")
 	public String error() {

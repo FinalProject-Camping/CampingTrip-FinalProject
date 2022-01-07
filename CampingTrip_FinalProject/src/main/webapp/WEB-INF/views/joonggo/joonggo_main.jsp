@@ -3,7 +3,7 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	String[] categories = {"캠핑 > 텐트/타프/매트","캠핑 > 테이블/의자/가구","캠핑 > 캠핑카/카라반/트레일러","캠핑 > 기타 캠핑용품","여행 > 가방/캐리어/용품","여행 > 등산용품","여행 > 낚시용품","자전거","스포츠/레저","홈/생활용품","디지털/가전","의류/잡화","귀금속/주얼리/악세사리","상품권/티켓/쿠폰","기타 잡화","먹거리/무료나눔"};
 	String[] recommends = {"캠핑 난로","캠핑 의자","아이스박스","백팩","캠핑카","캠핑 랜턴","카라반","텐트","바베큐그릴","카페트","캠핑세탁기","히터","낚시 용품"};	
@@ -53,21 +53,21 @@
 @media screen and (min-width: 1240px) and (max-width: 1999px) { body, html { font-size: 17px; } }
 @media screen and (min-width: 2000px) { body, html { font-size: 19px; } } */
 
-@media screen and (max-width: 575px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important; padding:5%; padding-top:0%;} .content { height: auto;} .content-img{height:240px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} #lnb.fixed{ width: 100%;} .heart{float:right;}}
-@media screen and (min-width: 576px) and (max-width: 767px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important; padding:2%; padding-top:0%;} .content { height: 220px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display: none;} #lnb.fixed{ width: 540px;} #suggest{width:448px;}}
-@media screen and (min-width: 768px) and (max-width: 991px) { .mainbody{font-size:16px;} #list{font-size:16px !important; padding-top:0%;} .content { height: 240px;} .content-img{height:100%; width:40%; float:right;} .content-inner{height:100%; width:59%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display:none;}  #lnb.fixed{ width: 720px;} #suggest{width:628px;}}
-@media screen and (min-width: 992px) and (max-width: 1199px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important;} .element{margin-bottom: 1.5%;} .content { height: auto; margin: 2%; margin-top:0%;} .content-img{height:180px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:960px;} #lnb.fixed{ width: 960px;} .heart{float:right;} #suggest{width:868px;}}
-@media screen and (min-width: 1200px) and (max-width: 1399px) { .mainbody{ font-size: 17px; } #list{font-size:15px !important;} .element{margin-bottom: 2%;} .content { height: auto; margin: 3%; margin-top:0%;} .content-img{height:200px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:1070px;} #lnb.fixed{ width: 1070px;} .heart{float:right;} #suggest{width:978px;}}
-@media screen and (min-width: 1400px) { .mainbody{ font-size: 17px; } #list{font-size:16px !important;} .element{margin-bottom: 2.5%;}  .content { height: auto; margin:3.5%; margin-top:0%;} .content-img{height:205px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody{width:1100px;} #lnb.fixed{ width: 1100px;} .heart{float:right;} #suggest{width:1008px;}}
+@media screen and (max-width: 575px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important; padding:5%; padding-top:0%;} .content { height: auto;} .content-img{height:240px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} #lnb.fixed{ width: 100%;} .heart{float:right;}  .maintitleclass{font-size:18px;}}
+@media screen and (min-width: 576px) and (max-width: 767px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important; padding:2%; padding-top:0%;} .content { height: 220px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display: none;} #lnb.fixed{ width: 540px;} #suggest{width:448px;} .maintitleclass{font-size:21px;}}
+@media screen and (min-width: 768px) and (max-width: 991px) { .mainbody{font-size:16px;} #list{font-size:16px !important; padding-top:0%;} .content { height: 240px;} .content-img{height:100%; width:40%; float:right;} .content-inner{height:100%; width:59%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display:none;}  #lnb.fixed{ width: 720px;} #suggest{width:628px;} .maintitleclass{font-size:22px;}}
+@media screen and (min-width: 992px) and (max-width: 1199px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important;} .element{margin-bottom: 1.5%;} .content { height: auto; margin: 2%; margin-top:0%;} .content-img{height:180px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:960px;} #lnb.fixed{ width: 960px;} .heart{float:right;} #suggest{width:868px;} .maintitleclass{font-size:23px;}}
+@media screen and (min-width: 1200px) and (max-width: 1399px) { .mainbody{ font-size: 17px; } #list{font-size:15px !important;} .element{margin-bottom: 2%;} .content { height: auto; margin: 3%; margin-top:0%;} .content-img{height:200px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:1070px;} #lnb.fixed{ width: 1070px;} .heart{float:right;} #suggest{width:978px;} .maintitleclass{font-size:24px;}}
+@media screen and (min-width: 1400px) { .mainbody{ font-size: 17px; } #list{font-size:16px !important;} .element{margin-bottom: 2.5%;}  .content { height: auto; margin:3.5%; margin-top:0%;} .content-img{height:205px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:1100px;} #lnb.fixed{ width: 1100px;} .heart{float:right;} #suggest{width:1008px;} .maintitleclass{font-size:25px;} }
 
 input::-webkit-search-decoration,
 input::-webkit-search-cancel-button,
 input::-webkit-search-results-button,
 input::-webkit-search-results-decoration{display:none;}
 
-body{background-color: #f8f9fa;}
-.mainbody{padding: 30px; padding-left:45px; padding-right:45px; font-family: NanumBarunGothic; background-color: #fff; border: 1px solid #e9ecef; border-radius: 8px; margin-bottom: 21px}
-#listdiv{min-height: 400px;}
+body{background-color : #f8f9fa;}
+.mainbody{padding: 30px; padding-left:45px; padding-right:45px; font-family: NanumBarunGothic; background-color: #fff; border: 1px solid #e9ecef; border-radius: 8px;}
+#listdiv{min-height: 1000px;}
 #suggest > input{margin-top:15px;} 
 
 #search-bar{
@@ -104,34 +104,32 @@ body{background-color: #f8f9fa;}
 }
 
 .select{
-	border: 2px solid darkgray;
+	border: 1px solid darkgray;
 	margin-bottom: 20px;
 	border-radius: 5px;
-	padding-left: 2px;
-	padding-right: 2px;
+	padding-left: 3px;
+	padding-right: 3px;
 }
 
 .side-btn{
 	background-color: white;
 	border: solid 1px darkgray;
-	border-radius: 10px;
+	border-radius: 25px;
 	padding-right: 10px;
 	padding-left: 10px;
 	height: 40px;
 }
-
+.side-btn:hover{
+	transition: all 0.3s;
+	border: solid 1px #d49466;
+	background-color: #d49466;
+	color : white;
+}
+.side-btn-three{height:50px; padding-left: 15px; padding-right: 15px;}
 .option-btn{background-color: #ff8a3d; border: solid 1px #ff8a3d; border-radius: 25px; padding-right: 10px; padding-left: 10px; margin-right: 10px; margin-bottom: 15px; color:white; height:30px; font-size:13px;}
 .white-btn{background-color: white; border: solid 1px darkgray; border-radius: 25px; padding-right: 10px; padding-left: 10px; margin-right: 10px; color:gray; height:30px; font-size:13px;}
 .green-btn{background-color: rgb(0, 191, 121); border: solid 1px rgb(0, 191, 121); border-radius: 25px; padding-right: 10px; padding-left: 10px; margin-bottom: 15px; margin-right: 10px; color:white; height:30px; font-size:13px;}
 
-.side-btn:hover{
-	transition: all 0.3s;
-	border: solid 1px rgb(173, 88, 66);
-	background-color: rgb(173, 88, 66);
-	color : white;
-}
-
-.side-btn-three{height:50px; padding-left: 15px; padding-right: 15px;}
 .btn-gray{background-color: #FFFFFF; border: solid 2px gray; color : gray; border-radius: 5px; padding-right:3%; padding-left:3%; padding-top:1.5%; padding-bottom:1.5%; font-weight: bold;}
 .btn-gray:hover{transition: all 0.3s; border: solid 2px gray; background-color: gray; color : white;}
 
@@ -234,6 +232,19 @@ body{background-color: #f8f9fa;}
 	padding:30px;
 	background-color: white;
 	border-radius: 8px;
+}
+
+.maintitleclass{
+	position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+	opacity:0;
+	transition: opacity 0.1s;
+}
+.active{
+	opacity:1;
+    transition: opacity 1s;
 }
 
 
@@ -477,7 +488,6 @@ const sessionUsertype = '${sessiondto.usertype}';
 					if(datalist.islast){
 						document.getElementById('morediv').style.display = 'none';
 						document.getElementById('listdiv').style.setProperty('border-radius', '8px');
-						document.getElementById('listdiv').style.setProperty('margin-bottom', '21px');
 						if(list.length === 0){
 							var loading = document.getElementById('loading');
 						    loading.classList.remove('rotation');
@@ -487,7 +497,6 @@ const sessionUsertype = '${sessiondto.usertype}';
 						}
 					}else{
 						document.getElementById('morediv').style.display = 'block';
-						document.getElementById('listdiv').style.setProperty('margin-bottom', '0px');
 						document.getElementById('listdiv').style.setProperty('border-bottom-left-radius', '0px');
 						document.getElementById('listdiv').style.setProperty('border-bottom-right-radius', '0px');
 					}
@@ -507,12 +516,18 @@ const sessionUsertype = '${sessiondto.usertype}';
 
 </head>
 <body>
-	<div id="header">
-   		<h1>헤더 </h1>
-	</div>
-	<div id="gap" style="height:97px; display:none;"></div>
 	
-	<div class="container mainbody" id="lnb">
+	<div id="gap" style="height:184.5px; display:none;"></div>
+	
+	<div class="container mainbody shadow" id="lnb" style="margin-bottom: 21px; border-top: none;">
+		
+		<div class="row" id="maintitle" style="position:relative; padding-top:25px; padding-bottom:25px; height:87.5px;">
+			<div class="col" style="text-align: center;">
+				<span class="w-100 maintitleclass active"><span class="align-middle fas fa-fire fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;중고거래를 통해 필요한 캠핑용품을 마련해보세요</span>
+				<span class="w-100 maintitleclass"><span class="align-middle far fa-smile-wink fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;안전한 거래문화 함께 만들어요</span>
+				<span class="w-100 maintitleclass"><span class="align-middle fas fa-campground fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;캠핑예약과 캠핑용품구매 모두 캠핑트립에서!</span>
+			</div>		
+		</div>
 		
 		<!-- 검색창 & 버튼 -->
 		<div class="row">
@@ -585,7 +600,8 @@ const sessionUsertype = '${sessiondto.usertype}';
 		
 		<div class="row">
 			<div class="col-xs-12">
-				<div id="suggest" style="padding-top:0px; padding:15px; background-color:white; text-align: left; display:none; position: fixed; z-index: 1;" class="col-lg-12">
+				<div id="suggest" style="width:100%; padding-bottom:0 !important; padding:15px; background-color:white; text-align: left; display:none; z-index: 1;" class="col-lg-12">
+					<hr style="margin:0;">
 					<b>추천 검색어&nbsp;</b>
 					<%
 						for(String s : recommends){
@@ -600,10 +616,10 @@ const sessionUsertype = '${sessiondto.usertype}';
 		
 	</div>
 	
-	<div class="container mainbody" id="listdiv" style="margin-bottom: 0px; padding-bottom: 0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
+	<div class="container mainbody shadow" id="listdiv" style="margin-bottom: 0px; padding-bottom: 0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
 		<div class="row">
 			<h4 class="col-8 bold">
-				중고거래 > <span id="queryKeyword"></span>
+				<span style="color:#d49466">중고거래&nbsp;>&nbsp;</span><span id="queryKeyword"></span>
 			</h4>
 			<div class="col-4" style="text-align: right;">
 				<select id="select" class="select">
@@ -723,10 +739,10 @@ const sessionUsertype = '${sessiondto.usertype}';
 
 	</div>
 	<!-- 버튼 -->
-	<div class="container mainbody" id="morediv" style="border-top:none; padding:0px; margin-top:0px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
+	<div class="container mainbody shadow" id="morediv" style="border-top:none; padding:0px; margin-top:0px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
 		<div onclick="moreResult(this);" style="text-align: center; cursor: pointer; padding-top:15px; padding-bottom:15px;">
 			<span class="more-text" style="display: block;">더보기</span>
-			<span class="align-middle fas fa-circle-notch fa-lg" style="display:none; color:#ff8a3d;"></span>
+			<span class="align-middle fas fa-circle-notch fa-lg" style="display:none; color:#d49466;"></span>
 		</div>
 	</div>
 	
@@ -765,7 +781,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 	</script>
 	
 	<!-- top -->
-	<a id="top" href="#"><span id="topspan" style="color:gray; font-size: 30pt;" class="align-middle fas fa-arrow-alt-circle-up"></span></a>
+	<a id="top" href="#"><span id="topspan" style="color:black; font-size: 30pt;" class="align-middle fas fa-arrow-alt-circle-up"></span></a>
 	<script>
     $(function() {
         $(window).scroll(function() {
@@ -792,12 +808,12 @@ const sessionUsertype = '${sessiondto.usertype}';
         		fontSize:"30pt"
         	},200);
         });
-        
-
     });
     
     $(function() {
-    	  var lnb = $("#lnb").offset().top;
+    	  var lnb = $("#lnb").offset().top + 87.5;
+    	  let flag = false;
+    	  let searchflag = false;
     	  
     	  $(window).scroll(function() {
     	   
@@ -805,9 +821,11 @@ const sessionUsertype = '${sessiondto.usertype}';
     	    
     	    if(lnb <= window) {
     	      $("#lnb").addClass("fixed");
+    	      $("#maintitle").hide();
     	      $("#gap").show();
     	    }else{
     	      $("#lnb").removeClass("fixed");
+    	      $("#maintitle").show();
     	      $("#gap").hide();
     	    }
     	  })
@@ -815,11 +833,35 @@ const sessionUsertype = '${sessiondto.usertype}';
     	  
     	  //추천검색어
     	  $("#search-bar").focus(function(){
-        	$("#suggest").slideDown(200); //원래 slidedown
+          	$("#suggest").slideDown(200); //원래 slidedown
           });
     	  $("#search-bar").focusout(function(){
-    		  $("#suggest").slideUp(200);
+    		 if(!flag){$("#suggest").slideUp(200);}
     	  });
+    	  $("#search-bar").on('mouseenter', function(){
+    		  searchflag = true;
+    	  })
+    	  $("#search-bar").on('mouseleave', function(){
+    		  searchflag = false;
+    	  })
+    	  $("#suggest").on('mouseenter', function(){
+    		  flag = true;
+    	  })
+    	  $("#suggest").on('mouseleave', function(){
+    		  flag = false;
+    	  })
+    	  $(document.body).on('click', function(){
+    		  if(!searchflag && !flag){$("#suggest").slideUp(200);}
+    	  })
+    	  
+    	  var maintitleOpacity = (idx) => {
+    		  $('.maintitleclass').eq(idx).removeClass('active');
+    		  idx = idx + 1 == 3? 0 : idx + 1;
+    		  $('.maintitleclass').eq(idx).addClass('active');
+    		  setTimeout( ()=>{maintitleOpacity(idx)}, 5500);
+    	  }
+    	  
+    	  setTimeout( ()=>{maintitleOpacity(0)}, 6500);
     	});
 	</script>
 	
@@ -853,6 +895,11 @@ const sessionUsertype = '${sessiondto.usertype}';
 	</div>
 	
 	
+	
+	
+	
+<br>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
 

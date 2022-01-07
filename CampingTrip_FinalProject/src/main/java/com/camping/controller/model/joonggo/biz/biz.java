@@ -19,4 +19,5 @@ public interface biz {
 	public int rmheart(Map<String,Object> map);
 	public boolean confirmheart(Map<String,Object> map);
 	public List<joonggo> person(String id);
+	public List<joonggo> selectlist_main();
 }

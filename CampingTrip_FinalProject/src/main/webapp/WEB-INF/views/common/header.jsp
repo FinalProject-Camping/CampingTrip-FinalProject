@@ -130,12 +130,12 @@ a {
 	<header>
         <nav class="navbar">
             <div class="navbar_logo">
-                <a href=""><i class="fas fa-campground"></i>CampingTrip</a>
+                <a href="index.jsp"><i class="fas fa-campground"></i>CampingTrip</a>
             </div>
 
             <ul class="navbar_menu">
                 <li><a href="">캠핑예약</a></li>
-                <li><a href="">중고거래</a></li>
+                <li><a href="list.do?keyword=">중고거래</a></li>
                 <li><a href="">동행하기</a></li>
                 <li><a href="">이벤트</a></li>
                 <li><a href="">고객센터</a></li>

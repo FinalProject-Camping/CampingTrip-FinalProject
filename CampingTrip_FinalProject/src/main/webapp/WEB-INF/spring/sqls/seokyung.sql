@@ -1,6 +1,5 @@
 select * from user_tables;
 
-CREATE SEQUENCE USERSEQ NOCACHE;
 CREATE SEQUENCE JOONGGOSEQ NOCACHE;
 CREATE SEQUENCE HITSEQ NOCACHE;
 CREATE SEQUENCE RENEWSEQ NOCACHE;
@@ -17,7 +16,7 @@ CREATE TABLE MYMEMBER(
     MYSEX VARCHAR2(10) NOT NULL,
     MYENABLED VARCHAR2(2) NOT NULL,
     MYROLE VARCHAR2(50) NOT NULL,
-    MYPENALTY NUMBER DEFAULT 0 NOT NULL
+    MYPENALTY NUMBER DEFAULT 0 NOT NULL,
     CONSTRAINT MYMEMBER_PK PRIMARY KEY(MYNO),
     CONSTRAINT MYMEMBER_UQ_ID UNIQUE(MYID),
     CONSTRAINT MYMEMBER_UQ_PHONE UNIQUE(MYPHONE),
@@ -88,7 +87,7 @@ CREATE TABLE RENEWAL(
 
 
 --5) 찜테이블
-CREATE TABLE JOONGGO_HEART(
+CREATE TABLE JOONGGO_HEART(W
 	HEARTDATE DATE NOT NULL,
 	HEARTID VARCHAR2(50) NOT NULL,
 	JOONGGOSEQ NUMBER NOT NULL,
@@ -99,7 +98,6 @@ CREATE TABLE JOONGGO_HEART(
 
 
 
-DROP TABLE T_USER;
 DROP TABLE JOONGGO;
 DROP TABLE HITDATA
 DROP TABLE JOONGGO_HEART;
@@ -107,19 +105,22 @@ DROP TABLE RENEWAL
 SELECT * FROM JOONGGO_HEART
 DELETE FROM JOONGGO_HEART
 DELETE FROM JOONGGO;
+SELECT * FROM MYMEMBER;
+
+SELECT J.* 
+FROM(
+SELECT REGDATE, IMGLIST, SEQ, TITLE, PRICE, PLACE
+FROM JOONGGO
+WHERE TRADE = 'Y'
+AND DELIVERY != 'C'
+ORDER BY REGDATE DESC) J
+WHERE ROWNUM <= 18;
 
 
 
 
 
 
-
-INSERT INTO T_USER
-VALUES(USERSEQ.NEXTVAL, '호갱', '1234', 'general', '12345@naver.com', '010-9922-5401', 0);
-INSERT INTO T_USER
-VALUES(USERSEQ.NEXTVAL, '가나다', '1234', 'general', 'abcd@naver.com', '010-1234-5401', 0);
-SELECT * FROM T_USER;
-SELECT * FROM JOONGGO WHERE CATEGORY = '캠핑 > 텐트/타프/매트' OR CATEGORY = '캠핑 > 캠핑카/카라반/트레일러' OR CATEGORY = '캠핑 > 기타 캠핑용품' ORDER BY SEQ;
 
 SELECT *
 FROM JOONGGO
@@ -130,33 +131,17 @@ FROM JOONGGO
 WHERE TITLE LIKE '%캠핑용%'
 
 INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
+VALUES(JOONGGOSEQ.NEXTVAL, 'USER4', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
 INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
+VALUES(JOONGGOSEQ.NEXTVAL, 'USER4', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
 INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
+VALUES(JOONGGOSEQ.NEXTVAL, 'USER4', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
 INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
+VALUES(JOONGGOSEQ.NEXTVAL, 'USER4', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
 INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
+VALUES(JOONGGOSEQ.NEXTVAL, 'USER4', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
 INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
-INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
-INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
-INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
-INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
-INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
-INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
-INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
-INSERT INTO JOONGGO(SEQ, ID, REGDATE, TITLE, CONTENT, CATEGORY, PRICE, PLACE, TAG, QUALITY, DELIVERY, AGREE, IMGLIST)
-VALUES(JOONGGOSEQ.NEXTVAL, '호갱', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
+VALUES(JOONGGOSEQ.NEXTVAL, 'USER4', SYSDATE, '캠핑용의자랑 기타 물품 팔아요', '팔아용~', '캠핑 > 텐트/타프/매트', 37000, '잠실동,목동', '의자','B','D','Y','https://img.wizwid.com/PImg/706861/bsc/706861593.jpg');
 
 SELECT *
 FROM (SELECT ROWNUM AS NUM, J.* FROM (

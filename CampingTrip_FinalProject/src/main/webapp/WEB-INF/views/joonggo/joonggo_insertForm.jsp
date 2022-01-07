@@ -3,7 +3,7 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	String[] categories = {"캠핑 > 텐트/타프/매트","캠핑 > 테이블/의자/가구","캠핑 > 캠핑카/카라반/트레일러","캠핑 > 기타 캠핑용품","여행 > 가방/캐리어/용품","여행 > 등산용품","여행 > 낚시용품","자전거","스포츠/레저","홈/생활용품","디지털/가전","의류/잡화","귀금속/주얼리/악세사리","상품권/티켓/쿠폰","기타 잡화","먹거리/무료나눔"};
 %>
@@ -61,8 +61,8 @@
 @media screen and (min-width: 1200px) { #mainbody { font-size: 18px; } .title{font-size: 16pt;} .container{width:893px;}}
 
 body{background-color: #f8f9fa;}
-#mainbody{font-family: NanumBarunGothic; }
-.mainbody-inner{background-color: #FFF; padding: 5%;}
+#mainbody{font-family: NanumBarunGothic;}
+.mainbody-inner{background-color: #FFF; padding: 5%; border-radius:8px;}
 .red{color:red;}
 .green{color:rgb(1, 176, 3);}
 .gray{color:gray;}
@@ -70,7 +70,7 @@ body{background-color: #f8f9fa;}
 .star{color:rgb(0, 191, 121); margin-left: 1%; font-weight: bold;}
 .message{display:none; margin-top: 1.5%;}
 .title{margin-bottom: 1%;}
-#maintitle{color:rgb(1, 176, 3);}
+#maintitle{color:rgb(0, 191, 121);}
 
 
 #address{display:none; margin-top: 1%;}
@@ -364,33 +364,21 @@ body{background-color: #f8f9fa;}
 							
 							let addr;
 	 						if(result[0].region_3depth_name){
-	 							addr = result[0].region_2depth_name + ' ' + result[0].region_3depth_name;	
+	 							addr = result[0].region_1depth_name + ' ' + result[0].region_2depth_name + ' ' + result[0].region_3depth_name;	
 	 						}else{
-	 							addr = result[1].region_2depth_name + ' ' + result[1].region_3depth_name;	
+	 							addr = result[1].region_1depth_name + ' ' + result[1].region_2depth_name + ' ' + result[1].region_3depth_name;	
 	 						}
-				            var btns = document.getElementById('addr-regist-list').children;
-				            var b = true;
-				            if(btns.length > 0){
-				            	Array.from(btns).forEach(btn =>{
-				            		if(btn.innerHTML === addr){
-				            			alert('이미 등록된 주소와 같습니다.');
-				            			b = false;
-				            		}
-				            	});
-				            }
-				            if(b){
-	 	 						var btn = document.createElement('button');
-		 						btn.classList.add('geocoder-btn');
-		 						btn.setAttribute('onclick', 'this.remove()');
-					            btn.innerHTML = addr;
-					            document.getElementById('addr-regist-list').append(btn);
-				            }
+	 						
+	 	 					var btn = document.createElement('button');
+		 					btn.classList.add('geocoder-btn');
+		 					btn.setAttribute('onclick', 'this.remove()');
+					        btn.innerHTML = addr;
+					        document.getElementById('addr-regist-list').append(btn);
 						}
 					};
 					
 					function addgeolocation(input){
-						if(document.getElementById('addr-regist-list').children.length === 3){
-							alert('주소는 최대 3개 등록할 수 있습니다.');
+						if(document.getElementById('addr-regist-list').children.length === 1){
 							return;
 						}
 						
@@ -411,8 +399,7 @@ body{background-color: #f8f9fa;}
 					}
 					
 					function adddirectlocation(){
-						if(document.getElementById('addr-regist-list').children.length === 3){
-							alert('주소는 최대 3개 등록할 수 있습니다.');
+						if(document.getElementById('addr-regist-list').children.length === 1){
 							return;
 						}
 						
@@ -422,27 +409,17 @@ body{background-color: #f8f9fa;}
 					        	
 		 						let addr;
 					            if(data.bname){
-					            	addr = data.sigungu + ' ' + data.bname;
+					            	addr = data.sido + ' ' + data.sigungu + ' ' + data.bname;
 					            }else{
-					            	addr = data.sigungu + ' ' + data.bname2;
+					            	addr = data.sido + ' ' + data.sigungu + ' ' + data.bname2;
 					            }
-					            var btns = document.getElementById('addr-regist-list').children;
-					            var b = true;
-					            if(btns.length > 0){
-					            	Array.from(btns).forEach(btn =>{
-					            		if(btn.innerHTML === addr) {
-					            			alert('이미 등록된 주소와 같습니다.');
-					            			b = false;
-					            		}
-					            	});
-					            }
-					            if(b){ //ajax 동기식에서는 return 이 안먹는다
-		 	 						var btn = document.createElement('button');
-			 						btn.classList.add('direct-btn');
-			 						btn.setAttribute('onclick', 'this.remove()');
-						            btn.innerHTML = addr;
-						            document.getElementById('addr-regist-list').append(btn);
-					            }
+					            
+		 	 					var btn = document.createElement('button');
+			 					btn.classList.add('direct-btn');
+			 					btn.setAttribute('onclick', 'this.remove()');
+						        btn.innerHTML = addr;
+						        document.getElementById('addr-regist-list').append(btn);
+					            
 					        }
 					    }).open();
 					}
@@ -465,13 +442,13 @@ body{background-color: #f8f9fa;}
         <div class="group">
 			<div class="title"><span>판매자 정보</span></div>
 			<div class="seller">
-				<span class="info">12343234@naver.com</span>&nbsp;&nbsp;<span class="lightgray">|</span>&nbsp;&nbsp;<span class="info">010-9922-5401</span>
+				<span class="info">${sessiondto.myemail }</span>&nbsp;&nbsp;<span class="lightgray">|</span>&nbsp;&nbsp;<span class="info">${sessiondto.myphone }</span>
 				<div>
 					<input id="agree1" type="checkbox" class="check align-middle" value="Y"><label for="agree1" class="label align-middle">휴대전화번호 노출 동의</label>
 				</div>
 				<div class="gray">판매자 정보는 판매기간 동안 멤버에게만 보입니다.</div>
 				<!---->
-				<p class="green">본인인증이 완료되었습니다.</p>
+				<p style="color:rgb(0, 191, 121)">본인인증이 완료되었습니다.</p>
 				<!---->
 			</div>
 		</div>
@@ -614,6 +591,8 @@ body{background-color: #f8f9fa;}
 		</div>
 	</div>
 	<br>
+	
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 
 

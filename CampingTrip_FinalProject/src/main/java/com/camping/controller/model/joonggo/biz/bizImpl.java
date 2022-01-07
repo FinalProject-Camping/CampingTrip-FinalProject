@@ -123,6 +123,11 @@ public class bizImpl implements biz{
 	public List<joonggo> person(String id) {
 		return dao.person(id);
 	}
+
+	@Override
+	public List<joonggo> selectlist_main() {
+		return dao.selectlist_main();
+	}
 	
 }
 

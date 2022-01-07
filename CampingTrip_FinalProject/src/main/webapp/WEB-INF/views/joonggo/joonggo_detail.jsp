@@ -3,7 +3,7 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -255,8 +255,8 @@ a {
 const seq = '${dto.seq}';
 const writer = '${dto.id}';
 
-const sessionUserType = '${sessiondto.myrole}'; //${sessiondto.usertype}
-const sessionid = '${sessiondto.myid}'; //${sessiondto.userid}
+const sessionUserType = '${sessiondto.myrole}'; 
+const sessionid = '${sessiondto.myid}'; 
 
 	//general user
 	function report(){
@@ -365,7 +365,7 @@ const sessionid = '${sessiondto.myid}'; //${sessiondto.userid}
 	function addheart(ele){
 		
 		$.ajax({
-			url:"addheart.do?seq=${dto.seq}&sessionid=${sessiondto.userid}",
+			url:"addheart.do?seq=${dto.seq}&sessionid=${sessiondto.myid}",
 			method: "post",
 			success:function(data){ 
 				if(data.data === false){
@@ -400,7 +400,7 @@ const sessionid = '${sessiondto.myid}'; //${sessiondto.userid}
 	function rmheart(ele){
 		
 		$.ajax({
-			url:"rmheart.do?seq=${dto.seq}&sessionid=${sessiondto.userid}",
+			url:"rmheart.do?seq=${dto.seq}&sessionid=${sessiondto.myid}",
 			method: "post",
 			success:function(data){ 
 				if(data.data === false){
@@ -727,9 +727,11 @@ const sessionid = '${sessiondto.myid}'; //${sessiondto.userid}
 	        					document.getElementById('seeAddr-span').setAttribute('onclick','');
 	        					document.getElementById('seeAddr-span').style.setProperty('cursor','default');
 	        				}else{
+		        				//var phone = '${dto.phone}'.split('-');
+		        				//document.getElementById('addrMasking').append(email[0].substring(0,2)+'*****@'+email[1] + ' | ' +  phone[0] +'-'+ phone[1].substring(0,2)+'**-'+phone[2].substring(0,2)+'**');
 	        					var email = '${dto.email}'.split('@');
-		        				var phone = '${dto.phone}'.split('-');
-		        				document.getElementById('addrMasking').append(email[0].substring(0,2)+'*****@'+email[1] + ' | ' +  phone[0] +'-'+ phone[1].substring(0,2)+'**-'+phone[2].substring(0,2)+'**');
+		        				var phone = '${dto.phone}'.substring(0,3) + '-' + '${dto.phone}'.substring(3,5)+ '**-' + '${dto.phone}'.substring(7,9) + '**'; 
+		        				document.getElementById('addrMasking').append(email[0].substring(0,2)+'*****@'+email[1] + ' | ' +  phone);
 	        				}
 	        				
 	        				function seeAddr(){
@@ -760,9 +762,9 @@ const sessionid = '${sessiondto.myid}'; //${sessiondto.userid}
 	        				</span>
 	        				
 	        				<script type="text/javascript">
-	        				if(sessionid != '' && sessionUserType != 'admin' && sessionid != writer){
+	        				if(sessionid != '' && sessionUserType != 'ADMIN' && sessionid != writer){
 	        					$.ajax({
-		        					url:"confirmheart.do?seq=${dto.seq}&sessionid=호갱", //${sessiondto.userid}
+		        					url:"confirmheart.do?seq=${dto.seq}&sessionid=${sessiondto.myid}", 
 		        					method: "post",
 		        					success:function(data){ 
 		        						if(data.data){
@@ -895,7 +897,7 @@ const sessionid = '${sessiondto.myid}'; //${sessiondto.userid}
  					});
  				}
  				
-/*  				function test(place){
+ 				/* function test(place){
  					let arr = new Array();
 					let callback = function(result, status) {
 						if (status === kakao.maps.services.Status.OK) {
@@ -1002,7 +1004,7 @@ const sessionid = '${sessiondto.myid}'; //${sessiondto.userid}
 					
 					//console.log(resultlist);
 					//최단거리
-/* 					for(var i = 0; i < resultlist.length; i++){
+					/* for(var i = 0; i < resultlist.length; i++){
 						
 						let name = '';
 						let km = 99999;
@@ -1060,21 +1062,23 @@ const sessionid = '${sessiondto.myid}'; //${sessiondto.userid}
 		<div style="padding:20px; background-color: #f8f9fa" id="개인정보">
 			
 		</div>
+		
 		<script type="text/javascript">
 			var agree = '${dto.agree}';
 			
 			if(agree === 'Y'){
-				document.getElementById('개인정보').innerHTML = '${dto.email}'+'<br>'+'${dto.phone}';
+				//document.getElementById('개인정보').innerHTML = '${dto.email}'+'<br>'+'${dto.phone}';
+				document.getElementById('개인정보').innerHTML = '${dto.email}'+'<br>'+'${dto.phone}'.substring(0,3) + '-' + '${dto.phone}'.substring(3,7) + '${dto.phone}'.substring(7,11);
 			}else{
 				document.getElementById('개인정보').innerHTML = '<b>연락처를 비공개한 회원입니다.<br> ※구매 채팅 또는 가격 제안하기 기능을 이용해보세요.</b>';
 			} 
-			
 
 			addrclear = ()=>{
 				document.getElementById('seeAddr').style.setProperty('opacity','0');
 				document.getElementById('seeAddr').style.display='none'; 
 			}
 		</script>
+		
 		<br>
 		판매 완료되거나 글이 수정된 지 한 달이 지난 경우,<br>
 		전화번호와 이메일 주소가 노출되지 않습니다.
@@ -1239,6 +1243,8 @@ const sessionid = '${sessiondto.myid}'; //${sessiondto.userid}
 	  </div>
 	</div>
 
+
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
 

@@ -451,38 +451,25 @@ body{background-color: #f8f9fa;}
 					var geocoder = new kakao.maps.services.Geocoder();
 					var callback = function(result, status){
 						if(status === kakao.maps.services.Status.OK){
+							console.log(result);
 							
 							let addr;
-							
 	 						if(result[0].region_3depth_name){
-	 							addr = result[0].region_2depth_name + ' ' + result[0].region_3depth_name;	
+	 							addr = result[0].region_1depth_name + ' ' + result[0].region_2depth_name + ' ' + result[0].region_3depth_name;	
 	 						}else{
-	 							addr = result[1].region_2depth_name + ' ' + result[1].region_3depth_name;	
+	 							addr = result[1].region_1depth_name + ' ' + result[1].region_2depth_name + ' ' + result[1].region_3depth_name;	
 	 						}
 	 						
-				            var btns = document.getElementById('addr-regist-list').children;
-				            var b = true;
-				            if(btns.length > 0){
-				            	Array.from(btns).forEach(btn =>{
-				            		if(btn.innerHTML === addr){
-				            			alert('이미 등록된 주소와 같습니다.');
-				            			b = false;
-				            		}
-				            	});
-				            }
-				            if(b){
-	 	 						var btn = document.createElement('button');
-		 						btn.classList.add('geocoder-btn');
-		 						btn.setAttribute('onclick', 'this.remove()');
-					            btn.innerHTML = addr;
-					            document.getElementById('addr-regist-list').append(btn);
-				            }
+	 	 					var btn = document.createElement('button');
+		 					btn.classList.add('geocoder-btn');
+		 					btn.setAttribute('onclick', 'this.remove()');
+					        btn.innerHTML = addr;
+					        document.getElementById('addr-regist-list').append(btn);
 						}
 					};
 					
 					function addgeolocation(input){
-						if(document.getElementById('addr-regist-list').children.length === 3){
-							alert('주소는 최대 3개 등록할 수 있습니다.');
+						if(document.getElementById('addr-regist-list').children.length === 1){
 							return;
 						}
 						
@@ -503,39 +490,27 @@ body{background-color: #f8f9fa;}
 					}
 					
 					function adddirectlocation(){
-						if(document.getElementById('addr-regist-list').children.length === 3){
-							alert('주소는 최대 3개 등록할 수 있습니다.');
+						if(document.getElementById('addr-regist-list').children.length === 1){
 							return;
 						}
 						
 					    new daum.Postcode({
 					        oncomplete: function(data) {
+					        	console.log(data);
 					        	
 		 						let addr;
-		 						
-		 						if(data.bname){
-					            	addr = data.sigungu + ' ' + data.bname;
+					            if(data.bname){
+					            	addr = data.sido + ' ' + data.sigungu + ' ' + data.bname;
 					            }else{
-					            	addr = data.sigungu + ' ' + data.bname2;
+					            	addr = data.sido + ' ' + data.sigungu + ' ' + data.bname2;
 					            }
-		 						
-					            var btns = document.getElementById('addr-regist-list').children;
-					            var b = true;
-					            if(btns.length > 0){
-					            	Array.from(btns).forEach(btn =>{
-					            		if(btn.innerHTML === addr) {
-					            			alert('이미 등록된 주소와 같습니다.');
-					            			b = false;
-					            		}
-					            	});
-					            }
-					            if(b){ //ajax 동기식에서는 return 이 안먹는다
-		 	 						var btn = document.createElement('button');
-			 						btn.classList.add('direct-btn');
-			 						btn.setAttribute('onclick', 'this.remove()');
-						            btn.innerHTML = addr;
-						            document.getElementById('addr-regist-list').append(btn);
-					            }
+					            
+		 	 					var btn = document.createElement('button');
+			 					btn.classList.add('direct-btn');
+			 					btn.setAttribute('onclick', 'this.remove()');
+						        btn.innerHTML = addr;
+						        document.getElementById('addr-regist-list').append(btn);
+					            
 					        }
 					    }).open();
 					}
