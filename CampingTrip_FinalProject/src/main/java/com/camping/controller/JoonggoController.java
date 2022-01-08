@@ -298,7 +298,7 @@ public class JoonggoController {
 		if(sessiondto == null) {
 			return "redirect:error.do";
 		}else {
-			if(!joonggo.getId().equals(sessiondto.getMemberid())){
+			if(!joonggo.getId().equals(sessiondto.getMyid())){
 				return "redirect:error.do";
 			}
 			if(sessiondto.getMypenalty() >=5) {
@@ -323,7 +323,7 @@ public class JoonggoController {
 		if(sessiondto == null) {
 			return "redirect:error.do";
 		}else {
-			if(!sessiondto.getMemberid().equals(writer)) {
+			if(!sessiondto.getMyid().equals(writer)) {
 				return "redirect:error.do";
 			}
 		}
@@ -344,7 +344,7 @@ public class JoonggoController {
 		if(sessiondto == null) {
 			return "redirect:error.do";
 		}else {
-			if(!sessiondto.getMemberid().equals(joonggo.getId())) {
+			if(!sessiondto.getMyid().equals(joonggo.getId())) {
 				return "redirect:error.do";
 			}
 		}
@@ -365,7 +365,7 @@ public class JoonggoController {
 		if(sessiondto == null) {
 			return "redirect:error.do";
 		}else {
-			if(!sessiondto.getMemberid().equals(writer)) {
+			if(!sessiondto.getMyid().equals(writer)) {
 				return "redirect:error.do";
 			}
 		}
@@ -434,7 +434,7 @@ public class JoonggoController {
 		if(sessiondto == null) {
 			map.put("data","error");
 		}else {
-			if(!sessiondto.getMemberid().equals(writer)) {
+			if(!sessiondto.getMyid().equals(writer)) {
 				map.put("data","error");
 			}else {
 				map.put("data",biz.renew(seq));
@@ -452,7 +452,7 @@ public class JoonggoController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		if(sessiondto != null) {
-			if(!sessiondto.getMemberid().equals(sessionid)) {
+			if(!sessiondto.getMyid().equals(sessionid)) {
 				map.put("data","differenet");
 			}else {
 				Map<String,Object> params = new HashMap<String,Object>();
@@ -476,7 +476,7 @@ public class JoonggoController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		if(sessiondto != null) {
-			if(!sessiondto.getMemberid().equals(sessionid)) {
+			if(!sessiondto.getMyid().equals(sessionid)) {
 				map.put("data","differenet");
 			}else {
 				Map<String,Object> params = new HashMap<String,Object>();
@@ -499,7 +499,7 @@ public class JoonggoController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		if(sessiondto != null) {
-			if(!sessiondto.getMemberid().equals(sessionid)) {
+			if(!sessiondto.getMyid().equals(sessionid)) {
 				map.put("data",false);
 			}else {
 				Map<String,Object> params = new HashMap<String,Object>();
@@ -539,7 +539,15 @@ public class JoonggoController {
 	}
 	
 	
-	
+	@RequestMapping("/joonggo_reportform.do")
+	public String report(Model model, int seq, String reportid) {
+		
+		
+		
+		model.addAttribute("reportid", "USER3");
+		model.addAttribute("seq", seq);
+		return "joonggo/joonggo_reportform";
+	}
 	
 	
 	

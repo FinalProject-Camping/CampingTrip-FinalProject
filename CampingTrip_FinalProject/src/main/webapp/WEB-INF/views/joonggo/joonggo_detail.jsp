@@ -53,7 +53,7 @@
 @media screen and (min-width: 1400px) { #mainbody,#seeAddr { font-size: 15px; }  #mainbody > .row{margin-left:18%; margin-right:18%;}  .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:25%} #user-circle{font-size:35px;} .titleandprice{font-size:23px;} .slider-1{height:500px;}}  
 
 #mainbody, .modal{font-family: NanumBarunGothic;}
-.hr{color: #d49466; }
+.hr{color: gray; }
 .bold{font-weight: bold;}
 .gray{color:gray;}
 .red{color:red;}
@@ -109,16 +109,8 @@ a{text-decoration: none; color:black;}
 	color : white;
 }
 
-        
-#adminModal .modal-header, #reportModal .modal-header {background-color: lightgray;}
-
 #suggestModal .modal-header{background-color: #ff8a3d; color:white;}
 #suggestprice {outline: none;}
-
-#chat .modal-header{background-color: lightgray; color: black;}
-#chat .modal-footer{background-color: lightgray;}
-
-#admin-select, #admin-textarea, #report-select, #report-textarea {border: 2px solid darkgray; border-radius: 5px; outline: none;}
 
 #user-circle{ color:gray; }
 #report{ cursor: pointer;}
@@ -165,7 +157,7 @@ a {
 
 /* 슬라이더 1 시작 */
 .slider-1 {
-	margin:2.5%;
+	margin:2.3%;
 	margin-top:2%;
 	margin-bottom:0;
     position:relative;
@@ -245,7 +237,7 @@ a {
     right:20px;
 }
 
-.margin{margin-top:2.5%; margin-bottom:2.5%;}
+.margin{margin-top:3.5%; margin-bottom:3.5%;}
 .titleandprice{margin-bottom:0.5%;}
 .popular-title, .popular-addr{overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;display: -webkit-box;-webkit-line-clamp: 1; -webkit-box-orient: vertical;}
 
@@ -288,44 +280,18 @@ const sessionid = '${sessiondto.myid}';
 	
 	//admin
 	function adminDel(){
-		var select = document.getElementById('admin-select');
-		var value = select.options[select.selectedIndex].value;
-		var reason = document.getElementById('admin-textarea');
-		
-		if(value === "3"){
-			var trimVal = reason.value;
-			if(trimVal === '' || trimVal === null){
-				alert("사유를 입력하세요.");
-				reason.value = '';
-				return false;
-			}
-		}else{
-			reason.value = select.options[value].innerHTML;
+		if(confirm("게시글을 삭제하시겠습니까?")){
+			location.href='delete.do?seq=${dto.seq}';
 		}
-		alert(reason.value);
-		return false;
 	}
 	
 	
 	//general user
 	function report(){
 		
-		var select = document.getElementById('report-select');
-		var value = select.options[select.selectedIndex].value;
-		var reason = document.getElementById('report-textarea');
+		popup("joonggo_reportform.do?seq=${dto.seq}&reportid=${sessiondto.myid}", "신고하기",450,520);
 		
-		if(value === "2"){
-			var trimVal = reason.value;
-			if(trimVal === '' || trimVal === null){
-				alert("사유를 입력하세요.");
-				reason.value = '';
-				return false;
-			}
-		}else{
-			reason.value = select.options[value].innerHTML;
-		}
-		alert(reason.value);
-		return false;
+
 	}
 
 	function suggest(){
@@ -416,50 +382,10 @@ const sessionid = '${sessiondto.myid}';
 	
 	document.addEventListener("DOMContentLoaded", ()=>{
 		
-		//admin SELECT
-		document.getElementById('admin-select').addEventListener("change", function(){
-			if(this.value === "3"){
-				document.getElementById('admin-textarea').value = '';
-				document.getElementById('admin-textarea').style.display = 'block';
-			}else{
-				document.getElementById('admin-textarea').style.display = 'none';
-			}
-		});
-		//user SELECT
-		document.getElementById('report-select').addEventListener("change", function(){
-			if(this.value === "2"){
-				document.getElementById('report-textarea').value = '';
-				document.getElementById('report-textarea').style.display = 'block';
-			}else{
-				document.getElementById('report-textarea').style.display = 'none';
-			}
-		});
-		 		  
-		//shown.bs.modal 이벤트가 느려서 직접 생성
-		document.getElementById('report').addEventListener('click', ()=>{
-			document.getElementById('report-select').options[0].selected = true;
-			document.getElementById('report-textarea').style.display = 'none';
-			document.getElementById('report-textarea').value = '';
-		}, false);
-		document.getElementById('admindel').addEventListener('click', ()=>{
-			document.getElementById('admin-select').options[0].selected = true;
-			document.getElementById('admin-textarea').style.display = 'none';
-			document.getElementById('admin-textarea').value = '';
-		}, false);
 		document.getElementById('suggestbtn').addEventListener('click', ()=>{
 			document.getElementsByClassName('message')[0].style.display = 'none';
 			document.getElementById('suggestprice').value = '';
 		}, false);
-		
-		
-		
-		var chat = document.getElementById('chat');
-		chat.addEventListener('shown.bs.modal', function () {
-			this.style.display = 'none';
-			setTimeout(function(){
-				document.getElementById('chat').style.display = 'block';
-			} ,500);
-		})
 		
 		//가격제안
 		document.getElementById('suggestprice').onkeyup = function(){
@@ -496,6 +422,17 @@ const sessionid = '${sessiondto.myid}';
 		}
 	}
 	
+	function popup(url, name, width, height){
+	    var _width = width;
+	    var _height = height;
+	 
+	    // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
+	    var _left = Math.ceil(( window.screen.width - _width )/2);
+	    var _top = Math.ceil(( window.screen.height - _height )/2); 
+	 
+	    window.open(url, name, 'width='+ _width +', height='+ _height +', left=' + _left + ', top='+ _top +',status=no, toolbar=no, scrollbars=no, resizable=no');
+	}
+	
 </script>
 
 </head>
@@ -507,8 +444,8 @@ const sessionid = '${sessiondto.myid}';
 	
 	    <div class="row">
 	        <div class="col-12">
-	        	<div>
-	        		<span class="bold">카테고리 > </span><span id=category>${dto.category }</span>
+	        	<div style="font-size:16px;">
+	        		<span class="bold" style="color:#d49466;">카테고리 > </span><span id=category>${dto.category }</span>
 	        	</div>
 	        	
 	        	<!-- 이미지 -->
@@ -632,9 +569,7 @@ const sessionid = '${sessiondto.myid}';
 					<!-- user report -->
 					<div class="col-4">
 						<div style="text-align: right; height: 100%;">
-							<span id="report" style="display: none;"><span
-								class="fas fa-exclamation-triangle h-100 fa-lg gray"
-								data-bs-toggle="modal" data-bs-target="#reportModal"></span></span>
+							<span id="report" onclick="report()" style="display: none;"><span class="fas fa-exclamation-triangle h-100 fa-lg gray"></span></span>
 						</div>
 					</div>
 				</div>
@@ -645,7 +580,7 @@ const sessionid = '${sessiondto.myid}';
 	        <div class="col-12">
 	        	<div style="padding-left:2%; padding-right:2%;">
 	        	
-	        		<div class="col"><hr class="hr" style="height: 2px; margin:0;"></div>
+	        		<div class="col"><hr class="hr" style="height: 1px; margin:0;"></div>
 	        		
 	        		<div class="margin">
 	        		<div class="titleandprice bold">
@@ -706,7 +641,7 @@ const sessionid = '${sessiondto.myid}';
 						</script>	
 					</div>        		
 	        		
-	        		<div class="col"><hr class="hr" style="height: 2px; margin:0;"></div>
+	        		<div class="col"><hr class="hr" style="height: 1px; margin:0;"></div>
 	        	
 	        	<!-- 연락처보기 -->
 	        		<div class="margin">
@@ -779,7 +714,7 @@ const sessionid = '${sessiondto.myid}';
 	        				</script>
 	        				<span class="align-middle">
 	        					<button id="suggestbtn" type="button" class="btn-suggest" data-bs-toggle="modal" data-bs-target="#suggestModal"><span class="align-middle fas fa-dollar-sign fa-lg"></span><span class="align-middle"> 가격 제안</span></button>
-	        					<button id="chatbtn" type="button" class="btns" data-bs-toggle="modal" data-bs-target="#chat"><span class="align-middle fas fa-comments-dollar fa-lg"></span><span class="align-middle"> 구매 채팅</span></button>
+	        					<button id="chatbtn" onclick="" type="button" class="btns"><span class="align-middle fas fa-comments-dollar fa-lg"></span><span class="align-middle"> 구매 채팅</span></button>
 	        				</span>
 	        			</div>
 	        			
@@ -790,7 +725,7 @@ const sessionid = '${sessiondto.myid}';
 	        			</div>
 	        			
 	        			<div id="admin" style="text-align: right; display:none;">
-	        				<button id="admindel" class="btn-del w-25" type="button" data-bs-toggle="modal" data-bs-target="#adminModal"><span class="align-middle fas fa-trash-alt fa-lg"></span><span class="align-middle"> 글 삭제</span></button>
+	        				<button id="admindel" onclick="adminDel()" class="btn-del w-25" type="button"><span class="align-middle fas fa-trash-alt fa-lg"></span><span class="align-middle"> 글 삭제</span></button>
 	        			</div>
 	        		</div>
 	        		</div>
@@ -856,30 +791,43 @@ const sessionid = '${sessiondto.myid}';
 	    	<script type="text/javascript">
 	    		document.getElementById('tag').innerHTML = '${dto.tag}'.split(',').join("\u00a0\u00a0\u00a0");
 	    	</script>
-		<div class="row"><div class="col"><hr class="hr" style="height: 2px;"></div></div>
+		<div class="row"><div class="col"><div style="padding-left: 2%; padding-right:2%;"><hr class="hr" style="height: 1px;"></div></div></div>
 		
 		
 <!--  추천매물 -->
 		<br><br><br>
-		<div class="row">
-			<div class="col-8">
-				<h3>이런 매물은 어떠세요?</h3><br>
+		<div class="row">	
+			<div class="col">
+			<div style="padding-left: 2%; padding-right:2%;">
+			<div class="row">
+				<div class="col-8">
+					<h3>이런 매물은 어떠세요?</h3>
+					<br>
+				</div>
+				<div class="col-4" style="text-align: right;">
+					<h5><a href="list.do?keyword=">중고 메인 <span></span></a></h5>
+				</div>
 			</div>
-			<div class="col-4" style="text-align: right;">
-				<h5><a href="list.do?keyword=">중고 메인 <span></span></a></h5>
-			</div>
-		</div>	
-		
-		<div class="row" id="popular">
 
+			</div>
+			</div>
+		</div>
+		
+			
+			
+		<div class="row" id="popular">
+		
 			<div class="row" id="popular-hit-list" style="margin:0 auto;">
 				<div class="col-12">
 					<h5>최근 많은 회원님들이 조회했어요</h5>
 					<br><br>
 				</div>
-			</div>
 				
-		</div>
+			</div>
+			
+		</div>	
+
+
 		
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b1a06c511e7475a92c07a62d70ae0304&libraries=services"></script>
 		<script type="text/javascript">
@@ -905,7 +853,7 @@ const sessionid = '${sessiondto.myid}';
  								var x = result[0].x;
  								var y = result[0].y;
  								var distance = computeDistance(latitude, longitude, y, x);
- 								$(ele).find('.place').html(result[0].address_name);
+ 								//$(ele).find('.place').html(result[0].address_name);
  								$(ele).find('.distance').html(distance + ' km');
  							}
  						})
@@ -952,7 +900,7 @@ const sessionid = '${sessiondto.myid}';
 								'<div class="popular-title" style="margin-top:5px; font-size:18px;">'+ data.title +'</div>'+
 								'<div class="bold" style="font-size:15px;"><span>'+ data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +'</span> 원<div>'+
 								'<div class="popular-addr">'+
-								'<span class="place" style="color:gray;"></span>&nbsp;&nbsp;'+
+								'<span class="place" style="color:gray;">'+data.place+'</span>&nbsp;&nbsp;'+
 								'<span class="distance" style="color:#ff8a3d;"></span>'+
 								'</div></div></div></div></div>';
 								
@@ -1017,84 +965,9 @@ const sessionid = '${sessiondto.myid}';
 
 
 
-	<!-- Modal admin delete-->
-	<div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModal" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	    
-	 	<!-- 폼 -->
-	    <form action="admindel.do" method="post" onsubmit="return adminDel()">
-	  	<!-- hidden -->
-	    <input type="hidden" name="seq" value="${seq }">
-	    <input type="hidden" name="adminid" value="${userid }">
-	    
-	      <div class="modal-header">
-	        <h5 class="modal-title bold" id="exampleModalLabel">게시글 삭제 사유 선택</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	      	<select id="admin-select" class="select w-100">
-				<option value="0" selected>상품 도배 행위, 광고성 게시글</option>
-				<option value="1">욕설/반말/부적절한 언어</option>
-				<option value="2">사기/허위 게시글</option>
-				<option value="3">직접 입력</option>
-			</select>
-			<br><br>
-			<textarea id="admin-textarea" name="reason" style="width: 100%; height:200px; resize: none; display:none;"></textarea>
-	      </div>
-	      <div class="modal-footer" style="border:none;">
-	        <button type="button" class="btn-del" data-bs-dismiss="modal">close</button>
-	        <button type="submit" class="btn-del"><span class="align-middle fas fa-trash-alt fa-lg"></span></button>
-	      </div>
-	    </form>
-	    
-	    </div>
-	  </div>
-	</div>
 	
 	
-	<!-- modal user-report -->
-	<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModal" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	    
-	 	<!-- 폼 -->
-	    <form action="report.do" method="post" onsubmit="return report()">
-	  	<!-- hidden -->
-	    <input type="hidden" name="seq" value="${seq }">
-	    <input type="hidden" name="reportid" value="${userid }">
-	    
-	      <div class="modal-header">
-	        <h5 class="modal-title bold" id="exampleModalLabel">신고 사유 선택</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	      	*허위 신고일 경우, 신고자의 서비스 활동이 제한될 수 있으니<br>
-	      	신중하게 신고해주세요 <br><br>
-	      	<select id="report-select" class="select w-100">
-				<option value="0" selected>상품 도배 행위, 광고성 게시글</option>
-				<option value="1">욕설/반말/부적절한 언어</option>
-				<option value="2">직접 입력</option>
-			</select>
-			<br><br>
-			<textarea id="report-textarea" name="reason" style="width: 100%; height:200px; resize: none; display:none;"></textarea>
-			
-			<!-- 자료첨부 -->
-			<label for="avatar">증거자료첨부:</label> <br>
-			<input type="file"
-			       id="file" name="file"
-			       accept="image/png, image/jpeg" multiple>
-						
-	      </div>
-	      <div class="modal-footer" style="border:none;">
-	        <button type="button" class="btn-del" data-bs-dismiss="modal">close</button>
-	        <button type="submit" class="btn-del">신고</button>
-	      </div>
-	    </form>
-	    
-	    </div>
-	  </div>
-	</div>
+
 	
 	<!--  modal user-suggest -->
 	<div class="modal fade" id="suggestModal" tabindex="-1" aria-labelledby="reportModal" aria-hidden="true">
@@ -1132,45 +1005,6 @@ const sessionid = '${sessiondto.myid}';
 	
 	
 
-	<!--  modal user-chat -->
-	<div class="modal " id="chat" tabindex="-1" aria-labelledby="adminModal" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	    
-	      <div class="modal-header">
-	        <h5 class="modal-title bold" id="exampleModalLabel">캠핑가자</h5>
-	        <!-- 예약신청 popover 버튼구현 검토 -->
-	        <button type="button" class="btn-del" style="margin-left: 30px;"><span class="fas fa-calendar-check fa-lg"></span> 예약신청</button>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      
-	      <div class="modal-body">
-			<div class="container" style="padding-right: 0; padding-left: 0; height:500px;" id="chatroom">
-				<div class="row" style="">
-					<div class="col-12" style="" >
-						<div style='width:50%; height:auto; border-radius: 5px; background-color: rgb(99, 170, 255); padding:5px;'>
-							ㅇ라ㅓㅣㄴ아러먀ㅣㅈ더리나어랴미더리ㅓㄴ야ㅣ러ㅣㄴ야러미냥러ㅣㅁ야너림냥러ㅣㄴ아러ㅣ냐더sdfslkdfjlskdfjsldifslieflsiesfldkflasdfsdfsefse
-						</div>
-					</div>
-
-				</div>
-			</div>
-	      </div>
-	      
-	      <div class="modal-footer">
-	      	<div class="container"style="padding-right: 0; padding-left: 0; height:120px;">
-				<div class="row" style="--bs-gutter-x: 0; height: 100%;">
-						<div class="col-10"><textarea style="border:none; display:block; outline:none; width:100%; height:100%; resize: none;"></textarea></div>
-						<div class="col-2">
-							<button type="button" style="outline:none; border:none; width:100%; height:100%; background-color: rgb(99, 170, 255); color:white;"><span class="fas fa-paper-plane fa-2x"></span></button>
-						</div>
-				</div>	      	
-	      	</div>
-	      </div>
-	    
-	    </div>
-	  </div>
-	</div>
 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

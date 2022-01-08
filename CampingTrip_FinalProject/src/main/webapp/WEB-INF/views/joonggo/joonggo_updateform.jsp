@@ -531,7 +531,7 @@ body{background-color: #f8f9fa;}
         <div class="group">
 			<div class="title"><span>판매자 정보</span></div>
 			<div class="seller">
-				<span class="info">12343234@naver.com</span>&nbsp;&nbsp;<span class="lightgray">|</span>&nbsp;&nbsp;<span class="info">010-9922-5401</span>
+				<span class="info">${dto.email}</span>&nbsp;&nbsp;<span class="lightgray">|</span>&nbsp;&nbsp;<span class="info">${dto.phone}</span>
 				<div>
 					<input id="agree1" type="checkbox" class="check align-middle" value="Y"><label for="agree1" class="label align-middle">휴대전화번호 노출 동의</label>
 				</div>
