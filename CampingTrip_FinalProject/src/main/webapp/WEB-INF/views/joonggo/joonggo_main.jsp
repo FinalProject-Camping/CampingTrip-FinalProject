@@ -134,8 +134,8 @@ body{background-color : #f8f9fa;}
 .btn-gray:hover{transition: all 0.3s; border: solid 2px gray; background-color: gray; color : white;}
 
 .titlegroup{
-	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-top: 3px;
+	margin-bottom: 3px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	word-wrap: break-word;
@@ -143,6 +143,18 @@ body{background-color : #f8f9fa;}
 	-webkit-box-orient: vertical;
 	/* webkit 엔진을 사용하지 않는 브라우저를 위한 속성. */
 	/* height = line-height * line = 1.2em * 3 = 3.6em  */
+}
+.placediv{
+	color:gray;
+	font-size:13px;
+	margin-top: 3px;
+	margin-bottom:3px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
 }
 
 .content{
@@ -200,7 +212,7 @@ body{background-color : #f8f9fa;}
   background:#121212; 
   text-align: center;
 }
-#lnb {padding-top : 12px; padding-bottom : 12px;}
+#lnb {padding-top : 17px; padding-bottom : 17px;}
 
 #lnb.fixed{
   position: fixed;
@@ -208,9 +220,9 @@ body{background-color : #f8f9fa;}
   left:50%;
   transform: translate(-50%, 0%);
   margin: 0 auto;
-  padding-top : 12px;
-  padding-bottom : 12px;
-  z-index: 1;
+  padding-top : 17px;
+  padding-bottom : 17px;
+  z-index: 2;
 }
 
 #fixed{
@@ -296,13 +308,13 @@ const sessionUsertype = '${sessiondto.usertype}';
 				if(data.data === true){
 					if(data.penalty >= 5){
 						toastr.options.positionClass = "toast-top-right";
-						toastr.error("게시글 작성이 불가능한 회원입니다.");
+						toastr.error("페널티 초과로 인해 게시글작성이 불가능합니다.");
 					}else{
 						location.href='insertform.do';
 					}
 				}else{
-					toastr.options.positionClass = "toast-top-right";
-					toastr.warning("로그인 해주세요");
+					alert('로그인이 필요합니다.');
+					location.href='loginform.do';
 				}
 			}
 		})
@@ -313,7 +325,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 		location.href='selectone.do?seq=' + seq;
 	}
 
-	function createContent(imgpath, seq, writer, date, trade, title, price, heart, hit){
+	function createContent(imgpath, seq, writer, date, trade, title, price, heart, hit, place){
 		
 		var maindiv = document.createElement('div');
 		maindiv.setAttribute('class', 'element col-lg-4 col-12');
@@ -386,7 +398,12 @@ const sessionUsertype = '${sessiondto.usertype}';
  		if(trade == 'T'){
  			imgdiv.innerHTML += '<span style="position: absolute; top:85%; left:0%; height:15%; width:100%; opacity:0.8; text-align:center; background-color:#ff8a3d; z-index:1; font-weight: bold; color:white;"><span style="position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);">예약중</span></span>';
  		} 
-		innerdiv.append(writer_span, date_span, titlediv, price_span, hearthitspan);
+ 		
+ 		var placediv = document.createElement('div');
+ 		placediv.innerHTML = place == ''? '-' : place;
+ 		placediv.setAttribute('class', 'placediv');
+ 		
+		innerdiv.append(writer_span, date_span, titlediv, placediv, price_span, hearthitspan);
 		div.append(imgdiv, innerdiv);
 		maindiv.append(div);
 		
@@ -418,14 +435,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 	}
 	
 	function convertPrice(price){
-		let temp = '';
-		for(let ch of price.toString()){temp = ch + temp;}
-		
-		let result = '';
-		for(let ch of temp.match(/.{1,3}/g).join(',')){
-			result = ch + result;
-		}
-		return result; 
+		return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
 	}
 	
 	function effect(count, arr){
@@ -451,7 +461,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 		}
 		console.log(arr);
 		arr.forEach(data => {
-			ele.appendChild(createContent(data.imglist.split(',')[0], data.seq, data.id, data.regdate, data.trade, data.title, data.price, data.heart, data.hit));
+			ele.appendChild(createContent(data.imglist.split(',')[0], data.seq, data.id, data.regdate, data.trade, data.title, data.price, data.heart, data.hit, data.place));
 		});
 		
 		
@@ -480,7 +490,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 					func2();
 					
 					list.forEach(data => {
-						ele.appendChild(createContent(data.imglist.split(',')[0], data.seq, data.id, data.regdate, data.trade, data.title, data.price, data.heart, data.hit));
+						ele.appendChild(createContent(data.imglist.split(',')[0], data.seq, data.id, data.regdate, data.trade, data.title, data.price, data.heart, data.hit, data.place));
 					});
 					
 					func3();
@@ -501,7 +511,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 						document.getElementById('listdiv').style.setProperty('border-bottom-right-radius', '0px');
 					}
 					
-				}, 600);
+				}, 500);
 				
 			},
 			error: function(){
@@ -516,10 +526,9 @@ const sessionUsertype = '${sessiondto.usertype}';
 
 </head>
 <body>
+	<div id="gap" style="height:194.5px; display:none;"></div>
 	
-	<div id="gap" style="height:184.5px; display:none;"></div>
-	
-	<div class="container mainbody shadow" id="lnb" style="margin-bottom: 21px; border-top: none;">
+	<div class="container mainbody shadow" id="lnb" style="margin-bottom: 21px; border-top: none; border-top-left-radius: 0; border-top-right-radius: 0;">
 		
 		<div class="row" id="maintitle" style="position:relative; padding-top:25px; padding-bottom:25px; height:87.5px;">
 			<div class="col" style="text-align: center;">
@@ -649,15 +658,13 @@ const sessionUsertype = '${sessiondto.usertype}';
 											    	loading.style.display = 'block';
 											    	loading.classList.add('rotation');
 											    },()=>{
+													ele.innerHTML = '';	
+											    	page = 1;
+											    	func(); //버튼 삭제/추가
+											    },()=>{
 											    	var loading = document.getElementById('loading');
 											    	loading.classList.remove('rotation');
 											    	loading.style.display = 'none';
-
-											    	func(); //버튼 삭제/추가
-											    	page = 1;
-													ele.innerHTML = '';	
-
-											    }, ()=>{
 											    	document.body.style.setProperty('pointer-events','');
 											    	document.body.style.setProperty('opacity', '');
 											    	effect(0, Array.from(ele.children));
@@ -765,13 +772,13 @@ const sessionUsertype = '${sessiondto.usertype}';
 							 ele.children[1].style.display = 'inline-block';
 							 ele.children[1].classList.add('rotation');							 
 						 },()=>{
+							 page = page + 1;
+						 },()=>{
 							 ele.children[1].classList.remove('rotation');
 							 ele.children[1].style.display = 'none';
 							 ele.children[0].style.display = 'block';
-						 },()=>{
 							 document.body.style.setProperty('pointer-events','');
-							 effect(0 , Array.from(list.children).slice(page * 9));
-							 page = page + 1;
+							 effect(0 , Array.from(list.children).slice((page-1) * 9));
 							 console.log(list.children.length);
 						 }
 	
@@ -844,13 +851,19 @@ const sessionUsertype = '${sessiondto.usertype}';
     	  $("#search-bar").on('mouseleave', function(){
     		  searchflag = false;
     	  })
+    	  $("#search-btn").on('mouseenter', function(){
+    		  flag = true;
+    	  })
+    	  $("#search-btn").on('mouseleave', function(){
+    		  flag = false;
+    	  })
     	  $("#suggest").on('mouseenter', function(){
     		  flag = true;
     	  })
     	  $("#suggest").on('mouseleave', function(){
     		  flag = false;
     	  })
-    	  $(document.body).on('click', function(){
+    	  $(document.body).on('mousedown', function(){
     		  if(!searchflag && !flag){$("#suggest").slideUp(200);}
     	  })
     	  

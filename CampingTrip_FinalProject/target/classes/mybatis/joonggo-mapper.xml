@@ -39,7 +39,7 @@
 	
 	
 	<select id="selectList" parameterType="String" resultMap="joonggoMap">
-		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT 
+		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT, PLACE 
 		FROM ( select * from joonggo order by regdate desc )
 		<where>
 			<if test='regexp != ""'>
@@ -58,7 +58,7 @@
 	</select>
 	
 	<select id="selectCategory" parameterType="hashmap" resultMap="joonggoMap">
-		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT 
+		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT, PLACE  
 		FROM ( select * from joonggo order by regdate desc )
 		<where>
 			<if test='regexp != ""'>

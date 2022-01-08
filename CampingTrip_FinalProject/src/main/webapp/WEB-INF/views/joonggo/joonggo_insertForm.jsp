@@ -279,7 +279,7 @@ body{background-color: #f8f9fa;}
 	<!-- 폼 시작 -->
 		<form action="insert.do" method="post" name="form">
 		
-		<input type="hidden" value="${sessiondto.userid }" name="id">
+		<input type="hidden" value="${sessiondto.myid }" name="id">
 		<input type="hidden" value="" name="imglist">
 		<input type="hidden" value="" name="tag">
 		<input type="hidden" value="" name="place">
@@ -363,10 +363,10 @@ body{background-color: #f8f9fa;}
 							console.log(result);
 							
 							let addr;
-	 						if(result[0].region_3depth_name){
-	 							addr = result[0].region_1depth_name + ' ' + result[0].region_2depth_name + ' ' + result[0].region_3depth_name;	
-	 						}else{
+	 						if(result[1]){
 	 							addr = result[1].region_1depth_name + ' ' + result[1].region_2depth_name + ' ' + result[1].region_3depth_name;	
+	 						}else{
+	 							addr = result[0].region_1depth_name + ' ' + result[0].region_2depth_name + ' ' + result[0].region_3depth_name;	
 	 						}
 	 						
 	 	 					var btn = document.createElement('button');
@@ -408,25 +408,19 @@ body{background-color: #f8f9fa;}
 					        	console.log(data);
 					        	
 		 						let addr;
-					            if(data.bname){
-					            	addr = data.sido + ' ' + data.sigungu + ' ' + data.bname;
-					            }else{
-					            	addr = data.sido + ' ' + data.sigungu + ' ' + data.bname2;
-					            }
-					            
-		 	 					var btn = document.createElement('button');
-			 					btn.classList.add('direct-btn');
-			 					btn.setAttribute('onclick', 'this.remove()');
-						        btn.innerHTML = addr;
-						        document.getElementById('addr-regist-list').append(btn);
-					            
+		 						if(data.autoJibunAddress){addr = data.autoJibunAddress;}
+		 						else if(data.jibunAddress){addr = data.jibunAddress;}
+		 						else if(data.roadAddress){addr = data.roadAddress;}
+		 						geocoder.addressSearch(addr, callback2);
 					        }
 					    }).open();
 					}
 						
-					
-					
-					
+					var callback2 = function(result, status) {
+					    if (status === kakao.maps.services.Status.OK) {
+					    	geocoder.coord2RegionCode(result[0].x, result[0].y, callback);
+					    }
+					};
 					
 					
 					
