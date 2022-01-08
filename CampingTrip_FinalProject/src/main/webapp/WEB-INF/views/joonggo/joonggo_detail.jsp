@@ -53,7 +53,7 @@
 @media screen and (min-width: 1400px) { #mainbody,#seeAddr { font-size: 15px; }  #mainbody > .row{margin-left:18%; margin-right:18%;}  .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:25%} #user-circle{font-size:35px;} .titleandprice{font-size:23px;} .slider-1{height:500px;}}  
 
 #mainbody, .modal{font-family: NanumBarunGothic;}
-.hr{color: #ff8a3d}
+.hr{color: #d49466; }
 .bold{font-weight: bold;}
 .gray{color:gray;}
 .red{color:red;}
@@ -72,14 +72,15 @@ a{text-decoration: none; color:black;}
 }
 .btns-n{cursor:default !important; background-color: lightgray; border: solid 1px lightgray; border-radius: 5px; padding-right:3%; padding-left:3%; color : white; font-weight: bold; height: 50px;}
 
-#btn-heart{margin-bottom:3px; background-color: #FFFFFF; border: solid 1px black; color : rgb(255, 59, 0); border-radius: 5px; padding-right:18px !important; padding-left: 18px !important;  font-weight: bold; height: 50px; 	font-size: 13px !important; }
-/* #btn-heart:hover{
+
+#btn-heart{color:rgb(255, 59, 0); background-color: #FFFFFF; border: solid 1px rgb(255, 59, 0); border-radius: 6px; padding-right:18px !important; padding-left: 18px !important;  font-weight: bold; height: 50px; 	font-size: 13px !important; }
+#btn-heart:hover{
 	transition: all 0.3s;
 	border: solid 1px rgb(255, 59, 0);
 	background-color: rgb(255, 59, 0);
 	color : white;
 }
-#btn-heart:hover .heart{transition: all 0.3s; color:#FFF !important;} */
+#btn-heart:hover .heart{transition: all 0.3s; color:#FFF !important;}
 .heart{color: #000 !important;}
 .btn-heart-n{cursor:default !important; background-color: lightgray !important; border: solid 1px lightgray !important; color : white !important; border-radius: 5px; padding-right:18px !important; padding-left: 18px !important;  font-weight: bold; height: 50px; 	font-size: 13px !important; }
 
@@ -246,7 +247,7 @@ a {
 
 .margin{margin-top:2.5%; margin-bottom:2.5%;}
 .titleandprice{margin-bottom:0.5%;}
-.popular-title{overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;display: -webkit-box;-webkit-line-clamp: 1; -webkit-box-orient: vertical;}
+.popular-title, .popular-addr{overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;display: -webkit-box;-webkit-line-clamp: 1; -webkit-box-orient: vertical;}
 
 
 </style>
@@ -258,27 +259,6 @@ const writer = '${dto.id}';
 const sessionUserType = '${sessiondto.myrole}'; 
 const sessionid = '${sessiondto.myid}'; 
 
-	//general user
-	function report(){
-		
-		var select = document.getElementById('report-select');
-		var value = select.options[select.selectedIndex].value;
-		var reason = document.getElementById('report-textarea');
-		
-		if(value === "2"){
-			var trimVal = reason.value;
-			if(trimVal === '' || trimVal === null){
-				alert("사유를 입력하세요.");
-				reason.value = '';
-				return false;
-			}
-		}else{
-			reason.value = select.options[value].innerHTML;
-		}
-		alert(reason.value);
-		return false;
-	}
-	
 	//writer
 	function del(){
 		if(confirm("게시글을 삭제하시겠습니까?")){
@@ -306,23 +286,6 @@ const sessionid = '${sessiondto.myid}';
 		})
 	}
 	
-	function getTime(date){
-		var today = new Date();
-		var regdate = new Date(date);
-		var timegap = today - regdate;
-		var d = parseInt(timegap/86400000);
-		var t = parseInt(timegap/3600000);
-		var m = parseInt(timegap/60000);
-		
-		switch(true){
-			case (d > 7):return date.split(' ')[0]; 
-			case (d >= 1): return d+'일 전';
-			case (t >= 1): return t+'시간 전';
-			case (m >= 1): return m+'분 전';
-			default: return '방금 전';
-		}
-	}
-	
 	//admin
 	function adminDel(){
 		var select = document.getElementById('admin-select');
@@ -343,7 +306,28 @@ const sessionid = '${sessiondto.myid}';
 		return false;
 	}
 	
-	//가격제안
+	
+	//general user
+	function report(){
+		
+		var select = document.getElementById('report-select');
+		var value = select.options[select.selectedIndex].value;
+		var reason = document.getElementById('report-textarea');
+		
+		if(value === "2"){
+			var trimVal = reason.value;
+			if(trimVal === '' || trimVal === null){
+				alert("사유를 입력하세요.");
+				reason.value = '';
+				return false;
+			}
+		}else{
+			reason.value = select.options[value].innerHTML;
+		}
+		alert(reason.value);
+		return false;
+	}
+
 	function suggest(){
 		if(sessionid ===''){
 			toastr.options.positionClass = "toast-top-right";
@@ -497,8 +481,22 @@ const sessionid = '${sessiondto.myid}';
 
 	})
 	
-	
-
+	function getTime(date){
+		var today = new Date();
+		var regdate = new Date(date);
+		var timegap = today - regdate;
+		var d = parseInt(timegap/86400000);
+		var t = parseInt(timegap/3600000);
+		var m = parseInt(timegap/60000);
+		
+		switch(true){
+			case (d > 7):return date.split(' ')[0]; 
+			case (d >= 1): return d+'일 전';
+			case (t >= 1): return t+'시간 전';
+			case (m >= 1): return m+'분 전';
+			default: return '방금 전';
+		}
+	}
 	
 </script>
 
@@ -649,7 +647,7 @@ const sessionid = '${sessiondto.myid}';
 	        <div class="col-12">
 	        	<div style="padding-left:2%; padding-right:2%;">
 	        	
-	        		<div class="col"><hr class="hr" style="height: 1px; margin:0;"></div>
+	        		<div class="col"><hr class="hr" style="height: 2px; margin:0;"></div>
 	        		
 	        		<div class="margin">
 	        		<div class="titleandprice bold">
@@ -710,7 +708,7 @@ const sessionid = '${sessiondto.myid}';
 						</script>	
 					</div>        		
 	        		
-	        		<div class="col"><hr class="hr" style="height: 1px; margin:0;"></div>
+	        		<div class="col"><hr class="hr" style="height: 2px; margin:0;"></div>
 	        	
 	        	<!-- 연락처보기 -->
 	        		<div class="margin">
@@ -755,8 +753,8 @@ const sessionid = '${sessiondto.myid}';
 	        		<div>
 	        			<div id="user" style="text-align: right; display:none;">
 	        				<span class="align-middle">
-		        				<button type="button" class="w-100" id="btn-heart" onclick="addheart(this);">
-		        					<span class="align-middle far fa-heart fa-lg"></span><br>
+		        				<button type="button" class="w-25" id="btn-heart" onclick="addheart(this);">
+		        					<span id="heartimg" class="align-middle far fa-heart fa-lg"></span><br>
 		        					<span id="heart" class="align-top heart">${dto.heart }</span>
 		        				</button>
 	        				</span>
@@ -810,6 +808,7 @@ const sessionid = '${sessiondto.myid}';
 									  btnheart.classList.add('btn-heart-n');
 									  btnheart.setAttribute('onclick','');
 									  document.querySelector('#btn-heart > #heart').classList.remove('heart');
+									  document.getElementById('heartimg').style.setProperty('color','white');
 									  btnsuggest.classList.remove('btn-suggest');
 									  btnsuggest.classList.add('btn-suggest-n');
 									  btnsuggest.setAttribute('onclick','');
@@ -886,7 +885,6 @@ const sessionid = '${sessiondto.myid}';
  				//current 
  				let latitude , longitude;
  				let placelist = [];
- 				let resultlist = [];
 				
  				function getCurrent(callback){
  					
@@ -897,30 +895,43 @@ const sessionid = '${sessiondto.myid}';
  					});
  				}
  				
- 				/* function test(place){
- 					let arr = new Array();
-					let callback = function(result, status) {
-						if (status === kakao.maps.services.Status.OK) {
-							let obj = new Object();
-							obj.x = result[0].x;
-							obj.y = result[0].y;
-							obj.name = result[0].address_name;
-							arr.push(obj);
-						}
-					};
+				function getaddress(ele, place){
+ 					
  					return new Promise(function(resolve, reject){
- 						
-						place.forEach( p => {
-							geocoder.addressSearch(p, callback);
-						});
-						resolve(arr);
+ 						geocoder.addressSearch(place, (result, status) => {
+ 							if (status === kakao.maps.services.Status.OK) {
+ 								var x = result[0].x;
+ 								var y = result[0].y;
+ 								var distance = computeDistance(latitude, longitude, y, x);
+ 								$(ele).find('.place').html(result[0].address_name);
+ 								$(ele).find('.distance').html(distance + ' km');
+ 							}
+ 						})
  					});
- 				} */
+ 				}
 				
+ 				function computeDistance(lat1,lng1,lat2,lng2) {
+ 					
+ 					function degreesToRadians(degrees) {
+ 					    radians = (degrees * Math.PI)/180;
+ 					    return radians;
+ 					}
+ 					
+ 				    var startLatRads = degreesToRadians(lat1);
+ 				    var startLongRads = degreesToRadians(lng1);
+ 				    var destLatRads = degreesToRadians(lat2);
+ 				    var destLongRads = degreesToRadians(lng2);
+
+ 				    var Radius = 6371; //지구의 반경(km)
+ 				    var distance = Math.acos(Math.sin(startLatRads) * Math.sin(destLatRads) + 
+ 				                    Math.cos(startLatRads) * Math.cos(destLatRads) *
+ 				                    Math.cos(startLongRads - destLongRads)) * Radius;
+
+ 				    return distance.toFixed(2);
+ 				}
 		
  				$.ajax({
 					url:"getpopularhit.do",
-					async:false,
 					data:{"seq":${dto.seq}},
 					method: "post",
 					success:function(datalist){ 
@@ -928,9 +939,7 @@ const sessionid = '${sessiondto.myid}';
 						var popular_hit_list = document.getElementById('popular-hit-list');
 						
 						list.forEach( data => {
-							
 							placelist.push(data.place);
-							
 							var hitdata = 
 								'<div class="popular-hit-ele col-lg-4 col-6" style="margin-bottom:10px;">'+
 								'<div style="cursor:pointer;" onclick="location.href=`selectone.do?seq='+ data.seq +'`" >'+		
@@ -938,15 +947,25 @@ const sessionid = '${sessiondto.myid}';
 								'<div style="height:70%; border-radius: 8px; background-image:url('+ data.imglist.split(',')[0] +'); background-position: center; background-size: cover;">'+
 								'</div>'+
 								'<div style="height:29%; width:100%;">'+
-								'<h5 class="popular-title" style="margin-top:5px;">'+ data.title +'</h5>'+
-								'<div class="bold"><span>'+ data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +'</span> 원</div>'+
-								'<div>'+
-								'<span class="place"></span>&nbsp;&nbsp;'+
+								'<div class="popular-title" style="margin-top:5px; font-size:18px;">'+ data.title +'</div>'+
+								'<div class="bold" style="font-size:15px;"><span>'+ data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +'</span> 원<div>'+
+								'<div class="popular-addr">'+
+								'<span class="place" style="color:gray;"></span>&nbsp;&nbsp;'+
 								'<span class="distance" style="color:#ff8a3d;"></span>'+
 								'</div></div></div></div></div>';
 								
 							popular_hit_list.innerHTML += hitdata;
 						});
+						
+						getCurrent().then(function(data){
+							latitude = data.coords.latitude;
+							longitude = data.coords.longitude;
+							var children = document.getElementsByClassName('popular-hit-ele');
+							
+							for(var i = 0 ; i < placelist.length; i++){
+								getaddress(children[i], placelist[i]).then(function(result){});
+							}
+						}); 
 						
 					},
 					error: function(){
@@ -954,98 +973,6 @@ const sessionid = '${sessiondto.myid}';
 						toastr.warning("통신 실패");
 					}
 				}); 
- 				
-				let callback = function(result, status) {
-					if (status === kakao.maps.services.Status.OK) {
-						
- 						let obj = new Object();
-						obj.x = result[0].x;
-						obj.y = result[0].y;
-						obj.name = result[0].address_name;
-						resultlist.push(obj);  
-						
-					}
-				};
-				
- 				function getaddress(place){
- 					
- 					return new Promise(function(resolve, reject){
- 						geocoder.addressSearch(place, (result, status) => {
- 							if (status === kakao.maps.services.Status.OK) {
- 						    	resolve(result);
- 							}
- 						})
- 					});
- 				}
-				
-				//geocoder.addressSearch(p, callback);
- 				
-				getCurrent().then(function(data){
-					var latitude = data.coords.latitude;
-					var longitude = data.coords.longitude;
-					var children = document.getElementsByClassName('popular-hit-ele');
-					
-					placelist.forEach( places => {
-						var place = places.split(',');
-						
-						var array = new Array();
-
-						for(var i = 0 ; i < place.length; i++){
-							getaddress(place[i]).then(function(result){
-								console.log(result);
-							});
-						}	
-						
-					});
-					
-					
-					
-					
-					
-					//console.log(resultlist);
-					//최단거리
-					/* for(var i = 0; i < resultlist.length; i++){
-						
-						let name = '';
-						let km = 99999;
-						resultlist[i].forEach( result => {
-							
-							var distance = getDistanceFromLatLonInKm(latitude, longitude, result.x, result.y);
-							if(distance < km){
-								km = distance;
-								name = result.name;
-							}
-							
-						});
-						
-						$(children[i]).find('.price').html(name);
-						$(children[i]).find('.distance').html(km);
-					} */
-					
-				}); 
- 				
- 				function getDistanceFromLatLonInKm(lat1,lng1,lat2,lng2) {
- 					 function deg2rad(deg) {
- 					 return deg * (Math.PI/180) 
- 					} 
- 					var R = 6371; // Radius of the earth in km 
- 					var dLat = deg2rad(lat2-lat1); // deg2rad below 
- 					var dLon = deg2rad(lng2-lng1); 
- 					var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2); 
- 					var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
- 					var d = R * c; // Distance in km 
-
- 					return d; 
- 				}
-					
-
- 					
-
- 				
- 				
- 				
- 				
-		
 		</script>
 		
 	</div>

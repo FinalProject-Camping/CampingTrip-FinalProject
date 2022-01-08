@@ -3,7 +3,7 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	String[] categories = {"캠핑 > 텐트/타프/매트","캠핑 > 테이블/의자/가구","캠핑 > 캠핑카/카라반/트레일러","캠핑 > 기타 캠핑용품","여행 > 가방/캐리어/용품","여행 > 등산용품","여행 > 낚시용품","자전거","스포츠/레저","홈/생활용품","디지털/가전","의류/잡화","귀금속/주얼리/악세사리","상품권/티켓/쿠폰","기타 잡화","먹거리/무료나눔"};
 %>
@@ -62,7 +62,7 @@
 
 body{background-color: #f8f9fa;}
 #mainbody{font-family: NanumBarunGothic; }
-.mainbody-inner{background-color: #FFF; padding: 5%;}
+.mainbody-inner{background-color: #FFF; padding: 5%;  border-radius:8px;}
 .red{color:red;}
 .green{color:rgb(1, 176, 3);}
 .gray{color:gray;}
@@ -454,10 +454,10 @@ body{background-color: #f8f9fa;}
 							console.log(result);
 							
 							let addr;
-	 						if(result[0].region_3depth_name){
-	 							addr = result[0].region_1depth_name + ' ' + result[0].region_2depth_name + ' ' + result[0].region_3depth_name;	
-	 						}else{
+	 						if(result[1]){
 	 							addr = result[1].region_1depth_name + ' ' + result[1].region_2depth_name + ' ' + result[1].region_3depth_name;	
+	 						}else{
+	 							addr = result[0].region_1depth_name + ' ' + result[0].region_2depth_name + ' ' + result[0].region_3depth_name;	
 	 						}
 	 						
 	 	 					var btn = document.createElement('button');
@@ -499,21 +499,19 @@ body{background-color: #f8f9fa;}
 					        	console.log(data);
 					        	
 		 						let addr;
-					            if(data.bname){
-					            	addr = data.sido + ' ' + data.sigungu + ' ' + data.bname;
-					            }else{
-					            	addr = data.sido + ' ' + data.sigungu + ' ' + data.bname2;
-					            }
-					            
-		 	 					var btn = document.createElement('button');
-			 					btn.classList.add('direct-btn');
-			 					btn.setAttribute('onclick', 'this.remove()');
-						        btn.innerHTML = addr;
-						        document.getElementById('addr-regist-list').append(btn);
-					            
+		 						if(data.autoJibunAddress){addr = data.autoJibunAddress;}
+		 						else if(data.jibunAddress){addr = data.jibunAddress;}
+		 						else if(data.roadAddress){addr = data.roadAddress;}
+		 						geocoder.addressSearch(addr, callback2);
 					        }
 					    }).open();
 					}
+						
+					var callback2 = function(result, status) {
+					    if (status === kakao.maps.services.Status.OK) {
+					    	geocoder.coord2RegionCode(result[0].x, result[0].y, callback);
+					    }
+					};
 						
 					
 					
@@ -704,6 +702,8 @@ body{background-color: #f8f9fa;}
 		</div>
 	</div>
 	<br>
+	
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 
 

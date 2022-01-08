@@ -200,7 +200,7 @@ body{background-color : #f8f9fa;}
   background:#121212; 
   text-align: center;
 }
-#lnb {padding-top : 12px; padding-bottom : 12px;}
+#lnb {padding-top : 17px; padding-bottom : 17px;}
 
 #lnb.fixed{
   position: fixed;
@@ -208,9 +208,9 @@ body{background-color : #f8f9fa;}
   left:50%;
   transform: translate(-50%, 0%);
   margin: 0 auto;
-  padding-top : 12px;
-  padding-bottom : 12px;
-  z-index: 1;
+  padding-top : 17px;
+  padding-bottom : 17px;
+  z-index: 2;
 }
 
 #fixed{
@@ -418,14 +418,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 	}
 	
 	function convertPrice(price){
-		let temp = '';
-		for(let ch of price.toString()){temp = ch + temp;}
-		
-		let result = '';
-		for(let ch of temp.match(/.{1,3}/g).join(',')){
-			result = ch + result;
-		}
-		return result; 
+		return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
 	}
 	
 	function effect(count, arr){
@@ -516,10 +509,9 @@ const sessionUsertype = '${sessiondto.usertype}';
 
 </head>
 <body>
+	<div id="gap" style="height:194.5px; display:none;"></div>
 	
-	<div id="gap" style="height:184.5px; display:none;"></div>
-	
-	<div class="container mainbody shadow" id="lnb" style="margin-bottom: 21px; border-top: none;">
+	<div class="container mainbody shadow" id="lnb" style="margin-bottom: 21px; border-top: none; border-top-left-radius: 0; border-top-right-radius: 0;">
 		
 		<div class="row" id="maintitle" style="position:relative; padding-top:25px; padding-bottom:25px; height:87.5px;">
 			<div class="col" style="text-align: center;">
@@ -844,13 +836,19 @@ const sessionUsertype = '${sessiondto.usertype}';
     	  $("#search-bar").on('mouseleave', function(){
     		  searchflag = false;
     	  })
+    	  $("#search-btn").on('mouseenter', function(){
+    		  flag = true;
+    	  })
+    	  $("#search-btn").on('mouseleave', function(){
+    		  flag = false;
+    	  })
     	  $("#suggest").on('mouseenter', function(){
     		  flag = true;
     	  })
     	  $("#suggest").on('mouseleave', function(){
     		  flag = false;
     	  })
-    	  $(document.body).on('click', function(){
+    	  $(document.body).on('mousedown', function(){
     		  if(!searchflag && !flag){$("#suggest").slideUp(200);}
     	  })
     	  

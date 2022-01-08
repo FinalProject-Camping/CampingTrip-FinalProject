@@ -115,8 +115,7 @@ public class bizImpl implements biz{
 
 	@Override
 	public boolean confirmheart(Map<String, Object> map) {
-		System.out.println(dao.confirmheart(map)==null);
-		return dao.confirmheart(map)==null? false : true;
+		return dao.confirmheart(map)!=null;
 	}
 
 	@Override
