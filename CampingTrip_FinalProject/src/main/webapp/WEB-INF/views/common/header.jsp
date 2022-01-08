@@ -142,9 +142,9 @@ a {
             </ul>
 
             <ul class="navbar_login">
-                <li><a href="">로그인</a></li>
+                <li><a href="loginform.do">로그인</a></li>
                 <li>|</li>
-                <li><a href="">회원가입</a></li>
+                <li><a href="registerform.do">회원가입</a></li>
             </ul>
 
             <a href="#" class="navbar_toggleBtn">

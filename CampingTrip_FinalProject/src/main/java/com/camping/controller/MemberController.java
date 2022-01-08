@@ -24,7 +24,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberBiz biz;
-	
+
+	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
 	@RequestMapping("/loginform.do")
@@ -89,8 +90,16 @@ public class MemberController {
 		return "member/memberRegister";
 	}
 	
+
+	@RequestMapping("/nextRegisterForm.do")
+	public String nextMemberInsertForm() {
+		return "member/nextMemberRegister";
+	}
+	
+	
 	@RequestMapping("/register.do")
 	public String memberInsert(MemberDto dto) {
+
 		//화면에서 넘어온 password 암호화하기
 		dto.setMypw(passwordEncoder.encode(dto.getMypw()));
 		System.out.println(dto.getMypw());
@@ -102,12 +111,6 @@ public class MemberController {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
