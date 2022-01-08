@@ -5,7 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+	<!-- Bootstrap CSS CDN -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+	rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+	crossorigin="anonymous">
 <script type="text/javascript">
 
 	function indexForm(){
@@ -117,11 +121,6 @@
 	
 </script>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Bootstrap CSS CDN -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-	rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-	crossorigin="anonymous">
 
 
 </head>
@@ -132,6 +131,7 @@
 </style>
 
 
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <body>
 	<div class="center" style="width:300px;">
 	
@@ -164,5 +164,6 @@
 		</form>	
 
 	</div>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
