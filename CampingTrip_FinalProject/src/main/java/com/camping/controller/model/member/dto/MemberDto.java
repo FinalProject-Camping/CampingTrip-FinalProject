@@ -1,48 +1,113 @@
 package com.camping.controller.model.member.dto;
 
 public class MemberDto {
-	private int memberno;
-	private String memberid;
-	private String memberpw;
-	private String membername;
+	private int myno;
+	private String myid;
+	private String mypw;
+	private String myname;
+	private String myaddr;
+	private String myphone;
+	private String myemail;
+	private String mybirth;
+	private String mysex;
+	private String myenabled;
+	private String myrole;
+	private int mypenalty;	
+	
+	
 	public MemberDto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	public MemberDto(int memberno, String memberid, String memberpw, String membername) {
+		
+	public MemberDto(int myno, String myid, String mypw, String myname, String myaddr, String myphone, String myemail,
+			String mybirth, String mysex, String myenabled, String myrole, int mypenalty) {
 		super();
-		this.memberno = memberno;
-		this.memberid = memberid;
-		this.memberpw = memberpw;
-		this.membername = membername;
+		this.myno = myno;
+		this.myid = myid;
+		this.mypw = mypw;
+		this.myname = myname;
+		this.myaddr = myaddr;
+		this.myphone = myphone;
+		this.myemail = myemail;
+		this.mybirth = mybirth;
+		this.mysex = mysex;
+		this.myenabled = myenabled;
+		this.myrole = myrole;
+		this.mypenalty = mypenalty;
 	}
-	public int getMemberno() {
-		return memberno;
+
+	public int getMyno() {
+		return myno;
 	}
-	public void setMemberno(int memberno) {
-		this.memberno = memberno;
+	public void setMyno(int myno) {
+		this.myno = myno;
 	}
-	public String getMemberid() {
-		return memberid;
+	public String getMyid() {
+		return myid;
 	}
-	public void setMemberid(String memberid) {
-		this.memberid = memberid;
+	public void setMyid(String myid) {
+		this.myid = myid;
 	}
-	public String getMemberpw() {
-		return memberpw;
+	public String getMypw() {
+		return mypw;
 	}
-	public void setMemberpw(String memberpw) {
-		this.memberpw = memberpw;
+	public void setMypw(String mypw) {
+		this.mypw = mypw;
 	}
-	public String getMembername() {
-		return membername;
+	public String getMyname() {
+		return myname;
 	}
-	public void setMembername(String membername) {
-		this.membername = membername;
+	public void setMyname(String myname) {
+		this.myname = myname;
 	}
-	
-	
-	
-	
+	public String getMyaddr() {
+		return myaddr;
+	}
+	public void setMyaddr(String myaddr) {
+		this.myaddr = myaddr;
+	}
+	public String getMyphone() {
+		return myphone;
+	}
+	public void setMyphone(String myphone) {
+		this.myphone = myphone;
+	}
+	public String getMyemail() {
+		return myemail;
+	}
+	public void setMyemail(String myemail) {
+		this.myemail = myemail;
+	}
+	public String getMybirth() {
+		return mybirth;
+	}
+	public void setMybirth(String mybirth) {
+		this.mybirth = mybirth;
+	}
+	public String getMysex() {
+		return mysex;
+	}
+	public void setMysex(String mysex) {
+		this.mysex = mysex;
+	}
+	public String getMyenabled() {
+		return myenabled;
+	}
+	public void setMyenabled(String myenabled) {
+		this.myenabled = myenabled;
+	}
+	public String getMyrole() {
+		return myrole;
+	}
+	public void setMyrole(String myrole) {
+		this.myrole = myrole;
+	}
+	public int getMypenalty() {
+		return mypenalty;
+	}
+	public void setMypenalty(int mypenalty) {
+		this.mypenalty = mypenalty;
+	}
+
 	
 }
