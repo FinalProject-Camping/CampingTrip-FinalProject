@@ -9,12 +9,21 @@
 		FROM MYMEMBER
 		WHERE MYID = #{myid}
 	</select>
-	
+	<!-- 
+		invaild오류 원인
+		1. myenabled를 myenable이라고 입력하는 실수
+		2. value의 number타입인데 mypenalty에 #{mypenalty}로 입력하는 실수(가입 시점에는 패널티가 0이기 때문에 0으로 직접입력해주기)
+		3. mybirth는 date타입인데 value에서 TO_DATE(#{mybirth},'YYYYMMDD')로 만들기
+		4. 마이바티스에서 value값에 특수문자가 포함될 경우 <![CDATA[  ]]>로 감싸기
+	-->
 	<insert id="insert" parameterType="memberDto">
-		INSERT INTO MYMEMBER
-		VALUES(MYNOSEQ.NEXTVAL, #{myid}, #{mypw}, #{myname}, #{myaddr},
-		#{myphone}, #{myemail}, #{mybirth}, #{mysex}, #{myenabled}, #{myrole}, #{mypenalty})
+		INSERT INTO MYMEMBER (myno, myid, mypw, myname, myaddr, myphone, myemail,  mybirth, mysex, myenabled, myrole, mypenalty) 
+		VALUES(MYNOSEQ.NEXTVAL, #{myid}, <![CDATA[#{mypw}]]>, #{myname}, #{myaddr},
+		#{myphone}, <![CDATA[#{myemail}]]>, TO_DATE(#{mybirth},'YYYYMMDD'), #{mysex}, 'Y', #{myrole}, 0)
 	</insert>
+	
+	
+	
 	
 	<select id="idChk" parameterType="String" resultType="int">
 	  	SELECT count(1) as idCnt FROM MYMEMBER WHERE MYID = #{myid}
