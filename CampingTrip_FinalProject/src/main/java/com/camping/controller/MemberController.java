@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.camping.controller.model.member.biz.MemberBiz;
-import com.camping.controller.model.member.dao.MemberDao;
 import com.camping.controller.model.member.dto.MemberDto;
 
 @Controller
@@ -47,7 +46,7 @@ public class MemberController {
 		boolean check = false;
 		if(res != null) {
 			//database에 저장되어있는 pw와 화면에서 넘어온 pw가 일치하는지 확인
-			if(passwordEncoder.matches(dto.getMemberpw(), res.getMemberpw())) {
+			if(passwordEncoder.matches(dto.getMypw(), res.getMypw())) {
 				session.setAttribute("login", res);
 				check=true;
 			}
@@ -93,8 +92,8 @@ public class MemberController {
 	@RequestMapping("/register.do")
 	public String memberInsert(MemberDto dto) {
 		//화면에서 넘어온 password 암호화하기
-		dto.setMemberpw(passwordEncoder.encode(dto.getMemberpw()));
-		System.out.println(dto.getMemberpw());
+		dto.setMypw(passwordEncoder.encode(dto.getMypw()));
+		System.out.println(dto.getMypw());
 		
 		if(biz.insert(dto)>0) {
 			return "redirect:loginform.do";
