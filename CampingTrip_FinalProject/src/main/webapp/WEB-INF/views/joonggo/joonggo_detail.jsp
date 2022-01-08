@@ -257,7 +257,7 @@ const seq = '${dto.seq}';
 const writer = '${dto.id}';
 
 const sessionUserType = '${sessiondto.myrole}'; 
-const sessionid = '${sessiondto.myid}'; 
+const sessionid = '${sessiondto.myid}';
 
 	//writer
 	function del(){
@@ -353,9 +353,8 @@ const sessionid = '${sessiondto.myid}';
 			method: "post",
 			success:function(data){ 
 				if(data.data === false){
-					toastr.options.positionClass = "toast-top-right";
-					toastr.options.timeOut = 1000;
-					toastr.warning("로그인이 필요합니다");
+					alert('로그인이 필요합니다.');
+					location.href='loginform.do';
 				}else if(data.data === 'differenet'){
 					location.href="error.do";
 				}else{
@@ -388,9 +387,8 @@ const sessionid = '${sessiondto.myid}';
 			method: "post",
 			success:function(data){ 
 				if(data.data === false){
-					toastr.options.positionClass = "toast-top-right";
-					toastr.options.timeOut = 1000;
-					toastr.warning("로그인이 필요합니다");
+					alert('로그인이 필요합니다.');
+					location.href='loginform.do';
 				}else if(data.data === 'differenet'){
 					location.href="error.do";
 				}else{
@@ -733,16 +731,20 @@ const sessionid = '${sessiondto.myid}';
 	        				}
 	        				
 	        				function seeAddr(){
-	        					if(sessionid ===''){
-	        						toastr.options.positionClass = "toast-top-right";
-	        						toastr.options.timeOut = 1000;
-	        						toastr.warning("로그인이 필요합니다");
-	        						return;
-	        					}
-	        					
-	        					var seeAddr = document.getElementById('seeAddr');
-	        					seeAddr.style.setProperty('display','block');
-	        					$(seeAddr).animate({opacity:'1'},200);
+	        					$.ajax({
+	        						url:"confirmsession.do",
+	        						method: "post",
+	        						success:function(data){
+	        							if(data.data){
+				        					var seeAddr = document.getElementById('seeAddr');
+				        					seeAddr.style.setProperty('display','block');
+				        					$(seeAddr).animate({opacity:'1'},200);
+	        							}else{
+	        								alert('로그인이 필요합니다.');
+	        								location.href='loginform.do';
+	        							}
+	        						}
+	        					});
 	        				}
 	        			
 	        			</script>
@@ -995,7 +997,7 @@ const sessionid = '${sessiondto.myid}';
 			
 			if(agree === 'Y'){
 				//document.getElementById('개인정보').innerHTML = '${dto.email}'+'<br>'+'${dto.phone}';
-				document.getElementById('개인정보').innerHTML = '${dto.email}'+'<br>'+'${dto.phone}'.substring(0,3) + '-' + '${dto.phone}'.substring(3,7) + '${dto.phone}'.substring(7,11);
+				document.getElementById('개인정보').innerHTML = '${dto.email}'+'<br>'+'${dto.phone}'.substring(0,3) + '-' + '${dto.phone}'.substring(3,7) + '-' + '${dto.phone}'.substring(7,11);
 			}else{
 				document.getElementById('개인정보').innerHTML = '<b>연락처를 비공개한 회원입니다.<br> ※구매 채팅 또는 가격 제안하기 기능을 이용해보세요.</b>';
 			} 

@@ -296,13 +296,13 @@ const sessionUsertype = '${sessiondto.usertype}';
 				if(data.data === true){
 					if(data.penalty >= 5){
 						toastr.options.positionClass = "toast-top-right";
-						toastr.error("게시글 작성이 불가능한 회원입니다.");
+						toastr.error("페널티 초과로 인해 게시글작성이 불가능합니다.");
 					}else{
 						location.href='insertform.do';
 					}
 				}else{
-					toastr.options.positionClass = "toast-top-right";
-					toastr.warning("로그인 해주세요");
+					alert('로그인이 필요합니다.');
+					location.href='loginform.do';
 				}
 			}
 		})

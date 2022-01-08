@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.camping.controller.model.joonggo.biz.biz;
 import com.camping.controller.model.joonggo.dto.FtpClient;
 import com.camping.controller.model.joonggo.dto.joonggo;
+import com.camping.controller.model.member.dto.MemberDto;
 import com.google.gson.JsonObject;
 
 
@@ -67,10 +67,6 @@ public class JoonggoController {
 		}
 		model.addAttribute("list", toJson);
 		model.addAttribute("keyword", keyword);
-		/*
-		  userDto sessiondto = (userDto)session.getAttribute("login");
-		  if(sessiondto != null)... */
-		//model.addAttribute("sessiondto", sessiondto); 
 		
 		return "joonggo/joonggo_main"; 
 	}
@@ -225,6 +221,16 @@ public class JoonggoController {
 		return "joonggo/error";
 	}
 	
+	@ResponseBody
+	@RequestMapping("/confirmsession.do")
+	public Map<String,Object> confirmsession(HttpSession session){
+		logger.info("session 확인");
+		Map<String,Object> map = new HashMap<String,Object>();
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		map.put("data", sessiondto != null);
+		
+		return map;
+	}
 	
 	@RequestMapping("/selectone")
 	public String selectone(HttpSession session, Model model, int seq) {
@@ -237,13 +243,14 @@ public class JoonggoController {
 			dto.setDelivery(dto.getDelivery().equals("A")?"직거래, 택배 거래":dto.getDelivery().equals("D")?"직거래":"택배 거래");
 			
 			model.addAttribute("dto", dto);
-			/*
-			  userDto sessiondto = (userDto)session.getAttribute("login");
-			  if(sessiondto != null)... */
-			//model.addAttribute("sessiondto", sessiondto); 
+			
+			MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+			if(sessiondto != null) {
+				model.addAttribute("sessiondto", sessiondto); 
+			}
 			
 		}else {
-			return "joonggo/error";
+			return "redirect:error.do";
 		}
 		return "joonggo/joonggo_detail";
 	}
@@ -255,49 +262,54 @@ public class JoonggoController {
 	@RequestMapping(value="/insertConfirm",method=RequestMethod.POST)
 	public Map<String,Object> insertConfirm(HttpSession session) {
 		logger.info("insertConfirm");
-		/*
-		  userDto sessiondto = (userDto)session.getAttribute("login");
-		   */
-		  
+		
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-	    map.put("data",true); //sessiondto != null
-	    //map.put("penalty", sessiondto.getPenalty()); if(sessiondto != null) 
-		
+		map.put("data", sessiondto != null); //sessiondto != null
+
+		if(sessiondto != null) {
+	    	map.put("penalty", sessiondto.getMypenalty());
+	    }
 		return map;
 	}
 	
 	@RequestMapping("/insertform")
 	public String insertform(HttpSession session, Model model) {
 		logger.info("insertform");
-		/*
-		  userDto sessiondto = (userDto)session.getAttribute("login");
-		   */
-		//세션확인 else return joonggo/error
-		//sessiondto.getpenalty 확인 else joonggo/error
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		
-		//model.addAttribute('sessiondto', sessiondto);
+		if(sessiondto == null) {
+			return "redirect:error.do";
+		}else {
+			if(sessiondto.getMypenalty() >=5) {
+				return "redirect:error.do";
+			}
+			model.addAttribute("sessiondto", sessiondto);
+		}
 		return "joonggo/joonggo_insertForm";
 	}
 	
 	@RequestMapping("/insert")
 	public String insert(HttpSession session, joonggo joonggo) {
 		logger.info("insert");
-		/*
-		  userDto sessiondto = (userDto)session.getAttribute("login");
-		   */
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		
-		//insert 요청한 계정과 현재 세션이 다르면 안됨 if(joonggo.getId().equals(sessiondto.getId)) else return joonggo/error
-		
-		//sessiondto.getpenalty 확인
-		
-		joonggo.setId("호갱");
-		
+		if(sessiondto == null) {
+			return "redirect:error.do";
+		}else {
+			if(!joonggo.getId().equals(sessiondto.getMemberid())){
+				return "redirect:error.do";
+			}
+			if(sessiondto.getMypenalty() >=5) {
+				return "redirect:error.do";
+			}
+		}
 		int res = biz.insert(joonggo);
 		if(res > 0) {
 			return "redirect:selectone.do?seq=" + res;
 		}else {
-			return "joonggo/error";
+			return "redirect:error.do";
 		}
 	}
 	
@@ -306,57 +318,63 @@ public class JoonggoController {
 	@RequestMapping("/updateform")
 	public String updateForm(HttpSession session, Model model, String writer, int seq) {
 		logger.info("updateform" + seq);
-		//세션이 끊겼는지 확인 userDto sessiondto = (userDto)session.getAttribute("login");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		
+		if(sessiondto == null) {
+			return "redirect:error.do";
+		}else {
+			if(!sessiondto.getMemberid().equals(writer)) {
+				return "redirect:error.do";
+			}
+		}
 		joonggo dto = biz.selectone(seq, true);
-		
 		if(dto != null) {
-			//if(sessiondto.equals(writer)) ... else{return joonggo/error}
 			model.addAttribute("dto", dto);
 			return "joonggo/joonggo_updateform";
 		}else {
-			return "joonggo/error";
+			return "redirect:error.do";
 		}
-		
 	}
 	
 	@RequestMapping("/update")
 	public String update(HttpSession session, joonggo joonggo) {
 		logger.info("update");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		
-		/*
-		  userDto sessiondto = (userDto)session.getAttribute("login");
-		   */
-		
-		
-		int seq = joonggo.getSeq();
-			//if(sessiondto.getUserid().equals(joonggo.getId())) 
-			int res = biz.update(joonggo);
-			if(res > 0) {
-				return "redirect:selectone.do?seq=" + seq;
-			}else {
-				return "joonggo/error";
+		if(sessiondto == null) {
+			return "redirect:error.do";
+		}else {
+			if(!sessiondto.getMemberid().equals(joonggo.getId())) {
+				return "redirect:error.do";
 			}
-			//else return joonggo/error
+		}
+		int seq = joonggo.getSeq();
+		int res = biz.update(joonggo);
+		if(res > 0) {
+			return "redirect:selectone.do?seq=" + seq;
+		}else {
+			return "redirect:error.do";
+		}
 	}
 	
 	@RequestMapping("/delete")
 	public String delete(HttpSession session, String writer, int seq) {
 		logger.info("delete");
-		/*
-		  userDto sessiondto = (userDto)session.getAttribute("login");
-		  */
-	    
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		
-		//if(sessiondto.getUserid.equals(writer)) 
-			int res = biz.delete(seq);
-			if(res > 0) {
-				return "redirect:list.do?keyword=";
-			}else {
-				return "joonggo/error";
+		if(sessiondto == null) {
+			return "redirect:error.do";
+		}else {
+			if(!sessiondto.getMemberid().equals(writer)) {
+				return "redirect:error.do";
 			}
-		//else return joonggo/error
-		
+		}
+		int res = biz.delete(seq);
+		if(res > 0) {
+			return "redirect:list.do?keyword=";
+		}else {
+			return "redirect:error.do";
+		}
 	}
 	
 	@ResponseBody
@@ -410,15 +428,18 @@ public class JoonggoController {
 	@RequestMapping(value="/renewal.do",method=RequestMethod.POST)
 	public Map<String, Object> renewal(HttpSession session, String writer, int seq){
 		logger.info("renewal");
-		/*
-		  userDto sessiondto = (userDto)session.getAttribute("login");
-		  */
-		
-		//if(sessiondto.getUserid.equals(writer))
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		Map<String,Object> map = new HashMap<String,Object>();
-	    map.put("data",biz.renew(seq));
-	    //else maps.put("data","error");
-	    
+		
+		if(sessiondto == null) {
+			map.put("data","error");
+		}else {
+			if(!sessiondto.getMemberid().equals(writer)) {
+				map.put("data","error");
+			}else {
+				map.put("data",biz.renew(seq));
+			}
+		}
 	    return map;
 	}
 	
@@ -427,24 +448,22 @@ public class JoonggoController {
 	@RequestMapping(value="/addheart.do",method=RequestMethod.POST)
 	public Map<String, Object> addHeart(HttpSession session, String sessionid, int seq){
 		logger.info("addheart");
-		/*
-		  userDto sessiondto = (userDto)session.getAttribute("login");
-		  */
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		Map<String,Object> map = new HashMap<String,Object>();
 		
-		//if(sessiondto != null) 
-			//if(sessionid.equals(sessiondto.getUserid()){
-			Map<String,Object> map = new HashMap<String,Object>();
-			Map<String,Object> params = new HashMap<String,Object>();
-			params.put("heartid", "가나다"); //sessionid
-			params.put("seq", seq);
-			int res = biz.addheart(params);
-			map.put("data",res>0? "성공":"실패");
-			//else{ map.put("data","differenet");}
-			
-		//else map.put("data",sessiondto != null);
-
-		
-		
+		if(sessiondto != null) {
+			if(!sessiondto.getMemberid().equals(sessionid)) {
+				map.put("data","differenet");
+			}else {
+				Map<String,Object> params = new HashMap<String,Object>();
+				params.put("heartid", sessionid);
+				params.put("seq", seq);
+				int res = biz.addheart(params);
+				map.put("data",res>0? "성공":"실패");
+			}
+		}else {
+			map.put("data",false);
+		}
 	    return map;
 	}
 	
@@ -453,53 +472,51 @@ public class JoonggoController {
 	@RequestMapping(value="/rmheart.do",method=RequestMethod.POST)
 	public Map<String, Object> rmHeart(HttpSession session, String sessionid, int seq){
 		logger.info("rmheart");
-		/*
-		  userDto sessiondto = (userDto)session.getAttribute("login");
-		  */
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		Map<String,Object> map = new HashMap<String,Object>();
 		
-		//if(sessiondto != null) 
-			//if(sessionid.equals(sessiondto.getUserid()){
-			Map<String,Object> map = new HashMap<String,Object>();
-			Map<String,Object> params = new HashMap<String,Object>();
-			params.put("heartid", "가나다"); //sessionid
-			params.put("seq", seq);
-			int res = biz.rmheart(params);
-			map.put("data",res>0? "성공":"실패");
-			//else{ map.put("data","differenet");}
-			
-		//else map.put("data",sessiondto != null);
-
-		
-		
+		if(sessiondto != null) {
+			if(!sessiondto.getMemberid().equals(sessionid)) {
+				map.put("data","differenet");
+			}else {
+				Map<String,Object> params = new HashMap<String,Object>();
+				params.put("heartid", sessionid); //sessionid
+				params.put("seq", seq);
+				int res = biz.rmheart(params);
+				map.put("data",res>0? "성공":"실패");
+			}
+		}else {
+			map.put("data",false);
+		}
 	    return map;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/confirmheart.do",method=RequestMethod.POST)
 	public Map<String, Object> confirmHeart(HttpSession session, String sessionid, int seq){
-		logger.info("renewal");
-		/*
-		  userDto sessiondto = (userDto)session.getAttribute("login");
-		  */
+		logger.info("confirmheart");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		Map<String,Object> map = new HashMap<String,Object>();
 		
-		//if(sessiondto != null) 
-			//if(sessionid.equals(sessiondto.getUserid()){
-			Map<String,Object> map = new HashMap<String,Object>();
-			Map<String,Object> params = new HashMap<String,Object>();
-			params.put("heartid", "가나다"); //sessionid
-			params.put("seq", seq);
-			map.put("data",biz.confirmheart(params));
-			//else{ map.put("data",false);}
-			
-		//else map.put("data",sessiondto != null);
-
+		if(sessiondto != null) {
+			if(!sessiondto.getMemberid().equals(sessionid)) {
+				map.put("data",false);
+			}else {
+				Map<String,Object> params = new HashMap<String,Object>();
+				params.put("heartid", "USER3"); //sessionid
+				params.put("seq", seq);
+				map.put("data",biz.confirmheart(params));
+			}
+		}else{
+			map.put("data",false);
+		}
 	    return map;
 	}
 	
 	
 	@RequestMapping("/person.do")
 	public String person(Model model, String id) {
-		
+		logger.info("person");
 		List<joonggo> list = biz.person(id);
 		
 		ObjectMapper mapper = new ObjectMapper();
