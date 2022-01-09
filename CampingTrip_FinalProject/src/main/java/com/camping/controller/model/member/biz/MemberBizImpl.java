@@ -27,4 +27,14 @@ public class MemberBizImpl implements MemberBiz {
 		return dao.idChk(memberId);
 	}
 	
+
+	@Override
+	public String findId(MemberDto dto) {
+		return dao.findId(dto);
+	}
+
+	@Override
+	public Integer resetPw(MemberDto dto) {
+		return dao.resetPw(dto);
+	}
 }

@@ -6,4 +6,6 @@ public interface MemberBiz {
 	public MemberDto login(MemberDto dto);
 	public int insert(MemberDto dto);
 	public Integer idChk(String memberId);
+	public String findId(MemberDto dto);
+	public Integer resetPw(MemberDto dto);
 }
