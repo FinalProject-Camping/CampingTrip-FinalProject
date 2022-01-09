@@ -42,7 +42,7 @@ public class JoonggoController {
 	@Autowired
 	private biz biz;
 	
-	@RequestMapping("/list.do")
+	@RequestMapping("/joonggo_list.do")
 	public String list(Model model, String keyword) {
 		logger.info("selectlist");
 		System.out.println("keyword : " + keyword);
@@ -232,7 +232,7 @@ public class JoonggoController {
 		return map;
 	}
 	
-	@RequestMapping("/selectone")
+	@RequestMapping("/joonggo_selectone.do")
 	public String selectone(HttpSession session, Model model, int seq) {
 		logger.info("selectone : " + seq);
 		joonggo dto = biz.selectone(seq, false);
@@ -259,7 +259,7 @@ public class JoonggoController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/insertConfirm",method=RequestMethod.POST)
+	@RequestMapping(value="/joonggo_insertConfirm",method=RequestMethod.POST)
 	public Map<String,Object> insertConfirm(HttpSession session) {
 		logger.info("insertConfirm");
 		
@@ -274,7 +274,7 @@ public class JoonggoController {
 		return map;
 	}
 	
-	@RequestMapping("/insertform")
+	@RequestMapping("/joonggo_insertform")
 	public String insertform(HttpSession session, Model model) {
 		logger.info("insertform");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
@@ -290,7 +290,7 @@ public class JoonggoController {
 		return "joonggo/joonggo_insertForm";
 	}
 	
-	@RequestMapping("/insert")
+	@RequestMapping("/joonggo_insert")
 	public String insert(HttpSession session, joonggo joonggo) {
 		logger.info("insert");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
@@ -307,7 +307,7 @@ public class JoonggoController {
 		}
 		int res = biz.insert(joonggo);
 		if(res > 0) {
-			return "redirect:selectone.do?seq=" + res;
+			return "redirect:joonggo_selectone.do?seq=" + res;
 		}else {
 			return "redirect:error.do";
 		}
@@ -315,7 +315,7 @@ public class JoonggoController {
 	
 
 	
-	@RequestMapping("/updateform")
+	@RequestMapping("/joonggo_updateform")
 	public String updateForm(HttpSession session, Model model, String writer, int seq) {
 		logger.info("updateform" + seq);
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
@@ -336,7 +336,7 @@ public class JoonggoController {
 		}
 	}
 	
-	@RequestMapping("/update")
+	@RequestMapping("/joonggo_update")
 	public String update(HttpSession session, joonggo joonggo) {
 		logger.info("update");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
@@ -351,13 +351,13 @@ public class JoonggoController {
 		int seq = joonggo.getSeq();
 		int res = biz.update(joonggo);
 		if(res > 0) {
-			return "redirect:selectone.do?seq=" + seq;
+			return "redirect:joonggo_selectone.do?seq=" + seq;
 		}else {
 			return "redirect:error.do";
 		}
 	}
 	
-	@RequestMapping("/delete")
+	@RequestMapping("/joonggo_delete")
 	public String delete(HttpSession session, String writer, int seq) {
 		logger.info("delete");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
@@ -371,7 +371,23 @@ public class JoonggoController {
 		}
 		int res = biz.delete(seq);
 		if(res > 0) {
-			return "redirect:list.do?keyword=";
+			return "redirect:joonggo_list.do?keyword=";
+		}else {
+			return "redirect:error.do";
+		}
+	}
+	
+	@RequestMapping("/joonggo_admindelete")
+	public String admindelete(HttpSession session, int seq) {
+		logger.info("delete");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		if(sessiondto != null && sessiondto.getMyrole()=="ADMIN") {
+			int res = biz.delete(seq);
+			if(res > 0) {
+				return "redirect:joonggo_list.do?keyword=";
+			}else {
+				return "redirect:error.do";
+			}
 		}else {
 			return "redirect:error.do";
 		}
@@ -445,7 +461,7 @@ public class JoonggoController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/addheart.do",method=RequestMethod.POST)
+	@RequestMapping(value="/joonggo_addheart.do",method=RequestMethod.POST)
 	public Map<String, Object> addHeart(HttpSession session, String sessionid, int seq){
 		logger.info("addheart");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
@@ -469,7 +485,7 @@ public class JoonggoController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/rmheart.do",method=RequestMethod.POST)
+	@RequestMapping(value="/joonggo_rmheart.do",method=RequestMethod.POST)
 	public Map<String, Object> rmHeart(HttpSession session, String sessionid, int seq){
 		logger.info("rmheart");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
@@ -492,7 +508,7 @@ public class JoonggoController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/confirmheart.do",method=RequestMethod.POST)
+	@RequestMapping(value="/joonggo_confirmheart.do",method=RequestMethod.POST)
 	public Map<String, Object> confirmHeart(HttpSession session, String sessionid, int seq){
 		logger.info("confirmheart");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
@@ -503,7 +519,7 @@ public class JoonggoController {
 				map.put("data",false);
 			}else {
 				Map<String,Object> params = new HashMap<String,Object>();
-				params.put("heartid", "USER3"); //sessionid
+				params.put("heartid", sessionid); //sessionid
 				params.put("seq", seq);
 				map.put("data",biz.confirmheart(params));
 			}
@@ -540,17 +556,34 @@ public class JoonggoController {
 	
 	
 	@RequestMapping("/joonggo_reportform.do")
-	public String report(Model model, int seq, String reportid) {
-		
-		
-		
-		model.addAttribute("reportid", "USER3");
-		model.addAttribute("seq", seq);
-		return "joonggo/joonggo_reportform";
+	public String reportform(HttpSession session, Model model, int seq, String writer, String reportid) {
+		logger.info("reportform");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		Map<String,Object> map = new HashMap<String,Object>();
+		if(sessiondto != null) {
+			if(!sessiondto.getMyid().equals(reportid)) {
+				return "redirect:error.do";
+			}else {
+				model.addAttribute("reportid", reportid);
+				model.addAttribute("writer", writer);
+				model.addAttribute("seq", seq);
+				return "joonggo/joonggo_reportform";
+			}
+		}else {
+			return "redirect:error.do";
+		}
 	}
 	
 	
-	
+	@RequestMapping("/joonggo_report.do")
+	@ResponseBody
+	public String report(@RequestParam("file") MultipartFile multipartFile, HttpSession session, int seq, String writer, String reportid) {
+		logger.info("reportform");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		
+		
+		return "";
+	}
 	
 	
 	

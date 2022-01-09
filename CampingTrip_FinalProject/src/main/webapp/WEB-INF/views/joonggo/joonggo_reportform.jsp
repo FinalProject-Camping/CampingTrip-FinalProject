@@ -80,7 +80,7 @@ body{font-family: NanumBarunGothic;}
 
         $.ajax({
             cache : false,
-            url : "report.do",
+            url : "joonggo_report.do",
             processData: false,
             contentType: false,
             type : 'POST', 
@@ -117,6 +117,7 @@ body{font-family: NanumBarunGothic;}
 			<!-- hidden -->
 			<input type="hidden" name="seq" value="${seq }"> 
 			<input type="hidden" name="reportid" value="${reportid }">
+			<input type="hidden" name="writer" value="${writer }">
 
 			<div>
 				<br>

@@ -254,19 +254,19 @@ const sessionid = '${sessiondto.myid}';
 	//writer
 	function del(){
 		if(confirm("게시글을 삭제하시겠습니까?")){
-			location.href='delete.do?writer=${dto.id}&seq=${dto.seq}';
+			location.href='joonggo_delete.do?writer=${dto.id}&seq=${dto.seq}';
 		}
 	}
 	function update(){
-		location.href='updateform.do?writer=${dto.id}&seq=${dto.seq}';
+		location.href='joonggo_updateform.do?writer=${dto.id}&seq=${dto.seq}';
 	}
 	function renewal(){
 		$.ajax({
-			url:"renewal.do?seq=${dto.seq}",
+			url:"renewal.do?writer=${dto.id}&seq=${dto.seq}",
 			method: "post",
 			success:function(data){ 
 				if(data.data === '성공'){
-					location.href='selectone.do?seq=${dto.seq}';
+					location.href='joonggo_selectone.do?seq=${dto.seq}';
 				}else if(data.data === '초과'){
 					alert('갱신 횟수 5회 초과하였습니다.');	
 				}else if(data.data === '실패'){
@@ -281,15 +281,27 @@ const sessionid = '${sessiondto.myid}';
 	//admin
 	function adminDel(){
 		if(confirm("게시글을 삭제하시겠습니까?")){
-			location.href='delete.do?seq=${dto.seq}';
+			location.href='joonggo_admindelete.do?seq=${dto.seq}';
+			//컨트롤러에서 관리자인지검사필요
 		}
 	}
 	
 	
 	//general user
 	function report(){
+		$.ajax({
+			url:"confirmsession.do",
+			method: "post",
+			success:function(data){ 
+				if(data.data === true){
+					popup("joonggo_reportform.do?seq=${dto.seq}&writer=${dto.id}&reportid=${sessiondto.myid}", "신고하기",450,520);
+				}else{
+					alert('로그인이 필요합니다.');
+					location.href='loginform.do';
+				}
+			}
+		})
 		
-		popup("joonggo_reportform.do?seq=${dto.seq}&reportid=${sessiondto.myid}", "신고하기",450,520);
 		
 
 	}
@@ -315,7 +327,7 @@ const sessionid = '${sessiondto.myid}';
 	function addheart(ele){
 		
 		$.ajax({
-			url:"addheart.do?seq=${dto.seq}&sessionid=${sessiondto.myid}",
+			url:"joonggo_addheart.do?seq=${dto.seq}&sessionid=${sessiondto.myid}",
 			method: "post",
 			success:function(data){ 
 				if(data.data === false){
@@ -349,7 +361,7 @@ const sessionid = '${sessiondto.myid}';
 	function rmheart(ele){
 		
 		$.ajax({
-			url:"rmheart.do?seq=${dto.seq}&sessionid=${sessiondto.myid}",
+			url:"joonggo_rmheart.do?seq=${dto.seq}&sessionid=${sessiondto.myid}",
 			method: "post",
 			success:function(data){ 
 				if(data.data === false){
@@ -699,7 +711,7 @@ const sessionid = '${sessiondto.myid}';
 	        				<script type="text/javascript">
 	        				if(sessionid != '' && sessionUserType != 'ADMIN' && sessionid != writer){
 	        					$.ajax({
-		        					url:"confirmheart.do?seq=${dto.seq}&sessionid=${sessiondto.myid}", 
+		        					url:"joonggo_confirmheart.do?seq=${dto.seq}&sessionid=${sessiondto.myid}", 
 		        					method: "post",
 		        					success:function(data){ 
 		        						if(data.data){
@@ -805,7 +817,7 @@ const sessionid = '${sessiondto.myid}';
 					<br>
 				</div>
 				<div class="col-4" style="text-align: right;">
-					<h5><a href="list.do?keyword=">중고 메인 <span></span></a></h5>
+					<h5><a href="joonggo_list.do?keyword=">중고 메인 <span></span></a></h5>
 				</div>
 			</div>
 
@@ -892,7 +904,7 @@ const sessionid = '${sessiondto.myid}';
 							placelist.push(data.place);
 							var hitdata = 
 								'<div class="popular-hit-ele col-lg-4 col-6" style="margin-bottom:10px;">'+
-								'<div style="cursor:pointer;" onclick="location.href=`selectone.do?seq='+ data.seq +'`" >'+		
+								'<div style="cursor:pointer;" onclick="location.href=`joonggo_selectone.do?seq='+ data.seq +'`" >'+		
 								'<div style="height:270px;">'+
 								'<div style="height:70%; border-radius: 8px; background-image:url('+ data.imglist.split(',')[0] +'); background-position: center; background-size: cover;">'+
 								'</div>'+

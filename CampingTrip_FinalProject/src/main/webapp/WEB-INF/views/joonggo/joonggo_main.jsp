@@ -290,7 +290,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 			document.getElementById('queryKeyword').innerHTML = '전체';
 		}else{
 			document.getElementById('queryKeyword').innerHTML = 
-			'<button type="button" onclick="location.href=`list.do?keyword=`" class="white-btn align-middle"><span class="align-middle fas fa-times"></span><span class="align-middle"> 키워드 : '+ keyword +'</span></button>';;
+			'<button type="button" onclick="location.href=`joonggo_list.do?keyword=`" class="white-btn align-middle"><span class="align-middle fas fa-times"></span><span class="align-middle"> 키워드 : '+ keyword +'</span></button>';;
 		}
 		
 		//초기 상품 로드
@@ -302,7 +302,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 	function addProduct(){
 		//로그인이 없거나 페널티가 있는경우 안되게
 		$.ajax({
-			url:"insertConfirm.do",
+			url:"joonggo_insertConfirm.do",
 			method: "post",
 			success:function(data){ 
 				if(data.data === true){
@@ -310,7 +310,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 						toastr.options.positionClass = "toast-top-right";
 						toastr.error("페널티 초과로 인해 게시글작성이 불가능합니다.");
 					}else{
-						location.href='insertform.do';
+						location.href='joonggo_insertform.do';
 					}
 				}else{
 					alert('로그인이 필요합니다.');
@@ -322,7 +322,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 	
 	function selectone(seq){
 		history.back();
-		location.href='selectone.do?seq=' + seq;
+		location.href='joonggo_selectone.do?seq=' + seq;
 	}
 
 	function createContent(imgpath, seq, writer, date, trade, title, price, heart, hit, place){
@@ -472,7 +472,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 		//redirect
 		var trimVal = val.trim();
 		if(trimVal === ''){return;}
-		location.href='list.do?keyword=' + trimVal;
+		location.href='joonggo_list.do?keyword=' + trimVal;
 	}
 
 	function ajax(url, method, senddata, func1, func2, func3){
