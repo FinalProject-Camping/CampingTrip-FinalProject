@@ -279,7 +279,7 @@ body{background-color: #f8f9fa;}
 	<div class="container" id="mainbody">
 		<div class="mainbody-inner shadow-lg">
 	<!-- 폼 시작 -->
-		<form action="update.do" method="post" name="form">
+		<form action="joonggo_update.do" method="post" name="form">
 		
 		<input type="hidden" value="${dto.id }" name="id">
 		<input type="hidden" value="" name="imglist">
@@ -295,7 +295,7 @@ body{background-color: #f8f9fa;}
 			<div class="col title" id="maintitle"><i class="fas fa-pencil-alt fa-lg"></i><span> 상품 수정하기</span></div>
 			<div class="col">
 				<button type="button" id="submitbtn" onclick="insertForm()" style="float:right;"><span class="align-middle">수정</span></button>
-				<button type="button" id="cancelbtn" onclick="location.href='selectone.do?seq=${dto.seq}'" style="float:right;"><span class="align-middle">취소</span></button>
+				<button type="button" id="cancelbtn" onclick="location.href='joonggo_selectone.do?seq=${dto.seq}'" style="float:right;"><span class="align-middle">취소</span></button>
 			</div>
 		</div>
 		<div class="row">

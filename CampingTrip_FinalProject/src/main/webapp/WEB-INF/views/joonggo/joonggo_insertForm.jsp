@@ -277,7 +277,7 @@ body{background-color: #f8f9fa;}
 	<div class="container" id="mainbody">
 		<div class="mainbody-inner  shadow-lg">
 	<!-- 폼 시작 -->
-		<form action="insert.do" method="post" name="form">
+		<form action="joonggo_insert.do" method="post" name="form">
 		
 		<input type="hidden" value="${sessiondto.myid }" name="id">
 		<input type="hidden" value="" name="imglist">

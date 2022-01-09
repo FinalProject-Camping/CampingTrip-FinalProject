@@ -48,15 +48,31 @@
 #mainbody{font-family: NanumBarunGothic; min-height: 400px;}
 </style>
 
+<script type="text/javascript">
+$(function(){
+	if(opener){
+		$("#pop").show();
+	}else{
+		$("#no-pop").show();
+	}
+})
+</script>
+
 </head>
 <body>
 	<br><br>
 	<div class="container" id="mainbody">
 		<div class="row">
-			<div class="col" style="text-align: center;">
+			<div class="col" style="text-align: center; display:none;" id="no-pop">
 				<h2>error</h2>
-				<h3><a href="list.do?keyword=">중고 메인 가기 ></a></h3>			
+				<h3><a href="joonggo_list.do?keyword=">중고 메인 가기 ></a></h3>			
 			</div>
+			
+			<div class="col" style="text-align: center; display:none;" id="pop">
+				<h2>error</h2>
+				<h3><a href="javascript:window.close()">닫기 ></a></h3>			
+			</div>
+			
 		</div>
 	</div>
 </body>

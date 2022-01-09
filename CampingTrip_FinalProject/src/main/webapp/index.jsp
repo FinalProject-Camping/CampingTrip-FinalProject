@@ -209,7 +209,7 @@ setInterval(function () {
 					list.forEach( data => {
 									
 						var html = 
-			                '<div class="card" style="cursor:pointer;" onclick="location.href=`selectone.do?seq='+ data.seq +'`">'+
+			                '<div class="card" style="cursor:pointer;" onclick="location.href=`joonggo_selectone.do?seq='+ data.seq +'`">'+
 			                '<div class="card-image loading"><img src="'+ data.imglist.split(',')[0] +'" alt=""></div>'+
 			                '<div class="card-info">'+
 			                '<h3 class="card-title loading"><span>'+ data.title +'</span></h3>'+

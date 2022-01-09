@@ -115,7 +115,7 @@
 						
 			var html = 
 				'<div class="col-lg-4 col-6" style="margin-bottom:30px;">'+
-				'<div style="cursor:pointer;" onclick="location.href=`selectone.do?seq='+ data.seq +'`" >'+		
+				'<div style="cursor:pointer;" onclick="location.href=`joonggo_selectone.do?seq='+ data.seq +'`" >'+		
 				'<div class="img-thumbnail" style="height:270px;">'+
 				'<div style="height:70%; border-radius: 8px; background-image:url('+ data.imglist.split(',')[0] +'); background-position: center; background-size: cover;">'+
 				'</div>'+
