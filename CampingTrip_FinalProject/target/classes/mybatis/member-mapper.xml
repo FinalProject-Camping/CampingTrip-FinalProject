@@ -28,4 +28,26 @@
 	<select id="idChk" parameterType="String" resultType="int">
 	  	SELECT count(1) as idCnt FROM MYMEMBER WHERE MYID = #{myid}
 	</select>
+	
+	<!-- 회원정보로 ID 조회 -->
+	<select id="findId" parameterType="memberDto" resultType="String">
+		SELECT MYID
+		FROM MYMEMBER
+		WHERE MYNAME = #{myname}
+		     AND MYBIRTH BETWEEN TO_DATE(#{mybirth},'YYYYMMDD') AND TO_DATE(#{mybirth},'YYYYMMDD')
+		     AND MYPHONE = #{myphone}
+	</select>
+	
+	<!-- 회원정보 일치할때 비밀번호를 ID와 같게 초기화 -->
+	
+	<update id="resetPw" parameterType="memberDto">
+		UPDATE MYMEMBER 
+		SET mypw = #{mypw}
+		WHERE MYID = #{myid}
+		     AND MYNAME = #{myname}
+		     AND MYBIRTH BETWEEN TO_DATE(#{mybirth},'YYYYMMDD') AND TO_DATE(#{mybirth},'YYYYMMDD')
+		     AND MYPHONE = #{myphone}
+	</update>
+	
+	
 </mapper>

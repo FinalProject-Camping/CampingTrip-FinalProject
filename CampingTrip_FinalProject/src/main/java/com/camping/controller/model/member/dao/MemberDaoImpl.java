@@ -52,7 +52,34 @@ public class MemberDaoImpl implements MemberDao {
 		return idCnt;
 	}
 	
+
+	// 회원ID찾기
+	public String findId(MemberDto dto) {
+		
+		String id ="";
+		//넘겨받은 회원정보로 회원아이디를 조회하여 반환
+		try {
+			id=sqlSession.selectOne(NAMESPACE+"findId", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return id;
+	}
 	
+	//회원비밀번호초기화
+	public Integer resetPw(MemberDto dto) {
+		
+		Integer res =0;
+		//넘겨받은 아이디로 회원테이블을 조회하여 (카운트쿼리) 0이면 true 리턴=사용가능아이디, 0초과 이면 false리턴=사용하지않는아이읻
+		try {
+			res=	sqlSession.update(NAMESPACE+"resetPw", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 	
 	
 	

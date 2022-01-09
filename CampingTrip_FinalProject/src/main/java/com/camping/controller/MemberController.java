@@ -34,6 +34,80 @@ public class MemberController {
 		return "member/memberLogin";
 	}
 	
+	/**
+	 * id찾기화면이동
+	 * @param session
+	 * @param dto
+	 * @return
+	 */
+	@RequestMapping("/findId.do")
+	public String findId() {
+		logger.info("FIND ID FORM");
+		return "member/findId";
+	}
+
+	/**
+	 * pw찾기화면이동
+	 * @param session
+	 * @param dto
+	 * @return
+	 */
+	@RequestMapping("/findPw.do")
+	public String findPw() {
+		logger.info("FIND PW FORM");
+		return "member/findPw";
+	}
+	
+	/**
+	 * 회원정보로 id찾기
+	 * @param session
+	 * @param dto
+	 * @return
+	 */
+	@RequestMapping("/ajaxFindId.do")
+	@ResponseBody
+	public Map<String, String> ajaxFindId(HttpSession session, @RequestBody MemberDto dto) {
+		logger.info("ajaxFindId");
+		//@RequestBody : request로 넘어오는 데이터를 java객체
+		//@ResponseBody : java객체를 response에 binding
+		
+		String rtnId = "";
+		dto.setMybirth(dto.getMybirth().replaceAll("-", ""));
+		rtnId = biz.findId(dto);
+		//리턴값을 담을 변수 선언
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("rtnId", rtnId);
+		
+		return map;
+	}
+	
+
+	/**
+	 * 회원정보로 비밀번호초기화
+	 * @param session
+	 * @param dto
+	 * @return
+	 */
+	@RequestMapping("/ajaxFindPw.do")
+	@ResponseBody
+	public Map<String, Integer> ajaxFindPw(HttpSession session, @RequestBody MemberDto dto) {
+		logger.info("ajaxFindPw");
+		//@RequestBody : request로 넘어오는 데이터를 java객체
+		//@ResponseBody : java객체를 response에 binding
+		Integer res = 0;
+		dto.setMybirth(dto.getMybirth().replaceAll("-", ""));
+		//id를암호화하여 pw에 담기
+		dto.setMypw(passwordEncoder.encode(dto.getMyid()));
+		res = biz.resetPw(dto);
+		//리턴값을 담을 변수 선언
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("check", res);
+		
+		return map;
+	}
+	
 	
 	@RequestMapping("/ajaxlogin.do")
 	@ResponseBody
@@ -96,17 +170,17 @@ public class MemberController {
 	
 
 	
-/**
- * 삭제예정
- * @return
- */
+	/**
+	 * 삭제예정
+	 * @return
+	 */
 	@RequestMapping("/nextRegisterForm.do")
 	public String nextMemberInsertForm() {
 		return "member/nextMemberRegister";
 	}
 	
 	/**
-	 * ㅅㄱ제예정
+	 * 삭제예정
 	 * @param dto
 	 * @return
 	 */

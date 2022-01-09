@@ -76,49 +76,64 @@ var preUrl;
 
 </script>
 </head>
-<body>
-<!--
-	<h2>LOGIN</h2>
-	
- 	<table>
-		<tr>
-			<th>ID</th>
-			<td><input type="text" id="memberid"/></td>
-		</tr>
-		<tr>
-			<th>PW</th>
-			<td><input type="password" id="memberpw"></td>
-		</tr>
-		<tr>
-			<td colspan="2"><input type="button" value="login" onclick="login();"/></td>
-		</tr>
-		<tr>
-			<td colspan="2" align="center" id="loginChk"></td>
-		</tr>
-	</table>
-	 -->
-	
+<body><!-- 가로배치
+<table width='100%'>
+	<tr>
+		<td width='50%'  height='500px'  align='center' >
+				<img src="resources/img/join_event.gif"  height = "100%" alt="event_gif">
+		</td>
+		<td>
+				<div class="center" style="width:300px;">
+					<h3 style="text-align:left;">로그인</h3>
+					<br>
+						<p id='login-validation'></p>
+						<p>
+						<input type="text" name="memberid" style="width:300px; height: 30px;">
+						</p>
+						<input type="password" name="memberpw" style="width:300px; height: 30px;">
+						
+						id찾기, 비밀번호 찾기 만들어야함
+						<div style="text-align: right; font-size: 8pt; color:#000000;">
+						<a href="idfound();" style="color:#000000;">아이디 찾기 | </a>
+						<a href="pwfound();" style="color:#000000;">비밀번호 찾기</a>
+						</div>
+						
+						<div class="d-grid gap-2 col-15 mx-auto">
+							<button class="btn text-white" style="background-color: #008000;" type="button" onclick='login();' value="login">로그인</button>
+							<button id="loginChk" class="btn text-black" style="background-color: lightgrey;" " type="button"  onclick="location.href='registerform.do'";>회원가입</button>
+						</div>
+					</div>
+		</td>
+	</tr>
+</table>
+ -->
+<!-- 세로배치 -->
 	<div class="center" style="width:300px;">
 		<h3 style="text-align:left;">로그인</h3>
 		<br>
 			<p id='login-validation'></p>
 			<p>
-			<input type="text" name="memberid" style="width:300px; height: 30px;">
+			<input type="text" name="memberid" style="width:300px; height: 30px;"  placeholder='ID를입력하세요.'>
 			</p>
-			<input type="password" name="memberpw" style="width:300px; height: 30px;">
+			<input type="password" name="memberpw" style="width:300px; height: 30px;"  placeholder='PW를입력하세요.'>
 			
 			<!-- id찾기, 비밀번호 찾기 만들어야함 -->
-			<div style="text-align: right; font-size: 8pt; color:#000000;">
-			<a href="idfound();" style="color:#000000;">아이디 찾기 | </a>
-			<a href="pwfound();" style="color:#000000;">비밀번호 찾기</a>
+			<div style="text-align: right; font-size: 9pt; color:#000000;">
+			<a href="findId.do" style="color:#000000;">아이디 찾기 | </a>
+			<a href="findPw.do" style="color:#000000;">비밀번호 찾기</a>
 			</div>
 			
 			<div class="d-grid gap-2 col-15 mx-auto">
 				<button class="btn text-white" style="background-color: #008000;" type="button" onclick='login();' value="login">로그인</button>
 				<button id="loginChk" class="btn text-black" style="background-color: lightgrey;" " type="button"  onclick="location.href='registerform.do'";>회원가입</button>
 			</div>
-
+			<br>
+			<br>
+			<img src="resources/img/join_event.gif" width='100%' alt="event_gif">
+					
 		</div>
+
 </body>
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </html>

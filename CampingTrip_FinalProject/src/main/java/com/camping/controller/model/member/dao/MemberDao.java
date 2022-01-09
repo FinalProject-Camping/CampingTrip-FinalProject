@@ -12,4 +12,7 @@ public interface MemberDao {
 	// 아이디 중복 체크
 	public Integer idChk(String memberId);
 	
+	public String findId(MemberDto dto);
+	
+	public Integer resetPw(MemberDto dto);
 }
