@@ -123,6 +123,9 @@ public class MemberController {
 			//database에 저장되어있는 pw와 화면에서 넘어온 pw가 일치하는지 확인
 			if(passwordEncoder.matches(dto.getMypw(), res.getMypw())) {
 				session.setAttribute("login", res);
+				session.setAttribute("id", res.getMyid());
+				session.setAttribute("name", res.getMyname());
+				
 				check=true;
 			}
 		}
@@ -227,6 +230,20 @@ public class MemberController {
 		
 		return map;
 		
+		
+	}
+	
+	/**
+	 * logout
+	 */
+	@RequestMapping("/sessionLogout.do")
+	public String sessionLogout(HttpSession session) {
+
+		session.removeAttribute("id");
+		session.removeAttribute("name");
+		session.removeAttribute("login");
+
+		return "redirect:/";
 		
 	}
 	
