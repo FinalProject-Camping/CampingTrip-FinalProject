@@ -27,10 +27,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.camping.controller.model.joonggo.biz.biz;
 import com.camping.controller.model.joonggo.dto.FtpClient;
 import com.camping.controller.model.joonggo.dto.joonggo;
+import com.camping.controller.model.joonggo.dto.report;
 import com.camping.controller.model.member.dto.MemberDto;
 import com.google.gson.JsonObject;
 
@@ -469,7 +471,7 @@ public class JoonggoController {
 		
 		if(sessiondto != null) {
 			if(!sessiondto.getMyid().equals(sessionid)) {
-				map.put("data","differenet");
+				map.put("data","different");
 			}else {
 				Map<String,Object> params = new HashMap<String,Object>();
 				params.put("heartid", sessionid);
@@ -493,7 +495,7 @@ public class JoonggoController {
 		
 		if(sessiondto != null) {
 			if(!sessiondto.getMyid().equals(sessionid)) {
-				map.put("data","differenet");
+				map.put("data","different");
 			}else {
 				Map<String,Object> params = new HashMap<String,Object>();
 				params.put("heartid", sessionid); //sessionid
@@ -577,12 +579,75 @@ public class JoonggoController {
 	
 	@RequestMapping("/joonggo_report.do")
 	@ResponseBody
-	public String report(@RequestParam("file") MultipartFile multipartFile, HttpSession session, int seq, String writer, String reportid) {
-		logger.info("reportform");
+	public String report(MultipartHttpServletRequest mtfRequest, HttpSession session, report report) {
+		logger.info("report");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		if(sessiondto != null) {
+			if(!sessiondto.getMyid().equals(report.getReportid())) {
+				return "error";
+			}
+		}else {
+			return "error";
+		}
 		
+		final String[] PERMISSION_FILE_EXT_ARR = {".GIF", ".JPEG", ".JPG", ".PNG", ".BMP"};
+		List<MultipartFile> filelist = mtfRequest.getFiles("file");
+		boolean nofile = false;
 		
-		return "";
+		for(MultipartFile mf : filelist) {
+			
+			String originalFileName = mf.getOriginalFilename();	//오리지날 파일명
+			if(originalFileName.equals("")) {
+				nofile = true;
+				break;
+			}
+			String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); //확장자
+			
+			String ext = extension.toUpperCase();
+			System.out.println("파일 확장자 : " + ext);
+			boolean res = false;
+			for(int i = 0; i < PERMISSION_FILE_EXT_ARR.length; i++) {
+				if(PERMISSION_FILE_EXT_ARR[i].equals(ext)) {
+					res = true;
+				}
+			}
+			if(!res) {return "false";}
+		}
+		//첨부파일이 있는 경우 파일 검증완료
+		
+		if(!nofile) {
+			String imglist = "";
+			FtpClient fp = new FtpClient("oracleksk.p-e.kr", 21, "ftpuser", "1234");
+			for(MultipartFile mf : filelist) {
+				String originalFileName = mf.getOriginalFilename();	//오리지날 파일명
+				String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+				String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+				
+				boolean isuploaded = false;
+				try {
+					isuploaded = fp.upload(mf, savedFileName);
+				} catch (SocketException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if(!isuploaded) {
+					return "notuploaded";
+				}else {
+					imglist += savedFileName + ",";
+				}
+			}
+			report.setFilepath(imglist.substring(0,imglist.length()-1));
+		}
+		
+		int res = biz.report(report);
+		if(res > 0) {
+			return "success";
+		}else {
+			return "error";
+		}
 	}
 	
 	

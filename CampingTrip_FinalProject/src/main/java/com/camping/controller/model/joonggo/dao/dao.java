@@ -6,6 +6,7 @@ import java.util.Map;
 import com.camping.controller.model.joonggo.dto.heart;
 import com.camping.controller.model.joonggo.dto.joonggo;
 import com.camping.controller.model.joonggo.dto.renew;
+import com.camping.controller.model.joonggo.dto.report;
 
 public interface dao {
 	String NAMESPACE = "myjoonggo.";
@@ -29,5 +30,5 @@ public interface dao {
 	public heart confirmheart(Map<String,Object> map);
 	public List<joonggo> person(String id);
 	public List<joonggo> selectlist_main();
-	
+	public int report(report report);
 }
