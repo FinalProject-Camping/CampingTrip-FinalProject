@@ -86,10 +86,19 @@ body{font-family: NanumBarunGothic;}
             type : 'POST', 
             data : formData, 
             success : function(data) {
-                
+                if(data === 'error'){
+                	location.href='error.do';
+                }else if(data === 'false'){
+                	alert('사진 형식의 파일만 업로드해주세요.');
+                }else if(data === 'notuploaded'){
+                	alert('사진 업로드 실패');
+                }else if(data === 'success'){
+                	$('#formdiv').hide();
+                	$('#success').show();
+                }
             },
             error : function(xhr, status) {
-                alert("오류");
+            	location.href='error.do';
             }
         });
 	}
@@ -110,19 +119,16 @@ body{font-family: NanumBarunGothic;}
 
 </head>
 <body>
+	<div style="text-align:center; background-color: gray; padding-top:18px; padding-bottom:10px;"><h5 class="bold" style="color:white; ">신고 사유 선택</h5></div>
 	<div class="container">
-	
+		
+		<div id="formdiv">
 		<form id="form1" name="form1" method="post" enctype="multipart/form-data">
 		
 			<!-- hidden -->
-			<input type="hidden" name="seq" value="${seq }"> 
+			<input type="hidden" name="joonggoseq" value="${seq }"> 
 			<input type="hidden" name="reportid" value="${reportid }">
 			<input type="hidden" name="writer" value="${writer }">
-
-			<div>
-				<br>
-				<h5 class="bold" style="color:gray;"><span></span>신고 사유 선택</h5>
-			</div>
 			<div class="">
 				<br> 
 				<select id="report-select" class="select w-100">
@@ -132,7 +138,7 @@ body{font-family: NanumBarunGothic;}
 				</select> 
 				<br>
 				<br>
-				<textarea id="report-textarea" name="reason" style="width: 100%; height: 200px; resize: none; display: none;"></textarea>
+				<textarea id="report-textarea" name="reportcontent" style="width: 100%; height: 200px; resize: none; display: none;"></textarea>
 
 				<!-- 자료첨부 -->
 				자료 첨부: <br><input type="file" id="file" name="file" accept="image/*" multiple>
@@ -145,6 +151,16 @@ body{font-family: NanumBarunGothic;}
 			</div>
 			
 		</form>
+		</div>
+		
+		<!-- 성공 -->
+		<div style="display:none; text-align: center;" id="success">
+			<br><br>
+			<h3>신고 내용이 접수가 완료되었습니다.</h3>
+			관리자 확인 후 조치를 취할 예정입니다.
+			<br><br>
+			<input type="button" class="btn-del" value="닫기" onclick="window.close()">
+		</div>
 
 	</div>
 </body>

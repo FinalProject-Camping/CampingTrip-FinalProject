@@ -1,5 +1,6 @@
 package com.camping.controller.model.joonggo.biz;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.camping.controller.model.joonggo.dao.dao;
-import com.camping.controller.model.joonggo.dto.heart;
 import com.camping.controller.model.joonggo.dto.joonggo;
 import com.camping.controller.model.joonggo.dto.renew;
+import com.camping.controller.model.joonggo.dto.report;
 
 @Service
 public class bizImpl implements biz{
@@ -73,12 +74,20 @@ public class bizImpl implements biz{
 			return "초과";
 		}
 		if(list.size() != 0) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			
 			Date date = list.get(0).getRenewdate();
 			Date now = new Date();
 			
-			if((now.getTime() - date.getTime())/3600000 < 24) {
+			String renewdate = sdf.format(date);
+			String nowdate = sdf.format(now);
+			if(nowdate.equals(renewdate)) {
 				return "실패";
 			}
+			/* 24시간 이내로 하는경우
+			if((now.getTime() - date.getTime())/3600000 < 24) {
+				return "실패";
+			}*/
 		}
 		if(dao.updateRenew(seq) < 0) {
 			return "실패";
@@ -127,6 +136,13 @@ public class bizImpl implements biz{
 	public List<joonggo> selectlist_main() {
 		return dao.selectlist_main();
 	}
+
+	@Override
+	public int report(report report) {
+		return dao.report(report);
+	}
+	
+	
 	
 }
 

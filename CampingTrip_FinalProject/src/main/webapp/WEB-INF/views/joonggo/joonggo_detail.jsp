@@ -8,9 +8,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<%-- <meta property="og:title" content="${dto.title }" /> 
+<meta property="og:url" content="http://localhost:8787/CampingTrip_FinalProject/joonggo_selectone.do?seq=${dto.seq }" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="http://oracleksk.p-e.kr/image/icon/logo.PNG" /> 
+<meta property="og:description" content="캠핑트립 중고거래" /> 
+<meta property="og:image:width" content="300">
+<meta property="og:image:height" content="100"> --%>
 <title>상세보기</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -46,11 +54,11 @@
  font-family: 'NanumBarunGothic', sans-serif;
 }
 
-@media screen and (max-width: 767px) { #mainbody,#seeAddr { font-size: 13px; }  .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:25%}  #user-circle{font-size:30px;} .titleandprice{font-size:21px;} .slider-1{height:350px;}}
-@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody,#seeAddr { font-size: 13px; }  #mainbody > .row{margin-left:5%; margin-right:5%;} .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:25%} #user-circle{font-size:30px;} .titleandprice{font-size:21px;} .slider-1{height:400px;}}
-@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody,#seeAddr { font-size: 14px; }  #mainbody > .row{margin-left:12%; margin-right:12%;} .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:25%} #user-circle{font-size:30px;}  .titleandprice{font-size:22px;} .slider-1{height:460px;}}
-@media screen and (min-width: 1200px) and (max-width: 1399px) { #mainbody,#seeAddr { font-size: 15px; }  #mainbody > .row{margin-left:15%; margin-right:15%;}  .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:25%} #user-circle{font-size:35px;} .titleandprice{font-size:23px;} .slider-1{height:480px;}}
-@media screen and (min-width: 1400px) { #mainbody,#seeAddr { font-size: 15px; }  #mainbody > .row{margin-left:18%; margin-right:18%;}  .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:25%} #user-circle{font-size:35px;} .titleandprice{font-size:23px;} .slider-1{height:500px;}}  
+@media screen and (max-width: 767px) { #mainbody,#seeAddr,#seeLink { font-size: 13px; }  .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:50%}  #user-circle{font-size:30px;} .titleandprice{font-size:21px;} .slider-1{height:350px;}}
+@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody,#seeAddr,#seeLink { font-size: 13px; }  #mainbody > .row{margin-left:5%; margin-right:5%;} .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:50%} #user-circle{font-size:30px;} .titleandprice{font-size:21px;} .slider-1{height:400px;}}
+@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody,#seeAddr,#seeLink { font-size: 14px; }  #mainbody > .row{margin-left:12%; margin-right:12%;} .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:50%} #user-circle{font-size:30px;}  .titleandprice{font-size:22px;} .slider-1{height:460px;}}
+@media screen and (min-width: 1200px) and (max-width: 1399px) { #mainbody,#seeAddr,#seeLink { font-size: 15px; }  #mainbody > .row{margin-left:15%; margin-right:15%;}  .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:50%} #user-circle{font-size:35px;} .titleandprice{font-size:23px;} .slider-1{height:480px;}}
+@media screen and (min-width: 1400px) { #mainbody,#seeAddr,#seeLink { font-size: 15px; }  #mainbody > .row{margin-left:18%; margin-right:18%;}  .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:50%} #user-circle{font-size:35px;} .titleandprice{font-size:23px;} .slider-1{height:500px;}}  
 
 #mainbody, .modal{font-family: NanumBarunGothic;}
 .hr{color: gray; }
@@ -63,7 +71,7 @@ a{text-decoration: none; color:black;}
 
 .place-btn{background-color: rgb(0, 191, 121); border: solid 2px rgb(0, 191, 121); border-radius: 15px; padding-right:12px; padding-left:12px; color : white; font-weight: bold; margin-right:8px;}
 
-.btns{background-color: #FFFFFF; border: solid 1px rgb(0, 191, 121); border-radius: 5px; padding-right:3%; padding-left:3%; color : rgb(0, 191, 121); font-weight: bold; height: 50px;}
+.btns{background-color: #FFFFFF; border: solid 1px rgb(0, 191, 121); border-radius: 4px; padding-right:3%; padding-left:3%; color : rgb(0, 191, 121); font-weight: bold; height: 50px;}
 .btns:hover{
 	transition: all 0.3s;
 	border: solid 1px rgb(0, 191, 121);
@@ -73,11 +81,11 @@ a{text-decoration: none; color:black;}
 .btns-n{cursor:default !important; background-color: lightgray; border: solid 1px lightgray; border-radius: 5px; padding-right:3%; padding-left:3%; color : white; font-weight: bold; height: 50px;}
 
 
-#btn-heart{color:rgb(255, 59, 0); background-color: #FFFFFF; border: solid 1px rgb(255, 59, 0); border-radius: 6px; padding-right:18px !important; padding-left: 18px !important;  font-weight: bold; height: 50px; 	font-size: 13px !important; }
+#btn-heart{color:rgb(229, 99, 45); background-color: #FFFFFF; border: solid 1px rgb(229, 99, 45); border-radius: 4px; padding-right:18px !important; padding-left: 18px !important;  font-weight: bold; height: 50px; 	font-size: 13px !important; }
 #btn-heart:hover{
 	transition: all 0.3s;
-	border: solid 1px rgb(255, 59, 0);
-	background-color: rgb(255, 59, 0);
+	border: solid 1px rgb(229, 99, 45);
+	background-color: rgb(229, 99, 45);
 	color : white;
 }
 #btn-heart:hover .heart{transition: all 0.3s; color:#FFF !important;}
@@ -101,13 +109,15 @@ a{text-decoration: none; color:black;}
 }
 .btn-suggest-n{cursor:default !important; background-color: lightgray; border: solid 2px lightgray; color : white; border-radius: 5px;  font-weight: bold; height: 50px;}
 
-.btn-update{background-color: #FFFFFF; border: solid 1px #ff9c78; color : #ff9c78; border-radius: 5px;  font-weight: bold; height: 50px;}
+.btn-update{background-color: #FFFFFF; border: solid 1px #ff9c78; color : #ff9c78; border-radius: 4px;  font-weight: bold; height: 50px;}
 .btn-update:hover{
 	transition: all 0.3s;
 	border: solid 1px #ff9c78;
 	background-color: #ff9c78;
 	color : white;
 }
+
+.btn-share{background-color: #FFFFFF; border: solid 1px gray; color : gray; border-radius: 4px;  font-weight: bold; height: 50px; width:23%;}
 
 #suggestModal .modal-header{background-color: #ff8a3d; color:white;}
 #suggestprice {outline: none;}
@@ -133,9 +143,23 @@ a{text-decoration: none; color:black;}
 	background-color: white;
 	border-radius: 8px;
 }
+#seeLink{
+	width:300px;
+	height:auto;
+	position: fixed;
+	top: 45%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+}
+#seeLink > .row{
+	padding-left:30px;
+	padding-right:30px;
+}
 
+/*rgb(255, 59, 0)*/
 /* toast */
-.toast-success {background-color: rgb(255, 59, 0) !important;}
+.toast-success {background-color: rgb(0, 191, 121) !important;}
 .toast-error {background-color: #BD362F !important;}
 .toast-info {background-color: #2F96B4 !important;}
 .toast-warning {background-color: #F89406 !important;}
@@ -270,7 +294,7 @@ const sessionid = '${sessiondto.myid}';
 				}else if(data.data === '초과'){
 					alert('갱신 횟수 5회 초과하였습니다.');	
 				}else if(data.data === '실패'){
-					alert('최신글 등록은 일 1회만 가능합니다.');
+					alert('최신글 등록은 하루 1회만 가능합니다.');
 				}else{
 					location.href="error.do";
 				}
@@ -333,7 +357,7 @@ const sessionid = '${sessiondto.myid}';
 				if(data.data === false){
 					alert('로그인이 필요합니다.');
 					location.href='loginform.do';
-				}else if(data.data === 'differenet'){
+				}else if(data.data === 'different'){
 					location.href="error.do";
 				}else{
 					if(data.data === '성공'){
@@ -342,12 +366,9 @@ const sessionid = '${sessiondto.myid}';
 						ele.children[0].classList.add('fas');
 						ele.setAttribute('onclick', 'rmheart(this)');
 						
-						toastr.options.positionClass = "toast-top-right";
-						toastr.options.timeOut = 700;
-						toastr.success("찜 추가 완료");
 					}else{
 						toastr.options.positionClass = "toast-top-right";
-						toastr.warning("추가 실패");
+						toastr.warning("추가 실패"); 
 					}
 				}
 			},
@@ -367,7 +388,7 @@ const sessionid = '${sessiondto.myid}';
 				if(data.data === false){
 					alert('로그인이 필요합니다.');
 					location.href='loginform.do';
-				}else if(data.data === 'differenet'){
+				}else if(data.data === 'different'){
 					location.href="error.do";
 				}else{
 					if(data.data === '성공'){
@@ -376,9 +397,6 @@ const sessionid = '${sessiondto.myid}';
 						ele.children[0].classList.add('far');
 						ele.setAttribute('onclick', 'addheart(this)');
 						
-						toastr.options.positionClass = "toast-top-right";
-						toastr.options.timeOut = 700;
-						toastr.success("찜 해제 완료")
 					}else{
 						toastr.options.positionClass = "toast-top-right";
 						toastr.warning("해제 실패");
@@ -394,10 +412,10 @@ const sessionid = '${sessiondto.myid}';
 	
 	document.addEventListener("DOMContentLoaded", ()=>{
 		
-		document.getElementById('suggestbtn').addEventListener('click', ()=>{
+		/* document.getElementById('suggestbtn').addEventListener('click', ()=>{
 			document.getElementsByClassName('message')[0].style.display = 'none';
 			document.getElementById('suggestprice').value = '';
-		}, false);
+		}, false); */
 		
 		//가격제안
 		document.getElementById('suggestprice').onkeyup = function(){
@@ -701,6 +719,8 @@ const sessionid = '${sessiondto.myid}';
 	        	<!-- 유저별 메뉴 -->
 	        		<div>
 	        			<div id="user" style="text-align: right; display:none;">
+	        				<button id="sharebtn" onclick="seeLink();" type="button" class="btn-share"><span class="align-middle far fa-share-square fa-lg"></span></button>
+	        			
 	        				<span class="align-middle">
 		        				<button type="button" class="w-25" id="btn-heart" onclick="addheart(this);">
 		        					<span id="heartimg" class="align-middle far fa-heart fa-lg"></span><br>
@@ -725,12 +745,13 @@ const sessionid = '${sessiondto.myid}';
 	        				}	
 	        				</script>
 	        				<span class="align-middle">
-	        					<button id="suggestbtn" type="button" class="btn-suggest" data-bs-toggle="modal" data-bs-target="#suggestModal"><span class="align-middle fas fa-dollar-sign fa-lg"></span><span class="align-middle"> 가격 제안</span></button>
+	        					<!-- <button id="suggestbtn" type="button" class="btn-suggest" data-bs-toggle="modal" data-bs-target="#suggestModal"><span class="align-middle fas fa-dollar-sign fa-lg"></span><span class="align-middle"> 가격 제안</span></button> -->
 	        					<button id="chatbtn" onclick="" type="button" class="btns"><span class="align-middle fas fa-comments-dollar fa-lg"></span><span class="align-middle"> 구매 채팅</span></button>
 	        				</span>
 	        			</div>
 	        			
 	        			<div id="owner" style="text-align: right; display:none;">
+	        				<button id="sharebtn" onclick="seeLink();" type="button" class="btn-share"><span class="align-middle far fa-share-square fa-lg"></span></button>
 	        				<button class="btn-del w-25" type="button" onclick="del();"><span class="align-middle fas fa-trash-alt fa-lg"></span><span class="align-middle"> 삭제</span></button>
 	        				<button class="btn-update w-25" type="button" onclick="renewal();"><span class="align-middle fas fa-arrow-up fa-lg"></span><span class="align-middle"> 위로</span></button>
 	        				<button class="btn-update w-25" type="button" onclick="update();"><span class="align-middle fas fa-pencil-alt fa-lg"></span><span class="align-middle"> 수정</span></button>
@@ -974,10 +995,100 @@ const sessionid = '${sessiondto.myid}';
 		<br><br>
 		<b><a href="https://cyberbureau.police.go.kr/prevention/sub7.jsp?mid=020600" target="'_black">*휴대폰 및 계좌번호 사기조회 서비스 이동 ></a></b>
 	</div>
-
-
-
 	
+	<script>
+	    function share() {
+	      var url = encodeURI(encodeURIComponent(myform.url.value));
+	      var title = encodeURI(myform.title.value);
+	      var shareURL = "https://share.naver.com/web/shareView?url=" + url + "&title=" + title;
+	      document.location = shareURL;
+	    }
+  	</script>
+
+	<!-- link -->
+	<div id="seeLink" style="display:none;" class="shadow-sm">
+		<div style="background-color: rgb(242,242,242); padding:30px; padding-top:15px; padding-bottom:15px;">
+				<span>공유하기</span>
+				<span style="cursor: pointer; float:right;" onclick="linkclear()" class="fas fa-times fa-lg"></span>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-12">
+				<a id="kakao-link-btn" href="javascript:sendLink()">
+					<img style=" margin-right:10px;"  src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+				</a>
+				<a href="#" onclick="javascript:window.open('http://share.naver.com/web/shareView.nhn?url=http://oracleksk.p-e.kr/index.html&title=[캠핑트립-중고거래] ${dto.title}', 'naversharedialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=580,width=450');return false;" target="_blank" alt="Share on Naver" > <img style="height:65px;"src="http://oracleksk.p-e.kr/image/icon/naver_square_40x40.png"></a>
+<!-- 				<span>
+					<script type="text/javascript" src="https://ssl.pstatic.net/share/js/naver_sharebutton.js"></script>
+					<script type="text/javascript">
+					new ShareNaver.makeButton({"type": "g", "title":"[캠핑트립-중고거래]${dto.title}", "url":window.location.href});
+					</script>
+				</span> -->
+
+			</div>
+		</div>
+		<br>
+		<div class="row" style="margin-top:30px; margin-bottom:30px;">
+			<div class="col">
+				<input id="clip" type="text" style="padding:4px; width:88%; outline: none; color:gray; border:1px solid lightgray;" readonly="readonly" value="">
+				&nbsp;<span onclick="clip()" style="cursor:pointer;" class="fas fa-paperclip fa-lg"></span>
+			</div>
+		</div>
+	</div>
+	        				
+	<script type="text/javascript">
+		document.getElementById('clip').value = window.location.href;
+	
+		function seeLink(){
+			document.getElementById('seeLink').style.display="block";
+		}
+		function linkclear(){
+			document.getElementById('seeLink').style.display="none";
+		}
+		function clip(){
+			var textarea = document.getElementById('clip');
+			textarea.select();
+			document.execCommand("copy");
+			toastr.options.positionClass = "toast-top-right";
+			toastr.options.timeOut = 500;
+			toastr.success("클립보드에 저장되었습니다");
+		}
+		
+	
+		Kakao.init('b1a06c511e7475a92c07a62d70ae0304')
+		Kakao.Link.createDefaultButton({
+		  container: '#kakao-link-btn',
+		  objectType: 'feed',
+		  content: {
+		    title: '[캠핑트립] 중고상품 바로가기\n'+'${dto.title}',
+		    description: '${dto.tag}',
+		    imageUrl: '${dto.imglist}'.split(",")[0],
+		    link: {
+		      mobileWebUrl: window.location.href,
+		      webUrl: window.location.href
+		    }
+		  },
+		  social: {
+		    likeCount: ${dto.heart},
+		  },
+		  buttons: [
+		    {
+		      title: '웹으로 보기',
+		      link: {
+		        mobileWebUrl: window.location.href,
+		        webUrl: window.location.href
+		      }
+		    },
+		    {
+		      title: '앱으로 보기',
+		      link: {
+		        mobileWebUrl: window.location.href,
+		        webUrl: window.location.href
+		      }
+		    }
+		  ]
+		});
+	</script>
 	
 
 	

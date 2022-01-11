@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.camping.controller.model.joonggo.dto.heart;
 import com.camping.controller.model.joonggo.dto.joonggo;
 import com.camping.controller.model.joonggo.dto.renew;
+import com.camping.controller.model.joonggo.dto.report;
 
 @Repository
 public class daoImpl implements dao{
@@ -287,6 +288,20 @@ public class daoImpl implements dao{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return res;
+	}
+
+	@Override
+	public int report(report report) {
+		
+		int res = 0;
+		
+		try {
+			res = sqlSession.update(NAMESPACE + "report", report);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return res;
 	}
 	

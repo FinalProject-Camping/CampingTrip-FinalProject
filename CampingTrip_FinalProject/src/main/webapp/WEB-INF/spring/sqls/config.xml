@@ -9,6 +9,7 @@
 		<typeAlias type="com.camping.controller.model.joonggo.dto.joonggo" alias="joonggoDto"/>
 		<typeAlias type="com.camping.controller.model.joonggo.dto.renew" alias="renewDto"/>
 		<typeAlias type="com.camping.controller.model.joonggo.dto.heart" alias="heartDto"/>
+		<typeAlias type="com.camping.controller.model.joonggo.dto.report" alias="reportDto"/>
     <typeAlias type="com.camping.controller.model.camp.dto.CampDto" alias="campDto"/>
     
     <!-- login -->

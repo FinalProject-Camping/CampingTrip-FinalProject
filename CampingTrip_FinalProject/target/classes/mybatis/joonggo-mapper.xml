@@ -37,6 +37,19 @@
 		<result property="joonggoseq" column="JOONGGOSEQ"/>
 	</resultMap>
 	
+	<resultMap type="reportDto" id="reportMap">
+		<result property="reportseq" column="REPORTSEQ" />
+		<result property="reportdate" column="REPORTDATE" />
+		<result property="reportid" column="REPORTID" />
+		<result property="reportcontent" column="REPORTCONTENT" />
+		<result property="filepath" column="FILEPATH" />
+		<result property="joonggoseq" column="JOONGGOSEQ" />
+		<result property="writer" column="WRITER" />
+		<result property="status" column="STATUS" />
+		<result property="adminid" column="ADMINID" />
+		<result property="admintext" column="ADMINTEXT" />
+	</resultMap>
+	
 	
 	<select id="selectList" parameterType="String" resultMap="joonggoMap">
 		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT, PLACE 
@@ -233,6 +246,10 @@
 		WHERE ROWNUM <![CDATA[<=]]> 18
 	</select>
 	
+	<insert id="report" parameterType="reportDto">
+		INSERT INTO REPORT(REPORTSEQ, REPORTDATE, REPORTID, REPORTCONTENT, FILEPATH, JOONGGOSEQ, WRITER)
+		VALUES(REPORTSEQ.NEXTVAL, SYSDATE, #{reportid}, #{reportcontent}, #{filepath}, #{joonggoseq}, #{writer})
+	</insert>
 	
 	
 </mapper>
