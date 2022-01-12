@@ -640,6 +640,8 @@ public class JoonggoController {
 				}
 			}
 			report.setFilepath(imglist.substring(0,imglist.length()-1));
+		}else {
+			report.setFilepath("");
 		}
 		
 		int res = biz.report(report);

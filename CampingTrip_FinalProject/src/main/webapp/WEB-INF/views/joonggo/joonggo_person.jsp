@@ -45,10 +45,10 @@
  font-family: 'NanumBarunGothic', sans-serif;
 }
 
-@media screen and (max-width: 767px) { #mainbody { font-size: 14px; } .title{font-size: 13pt;} }
-@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody { font-size: 16px; } }
-@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody { font-size: 16px; } .container{width:781px;}}
-@media screen and (min-width: 1200px) { #mainbody { font-size: 18px; } .title{font-size: 16pt;} .container{width:829px;}}
+@media screen and (max-width: 767px) { #mainbody { font-size: 20px; } .title{font-size: 20px !important;}.img{height:320px !important;} }
+@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody { font-size: 22px; } .title{font-size: 22px !important;}  .img{height:400px !important;}}
+@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody { font-size: 16px; } #mainbody{width:781px;}}
+@media screen and (min-width: 1200px) { #mainbody { font-size: 18px; } .title{font-size: 16pt;} #mainbody{width:829px;}}
 
 #mainbody{font-family: NanumBarunGothic;}
 .title{overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;display: -webkit-box;-webkit-line-clamp: 1; -webkit-box-orient: vertical; margin-top:5px; font-size:18px;}
@@ -73,7 +73,7 @@
 <body>
 	<br><br>
 
-	<div class="container" id="mainbody">
+	<div class="container-fluid" id="mainbody">
 		<div class="row">
 			<div class="col">
 				<h3><span style="color:#d49466;">${id }</span> 님의 중고매물</h3><br>
@@ -116,7 +116,7 @@
 			var html = 
 				'<div class="col-lg-4 col-6" style="margin-bottom:30px;">'+
 				'<div style="cursor:pointer;" onclick="location.href=`joonggo_selectone.do?seq='+ data.seq +'`" >'+		
-				'<div class="img-thumbnail" style="height:270px;">'+
+				'<div class="img img-thumbnail" style="height:270px;">'+
 				'<div style="height:70%; border-radius: 8px; background-image:url('+ data.imglist.split(',')[0] +'); background-position: center; background-size: cover;">'+
 				'</div>'+
 				'<div style="height:29%; width:100%;">'+

@@ -49,13 +49,10 @@
 .nanumbarungothic * {
  font-family: 'NanumBarunGothic', sans-serif;
 }
-/* @media screen and (min-width: 769px) and (max-width: 1239px) { body, html { font-size: 15px; }  }
-@media screen and (min-width: 1240px) and (max-width: 1999px) { body, html { font-size: 17px; } }
-@media screen and (min-width: 2000px) { body, html { font-size: 19px; } } */
 
-@media screen and (max-width: 575px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important; padding:5%; padding-top:0%;} .content { height: auto;} .content-img{height:240px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} #lnb.fixed{ width: 100%;} .heart{float:right;}  .maintitleclass{font-size:18px;}}
-@media screen and (min-width: 576px) and (max-width: 767px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important; padding:2%; padding-top:0%;} .content { height: 220px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display: none;} #lnb.fixed{ width: 540px;} #suggest{width:448px;} .maintitleclass{font-size:21px;}}
-@media screen and (min-width: 768px) and (max-width: 991px) { .mainbody{font-size:16px;} #list{font-size:16px !important; padding-top:0%;} .content { height: 240px;} .content-img{height:100%; width:40%; float:right;} .content-inner{height:100%; width:59%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display:none;}  #lnb.fixed{ width: 720px;} #suggest{width:628px;} .maintitleclass{font-size:22px;}}
+@media screen and (max-width: 575px) { .mainbody{ font-size: 18px; } #list{font-size:18px !important; padding:2%; padding-top:0%;} .content { height: auto;} .content-img{height:240px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} #lnb.fixed{ width: 100%;} .heart{float:right;}  .maintitleclass{font-size:18px;} }
+@media screen and (min-width: 576px) and (max-width: 767px) { .mainbody{ font-size: 16px; } #list{font-size:16px !important; padding-top:0%;} .content { height: 280px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display: none;} #lnb.fixed{ width: 100%;}  .maintitleclass{font-size:20px} }
+@media screen and (min-width: 768px) and (max-width: 991px) { .mainbody{font-size:18px;} #list{font-size:18px !important; padding-top:0%;} .content { height: 370px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display:none;}  #lnb.fixed{ width: 100%;} .maintitleclass{font-size:21px;} }
 @media screen and (min-width: 992px) and (max-width: 1199px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important;} .element{margin-bottom: 1.5%;} .content { height: auto; margin: 2%; margin-top:0%;} .content-img{height:180px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:960px;} #lnb.fixed{ width: 960px;} .heart{float:right;} #suggest{width:868px;} .maintitleclass{font-size:23px;}}
 @media screen and (min-width: 1200px) and (max-width: 1399px) { .mainbody{ font-size: 17px; } #list{font-size:15px !important;} .element{margin-bottom: 2%;} .content { height: auto; margin: 3%; margin-top:0%;} .content-img{height:200px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:1070px;} #lnb.fixed{ width: 1070px;} .heart{float:right;} #suggest{width:978px;} .maintitleclass{font-size:24px;}}
 @media screen and (min-width: 1400px) { .mainbody{ font-size: 17px; } #list{font-size:16px !important;} .element{margin-bottom: 2.5%;}  .content { height: auto; margin:3.5%; margin-top:0%;} .content-img{height:205px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:1100px;} #lnb.fixed{ width: 1100px;} .heart{float:right;} #suggest{width:1008px;} .maintitleclass{font-size:25px;} }
@@ -528,7 +525,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 <body>
 	<div id="gap" style="height:194.5px; display:none;"></div>
 	
-	<div class="container mainbody shadow" id="lnb" style="margin-bottom: 21px; border-top: none; border-top-left-radius: 0; border-top-right-radius: 0;">
+	<div class="container-fluid mainbody shadow" id="lnb" style="margin-bottom: 21px; border-top: none; border-top-left-radius: 0; border-top-right-radius: 0;">
 		
 		<div class="row" id="maintitle" style="position:relative; padding-top:25px; padding-bottom:25px; height:87.5px;">
 			<div class="col" style="text-align: center;">
@@ -593,7 +590,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 						document.getElementById('side-lg').style.display = 'block';
 					}
 					
-					$(window).resize(function(){
+ 					$(window).resize(function(){
 						if(window.innerWidth < 992){
 							document.getElementById('side-mobile').style.display = 'block';
 							document.getElementById('side-lg').style.display = 'none';
@@ -601,7 +598,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 							document.getElementById('side-mobile').style.display = 'none';
 							document.getElementById('side-lg').style.display = 'block';
 						}
-					});
+					}); 
 				</script>
 
 			</div>
@@ -625,7 +622,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 		
 	</div>
 	
-	<div class="container mainbody shadow" id="listdiv" style="margin-bottom: 0px; padding-bottom: 0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
+	<div class="container-fluid mainbody shadow" id="listdiv" style="margin-bottom: 0px; padding-bottom: 0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
 		<div class="row">
 			<h4 class="col-8 bold">
 				<span style="color:#d49466">중고거래&nbsp;>&nbsp;</span><span id="queryKeyword"></span>
@@ -746,7 +743,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 
 	</div>
 	<!-- 버튼 -->
-	<div class="container mainbody shadow" id="morediv" style="border-top:none; padding:0px; margin-top:0px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
+	<div class="container-fluid mainbody shadow" id="morediv" style="border-top:none; padding:0px; margin-top:0px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
 		<div onclick="moreResult(this);" style="text-align: center; cursor: pointer; padding-top:15px; padding-bottom:15px;">
 			<span class="more-text" style="display: block;">더보기</span>
 			<span class="align-middle fas fa-circle-notch fa-lg" style="display:none; color:#d49466;"></span>

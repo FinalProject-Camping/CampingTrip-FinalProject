@@ -120,7 +120,7 @@ body{font-family: NanumBarunGothic;}
 </head>
 <body>
 	<div style="text-align:center; background-color: gray; padding-top:18px; padding-bottom:10px;"><h5 class="bold" style="color:white; ">신고 사유 선택</h5></div>
-	<div class="container">
+	<div class="container-fluid">
 		
 		<div id="formdiv">
 		<form id="form1" name="form1" method="post" enctype="multipart/form-data">

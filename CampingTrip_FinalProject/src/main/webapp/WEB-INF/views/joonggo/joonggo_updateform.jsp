@@ -55,11 +55,12 @@
  font-family: 'NanumBarunGothic', sans-serif;
 }
 
-@media screen and (max-width: 767px) { #mainbody { font-size: 14px; } .title{font-size: 13pt;} }
-@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody { font-size: 16px; } .title{font-size: 14pt;} }
-@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody { font-size: 16px; } .title{font-size: 15pt;} #mainbody > div {margin-left:10%; margin-right:10%;}}
-@media screen and (min-width: 1200px) { #mainbody { font-size: 18px; } .title{font-size: 16pt;} .container{width:893px;}}
-
+@media screen and (max-width: 767px) { #mainbody { font-size: 18px; } .title{font-size: 20px;} }
+@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody { font-size: 18px; } .title{font-size: 20px;} }
+@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody { font-size: 16px; } .title{font-size: 15pt;} #mainbody{width:750px;}}
+@media screen and (min-width: 1200px) { #mainbody { font-size: 18px; } .title{font-size: 16pt;} #mainbody{width:893px;}}
+ .container-fluid{padding-right:0; padding-left:0;}
+ 
 body{background-color: #f8f9fa;}
 #mainbody{font-family: NanumBarunGothic; }
 .mainbody-inner{background-color: #FFF; padding: 5%;  border-radius:8px;}
@@ -276,7 +277,7 @@ body{background-color: #f8f9fa;}
 </head>
 <body>
 	<br>
-	<div class="container" id="mainbody">
+	<div class="container-fluid" id="mainbody">
 		<div class="mainbody-inner shadow-lg">
 	<!-- 폼 시작 -->
 		<form action="joonggo_update.do" method="post" name="form">
