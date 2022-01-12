@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="event"> <!-- interface dao에 적어둔 namespace와 동일 -->
+	
+	<resultMap type="eventDto" id="eventMap">
+		<result property="pointSeq" column="POINTSEQ"/>
+		<result property="pointId" column="POINTID"/>
+		<result property="pointDetail" column="POINTDETAIL"/>
+		<result property="pointGetDate" column="POINTGETDATE"/>
+		<result property="getPoint" column="GETPOINT"/>
+		<result property="usePoint" column="USEPOINT"/>
+		<result property="totalPoint" column="TOTALPOINT"/>
+		<result property="pointImg" column="POINTIMG"/>
+	</resultMap>
+	
+	<select id="selectList" parameterType="String" resultMap="eventMap">
+		SELECT POINTSEQ, ID, POINTDETAIL, POINTGETDATE, GETPOINT, TOTALPOINT, POINTIMG  
+		FROM ( select * from point order by pointGetDate desc )
+		<where>
+			<if test='regexp != ""'>
+				(
+				(REGEXP_LIKE(ID, #{regexp}))
+				OR
+				(REGEXP_LIKE(, #{regexp}))
+				OR
+				(REGEXP_LIKE(, #{regexp}))
+				)
+			</if>
+			<if test='true'>
+				AND ROWNUM <![CDATA[<=]]> 10
+			</if>
+		</where>	
+	</select>
+</mapper>

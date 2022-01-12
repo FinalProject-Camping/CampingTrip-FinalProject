@@ -138,8 +138,8 @@ a {
                 <li><a href="">캠핑예약</a></li>
                 <li><a href="joonggo_list.do?keyword=">중고거래</a></li>
                 <li><a href="">동행하기</a></li>
-                <li><a href="">이벤트</a></li>
-                <li><a href="">고객센터</a></li>
+                <li><a href="event.do">이벤트</a></li>
+                <li><a href="cscenter.do">고객센터</a></li>
             </ul>
 
 <c:set var="loginId" value='<%=session.getAttribute("id")%>' />
