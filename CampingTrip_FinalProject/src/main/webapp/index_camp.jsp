@@ -8,5 +8,6 @@
 </head>
 <body>
 	<a href="insertform_camp.do">camp_write</a>
+	<a href="camplist.do">캠핑리스트</a>
 </body>
 </html>

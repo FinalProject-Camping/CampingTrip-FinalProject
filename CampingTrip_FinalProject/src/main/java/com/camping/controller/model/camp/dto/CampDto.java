@@ -1,5 +1,6 @@
 package com.camping.controller.model.camp.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CampDto {
@@ -12,17 +13,56 @@ public class CampDto {
 	private String service;
 	private String intro;
 	private String rule;
-	private String phone;
-	private String email;
+	private String phone="";
+	private String email="";
+	private String tag="";
 	private int view_count;
 	private Date create_date;
+	private String thumbnail;
 	
 	public CampDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 	
+	public CampDto(int campno, String writer, String name, String camp_type, String address, String address_detail,
+			String service, String intro, String rule, String phone, String email, String tag, int view_count,
+			Date create_date, String thumbnail) {
+		super();
+		this.campno = campno;
+		this.writer = writer;
+		this.name = name;
+		this.camp_type = camp_type;
+		this.address = address;
+		this.address_detail = address_detail;
+		this.service = service;
+		this.intro = intro;
+		this.rule = rule;
+		this.phone = phone;
+		this.email = email;
+		this.tag = tag;
+		this.view_count = view_count;
+		this.create_date = create_date;
+		this.thumbnail = thumbnail;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
 
 	public int getCampno() {
 		return campno;
@@ -47,27 +87,6 @@ public class CampDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	
-
-	public CampDto(int campno, String writer, String name, String camp_type, String address, String address_detail,
-			String service, String intro, String rule, String phone, String email, int view_count, Date create_date) {
-		super();
-		this.campno = campno;
-		this.writer = writer;
-		this.name = name;
-		this.camp_type = camp_type;
-		this.address = address;
-		this.address_detail = address_detail;
-		this.service = service;
-		this.intro = intro;
-		this.rule = rule;
-		this.phone = phone;
-		this.email = email;
-		this.view_count = view_count;
-		this.create_date = create_date;
-	}
-
 
 
 	public String getCamp_type() {
@@ -153,6 +172,10 @@ public class CampDto {
 	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
 	}
-	
+	public String date_tostr() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		return simpleDateFormat.format(create_date);
+	}
 	
 }

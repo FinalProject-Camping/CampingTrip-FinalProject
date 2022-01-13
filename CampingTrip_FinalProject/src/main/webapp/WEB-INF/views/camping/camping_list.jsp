@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,12 +67,14 @@
 		
 		//검색기본날짜-현재날짜
 		var today = new Date();   
-
+		
 		var year = today.getFullYear(); // 년도
 		var month = today.getMonth() + 1;  // 월
 		var date = today.getDate();  // 날짜
 		
 		document.getElementById('input_calendar').value=(year + '/' + month + '/' + date);
+		
+		
 		
 		tablePagenation();
 	}
@@ -138,8 +141,6 @@
 	<br><br><br>
 	<div class="container" id="search_condition">
 		<form action="" method="">
-
-
 			<div class="category_div">
 				<span class="search_category">캠핑구분</span>
 				<div class="btn_element">
@@ -243,138 +244,20 @@
 	</div>
 	<br><br><br>
 	<div id="search_camping_list" class="container">
+		<c:forEach var="campDto" items="${camplist}">
 		<div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+          		<img class="bd-placeholder-img" width="350" height="250" src="${campDto.thumbnail }">
 			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static" onclick="location.href='camping_detail.jsp'">
-          		<h3 class="camping_name mb-0">KH 캠핑지</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
+        	<div class="camping_info col p-4 d-flex flex-column position-static" onclick="location.href='campdetail.do?campno=${campDto.campno}'">
+          		<h3 class="camping_name mb-0">${campDto.name}</h3>
+          		<div class="camping_addr mb-1 text-muted">${campDto.address}</div>
           		<br><br>
           		<span class="camping_price">₩200,000</span>
         	</div>
       	</div>
-      	<div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div><div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div><div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div><div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div><div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div><div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div><div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div><div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div><div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div><div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div><div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div><div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        	<div class="camping_pic col-auto d-none d-lg-block">
-          		<svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-			</div>
-        	<div class="camping_info col p-4 d-flex flex-column position-static">
-          		<h3 class="camping_name mb-0">캠핑명</h3>
-          		<div class="camping_addr mb-1 text-muted">서울특별시 캠핑구 캠핑동 12-12</div>
-          		<br><br>
-          		<span class="camping_price">₩150,000</span>
-        	</div>
-      	</div>
+      	</c:forEach>
+      	
       	<div id="pagination_div">
 			<ul class="pagination" id="numbers"></ul>
 		</div>

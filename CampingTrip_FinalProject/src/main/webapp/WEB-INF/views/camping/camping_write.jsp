@@ -346,13 +346,37 @@ textarea {
 	left:-100px;
 	object-fit:cover;
 }
+.black_overlay{
+        display: none;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        z-index:1001;
+        -moz-opacity: 0.8;
+        opacity:.80;
+        filter: alpha(opacity=80);
+    }
+    .white_content {
+        display: none;
+        position: absolute;
+        top: 25%;
+        left: 25%;
+        width: 50%;
+        height: 50%;
+        padding: 16px;
+        border: 2px solid green;
+        background-color: white;
+        z-index:1002;
+        overflow: auto;
+    }
 
 </style>
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						console.log("hi");
+	$(document).ready(function() {
+		console.log("hi");
 
 						/*=====[ Focus Contact2 ]*/
 						$('.input2').each(function() {
@@ -375,58 +399,14 @@ textarea {
 							console.log("hi");
 							$(this).on('')
 						});
-
-						/*==================================================================
-						[ Validate ]*/
-						var name = $('.validate-input input[name="name"]');
-						var email = $('.validate-input input[name="email"]');
-						var message = $('.validate-input textarea[name="message"]');
-
-						$('.validate-form')
-								.on(
-										'submit',
-										function() {
-											var check = true;
-
-											if ($(name).val().trim() == '') {
-												showValidate(name);
-												check = false;
-											}
-
-											if ($(email)
-													.val()
-													.trim()
-													.match(
-															/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
-												showValidate(email);
-												check = false;
-											}
-
-											if ($(message).val().trim() == '') {
-												showValidate(message);
-												check = false;
-											}
-
-											return check;
-										});
-
-						$('.validate-form .input2').each(function() {
-							$(this).focus(function() {
-								hideValidate(this);
-							});
-						});
-
-						function showValidate(input) {
-							var thisAlert = $(input).parent();
-
-							$(thisAlert).addClass('alert-validate');
-						}
-
-						function hideValidate(input) {
-							var thisAlert = $(input).parent();
-
-							$(thisAlert).removeClass('alert-validate');
-						}
+						
+						//화면 첫화면 설정
+						movePhase("A");
+						//file-delete 이벤트 추가
+						$("a[name='file-delete']").on("click", function(e) {
+					          e.preventDefault();
+					         deleteFile($(this));
+					   });
 					});
 
 	function daumAddress() {
@@ -459,11 +439,25 @@ textarea {
 		});
 
 		$('#phase_' + level).show();
+		$('#room_form').hide();
 	}
 	var openWin;
 	function openWindowPop(url, name) {
 		var options = 'top=10, left=10, width=600, height=600, status=no, menubar=no, toolbar=no, resizable=no';
 		openWin = window.open(url, name, options);
+	}
+	
+	//file 추가,삭제 함수
+	function addFile(){
+		var str="<div class='file-group'><input type='file' name='camp_image'><a href='#this' name='file-delete'>삭제</a></div>";
+		$("#file-list").append(str);
+		$("a[name='file-delete']").on("click",function(e){
+			e.preventDefault();
+			deleteFile($(this));
+		});
+	}
+	function deleteFile(obj){
+		obj.parent().remove();
 	}
 </script>
 </head>
@@ -472,7 +466,10 @@ textarea {
 		<div class="main_left">
 			<div class="main_img"></div>
 		</div>
+		
 		<div class="main_right">
+		<!-- form 태그 시작 -->
+		<form name="fileForm" action="insertcamp.do" method="post" enctype="multipart/form-data">
 			<div class="main_content container" id="phase_A">
 				<div class="row mt-3">
 					<div class="col-12 d-flex justify-content-end">
@@ -491,10 +488,11 @@ textarea {
 					</div>
 				</div>
 				<div class="row">
+					<input type="hidden" name='writer' value="admin">
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
-							<input class="input2" type="text" id="name" name="name">
+							<input class="input2" type="text" id="name" name="name" required>
 							<span class="focus-input2" data-placeholder="캠핑지 이름"></span>
 						</div>
 					</div>
@@ -503,10 +501,10 @@ textarea {
 							<div class="wrap-input2 flex-fill validate-input"
 								data-validate="Name is required">
 								<input class="input2" type="text" id="address" name="address"
-									readonly onclick="daumAddress()"><span
+									readonly onclick="daumAddress()" required><span
 									class="focus-input2" data-placeholder="캠핑지 주소"></span>
 							</div>
-							<button class="btn btn-outline-dark align-self-baseline mt-2"
+							<button type="button" class="btn btn-outline-dark align-self-baseline mt-2"
 								style="float: right;" onclick="daumAddress()">주소찾기</button>
 						</div>
 					</div>
@@ -514,7 +512,7 @@ textarea {
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
 							<input class="input2" type="text" id="address_detail"
-								name="address_detail"> <span class="focus-input2"
+								name="address_detail" required> <span class="focus-input2"
 								data-placeholder="상세주소"></span>
 						</div>
 					</div>
@@ -524,7 +522,7 @@ textarea {
 							style="border-bottom: 0px;" data-validate="Name is required">
 							<div id="type_blank"></div>
 							<input class="btn-check input2" type="checkbox" name="camp_type"
-								id="price_category1" value="option1"> <label
+								id="price_category1" value="option1" > <label
 								class="btn btn-outline-dark" for="price_category1">오토캠핑</label>
 
 							<input class="btn-check" type="checkbox" name="camp_type"
@@ -539,18 +537,18 @@ textarea {
 								class="focus-input2" id="span_type" data-placeholder="캠핑지 종류"></span>
 						</div>
 					</div>
-
 					<div class="col-md-12 d-flex justify-content-center">
-						<div class="wrap-input2 validate-input"
-							style="border-bottom: 0px;">
-							<input class="input2" type="file" id="campfile" name="campimages">
-
+						<div class="form-group wrap-input2" id="file-list">
+							<a href="#this" onclick="addFile()">이미지추가</a>
+							<div class="file-group">
+								<input type="file" name="camp_image"><a href="#this" name="file-delete">삭제</a>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 d-flex justify-content-center">
-						<button class="btn2" onclick="movePhase('B')">다음단계</button>
+						<button type="button" class="btn2" onclick="movePhase('B')">다음단계</button>
 					</div>
 				</div>
 
@@ -571,21 +569,21 @@ textarea {
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
-							<textarea class="input2" name="intro"></textarea>
+							<textarea class="input2" name="intro" required></textarea>
 							<span class="focus-input2" data-placeholder="캠핑지 소개"></span>
 						</div>
 					</div>
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
-							<textarea class="input2" name="service"></textarea>
+							<textarea class="input2" name="service" required></textarea>
 							<span class="focus-input2" data-placeholder="이용가능 서비스"></span>
 						</div>
 					</div>
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
-							<textarea class="input2" name="rule"></textarea>
+							<textarea class="input2" name="rule" required></textarea>
 							<span class="focus-input2" data-placeholder="캠핑지 이용수칙"></span>
 						</div>
 					</div>
@@ -596,11 +594,18 @@ textarea {
 								class="focus-input2" data-placeholder="연락처"></span>
 						</div>
 					</div>
+					<div class="col-md-12 d-flex justify-content-center">
+						<div class="wrap-input2 validate-input"
+							data-validate="Name is required">
+							<input class="input2" type="text" name="email"><span
+								class="focus-input2" data-placeholder="이메일"></span>
+						</div>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 d-flex justify-content-center">
-						<button class="btn2" onclick="movePhase('A')">이전단계</button>
-						<button class="btn2" onclick="movePhase('C')">다음단계</button>
+						<button type="button" class="btn2" onclick="movePhase('A')">이전단계</button>
+						<button type="button" class="btn2" onclick="movePhase('C')">다음단계</button>
 					</div>
 				</div>
 			</div>
@@ -617,7 +622,7 @@ textarea {
 				</div>
 				<div id="room_list" class="row d-flex">
 					<div class="add_room col-md-6"
-						onclick="openWindowPop('room_write.jsp','roomadd')">
+						onclick="openWindowPop('roominsertform.do','roomadd')">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
   <path
@@ -627,14 +632,21 @@ textarea {
 </svg>
 					</div>
 				</div>
+				<div id="room_form">
+				</div>
 				<div class="row">
 					<div class="col-md-12 d-flex justify-content-center">
-						<button class="btn2" onclick="movePhase('B')">이전단계</button>
-						<button class="btn2" onclick="movePhase('C')">등록하기</button>
+						<button type="button" class="btn2" onclick="movePhase('B')">이전단계</button>
+						<input type="submit" class="btn2" value="등록하기">
 					</div>
 				</div>
+			
 			</div>
+			
+		</form>
+		<!-- form 태그 종료 -->
 		</div>
 	</div>
+	
 </body>
 </html>

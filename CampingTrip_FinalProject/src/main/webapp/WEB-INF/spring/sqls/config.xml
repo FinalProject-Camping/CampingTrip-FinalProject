@@ -9,7 +9,13 @@
 		<typeAlias type="com.camping.controller.model.joonggo.dto.joonggo" alias="joonggoDto"/>
 		<typeAlias type="com.camping.controller.model.joonggo.dto.renew" alias="renewDto"/>
 		<typeAlias type="com.camping.controller.model.joonggo.dto.heart" alias="heartDto"/>
-    <typeAlias type="com.camping.controller.model.camp.dto.CampDto" alias="campDto"/>
+    	<typeAlias type="com.camping.controller.model.camp.dto.CampDto" alias="campDto"/>
+    	<typeAlias type="com.camping.controller.model.camp.dto.CampImageDto" alias="campImageDto"/>
+    	<typeAlias type="com.camping.controller.model.camp.dto.ReservationDto" alias="reservationDto"/>
+    	<typeAlias type="com.camping.controller.model.camp.dto.RoomDto" alias="roomDto"/>
+    	<typeAlias type="com.camping.controller.model.camp.dto.RoomImageDto" alias="roomImageDto"/>
+    	<typeAlias type="com.camping.controller.model.camp.dto.ReviewDto" alias="reviewDto"/>
+    	<typeAlias type="com.camping.controller.model.camp.dto.WriterInfo" alias="writerInfo"/>
 	</typeAliases>
 	
 	<mappers> <!-- mybatis mapper 등록 -->

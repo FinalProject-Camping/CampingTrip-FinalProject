@@ -3,12 +3,120 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="camp">
-  <select id="selectBlog" resultType="campDto">
-    select * from camp where id = #{id}
+
+	<resultMap type="writerInfo" id="WriterInfoMap">
+  		<result property="total" column="TOTAL"/>
+  		<result property="service" column="SERVICE"/>
+  		<result property="cleanliness" column="CLEANLINESS"/>
+  		<result property="cost" column="COST"/>
+  		<result property="location" column="LOCATION"/>
+  		<result property="totalcnt" column="TOTALCNT"/>
+  		<result property="man" column="MAN"/>
+  		<result property="woman" column="WOMAN"/>
+  		<result property="ten" column="TEN"/>
+  		<result property="twenty" column="TWENTY"/>
+  		<result property="thirty" column="THIRTY"/>
+  		<result property="fourty" column="FOURTY"/>
+  		<result property="fifty" column="FIFTY"/>
+  	</resultMap>
+  	
+  <select id="selectAllCamp" resultType="campDto">
+    SELECT * FROM CAMP
   </select>
-  <insert id="insert" parameterType="CampDto">
+  
+  <select id="selectOneCamp" parameterType="int" resultType="campDto">
+  	SELECT * FROM CAMP WHERE CAMPNO= #{campno}
+  </select>
+  
+  <select id="selectAllRoom" parameterType="int" resultType="roomDto">
+  	SELECT * FROM ROOM WHERE CAMPNO= #{campno}
+  </select>
+  
+  <select id="selectOneRoom" parameterType="int" resultType="roomDto">
+  	SELECT * FROM ROOM WHERE ROOMNO= #{roomno}
+  </select>
+  
+  <select id="selectAllImage" parameterType="int" resultType="campImageDto">
+  	SELECT * FROM CAMP_IMAGE WHERE CAMPNO=#{campno}
+  </select>
+  
+  <select id="selectAllRImage" parameterType="int" resultType="roomImageDto">
+  	SELECT * FROM ROOM_IMAGE WHERE ROOMNO=#{roomno}
+  </select>
+  
+  <select id="selectAllResevation" parameterType="int" resultType="reservationDto">
+  	SELECT * FROM RESERVATION WHERE ROOMNO=#{roomno}
+  </select>
+  
+  <select id="selectAllReview" parameterType="int" resultType="reviewDto">
+  	SELECT * FROM REVIEW WHERE CAMPNO=#{campno}
+  </select>
+  
+  <select id="selectOneReview" parameterType="int" resultType="reviewDto">
+  	SELECT * FROM REVIEW WHERE REVIEWNO=#{reviewno}
+  </select>
+  
+  <select id="collectWriterInfo" parameterType="int" resultMap="WriterInfoMap">
+  	SELECT ROUND(AVG(TOTAL),1) AS TOTAL,ROUND(AVG(SERVICE),1) AS SERVICE,
+  	ROUND(AVG(CLEANLINESS),1) AS CLEANLINESS, ROUND(AVG(COST),1) AS COST, ROUND(AVG(LOCATION),1) AS LOCATION,
+  	COUNT(*) AS TOTALCNT,
+  	COUNT(CASE WHEN MYSEX='남성' THEN 1 end) AS MAN,COUNT(CASE WHEN MYSEX='여성' THEN 1 end) AS WOMAN,
+	COUNT(CASE WHEN TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE),TRUNC(MYBIRTH))/12) BETWEEN 0 AND 19 THEN 1 END) AS TEN,
+	COUNT(CASE WHEN TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE),TRUNC(MYBIRTH))/12) BETWEEN 20 AND 29 THEN 1 END) AS TWENTY,
+	COUNT(CASE WHEN TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE),TRUNC(MYBIRTH))/12) BETWEEN 30 AND 39 THEN 1 END) AS THIRTY,
+	COUNT(CASE WHEN TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE),TRUNC(MYBIRTH))/12) BETWEEN 40 AND 49 THEN 1 END) AS FOURTY,
+	COUNT(CASE WHEN TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE),TRUNC(MYBIRTH))/12) > 50 THEN 1 END) AS FIFTY
+	FROM (SELECT TOTAL,SERVICE,CLEANLINESS,COST,LOCATION,MYSEX,MYBIRTH FROM MYMEMBER, REVIEW WHERE MYID=WRITER AND CAMPNO=#{campno})
+  </select>
+  
+  <insert id="insertCamp" parameterType="CampDto">
   	INSERT INTO CAMP
-  	VALUES(CAMPSEQ.NEXTVAL,#{writer},#{name},#{camp_type},#{address},#{address_detail},
-  	#{service},#{intro},#{rule},#{phone},#{email},0,SYSDATE)
+  	VALUES(CAMPSEQ.NEXTVAL,'admin',#{name},#{camp_type},#{address},#{address_detail},
+  	#{service},#{intro},#{rule},#{phone},#{email},#{tag},0,'/resources/img/camp_default.png',SYSDATE)
   </insert>
+  
+  <insert id="insertfile" parameterType="hashmap">
+  	INSERT INTO CAMP_IMAGE
+  	VALUES(IMAGE_SEQ.NEXTVAL,CAMPSEQ.CURRVAL,#{ORG_FILE_NAME},#{SAVE_FILE_NAME},#{FILE_SIZE},'N')
+  </insert>
+  
+  <insert id="insertRoom" parameterType="RoomDto">
+  	INSERT INTO ROOM
+  	VALUES(ROOMSEQ.NEXTVAL,CAMPSEQ.CURRVAL,#{room_name},#{room_price},#{guest_number},#{room_content},'/resources/img/room_default.png')
+  </insert>
+  
+  <insert id="insertRfile" parameterType="hashmap">
+  	INSERT INTO ROOM_IMAGE
+  	VALUES(RIMAGE_SEQ.NEXTVAL,ROOMSEQ.CURRVAL,#{ORG_FILE_NAME},#{SAVE_FILE_NAME},#{FILE_SIZE},'N')
+  </insert>
+  
+  <insert id="insertReservation" parameterType="reservationDto">
+  	INSERT INTO RESERVATION
+  	VALUES(RESERVATION_SEQ.NEXTVAL,#{campno},#{roomno},#{userid},#{user_name},#{user_contact},#{guest_number},#{check_in},#{check_out},'Y',SYSDATE)
+  </insert>
+  
+  <insert id="insertReview" parameterType="reviewDto">
+  	INSERT INTO REVIEW
+  	VALUES(REVIEWSEQ.NEXTVAL,#{campno},#{writer},#{title},#{content},#{service},#{cost},#{cleanliness},#{location},#{total},#{thumbnail},SYSDATE)
+  </insert>
+  
+  <update id="updateCampThumbnail" parameterType="String">
+  	UPDATE CAMP
+  	SET THUMBNAIL=(#{src})
+  	WHERE CAMPNO=(select campno from(select * from camp order by campno DESC)where ROWNUM = 1)
+  </update>
+	<update id="updateRoomThumbnail" parameterType="String">
+  		UPDATE ROOM
+  		SET THUMBNAIL=(#{src})
+  		WHERE ROOMNO=(select roomno from(select * from room order by roomno DESC)where ROWNUM = 1)
+  </update>
+  
+  <select id="chkReservation" parameterType="reservationDto" resultType="int">
+  	SELECT COUNT(*) FROM (SELECT * FROM RESERVATION WHERE ROOMNO=#{roomno})
+	WHERE (#{check_in} BETWEEN CHECK_IN AND CHECK_OUT) OR (#{check_out} BETWEEN CHECK_IN AND CHECK_OUT)
+  </select>
+  
+  <select id="newReservation" resultType="reservationDto">
+  	SELECT * FROM (SELECT * FROM RESERVATION ORDER BY RESERVNO DESC )WHERE ROWNUM=1
+  </select>
 </mapper>
