@@ -31,4 +31,5 @@ public interface dao {
 	public List<joonggo> person(String id);
 	public List<joonggo> selectlist_main();
 	public int report(report report);
+	public List<joonggo> setAddress(Map<String,Object> map);
 }

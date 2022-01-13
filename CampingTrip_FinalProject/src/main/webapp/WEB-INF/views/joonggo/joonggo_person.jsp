@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" type="text/css" href="resources/css/nanumfont.css">
+<link rel="stylesheet" type="text/css" href="resources/css/webfont.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -49,11 +49,11 @@
 	<div class="container-fluid" id="mainbody">
 		<div class="row">
 			<div class="col">
-				<h3><span style="color:#d49466;">${id }</span> 님의 중고매물</h3><br>
+				<h3><span style="color:#d49466; font-family: EliceDigitalBaeum_Bold;">${id }</span> 님의 중고매물</h3><br>
 			</div>
 		</div>
 		
-		<div class="row" style="margin-left:0; margin-right:0;">
+		<div class="row" style="margin-left:0; margin-right:0;  font-family: EliceDigitalBaeum_Bold;">
 			<div class="col-4">
 				<div class="menu menu-active">판매중인 물품(<span id="y"></span> 건)</div>
 			</div>

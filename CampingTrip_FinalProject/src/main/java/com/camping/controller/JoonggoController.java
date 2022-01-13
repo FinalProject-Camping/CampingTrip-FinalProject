@@ -31,10 +31,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.camping.controller.model.joonggo.biz.biz;
 import com.camping.controller.model.joonggo.dto.FtpClient;
+import com.camping.controller.model.joonggo.dto.LocationDistance;
 import com.camping.controller.model.joonggo.dto.joonggo;
+import com.camping.controller.model.joonggo.dto.kakao;
 import com.camping.controller.model.joonggo.dto.report;
 import com.camping.controller.model.member.dto.MemberDto;
 import com.google.gson.JsonObject;
+
+import oracle.net.aso.k;
 
 
 
@@ -653,15 +657,149 @@ public class JoonggoController {
 	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value="/addrSearch.do",method=RequestMethod.POST)
+	public Map<String, Object> addrSearch(String category, String status, String keyword, String address, int km){
+		logger.info("addrSearch");
+		
+		List<String> categories = category.length()==0? new ArrayList<String>():new ArrayList<String>(Arrays.asList(category.split(",")));
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("category", categories);
+		map.put("status", status);
+		map.put("regexp", getKeywords(keyword));
+		List<joonggo> list = biz.setAddress(map);
+		List<joonggo> res = new ArrayList<joonggo>();
+		
+		kakao k = new kakao();
+		LocationDistance ld = new LocationDistance();
+		
+		k.setAddress(address);
+		Map<String, Double> temp = k.getResult();
+		double lati = temp.get("latitude");
+		double longi = temp.get("longitude");
+		
+		for(int i = 0; i < list.size(); i++) {
+			
+			String place = list.get(i).getPlace();
+			k.setAddress(place);
+			Map<String, Double> tmp = k.getResult();
+			
+			double distance = ld.distance(lati, longi, tmp.get("latitude"), tmp.get("longitude"), "km");
+			System.out.println("거리" + distance);
+			System.out.println("km" + km);
+			
+			if(distance <= (double)km) {
+				res.add(list.get(i));
+			}
+		}
+		System.out.println("최종 리스트 사이즈" + res.size());
+		
+		Map<String,Object> maps = new HashMap<String,Object>();
+		maps.put("islast", !(res.size() >= 10));
+		
+		if(res.size() >= 10) {
+			res = res.subList(0, 9);
+		}
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String toJson = null;
+		try {
+			toJson = mapper.writeValueAsString(res);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    maps.put("data",toJson);
+	    
+	    return maps;
+	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value="/addrMore.do",method=RequestMethod.POST)
+	public Map<String, Object> addrMore(String category, String status, String keyword, String address, int km, String page){
+		logger.info("addrMore");
+		
+		List<String> categories = category.length()==0? new ArrayList<String>():new ArrayList<String>(Arrays.asList(category.split(",")));
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("category", categories);
+		map.put("status", status);
+		map.put("regexp", getKeywords(keyword));
+		List<joonggo> list = biz.setAddress(map);
+		List<joonggo> res = new ArrayList<joonggo>();
+		
+		kakao k = new kakao();
+		LocationDistance ld = new LocationDistance();
+		
+		k.setAddress(address);
+		Map<String, Double> temp = k.getResult();
+		double lati = temp.get("latitude");
+		double longi = temp.get("longitude");
+		
+		for(int i = 0; i < list.size(); i++) {
+			
+			String place = list.get(i).getPlace();
+			k.setAddress(place);
+			Map<String, Double> tmp = k.getResult();
+			
+			double distance = ld.distance(lati, longi, tmp.get("latitude"), tmp.get("longitude"), "km");
+			System.out.println("거리" + distance);
+			System.out.println("km" + km);
+			
+			if(distance <= (double)km) {
+				res.add(list.get(i));
+			}
+		}
+		int pageCount = Integer.parseInt(page);
+		res = res.subList(pageCount * 9, res.size());
+
+		Map<String,Object> maps = new HashMap<String,Object>();
+		maps.put("islast", !(res.size() >= 10));
+		
+		if(res.size() >= 10) {
+			res = res.subList(0, 9);
+		}
+		System.out.println("추가 리스트 사이즈" + res.size());
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String toJson = null;
+		try {
+			toJson = mapper.writeValueAsString(res);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    maps.put("data",toJson);
+	    
+	    return maps;
+	}	
 	
 	
-	
-	
-	
-	
-	
+	@RequestMapping("/joonggo_chatform.do")
+	public String chatform(HttpSession session, Model model, int seq, String writer, String chatid) {
+		logger.info("reportform");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		Map<String,Object> map = new HashMap<String,Object>();
+		if(sessiondto != null) {
+			if(!sessiondto.getMyid().equals(chatid)) {
+				return "redirect:error.do";
+			}else {
+				model.addAttribute("reportid", chatid);
+				model.addAttribute("writer", writer);
+				model.addAttribute("seq", seq);
+				return "joonggo/joonggo_chatform";
+			}
+		}else {
+			return "redirect:error.do";
+		}
+	}		
+
 	
 	
 	

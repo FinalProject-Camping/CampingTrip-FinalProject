@@ -18,7 +18,7 @@
 <title>상세보기</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" type="text/css" href="resources/css/nanumfont.css">
+<link rel="stylesheet" type="text/css" href="resources/css/webfont.css">
 <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -40,13 +40,13 @@
 .message{display:none; margin-top:1.5%;}
 a{text-decoration: none; color:black;}
 
-.place-btn{background-color: rgb(0, 191, 121); border: solid 2px rgb(0, 191, 121); border-radius: 15px; padding-right:12px; padding-left:12px; color : white; font-weight: bold; margin-right:8px;}
+.place-btn{background-color: #198754; border: solid 2px #198754; border-radius: 15px; padding-right:12px; padding-left:12px; color : white; font-weight: bold; margin-right:8px;}
 
-.btns{background-color: #FFFFFF; border: solid 1px rgb(0, 191, 121); border-radius: 4px; padding-right:3%; padding-left:3%; color : rgb(0, 191, 121); font-weight: bold; height: 50px;}
+.btns{background-color: #FFFFFF; border: solid 1px #198754; border-radius: 4px; padding-right:3%; padding-left:3%; color : #198754; font-weight: bold; height: 50px;}
 .btns:hover{
 	transition: all 0.3s;
-	border: solid 1px rgb(0, 191, 121);
-	background-color: rgb(0, 191, 121);
+	border: solid 1px #198754;
+	background-color: #198754;
 	color : white;
 }
 .btns-n{cursor:default !important; background-color: lightgray; border: solid 1px lightgray; border-radius: 5px; padding-right:3%; padding-left:3%; color : white; font-weight: bold; height: 50px;}
@@ -118,7 +118,7 @@ a{text-decoration: none; color:black;}
 
 /*rgb(255, 59, 0)*/
 /* toast */
-.toast-success {background-color: rgb(0, 191, 121) !important;}
+.toast-success {background-color: #198754 !important;}
 .toast-error {background-color: #BD362F !important;}
 .toast-info {background-color: #2F96B4 !important;}
 .toast-warning {background-color: #F89406 !important;}
@@ -271,6 +271,23 @@ const sessionid = '${sessiondto.myid}';
 	
 	
 	//general user
+	function chat(){
+		$.ajax({
+			url:"confirmsession.do",
+			method: "post",
+			success:function(data){ 
+				if(data.data === true){
+					popup("joonggo_chatform.do?seq=${dto.seq}&writer=${dto.id}&chatid=${sessiondto.myid}", "채팅하기",450,720);
+				}else{
+					alert('로그인이 필요합니다.');
+					location.href='loginform.do';
+				}
+			}
+		})
+	}
+	
+	
+	
 	function report(){
 		$.ajax({
 			url:"confirmsession.do",
@@ -284,9 +301,6 @@ const sessionid = '${sessiondto.myid}';
 				}
 			}
 		})
-		
-		
-
 	}
 
 	function addheart(ele){
@@ -390,7 +404,7 @@ const sessionid = '${sessiondto.myid}';
 	
 	    <div class="row">
 	        <div class="col-12">
-	        	<div class="categorydiv" style="font-size:16px;">
+	        	<div class="categorydiv" style="font-size:16px; font-family: EliceDigitalBaeum_Bold;">
 	        		<span class="bold" style="color:#d49466;">카테고리 > </span><span id=category>${dto.category }</span>
 	        	</div>
 	        	
@@ -537,7 +551,7 @@ const sessionid = '${sessiondto.myid}';
 	        				var issale = document.getElementById('issale');
 	        				if(trade === 'Y'){
 	        					issale.innerHTML = '[판매]';
-	        					issale.style.setProperty('color','rgb(0, 191, 121)');
+	        					issale.style.setProperty('color','#198754');
 	        				}else if(trade === 'N'){
 	        					issale.innerHTML = '[완료]';
 	        					issale.style.setProperty('color','gray');
@@ -661,7 +675,7 @@ const sessionid = '${sessiondto.myid}';
 	        				}	
 	        				</script>
 	        				<span class="align-middle">
-	        					<button id="chatbtn" onclick="" type="button" class="btns"><span class="align-middle fas fa-comments-dollar fa-lg"></span><span class="align-middle"> 구매 채팅</span></button>
+	        					<button id="chatbtn" onclick="chat()" type="button" class="btns"><span class="align-middle fas fa-comments-dollar fa-lg"></span><span class="align-middle"> 구매 채팅</span></button>
 	        				</span>
 	        			</div>
 	        			
@@ -715,7 +729,7 @@ const sessionid = '${sessiondto.myid}';
 	    	<div class="col">
 	    		<div style="padding:2%; padding-top:0;">
 				<div class="darkgray" style="background-color: rgb(255, 238, 219); border-radius: 8px; padding:2%;">
-		        	<b>📢 아래 사항에 유의해주세요.</b><br><br>
+		        	<b style="font-family: EliceDigitalBaeum_Bold;">📢 아래 사항에 유의해주세요.</b><br><br>
 					- 등록된 판매 물품과 내용은 개별 판매자가 등록한 것으로서, (주)캠핑트립은 등록을 위한 시스템만 제공하며 내용에 대하여 일체의 책임을 지지 않습니다.<br>
 		        	- 구매문의 채팅이나 전화 등을 이용해 연락하고 외부 메신저 이용 및 개인 정보 유출에 주의하세요.<br>
 					- 계좌이체 시 선입금을 유도할 경우 안전한 거래인지 다시 한번 확인하세요.<br>
@@ -748,7 +762,7 @@ const sessionid = '${sessiondto.myid}';
 		<div class="row">	
 			<div class="col">
 			<div style="padding-left: 2%; padding-right:2%;">
-			<div class="row">
+			<div class="row" style="font-family: EliceDigitalBaeum_Bold;">
 				<div class="col-8">
 					<h3>이런 매물은 어떠세요?</h3>
 					<br>
@@ -768,7 +782,7 @@ const sessionid = '${sessiondto.myid}';
 		
 			<div class="row" id="popular-hit-list" style="margin:0 auto;">
 				<div class="col-12">
-					<h5>최근 많은 회원님들이 조회했어요</h5>
+					<h5 style="font-family: EliceDigitalBaeum_Bold;">최근 많은 회원님들이 조회했어요</h5>
 					<br><br>
 				</div>
 				

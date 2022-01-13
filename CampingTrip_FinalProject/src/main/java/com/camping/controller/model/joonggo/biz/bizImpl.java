@@ -141,6 +141,11 @@ public class bizImpl implements biz{
 	public int report(report report) {
 		return dao.report(report);
 	}
+
+	@Override
+	public List<joonggo> setAddress(Map<String, Object> map) {
+		return dao.setAddress(map);
+	}
 	
 	
 	

@@ -15,7 +15,7 @@
 <title>물품 수정하기</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" type="text/css" href="resources/css/nanumfont.css">
+<link rel="stylesheet" type="text/css" href="resources/css/webfont.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -40,11 +40,10 @@ body{background-color: #f8f9fa;}
 .green{color:rgb(1, 176, 3);}
 .gray{color:gray;}
 .lightgray{color:lightgray;}
-.star{color:rgb(0, 191, 121); margin-left: 1%; font-weight: bold;}
+.star{color:#198754; margin-left: 1%; font-weight: bold;}
 .message{display:none; margin-top: 1.5%;}
-.title{margin-bottom: 1%;}
-#maintitle{ color:#ff8a3d}
-
+.title{margin-bottom: 1%;font-family: EliceDigitalBaeum_Bold;}
+#maintitle{ color:#ff8a3d;font-family: EliceDigitalBaeum_Bold;}
 
 #address{display:none; margin-top: 1%;}
 .addr-regist-btn{background-color: lightgray; border: solid 1px lightgray; border-radius: 5px; padding:1%; width:100px; color: white; height: auto; font-weight: bold; margin-right: 1%;}

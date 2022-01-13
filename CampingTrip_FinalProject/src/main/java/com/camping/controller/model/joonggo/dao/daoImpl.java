@@ -304,6 +304,18 @@ public class daoImpl implements dao{
 		
 		return res;
 	}
+
+	@Override
+	public List<joonggo> setAddress(Map<String, Object> map) {
+		List<joonggo> res = new ArrayList<joonggo>();
+		
+		try {
+			res = sqlSession.selectList(NAMESPACE + "setAddress", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 	
 
 
