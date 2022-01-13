@@ -119,4 +119,12 @@
   <select id="newReservation" resultType="reservationDto">
   	SELECT * FROM (SELECT * FROM RESERVATION ORDER BY RESERVNO DESC )WHERE ROWNUM=1
   </select>
+  <select id="searchRoom" parameterType="reservationDto" resultType="roomDto">
+  	SELECT * FROM ROOM
+	WHERE ROOMNO NOT IN(
+	SELECT ROOMNO FROM RESERVATION
+	WHERE CAMPNO=#{campno} AND 
+	(CHECK_IN BETWEEN #{check_in} AND #{check_out}) OR(CHECK_OUT BETWEEN  #{check_in} AND #{check_out}))
+	AND CAMPNO=#{campno}
+  </select>
 </mapper>

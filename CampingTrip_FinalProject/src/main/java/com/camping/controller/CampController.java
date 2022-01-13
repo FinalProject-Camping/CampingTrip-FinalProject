@@ -9,10 +9,13 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -168,12 +171,14 @@ public class CampController {
 		return "camping/review_write";
 	}
 	
-	@RequestMapping("test.do")
-	public String test() {
+	@RequestMapping(value="searchRoom.do",method=RequestMethod.POST)
+	@ResponseBody
+	public List<RoomDto> searchRoom(@RequestBody ReservationDto rsDto) throws Exception{
+		System.out.println(rsDto.toString());
 		
-		return "camping/reservation_check";
+		List<RoomDto> roomList = biz.searchRoom(rsDto);
+		return roomList;
 	}
-	
 	@RequestMapping("purchase.do")
 	public String purchase() {
 		return "camping/payment";

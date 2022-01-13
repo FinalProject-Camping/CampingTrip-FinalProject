@@ -170,6 +170,17 @@ a {
 	font-size: 16px;
 	font-weight: bold;
 }
+.room_list{
+	padding:10px;
+}
+.empty_result{
+	height:160px;
+	font-size:16px;
+	font-weight:bold;
+	border: 1px solid gray;
+	border-radius:1em;
+	margin:0px;
+}
 </style>
 <script type="text/javascript">
 	window.onload = function() {
@@ -393,6 +404,62 @@ a {
 	function priceLocale(price){
 		return price.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 	}
+	
+	function searchRoom(){
+		
+		var check_in = $("#check-in").val();
+		var check_out = $("#check-out").val();
+		
+		var searchVal = {
+				"campno":${campDto.campno},
+				"check_in":check_in,
+				"check_out":check_out
+		}
+		
+		if(check_in == null || check_in =="" || check_out==null || check_out==""){
+			alert("체크인, 체크아웃 날짜를 확인해주세요");
+		}else{
+			
+			$.ajax({
+				type:"post",
+				url:"searchRoom.do",
+				data:JSON.stringify(searchVal),
+				contentType:"application/json",
+				success:function(result){
+					var comments = "";
+					
+					if(result.length<1){
+						comments+="<div class='empty_result col-12 d-flex align-items-center justify-content-center'>";
+						comments+="검색한 날짜에 이용가능한 객실이 없습니다.";
+						comments+="</div>";
+					}else{
+						$(result).each(function(){
+							comments +='<div class="room_info col-md-6 mt-3">';
+							comments +='<div class="card mb-3" style="max-width: 540px;">';							
+							comments +='<div class="row g-0">';
+							comments +='	<div class="col-md-4">';
+							comments +='		<img src="'+this.thumbnail+'"';
+							comments +='			class="d-block w-100 h-100 rounded-start" alt="...">';
+							comments +='	</div>';
+							comments +='	<div class="col-md-8">';
+							comments +='		<div class="card-body">';
+							comments +='			<div class="room_title card-title"><a href="#" onclick="open_roomDetail('+this.roomno+')">'+this.room_name+'</a></div>';
+							comments +='			<div class="room_price">'+this.room_price+'원</div>';
+							comments +='			<div class="room_people">수용인원:'+this.guest_number+'</div>';
+							comments +='			<button type="button" class="btn btn-warning book_btn mb-1"';
+							comments +='			onclick="openWindowPop(\'reservationform.do?roomno='+this.roomno+'\', \'reservform\')">예약하기</button>';
+							comments +='			</div></div></div></div></div>';
+						});
+					}
+					$(".room_list").empty();
+					$(".room_list").append(comments);
+				},
+				error:function(){
+					alert("통신실패");
+				}
+			});
+		}
+	}
 </script>
 </head>
 <body>
@@ -508,7 +575,7 @@ a {
 										id="check-in"> <input type="text" class="form-control"
 										name="check-out" id="check-out">
 									<button type="button" class="btn btn-success" id="calendar_btn"
-										onclick="openWindowPop('test.do')">검색</button>
+										onclick="searchRoom()">검색</button>
 								</div>
 							</div>
 							<div class="col-md-6">

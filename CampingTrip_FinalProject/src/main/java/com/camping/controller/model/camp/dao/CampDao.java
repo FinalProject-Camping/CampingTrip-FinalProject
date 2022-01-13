@@ -270,4 +270,16 @@ public class CampDao {
 		}
 		return res;
 	}
+	
+	public List<RoomDto> searchRoom(ReservationDto dto){
+		List<RoomDto> res = new ArrayList<RoomDto>();
+		try {
+			res=sqlSession.selectList(NAMESPACE+"searchRoom",dto);
+		} catch (Exception e) {
+			System.out.println("[error]: search Room");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 }

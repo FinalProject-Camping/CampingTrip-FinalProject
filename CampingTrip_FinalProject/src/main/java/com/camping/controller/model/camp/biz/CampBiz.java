@@ -112,4 +112,8 @@ public class CampBiz {
 		return dao.newReservation();
 	}
 	
+	public List<RoomDto> searchRoom(ReservationDto dto){
+		return dao.searchRoom(dto);
+	}
+	
 }

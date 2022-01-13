@@ -142,12 +142,17 @@ public class ReservationDto {
 		return simpleDateFormat.format(create_date);
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "ReservationDto [reservno=" + reservno + ", roomno=" + roomno + ", userid=" + userid + ", user_name="
-				+ user_name + ", user_contact=" + user_contact + ", guest_number=" + guest_number + ", check_in="
-				+ check_in + ", check_out=" + check_out + ", status=" + status + ", create_date=" + create_date + "]";
+		return "ReservationDto [reservno=" + reservno + ", campno=" + campno + ", roomno=" + roomno + ", userid="
+				+ userid + ", user_name=" + user_name + ", user_contact=" + user_contact + ", guest_number="
+				+ guest_number + ", check_in=" + check_in + ", check_out=" + check_out + ", status=" + status
+				+ ", create_date=" + create_date + "]";
 	}
+
+	
 
 	
 }
