@@ -98,6 +98,34 @@
 		</where>
 	</select>
 	
+	<select id="setAddress" parameterType="hashmap" resultMap="joonggoMap">
+		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT, PLACE, DELIVERY  
+		FROM ( select * from joonggo order by regdate desc )
+		<where>
+			<if test='regexp != ""'>
+				(
+				(REGEXP_LIKE(TITLE, #{regexp}))
+				OR
+				(REGEXP_LIKE(CONTENT, #{regexp}))
+				OR
+				(REGEXP_LIKE(TAG, #{regexp}))
+				)
+			</if>
+			<if test='status != ""'>
+				AND TRADE = #{status}
+			</if>
+			<if test='category.size != 0'>
+				AND CATEGORY IN
+				<foreach collection="category" item="item" open="(" close=")" separator=",">
+					#{item}
+				</foreach>
+			</if>
+			<if test='true'>
+				AND DELIVERY != 'C'
+			</if>
+		</where>
+	</select>
+	
 	<select id="moreResult" parameterType="hashmap" resultMap="joonggoMap">
 		SELECT *
 		FROM (SELECT ROWNUM AS NUM, J.* FROM (
