@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,8 @@
 <title>캠핑지 등록</title>
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/resources/css/tagsinput.css">
+<script src="/resources/js/tagsinput.js" charset="UTF-8"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -73,7 +76,14 @@ h4 {
 .page_nav {
 	color: #181818;
 }
-
+.badge{
+	color:white;
+	background-color:#198754;
+	margin-right:3px;
+}
+#tags{
+	display:none;
+}
 /*input style*/
 input {
 	outline: none;
@@ -372,7 +382,10 @@ textarea {
         z-index:1002;
         overflow: auto;
     }
-
+	.bootstrap-tagsinput{
+		border:0px;
+		box-shadow: unset;
+	}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -470,6 +483,8 @@ textarea {
 		<div class="main_right">
 		<!-- form 태그 시작 -->
 		<form name="fileForm" action="insertcamp.do" method="post" enctype="multipart/form-data">
+			<c:set var="loginId" value='<%=session.getAttribute("id")%>' />
+			<input type="hidden" name="writer" value="${loginId}">
 			<div class="main_content container" id="phase_A">
 				<div class="row mt-3">
 					<div class="col-12 d-flex justify-content-end">
@@ -488,7 +503,6 @@ textarea {
 					</div>
 				</div>
 				<div class="row">
-					<input type="hidden" name='writer' value="admin">
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
@@ -522,17 +536,17 @@ textarea {
 							style="border-bottom: 0px;" data-validate="Name is required">
 							<div id="type_blank"></div>
 							<input class="btn-check input2" type="checkbox" name="camp_type"
-								id="price_category1" value="option1" > <label
+								id="price_category1" value="autocamping" > <label
 								class="btn btn-outline-dark" for="price_category1">오토캠핑</label>
 
 							<input class="btn-check" type="checkbox" name="camp_type"
-								id="price_category2" value="option2"> <label
+								id="price_category2" value="glamping"> <label
 								class="btn btn-outline-dark" for="price_category2">글램핑</label> <input
 								class="btn-check" type="checkbox" name="camp_type"
-								id="price_category3" value="option3"> <label
+								id="price_category3" value="caravan"> <label
 								class="btn btn-outline-dark" for="price_category3">카라반</label> <input
 								class="btn-check" type="checkbox" name="camp_type"
-								id="price_category4" value="option4"> <label
+								id="price_category4" value="pension"> <label
 								class="btn btn-outline-dark" for="price_category4">펜션</label> <span
 								class="focus-input2" id="span_type" data-placeholder="캠핑지 종류"></span>
 						</div>
@@ -599,6 +613,13 @@ textarea {
 							data-validate="Name is required">
 							<input class="input2" type="text" name="email"><span
 								class="focus-input2" data-placeholder="이메일"></span>
+						</div>
+					</div>
+					<div class="col-md-12 d-flex justify-content-center">
+						<div class="wrap-input2 validate-input"
+							data-validate="Name is required">
+							<span>태그입력</span>
+							<input class="input2" type="text" id="tags" name="tags" data-role="tagsinput">
 						</div>
 					</div>
 				</div>
