@@ -18,7 +18,7 @@ public class CampDto {
 	private String tags="";
 	private int view_count;
 	private double total_grade;
-	private String lowest_price;
+	private String lowest_price="0";
 	private Date create_date;
 	private String thumbnail;
 	
@@ -195,6 +195,12 @@ public class CampDto {
 		this.lowest_price = lowest_price;
 	}
 
+	public String lowestprice_tostr() {
+		int tmp = Integer.parseInt(lowest_price);
+		String format = String.format("%,d", tmp);
+		return format;
+	}
+	
 	@Override
 	public String toString() {
 		return "CampDto [campno=" + campno + ", writer=" + writer + ", name=" + name + ", camp_type=" + camp_type

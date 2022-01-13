@@ -72,7 +72,7 @@
   <insert id="insertCamp" parameterType="CampDto">
   	INSERT INTO CAMP
   	VALUES(CAMPSEQ.NEXTVAL,#{writer},#{name},#{camp_type},#{address},#{address_detail},
-  	#{service},#{intro},#{rule},#{phone},#{email},#{tags},0,0,' ','/resources/img/camp_default.png',SYSDATE)
+  	#{service},#{intro},#{rule},#{phone},#{email},#{tags},0,0,'0','/resources/img/camp_default.png',SYSDATE)
   </insert>
   
   <insert id="insertfile" parameterType="hashmap">
@@ -153,6 +153,6 @@
   </update>
   
   <select id="newstCampno" resultType="int">
-  	SELECT CAMPNO FROM CAMP WHERE ROWNUM=1 ORDER BY CAMPNO;
+  	SELECT CAMPNO FROM CAMP WHERE ROWNUM=1 ORDER BY CAMPNO DESC
   </select>
 </mapper>

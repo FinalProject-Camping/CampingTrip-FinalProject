@@ -312,6 +312,7 @@ public class CampDao {
 	public int updateLowestPrice() {
 		int res=0;
 		int campno=newstCampno();
+		System.out.println("campno="+campno);
 		try {
 			res=sqlSession.update(NAMESPACE+"updateLowestPrice",campno);
 		} catch (Exception e) {
@@ -323,7 +324,7 @@ public class CampDao {
 	public int newstCampno() {
 		int campno=0;
 		try {
-			campno=sqlSession.update(NAMESPACE+"newstCampno");
+			campno=sqlSession.selectOne(NAMESPACE+"newstCampno");
 		} catch (Exception e) {
 			System.out.println("[error]: find newstCampno");
 			e.printStackTrace();

@@ -295,7 +295,7 @@
           		<h3 class="camping_name mb-0">${campDto.name}</h3>
           		<div class="camping_addr mb-1 text-muted">${campDto.address}</div>
           		<br><br>
-          		<span class="camping_price">₩200,000</span>
+          		<span class="camping_price">￦${campDto.lowestprice_tostr()}</span>
         	</div>
       	</div>
       	</c:forEach>

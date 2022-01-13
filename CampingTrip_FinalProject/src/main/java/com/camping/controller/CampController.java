@@ -77,7 +77,7 @@ public class CampController {
 			}
 		}
 		int res2=biz.updateLowestPrice();
-		return "index_camp";
+		return "redirect:camplist.do";
 	}
 	
 	@RequestMapping("/roominsertform.do")
