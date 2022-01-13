@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <script src="http://kit.fontawesome.com/2d323a629b.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -130,21 +131,37 @@ a {
 	<header>
         <nav class="navbar">
             <div class="navbar_logo">
-                <a href=""><i class="fas fa-campground"></i>CampingTrip</a>
+                <a href="index.jsp"><i class="fas fa-campground"></i>CampingTrip</a>
             </div>
 
             <ul class="navbar_menu">
                 <li><a href="">캠핑예약</a></li>
-                <li><a href="">중고거래</a></li>
+                <li><a href="joonggo_list.do?keyword=">중고거래</a></li>
                 <li><a href="">동행하기</a></li>
-                <li><a href="">이벤트</a></li>
-                <li><a href="">고객센터</a></li>
+                <li><a href="event.do">이벤트</a></li>
+                <li><a href="cscenter.do">고객센터</a></li>
             </ul>
 
+<c:set var="loginId" value='<%=session.getAttribute("id")%>' />
+<c:set var="loginName" value='<%=session.getAttribute("name")%>' />
             <ul class="navbar_login">
-                <li><a href="">로그인</a></li>
-                <li>|</li>
-                <li><a href="">회원가입</a></li>
+            
+             <!-- loginId가 null이 아님 그리고 loginId가 ""이 아니어야 -->
+             <c:choose>
+             	<c:when test="${(loginId ne null and loginId ne '')}">
+	             	<li>${loginName}(${loginId})님 환영합니다.</li>
+	                <li>|</li>
+	                <li><a href="">마이페이지</a></li>
+	                <li>|</li>
+	                <li><a href="sessionLogout.do" onclick="">로그아웃</a></li>
+             	</c:when>
+             	<c:otherwise>
+	             	<li><a href="loginform.do">로그인</a></li>
+	                <li>|</li>
+	                <li><a href="registerform.do">회원가입</a></li>
+            	</c:otherwise>
+             </c:choose>
+            	 
             </ul>
 
             <a href="#" class="navbar_toggleBtn">

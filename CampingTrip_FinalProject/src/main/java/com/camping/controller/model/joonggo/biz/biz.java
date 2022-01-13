@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.camping.controller.model.joonggo.dto.joonggo;
+import com.camping.controller.model.joonggo.dto.report;
 
 public interface biz {
 	public List<joonggo> selectList(String regexp);
@@ -19,4 +20,7 @@ public interface biz {
 	public int rmheart(Map<String,Object> map);
 	public boolean confirmheart(Map<String,Object> map);
 	public List<joonggo> person(String id);
+	public List<joonggo> selectlist_main();
+	public int report(report report);
+	public List<joonggo> setAddress(Map<String,Object> map);
 }

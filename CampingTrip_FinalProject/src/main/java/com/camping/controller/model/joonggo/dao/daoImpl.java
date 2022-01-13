@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.camping.controller.model.joonggo.dto.heart;
 import com.camping.controller.model.joonggo.dto.joonggo;
 import com.camping.controller.model.joonggo.dto.renew;
+import com.camping.controller.model.joonggo.dto.report;
 
 @Repository
 public class daoImpl implements dao{
@@ -272,6 +273,44 @@ public class daoImpl implements dao{
 		
 		try {
 			res = sqlSession.selectList(NAMESPACE + "person", id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	@Override
+	public List<joonggo> selectlist_main() {
+		List<joonggo> res = new ArrayList<joonggo>();
+		
+		try {
+			res = sqlSession.selectList(NAMESPACE + "selectList_main");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	@Override
+	public int report(report report) {
+		
+		int res = 0;
+		
+		try {
+			res = sqlSession.update(NAMESPACE + "report", report);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public List<joonggo> setAddress(Map<String, Object> map) {
+		List<joonggo> res = new ArrayList<joonggo>();
+		
+		try {
+			res = sqlSession.selectList(NAMESPACE + "setAddress", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
