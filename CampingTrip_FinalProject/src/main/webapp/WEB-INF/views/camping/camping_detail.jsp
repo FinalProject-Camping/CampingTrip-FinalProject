@@ -183,7 +183,7 @@ a {
 }
 </style>
 <script type="text/javascript">
-	window.onload = function() {
+	window.addEventListener('load',function() {
 
 		//검색기본날짜-현재날짜
 		var today = new Date();
@@ -258,7 +258,7 @@ a {
 		making_doughnutChart();
 		
 		
-	}
+	})
 	
 	function making_barChart(){
 		var ctx = document.getElementById('barChart').getContext('2d'); var chart = new Chart(ctx, { 
@@ -463,7 +463,8 @@ a {
 </script>
 </head>
 <body>
-	<div class="main container">
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	<div class="main container mb-5">
 		<div class="camping_info row mt-3">
 			<div class="col-md-6">
 				<div id="carouselExampleIndicators" class="carousel slide"
@@ -512,7 +513,7 @@ a {
 											</div>
 										</c:when>
 										<c:otherwise>
-						<<div class="carousel-item">
+											<div class="carousel-item">
 												<img src="/upload/${idto.save_file_name}"
 													class="d-block w-100 rounded" alt="...">
 											</div>
@@ -729,6 +730,9 @@ a {
 								</div>
 								<c:choose>
 									<c:when test="${empty reviewlist }">
+										<div class='empty_result mb-3 col-12 d-flex align-items-center justify-content-center'>
+											등록된 리뷰가 아직 존재하지 않습니다.
+										</div>
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${reviewlist}" var="review">
@@ -758,5 +762,6 @@ a {
 			</div>
 		</div>
 	</div>
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

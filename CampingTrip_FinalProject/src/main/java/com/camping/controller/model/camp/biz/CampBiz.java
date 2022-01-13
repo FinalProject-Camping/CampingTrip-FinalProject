@@ -101,6 +101,7 @@ public class CampBiz {
 	}
 	
 	public int insertReview(ReviewDto dto) {
+		int res = dao.updateTotalgrade(dto.getCampno());
 		return dao.insertReview(dto);
 	}
 	
@@ -114,6 +115,24 @@ public class CampBiz {
 	
 	public List<RoomDto> searchRoom(ReservationDto dto){
 		return dao.searchRoom(dto);
+	}
+	
+	public int paymentChk(int reservno) {
+		return dao.paymentChk(reservno);
+	}
+	
+	public int lowPrice(int campno) {
+		return dao.lowPrice(campno);
+	}
+	
+	public int updateLowestPrice() {
+		
+		return dao.updateLowestPrice();
+	}
+	
+	public int viewPlus(int campno) {
+		
+		return dao.viewPlus(campno);
 	}
 	
 }

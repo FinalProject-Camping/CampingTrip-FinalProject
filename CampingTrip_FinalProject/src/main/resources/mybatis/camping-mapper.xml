@@ -71,8 +71,8 @@
   
   <insert id="insertCamp" parameterType="CampDto">
   	INSERT INTO CAMP
-  	VALUES(CAMPSEQ.NEXTVAL,'admin',#{name},#{camp_type},#{address},#{address_detail},
-  	#{service},#{intro},#{rule},#{phone},#{email},#{tag},0,'/resources/img/camp_default.png',SYSDATE)
+  	VALUES(CAMPSEQ.NEXTVAL,#{writer},#{name},#{camp_type},#{address},#{address_detail},
+  	#{service},#{intro},#{rule},#{phone},#{email},#{tags},0,0,' ','/resources/img/camp_default.png',SYSDATE)
   </insert>
   
   <insert id="insertfile" parameterType="hashmap">
@@ -119,6 +119,7 @@
   <select id="newReservation" resultType="reservationDto">
   	SELECT * FROM (SELECT * FROM RESERVATION ORDER BY RESERVNO DESC )WHERE ROWNUM=1
   </select>
+  
   <select id="searchRoom" parameterType="reservationDto" resultType="roomDto">
   	SELECT * FROM ROOM
 	WHERE ROOMNO NOT IN(
@@ -126,5 +127,32 @@
 	WHERE CAMPNO=#{campno} AND 
 	(CHECK_IN BETWEEN #{check_in} AND #{check_out}) OR(CHECK_OUT BETWEEN  #{check_in} AND #{check_out}))
 	AND CAMPNO=#{campno}
+  </select>
+  
+  <update id="paymentChk" parameterType="int">
+  	UPDATE RESERVATION SET STATUS='N' WHERE RESERVNO = #{reservno}
+  </update>
+  
+  <select id="lowPrice" parameterType="int" resultType="String">
+  	SELECT ROOM_PRICE FROM (SELECT * FROM ROOM WHERE CAMPNO=#{campno} ORDER BY CAST(ROOM_PRICE AS NUMBER)) WHERE ROWNUM=1;
+  </select>
+  
+  <update id="updateLowestPrice" parameterType="int">
+  	UPDATE CAMP 
+  	SET LOWEST_PRICE=(SELECT ROOM_PRICE FROM 
+  	(SELECT * FROM ROOM WHERE CAMPNO=#{campno} ORDER BY CAST(ROOM_PRICE AS NUMBER)) WHERE ROWNUM=1) 
+  	WHERE CAMPNO=#{campno}
+  </update>
+  
+  <update id="viewPlus" parameterType="int">
+  	UPDATE CAMP SET VIEW_COUNT=VIEW_COUNT+1 WHERE CAMPNO=#{campno}
+  </update>
+  
+  <update id="updateTotalgrade" parameterType="int">
+  	UPDATE CAMP SET TOTAL_GRADE=(SELECT ROUND(AVG(TOTAL),1) FROM REVIEW WHERE CAMPNO=#{campno}) WHERE CAMPNO=#{campno}
+  </update>
+  
+  <select id="newstCampno" resultType="int">
+  	SELECT CAMPNO FROM CAMP WHERE ROWNUM=1 ORDER BY CAMPNO;
   </select>
 </mapper>

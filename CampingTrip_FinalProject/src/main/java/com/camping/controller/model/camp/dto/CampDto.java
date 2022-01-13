@@ -15,8 +15,10 @@ public class CampDto {
 	private String rule;
 	private String phone="";
 	private String email="";
-	private String tag="";
+	private String tags="";
 	private int view_count;
+	private double total_grade;
+	private String lowest_price;
 	private Date create_date;
 	private String thumbnail;
 	
@@ -26,8 +28,8 @@ public class CampDto {
 	}
 	
 	public CampDto(int campno, String writer, String name, String camp_type, String address, String address_detail,
-			String service, String intro, String rule, String phone, String email, String tag, int view_count,
-			Date create_date, String thumbnail) {
+			String service, String intro, String rule, String phone, String email, String tags, int view_count,
+			double total_grade, String lowest_price, Date create_date, String thumbnail) {
 		super();
 		this.campno = campno;
 		this.writer = writer;
@@ -40,8 +42,10 @@ public class CampDto {
 		this.rule = rule;
 		this.phone = phone;
 		this.email = email;
-		this.tag = tag;
+		this.tags = tags;
 		this.view_count = view_count;
+		this.total_grade = total_grade;
+		this.lowest_price = lowest_price;
 		this.create_date = create_date;
 		this.thumbnail = thumbnail;
 	}
@@ -52,16 +56,6 @@ public class CampDto {
 
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
-	}
-
-	public String getTag() {
-		return tag;
-	}
-
-
-
-	public void setTag(String tag) {
-		this.tag = tag;
 	}
 
 	public int getCampno() {
@@ -88,17 +82,14 @@ public class CampDto {
 		this.name = name;
 	}
 
-
 	public String getCamp_type() {
 		return camp_type;
 	}
 
 
-
 	public void setCamp_type(String camp_type) {
 		this.camp_type = camp_type;
 	}
-
 
 
 	public String getAddress() {
@@ -177,5 +168,39 @@ public class CampDto {
 		
 		return simpleDateFormat.format(create_date);
 	}
-	
+
+	public String getTags() {
+		return tags;
+	}
+
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+	public double getTotal_grade() {
+		return total_grade;
+	}
+
+	public void setTotal_grade(double total_grade) {
+		this.total_grade = total_grade;
+	}
+
+
+	public String getLowest_price() {
+		return lowest_price;
+	}
+
+	public void setLowest_price(String lowest_price) {
+		this.lowest_price = lowest_price;
+	}
+
+	@Override
+	public String toString() {
+		return "CampDto [campno=" + campno + ", writer=" + writer + ", name=" + name + ", camp_type=" + camp_type
+				+ ", address=" + address + ", address_detail=" + address_detail + ", service=" + service + ", intro="
+				+ intro + ", rule=" + rule + ", phone=" + phone + ", email=" + email + ", tags=" + tags
+				+ ", view_count=" + view_count + ", total_grade=" + total_grade + ", lowest_price=" + lowest_price
+				+ ", create_date=" + create_date + ", thumbnail=" + thumbnail + "]";
+	}
 }

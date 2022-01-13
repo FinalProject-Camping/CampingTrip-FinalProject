@@ -140,10 +140,20 @@ textarea {
 			</div>
 		</div>
 		<div class="row mt-5">
-			<div class="col-md-12 d-flex justify-content-center">
-				<button type="button" class="btn2" onclick="requestPay()">결제</button>
-				<button class="btn2" onclick="window.close()">취소</button>
-			</div>
+			<c:choose>
+					<c:when test="${resrvDto.status eq 'Y'}">
+					<div class="col-md-12 d-flex justify-content-center">
+						<button type="button" class="btn2" onclick="requestPay()">결제</button>
+						<button class="btn2" onclick="window.close()">취소</button>
+					</div>
+					</c:when>
+					<c:otherwise>
+					<div class="col-md-12 d-flex justify-content-center">
+						<button type="button" class="btn2" onclick="window.close()">확인</button>
+					</div>
+					</c:otherwise>
+			</c:choose>
+			
 		</div>
 		<script>
 	function requestPay() {
@@ -154,7 +164,7 @@ textarea {
 	        pay_method: "card",
 	        merchant_uid: "${resrvDto.reservno}",
 	        name: "${roomDto.room_name}",
-	        amount: 100,
+	        amount: "${roomDto.room_price}",
 	        buyer_email: "gildong@gmail.com",
 	        buyer_name: "홍길동",
 	        buyer_tel: "010-4242-4242",
@@ -164,7 +174,7 @@ textarea {
 	        if (rsp.success) {
 	        	 // jQuery로 HTTP 요청
 	            jQuery.ajax({
-	                url: "{서버의 결제 정보를 받는 endpoint}", // 예: https://www.myservice.com/payments/complete
+	                url: "paymentCheck.do?reservno=${resrvDto.reservno}", // 예: https://www.myservice.com/payments/complete
 	                method: "POST",
 	                headers: { "Content-Type": "application/json" },
 	                data: {
@@ -176,6 +186,7 @@ textarea {
 	            })
 	            
 	            alert("결제가 완료되었습니다.");
+	            location.reload();
 	          } else {
 	            alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
 	          }

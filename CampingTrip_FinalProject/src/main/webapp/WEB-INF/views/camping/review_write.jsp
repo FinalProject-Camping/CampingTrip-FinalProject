@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,7 +104,8 @@ textarea {
 	<div class="container">
 		<form action="reviewwriteres.do" method="post">
 		<input type="hidden" name="campno" value="${campno}">
-		<input type="hidden" name="writer" value="ADMIN3">
+		<c:set var="loginId" value='<%=session.getAttribute("id")%>' />
+		<input type="hidden" name="writer" value="${loginId}">
 		<div class="row mt-3">
 			<div class="title">리뷰작성</div>
 		</div>

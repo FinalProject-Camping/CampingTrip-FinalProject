@@ -223,7 +223,8 @@ document.addEventListener('DOMContentLoaded', function() {
 				<form action="reservationres.do" method="post">
 					<input type="hidden" name="roomno" value="${roomDto.roomno}">
 					<input type="hidden" name="campno" value="${roomDto.campno}">
-					<input type="hidden" name="userid" value="ADMIN1">
+					<c:set var="loginId" value='<%=session.getAttribute("id")%>' />
+					<input type="hidden" name="userid" value="${loginId}">
 					<div class="mt-3 reserv_row d-flex">
 						<div>
 							<div class="reserv_column">체크인</div>

@@ -1,6 +1,8 @@
 package com.camping.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,8 +10,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +28,7 @@ import com.camping.controller.model.camp.dto.CampDto;
 import com.camping.controller.model.camp.dto.ReservationDto;
 import com.camping.controller.model.camp.dto.ReviewDto;
 import com.camping.controller.model.camp.dto.RoomDto;
+import com.camping.controller.model.member.dto.MemberDto;
 
 @Controller
 public class CampController {
@@ -41,7 +46,7 @@ public class CampController {
 	
 	@RequestMapping(value="/insertcamp.do", method=RequestMethod.POST)
 	public String insertCamp(CampDto dto, MultipartHttpServletRequest mRequest, RoomDto rdto) throws Exception {
-		 System.out.println(dto.getName());
+		 System.out.println(dto.toString());
 		 int res = biz.insertCamp(dto);
 		 System.out.println("res:"+res);
 		 
@@ -71,7 +76,7 @@ public class CampController {
 				biz.insertRFiles(parseFileInfo(rfileList));
 			}
 		}
-		 
+		int res2=biz.updateLowestPrice();
 		return "index_camp";
 	}
 	
@@ -89,6 +94,7 @@ public class CampController {
 	
 	@RequestMapping("/campdetail.do")
 	public String campdetail(Model model,int campno) {
+		int res= biz.viewPlus(campno);
 		model.addAttribute("campDto", biz.selectOneCamp(campno));		
 		model.addAttribute("imagelist",biz.selectAllImage(campno));		
 		model.addAttribute("roomlist", biz.selectAllRoom(campno));
@@ -105,14 +111,19 @@ public class CampController {
 	}
 	
 	@RequestMapping("reservationres.do")
-	public String reservationRes(ReservationDto rsvdto) {
+	public String reservationRes(ReservationDto rsvdto,HttpServletResponse response) throws IOException {
 		
 		int res=biz.insertReservation(rsvdto);
 		
 		//예약중복
 		if(res==-77) {
 			System.out.println("날짜중복");
-			return "redirect:reservationform.do?roomno="+rsvdto.getRoomno();
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('선택한 날짜는 이미 예약되었습니다.'); history.go(-1);</script>");
+            out.flush();
+
+			return "";
 		}//등록실패
 		else if(res<0){
 			System.out.println("등록실패");
@@ -179,10 +190,35 @@ public class CampController {
 		List<RoomDto> roomList = biz.searchRoom(rsDto);
 		return roomList;
 	}
-	@RequestMapping("purchase.do")
-	public String purchase() {
-		return "camping/payment";
+	
+	@RequestMapping(value="paymentCheck.do",method=RequestMethod.POST)
+	@ResponseBody
+	public int paymentCheck(int reservno) {
+		System.out.println("reservno:"+reservno);
+		int res = biz.paymentChk(reservno);
+		return res;
 	}
+	
+	@RequestMapping("test.do")
+	public String purchase() {
+		return "camping/test";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/loginChk.do",method=RequestMethod.POST)
+	public Map<String,Object> loginChk(HttpSession session) {
+		
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("data", sessiondto != null); //sessiondto != null
+
+		if(sessiondto != null) {
+	    	map.put("penalty", sessiondto.getMypenalty());
+	    }
+		return map;
+	}
+	
 	private List<Map<String,Object>> parseFileInfo(List<MultipartFile> files) throws Exception{
 		
 		List<Map<String,Object>> fileList = new ArrayList<Map<String,Object>>();

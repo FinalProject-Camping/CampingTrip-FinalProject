@@ -31,6 +31,7 @@
 #search_condition {
 	background-color: #f3f3df;
 	border-radius: 1em;
+	padding:10px;
 }
 
 .category_div {
@@ -60,10 +61,24 @@
 .camping_info{
 	cursor:pointer;
 }
+.side-btn{
+	background-color: white;
+	border: solid 1px darkgray;
+	border-radius: 25px;
+	padding-right: 10px;
+	padding-left: 10px;
+	height: 40px;
+}
+.side-btn:hover{
+	transition: all 0.3s;
+	border: solid 1px #d49466;
+	background-color: #d49466;
+	color : white;
+}
 </style>
 
 <script type="text/javascript">
-	window.onload=function(){
+	window.addEventListener('load',function() {
 		
 		//검색기본날짜-현재날짜
 		var today = new Date();   
@@ -77,7 +92,7 @@
 		
 		
 		tablePagenation();
-	}
+	})
 
 	function tablePagenation(){
 		/*
@@ -135,11 +150,34 @@
 			displayRows(index-1);
 		});
 	}
+	function moveToCampwrite(){
+		
+			//로그인이 없거나 페널티가 있는경우 안되게
+			$.ajax({
+				url:"loginChk.do",
+				method: "post",
+				success:function(data){ 
+					if(data.data === true){
+						
+						location.href='insertform_camp.do';
+
+					}else{
+						if(confirm("로그인이 필요한 작업입니다. 로그인 하시겠습니까?")){
+						location.href='loginform.do';
+						}else{
+							
+						}
+					}
+				}
+			})
+		
+	}
 </script>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<br><br><br>
-	<div class="container" id="search_condition">
+	<div class="container"><div id="search_condition">
 		<form action="" method="">
 			<div class="category_div">
 				<span class="search_category">캠핑구분</span>
@@ -242,7 +280,11 @@
 			</div>
 		</form>
 	</div>
-	<br><br><br>
+	<div class="row mt-3 mb-3">
+		<div class="col-md-12 d-flex justify-content-end">
+			<button type="button" class="side-btn" onclick="moveToCampwrite()">캠핑지 등록</button>
+		</div>
+	</div>
 	<div id="search_camping_list" class="container">
 		<c:forEach var="campDto" items="${camplist}">
 		<div class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -262,6 +304,7 @@
 			<ul class="pagination" id="numbers"></ul>
 		</div>
 	</div>
-	
+	</div>
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

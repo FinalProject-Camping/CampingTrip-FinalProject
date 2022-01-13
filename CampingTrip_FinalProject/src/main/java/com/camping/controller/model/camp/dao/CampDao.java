@@ -282,4 +282,75 @@ public class CampDao {
 		
 		return res;
 	}
+	
+	public int paymentChk(int reservno) {
+		int res = 0;
+		
+		try {
+			res=sqlSession.update(NAMESPACE+"paymentChk",reservno);
+		} catch (Exception e) {
+			System.out.println("[error]: update paymentStatus");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	public int lowPrice(int campno) {
+		int res = 0;
+		
+		try {
+			res=sqlSession.selectOne(NAMESPACE+"lowPrice",campno);
+		} catch (Exception e) {
+			System.out.println("[error]: select lowPrice");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	public int updateLowestPrice() {
+		int res=0;
+		int campno=newstCampno();
+		try {
+			res=sqlSession.update(NAMESPACE+"updateLowestPrice",campno);
+		} catch (Exception e) {
+			System.out.println("[error]: update lowPrice");
+			e.printStackTrace();
+		}
+		return res;
+	}
+	public int newstCampno() {
+		int campno=0;
+		try {
+			campno=sqlSession.update(NAMESPACE+"newstCampno");
+		} catch (Exception e) {
+			System.out.println("[error]: find newstCampno");
+			e.printStackTrace();
+		}
+		return campno;
+	}
+	public int viewPlus(int campno) {
+		int res=0;
+		
+		try {
+			res=sqlSession.update(NAMESPACE+"viewPlus",campno);
+		} catch (Exception e) {
+			System.out.println("[error]: update view");
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public int updateTotalgrade(int campno) {
+		int res=0;
+		
+		try {
+			res=sqlSession.update(NAMESPACE+"updateTotalgrade",campno);
+		} catch (Exception e) {
+			System.out.println("[error]: update Totalgrade");
+			e.printStackTrace();
+		}
+		return res;
+	}
 }
