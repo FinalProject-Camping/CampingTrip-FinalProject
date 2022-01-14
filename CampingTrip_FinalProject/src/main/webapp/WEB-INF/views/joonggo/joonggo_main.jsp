@@ -423,7 +423,7 @@ let km = '';
 		}
 		var child = arr[count];
 		
-		$(child).animate({opacity:'1'}, 120, ()=>{
+		$(child).animate({opacity:'1'}, 110, ()=>{
 			effect(count + 1, arr);
 		});
 	}

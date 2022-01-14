@@ -19,6 +19,7 @@
 
 <style type="text/css">
 body{font-family: NanumBarunGothic;}
+.container-fluid{padding:0;}
 .chat-header{
 	height:50px;
 	width:100%;
@@ -39,11 +40,10 @@ body{font-family: NanumBarunGothic;}
 		<div class="chat-body">
 				<div class="row" style="">
 					<div class="col-12" style="" >
-						<div style='width:100%; height:500px; border-radius: 5px; background-color: rgb(99, 170, 255); padding:5px;'>
+						<div style='width:100%; height:500px; background-color: rgb(99, 170, 255); padding:5px;'>
 							ㅇ라ㅓㅣㄴ아러먀ㅣㅈ더리나어랴미더리ㅓㄴ야ㅣ러ㅣㄴ야러미냥러ㅣㅁ야너림냥러ㅣㄴ아러ㅣ냐더sdfslkdfjlskdfjsldifslieflsiesfldkflasdfsdfsefse
 						</div>
 					</div>
-
 				</div>
 		
 		
