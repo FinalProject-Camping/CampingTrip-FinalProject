@@ -54,7 +54,7 @@
 	<!-- ID로 회원정보 조회 -->
 	<select id="select" parameterType="String" resultType="memberDto">
 		SELECT 
-			myno, myid, myname, myaddr, myphone, myemail, mybirth, mysex
+			myno, myid, myname, myaddr, myphone, myemail, mybirth, mysex, myrole
 		FROM MYMEMBER
 		WHERE MYID = #{myid}
 	</select>
@@ -69,6 +69,12 @@
 		WHERE MYNO = #{myno}		
 	</update>
 
+	<!-- 활성화여부 'N'으로 수정 -->
+	<update id="enabledUpdate" parameterType="memberDto">
+		UPDATE MYMEMBER
+		SET MYENABLED = 'N'
+		WHERE MYID=#{myid}
+	</update>
 	
 	
 </mapper>

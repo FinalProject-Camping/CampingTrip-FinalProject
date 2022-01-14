@@ -10,4 +10,5 @@ public interface MemberBiz {
 	public Integer resetPw(MemberDto dto);
 	public MemberDto select(String memberId);
 	public int update(MemberDto dto);
+	public int enabledUpdate(MemberDto dto);
 }

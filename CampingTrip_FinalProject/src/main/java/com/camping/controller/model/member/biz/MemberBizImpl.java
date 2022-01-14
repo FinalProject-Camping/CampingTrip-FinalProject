@@ -47,4 +47,9 @@ public class MemberBizImpl implements MemberBiz {
 	public int update(MemberDto dto) {
 		return dao.update(dto);
 	}
+	
+	@Override
+	public int enabledUpdate(MemberDto dto) {
+		return dao.enabledUpdate(dto);
+	}
 }

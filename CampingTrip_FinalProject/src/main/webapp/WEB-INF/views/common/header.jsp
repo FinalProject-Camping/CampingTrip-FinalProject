@@ -19,6 +19,48 @@ window.onload = function(){
 		icons.classList.toggle('active');
 	});
 }
+
+	function ajaxEnabledUpdate(){
+	console.log("fff");
+	//회원정보 변경하기		
+				$.ajax({
+				type:"post",
+				url:"ajaxEnabledUpdate.do",
+				contentType:"application/json",
+				dataType:"json",
+				success:function(msg){
+					if(msg.check==true){
+						alert("회원탈퇴가 완료되었습니다.");
+						location.href="/"					
+					}else{
+						alert("회원탈퇴에 실패했습니다.");
+					}
+				},
+				error:function(){
+					alert("통신 실패");
+				}
+			});	
+		
+}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 </script>
 
 <style type="text/css">
@@ -144,17 +186,19 @@ a {
 
 <c:set var="loginId" value='<%=session.getAttribute("id")%>' />
 <c:set var="loginName" value='<%=session.getAttribute("name")%>' />
+<c:set var="loginRole" value='<%=session.getAttribute("role") %>' />
             <ul class="navbar_login">
             
              <!-- loginId가 null이 아님 그리고 loginId가 ""이 아니어야 -->
              <c:choose>
              	<c:when test="${(loginId ne null and loginId ne '')}">
-	             	<li>${loginName}(${loginId})님 환영합니다.</li>
+	             	<li>${loginRole} ${loginName}(${loginId})님 환영합니다.</li>
 	                <li>|</li>
 	                <li><a href="">마이페이지</a></li>
 	                <li>|</li>
 	                <li><a href="sessionLogout.do" onclick="">로그아웃</a></li>
              		<li><a href="memberDetail.do" onclick="">회원정보보기</a></li>
+             		<li><a href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
              	
              	</c:when>
              	<c:otherwise>
