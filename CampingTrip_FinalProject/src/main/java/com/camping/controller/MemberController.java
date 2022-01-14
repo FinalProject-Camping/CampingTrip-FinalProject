@@ -1,19 +1,26 @@
 package com.camping.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.camping.controller.model.joonggo.dto.joonggo;
 import com.camping.controller.model.member.biz.MemberBiz;
 import com.camping.controller.model.member.dto.MemberDto;
 
@@ -215,7 +222,6 @@ public class MemberController {
 
 		//화면에서 넘어온 password 암호화하기
 		dto.setMypw(passwordEncoder.encode(dto.getMypw()));
-		dto.setMyrole("USER");
 		dto.setMybirth(dto.getMybirth().replaceAll("-", ""));
 		Boolean check = false;
 		
@@ -247,4 +253,63 @@ public class MemberController {
 		
 	}
 	
+
+	/**
+	 * 회원상세정보 조회
+	 * @param session 
+	 * @param id 
+	 */
+	@RequestMapping("/memberDetail.do")
+	public String memberDetail(Model model, HttpSession session) {
+		logger.info("DETAIL");
+		
+		//1.로그인 정보에서 아이디 가져오기
+		String loginId = session.getAttribute("id").toString();
+
+		//2.받아온 아이디로 회원정보 조회
+		MemberDto dto = biz.select(loginId);
+		
+		//3.조회한 회원정보를 화면에 넘겨준다
+		model.addAttribute("memberInfo",dto);
+		
+		return "member/memberDetail";
+		
+		
+	}
+	
+	
+	
+	/**
+	 * 회원상세정보 조회
+	 * @param session 
+	 * @param id 
+	 */
+	@RequestMapping("/ajaxMemberUpdate.do")
+	@ResponseBody
+	public Map<String, Boolean> ajaxMemberUpdate(Model model, HttpSession session, @RequestBody MemberDto dto) {
+		logger.info("UPDATE");
+
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		Boolean check = false;
+		
+		int res = 0;
+		
+		//pw를 암호화하여 db에 담기
+		dto.setMypw(passwordEncoder.encode(dto.getMypw()));
+		
+		res = biz.update(dto);
+		
+		if(res>0) {
+			//성공
+			check=true;
+		}else {
+			check=false;
+		}
+
+		map.put("check", check);
+		
+		return map;
+		
+	}
+		
 }
