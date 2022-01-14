@@ -111,5 +111,20 @@ public class MemberDaoImpl implements MemberDao {
 		
 	}	
 	
+	//활성화 여부 수정
+	public int enabledUpdate(MemberDto dto) {
+		
+		int res = 0;
+		
+		try {
+			res=sqlSession.update(NAMESPACE+"enabledUpdate", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+		
+	}
+	
 
 }

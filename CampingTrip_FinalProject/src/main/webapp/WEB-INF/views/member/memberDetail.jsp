@@ -112,7 +112,7 @@
 </head>
 <style type="text/css">
 .center{
-	margin: 4em auto;
+	margin: 3em auto;
 }
 </style>
 
@@ -181,23 +181,27 @@
 				<input type="text" name="myaddr" id="myaddr" value='${memberInfo.myaddr}'
 				style="width:300px; height: 40px; font-size: 10pt;" required>
 			</p>
+						
+			<p>
+			<div style="display:inline-block;">
+					<div style="text-align:left; font-size: 12pt;">회원구분</div>
+					<input type="text" disabled id="myrole" name="myrole" value='${memberInfo.myrole}'
+					style="width:300px; height: 40px; font-size: 10pt;" required readonly="readonly">
+			</div>
+			</p>
+		</form>	
+			<br>
+			<br>
 			
-<%-- 		<div style="width:40%; height:50px; float:left; margin-top:30px;" align="center" >
-					<input type="radio" name="mysex" value="남성" checked='checked' readonly="readonly" value='${mysex}'>남 &nbsp;
-					<input type="radio" name="mysex" value="여성" readonly="readonly" value='${mysex}'>여
-				</div>
---%>
-
+			<p>
  			<div class="d-md-flex justify-content-md-end" style= "float:left;">
 				<button class="btn text-white" style= "background-color:#d49466; width:100px;" onclick="window.history.back();">취소</button>
 			</div>
-			
-			<p>
-		</form>	
 			<div class="d-md-flex justify-content-md-end" style="float:right; display:inline-block;">
 				<button  class="btn text-white" style="background-color:#198754; width:100px;" onclick="ajaxMemberUpdate();">변경하기</button>
 			</div>
 			</p>
+			
 			<br>
 			<br>
 			<br>

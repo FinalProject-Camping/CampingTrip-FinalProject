@@ -36,8 +36,15 @@ public class MemberController {
 	BCryptPasswordEncoder passwordEncoder;
 	
 	@RequestMapping("/loginform.do")
-	public String loginForm() {
+	public String loginForm(HttpSession session) {
 		logger.info("LOGIN FORM");
+		
+		//로그인 상태에서 메인으로 이동(리다이렉트)
+		if(session.getAttribute("id") != null && session.getAttribute("id") != "") {
+			return "redirect:/";
+		}
+		
+		
 		return "member/memberLogin";
 	}
 	
@@ -122,7 +129,6 @@ public class MemberController {
 		logger.info("LOGIN");
 		//@RequestBody : request로 넘어오는 데이터를 java객체
 		//@ResponseBody : java객체를 response에 binding
-		
 		MemberDto res = biz.login(dto);
 		
 		boolean check = false;
@@ -132,6 +138,8 @@ public class MemberController {
 				session.setAttribute("login", res);
 				session.setAttribute("id", res.getMyid());
 				session.setAttribute("name", res.getMyname());
+				session.setAttribute("role", res.getMyrole());
+
 				
 				check=true;
 			}
@@ -174,40 +182,18 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping("/registerform.do")
-	public String memberInsertForm() {
-		return "member/memberRegister";
-	}
-	
-
-	
-	/**
-	 * 삭제예정
-	 * @return
-	 */
-	@RequestMapping("/nextRegisterForm.do")
-	public String nextMemberInsertForm() {
-		return "member/nextMemberRegister";
-	}
-	
-	/**
-	 * 삭제예정
-	 * @param dto
-	 * @return
-	 */
-	@RequestMapping("/register.do")
-	public String memberInsert(MemberDto dto) {
-
-		//화면에서 넘어온 password 암호화하기
-		dto.setMypw(passwordEncoder.encode(dto.getMypw()));
-		System.out.println(dto.getMypw());
-		//가입(인서트)성공시 로그인화면으로 이동하고 실패시 다시가입화면으로 이동
-		if(biz.insert(dto)>0) {
-			return "redirect:loginform.do";
-		}else {
-			return "redirect:registerform.do";
+	public String memberInsertForm(HttpSession session, Model model) {
+		
+		if("사용자".equals(session.getAttribute("role")) || "판매자".equals(session.getAttribute("role"))){
+			return "redirect:/";
+		}else if("관리자".equals(session.getAttribute("role"))){
+			model.addAttribute("adminRole","관리자");
 		}
+		return "member/memberRegister";
 		
 	}
+	
+
 
 	/**
 	 * 회원가입 버튼 클릭 시 호출 ajax 가입처리.
@@ -248,6 +234,7 @@ public class MemberController {
 		session.removeAttribute("id");
 		session.removeAttribute("name");
 		session.removeAttribute("login");
+		session.removeAttribute("role");
 
 		return "redirect:/";
 		
@@ -311,5 +298,48 @@ public class MemberController {
 		return map;
 		
 	}
+	
+
+	/**
+	 * 회원탈퇴 후 메인화면 호출
+	 * @param session 
+	 * @param id 
+	 */
+	@RequestMapping("/ajaxEnabledUpdate.do")
+	@ResponseBody
+	public Map<String, Boolean> ajaxEnabledUpdate(Model model, HttpSession session) {
+		logger.info("ENABLEDUPDATE");
+		
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		Boolean check = false;
+		
+		int res = 0;
+		
+		MemberDto dto = new MemberDto();
+		
+		dto.setMyid(session.getAttribute("id").toString());
+		
+		res = biz.enabledUpdate(dto);
+		
+		if(res>0) {
+			//성공
+			session.removeAttribute("id");
+			session.removeAttribute("name");
+			session.removeAttribute("login");
+			session.removeAttribute("role");
+
+			check=true;
+		}else {
+			check=false;
+		}
+
+		map.put("check", check);
+		
+		return map;
+		
+		
+	}
+	
+	
 		
 }

@@ -162,6 +162,7 @@
 				var mysex = $('form[name=memberInfoForm]').find('input[name=mysex]:checked').val();
 				var myemail = $('form[name=memberInfoForm]').find('[name=myemail]').val();
 				var myaddr = $('form[name=memberInfoForm]').find('[name=myaddr]').val();
+				var myrole = $('form[name=memberInfoForm]').find('[name=myrole]').val();
 				const mbrInfo = {
 						myid: myid,
 						mypw: mypw,
@@ -170,7 +171,8 @@
 						mybirth: mybirth,
 						mysex: mysex,
 						myemail: myemail,
-						myaddr: myaddr
+						myaddr: myaddr,
+						myrole: myrole
 				}
 
 				
@@ -209,7 +211,7 @@
 </head>
 <style type="text/css">
 .center{
-	margin: 4em auto;
+	margin: 3em auto;
 }
 </style>
 
@@ -217,9 +219,18 @@
 <body>
 	<div class="center" style="width:300px;">
 	
-		<h3 style="text-align:left;">회원가입</h3>
+			<c:choose>
+				<c:when test="${adminRole eq '관리자'}">
+					<h3 style="text-align:left;">관리자 계정 추가</h3>
+				</c:when>
+				<c:otherwise>
+					<h3 style="text-align:left;">회원가입</h3>
+				</c:otherwise>
+			</c:choose>
+			
 		<form name='memberInfoForm'  autocomplete="off">
 			<br>
+		
 			<p>
 			<div style="height:65px;">
 				<div style="text-align:left; font-size: 12pt; width:40%; float:left; ">아이디</div>
@@ -257,11 +268,13 @@
 			<p>
 			<div>
 				<div style="width:60%; height:50px; float:left;">
-					<div style="float:left; text-align:left; font-size: 12pt; width:170px; display:inline-block;">생년월일</div>
-					<input type="date"  min='1899-01-01' max='2000-13-13' id="mybirth"  name="mybirth"  class="birth"  style="float:left; width:170px; height: 40px; font-size: 10pt;" maxlength="8" required numberOnly>
+					<div style="float:left; text-align:left; font-size: 12pt; width:100%; display:inline-block;">생년월일</div>
+					<input type="date"  min='1899-01-01' max='2000-13-13' id="mybirth"  name="mybirth"  class="birth" 
+					style="float:left; width:100%; height: 40px; font-size: 10pt;" maxlength="8" required numberOnly>
 				</div>
-				<div style="width:40%; height:50px; float:left; margin-top:30px;" align="center" >
-					<input type="radio" name="mysex" value="남성" checked='checked'>남 &nbsp;
+				<div style="float:right; text-align:left; font-size: 12pt; width:35%;">성별</div>
+				<div style="width:35%; height:50px; float:left; margin-top:10px;" align="center" >
+					<input type="radio" name="mysex" value="남성" checked='checked'>남 &nbsp;&nbsp;
 					<input type="radio" name="mysex" value="여성">여
 				</div>
 			</div>
@@ -278,20 +291,25 @@
 			</p>
 			
 			<p>
-			<div style="width:40%; height:50px; float:left; margin-top:30px;" align="center" >
-				<input type="radio" name="mysex" value="사용자" checked='checked'>남 &nbsp;
-				<input type="radio" name="mysex" value="판매자">여
-			</div>
+			<c:choose>
+				<c:when test="${adminRole eq '관리자'}">
+					<input type="hidden" name="myrole" value="관리자">
+				</c:when>
+				<c:otherwise>
+					<div style="text-align:left; font-size: 12pt;">회원구분</div>
+					<div style="width:100%; height:50px; float:left; margin-top:10px;" align="center" >
+						<input type="radio" name="myrole" value="사용자" checked='checked'>사용자 &nbsp; &nbsp;
+						<input type="radio" name="myrole" value="판매자">판매자
+					</div>
+				</c:otherwise>
+			</c:choose>
 			</p>
-<!--			
-		 	<div class="d-md-flex justify-content-md-end" style= "float:left;">
-				<button class="btn text-black" style= "background-color:lightgrey; width:100px;" type="button" onclick="registForm();">이전</button>
-			</div>
--->
+		</form>
+			<br>
+			
 			<p>
-		</form>	
 			<div class="d-md-flex justify-content-md-end" style="float:right; display:inline-block;">
-				<button  class="btn text-white" style="background-color:#198754; width:100px;" onclick="ajaxJoin();"> 가입</button>
+				<button  class="btn text-white" style="background-color:#198754; width:100px;" onclick="ajaxJoin();">가입하기</button>
 			</div>
 			</p>
 			

@@ -21,4 +21,7 @@ public interface MemberDao {
 	
 	//회원정보 수정
 	public int update(MemberDto dto);
+	
+	//활성화 여부 수정
+	public int enabledUpdate(MemberDto dto);
 }
