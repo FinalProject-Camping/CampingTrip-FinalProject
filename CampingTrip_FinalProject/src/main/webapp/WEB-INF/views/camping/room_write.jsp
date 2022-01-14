@@ -42,7 +42,9 @@ textarea {
 	height: 150px;
 	resize: none;
 }
-
+.input-multiple-image{
+	width:300px;
+}
 #multiple-container {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
@@ -85,6 +87,7 @@ textarea {
 	function sendData(){
 		//console.log(document.getElementById("input-multiple-image").value);
 		console.log($("#multiple-container img").attr("src"));
+		console.log($(".room_element").length);
 		$("#room_list",opener.document).prepend(
 			"<div class='room_element col-md-6 d-flex'>"
 			+"<div class='room_image'>"
@@ -95,8 +98,80 @@ textarea {
 			+"객실가격 : "+document.getElementById("room_price").value+"<br>"
 			+"</div></div>"		
 		);
+		$(".room_value").each(function(){
+			$("#room_form",opener.document).prepend($(this).clone());	
+		});
+		
 		window.close();
 	}
+	function clone(){
+		var test = $('#test').clone();
+		$('#test').append(test);
+	}
+	//file 추가,삭제 함수
+	function addFile(){
+		var cnt = $(".room_element",opener.document).length;
+		var str="<div class='file-group'><input type='file' class='input-multiple-image' name='room_image"+cnt+"'><a href='#this' name='file-delete'>삭제</a></div>";
+		$("#file-list").append(str);
+		$("a[name='file-delete']").on("click",function(e){
+			e.preventDefault();
+			deleteFile($(this));
+		});
+		$(".input-multiple-image").each(function(){
+	 		console.log("hey");
+	 		$(this).on("change", function(e){
+	 	 		 readMultipleImage(e.target)
+	 	 	});
+		});
+	}
+	function deleteFile(obj){
+		obj.parent().remove();
+	}
+	//미리보기
+	function readMultipleImage(input) {
+	    const multipleContainer = document.getElementById("multiple-container")
+	    
+	    // 인풋 태그에 파일들이 있는 경우
+	    if(input.files) {
+	        // 이미지 파일 검사 (생략)
+	        console.log(input.files)
+	        // 유사배열을 배열로 변환 (forEach문으로 처리하기 위해)
+	        const fileArr = Array.from(input.files)
+	        const $colDiv1 = document.createElement("div")
+	        const $colDiv2 = document.createElement("div")
+	        $colDiv1.classList.add("column")
+	        $colDiv2.classList.add("column")
+	        fileArr.forEach((file, index) => {
+	            const reader = new FileReader()
+	            const $imgDiv = document.createElement("div")   
+	            const $img = document.createElement("img")
+	            $img.classList.add("image")
+	            const $label = document.createElement("label")
+	            $label.classList.add("image-label")
+	            $label.textContent = file.name
+	            $imgDiv.appendChild($img)
+	            $imgDiv.appendChild($label)
+	            console.log(($img.naturalWidth)+","+($img.naturalHeight))
+	            reader.onload = e => {
+	                $img.src = e.target.result
+	                
+	                $imgDiv.style.width = "200px"//($img.naturalWidth) * 0.2 + "px"
+	                $imgDiv.style.height = "150px"//($img.naturalHeight) * 0.2 + "px"
+	            }
+	            
+	            console.log(file.name)
+	            if(index % 2 == 0) {
+	                $colDiv1.appendChild($imgDiv)
+	            } else {
+	                $colDiv2.appendChild($imgDiv)
+	            }
+	            
+	            reader.readAsDataURL(file)
+	        })
+	        multipleContainer.appendChild($colDiv1)
+	        multipleContainer.appendChild($colDiv2)
+	   	 	}
+		}
 </script>
 </head>
 <body>
@@ -108,32 +183,33 @@ textarea {
 			<div class="room_row">
 				<div class="room_column">객실이름</div>
 				<div class="room_value">
-					<input type="text" name="room_name" id="room_name">
+					<input type="text" name="room_name" id="room_name" required>
 				</div>
 			</div>
 			<div class="room_row">
 				<div class="room_column">객실가격</div>
 				<div class="room_value">
-					<input type="text" name="room_price" id="room_price">
+					<input type="text" name="room_price" id="room_price" required>
 				</div>
 			</div>
 			<div class="room_row">
 				<div class="room_column">객실인원</div>
 				<div class="room_value">
-					<input type="text" name="room_guest" id="room_guest">
+					<input type="text" name="guest_number" id="guest_number" required>
 				</div>
 			</div>
 			<div class="room_row">
 				<div class="room_column">객실설명</div>
 				<div class="room_value">
-					<textarea name="room_content" id="room_content"></textarea>
+					<textarea name="room_content" id="room_content" required></textarea>
 				</div>
 			</div>
 			<div class="room_row">
 				<div class="room_column">사진추가</div>
-				<div class="room_value">
-					<input style="display: block;" type="file"
-						id="input-multiple-image" multiple>
+				<div class="room_value" id="test">
+					<div class="form-group wrap-input2" id="file-list">
+							<a href="#this" onclick="addFile()">이미지추가</a>
+					</div>
 				</div>
 			</div>
 			<div id="multiple-container"></div>
@@ -142,12 +218,12 @@ textarea {
 		<div class="row">
 			<div class="col-md-12 d-flex justify-content-center">
 					<button class="btn2" onclick="sendData()">등록</button>
-					<button class="btn2">취소</button>
+					<button class="btn2" onclick="window.close()">취소</button>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
-function readMultipleImage(input) {
+	function readMultipleImage(input) {
     const multipleContainer = document.getElementById("multiple-container")
     
     // 인풋 태그에 파일들이 있는 경우
@@ -189,12 +265,17 @@ function readMultipleImage(input) {
         })
         multipleContainer.appendChild($colDiv1)
         multipleContainer.appendChild($colDiv2)
-    }
-}
-const inputMultipleImage = document.getElementById("input-multiple-image")
-inputMultipleImage.addEventListener("change", e => {
-    readMultipleImage(e.target)
-})
+   	 	}
+	}
+	//const inputMultipleImage = document.getElementById("input-multiple-image")
+	//inputMultipleImage.addEventListener("change", e => {
+ 	//   readMultipleImage(e.target)
+ 	$(".input-multiple-image").each(function(){
+ 		console.log("hey");
+ 		$(this).on("change", function(e){
+ 		 readMultipleImage(e.target)
+ 		})
+	})
 </script>
 </body>
 </html>
