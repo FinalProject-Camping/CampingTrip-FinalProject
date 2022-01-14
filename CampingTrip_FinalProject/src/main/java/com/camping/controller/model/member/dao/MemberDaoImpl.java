@@ -81,8 +81,50 @@ public class MemberDaoImpl implements MemberDao {
 		return res;
 	}
 	
+	//회원정보 상세 조회
+	public MemberDto select(String memberId) {
+		
+		MemberDto res = new MemberDto();
+		
+		try {
+			res=sqlSession.selectOne(NAMESPACE+"select", memberId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+		
+	}	
 	
+	//회원정보 수정
+	public int update(MemberDto dto) {
+		
+		int res = 0;
+		
+		try {
+			res=sqlSession.update(NAMESPACE+"update", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+		
+	}	
 	
+	//활성화 여부 수정
+	public int enabledUpdate(MemberDto dto) {
+		
+		int res = 0;
+		
+		try {
+			res=sqlSession.update(NAMESPACE+"enabledUpdate", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+		
+	}
 	
 
 }

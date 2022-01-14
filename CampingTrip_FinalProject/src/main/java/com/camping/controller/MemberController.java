@@ -1,19 +1,26 @@
 package com.camping.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.camping.controller.model.joonggo.dto.joonggo;
 import com.camping.controller.model.member.biz.MemberBiz;
 import com.camping.controller.model.member.dto.MemberDto;
 
@@ -29,8 +36,15 @@ public class MemberController {
 	BCryptPasswordEncoder passwordEncoder;
 	
 	@RequestMapping("/loginform.do")
-	public String loginForm() {
+	public String loginForm(HttpSession session) {
 		logger.info("LOGIN FORM");
+		
+		//로그인 상태에서 메인으로 이동(리다이렉트)
+		if(session.getAttribute("id") != null && session.getAttribute("id") != "") {
+			return "redirect:/";
+		}
+		
+		
 		return "member/memberLogin";
 	}
 	
@@ -115,7 +129,6 @@ public class MemberController {
 		logger.info("LOGIN");
 		//@RequestBody : request로 넘어오는 데이터를 java객체
 		//@ResponseBody : java객체를 response에 binding
-		
 		MemberDto res = biz.login(dto);
 		
 		boolean check = false;
@@ -125,6 +138,8 @@ public class MemberController {
 				session.setAttribute("login", res);
 				session.setAttribute("id", res.getMyid());
 				session.setAttribute("name", res.getMyname());
+				session.setAttribute("role", res.getMyrole());
+
 				
 				check=true;
 			}
@@ -167,40 +182,18 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping("/registerform.do")
-	public String memberInsertForm() {
-		return "member/memberRegister";
-	}
-	
-
-	
-	/**
-	 * 삭제예정
-	 * @return
-	 */
-	@RequestMapping("/nextRegisterForm.do")
-	public String nextMemberInsertForm() {
-		return "member/nextMemberRegister";
-	}
-	
-	/**
-	 * 삭제예정
-	 * @param dto
-	 * @return
-	 */
-	@RequestMapping("/register.do")
-	public String memberInsert(MemberDto dto) {
-
-		//화면에서 넘어온 password 암호화하기
-		dto.setMypw(passwordEncoder.encode(dto.getMypw()));
-		System.out.println(dto.getMypw());
-		//가입(인서트)성공시 로그인화면으로 이동하고 실패시 다시가입화면으로 이동
-		if(biz.insert(dto)>0) {
-			return "redirect:loginform.do";
-		}else {
-			return "redirect:registerform.do";
+	public String memberInsertForm(HttpSession session, Model model) {
+		
+		if("사용자".equals(session.getAttribute("role")) || "판매자".equals(session.getAttribute("role"))){
+			return "redirect:/";
+		}else if("관리자".equals(session.getAttribute("role"))){
+			model.addAttribute("adminRole","관리자");
 		}
+		return "member/memberRegister";
 		
 	}
+	
+
 
 	/**
 	 * 회원가입 버튼 클릭 시 호출 ajax 가입처리.
@@ -215,7 +208,6 @@ public class MemberController {
 
 		//화면에서 넘어온 password 암호화하기
 		dto.setMypw(passwordEncoder.encode(dto.getMypw()));
-		dto.setMyrole("USER");
 		dto.setMybirth(dto.getMybirth().replaceAll("-", ""));
 		Boolean check = false;
 		
@@ -242,9 +234,112 @@ public class MemberController {
 		session.removeAttribute("id");
 		session.removeAttribute("name");
 		session.removeAttribute("login");
+		session.removeAttribute("role");
 
 		return "redirect:/";
 		
 	}
 	
+
+	/**
+	 * 회원상세정보 조회
+	 * @param session 
+	 * @param id 
+	 */
+	@RequestMapping("/memberDetail.do")
+	public String memberDetail(Model model, HttpSession session) {
+		logger.info("DETAIL");
+		
+		//1.로그인 정보에서 아이디 가져오기
+		String loginId = session.getAttribute("id").toString();
+
+		//2.받아온 아이디로 회원정보 조회
+		MemberDto dto = biz.select(loginId);
+		
+		//3.조회한 회원정보를 화면에 넘겨준다
+		model.addAttribute("memberInfo",dto);
+		
+		return "member/memberDetail";
+		
+		
+	}
+	
+	
+	
+	/**
+	 * 회원상세정보 조회
+	 * @param session 
+	 * @param id 
+	 */
+	@RequestMapping("/ajaxMemberUpdate.do")
+	@ResponseBody
+	public Map<String, Boolean> ajaxMemberUpdate(Model model, HttpSession session, @RequestBody MemberDto dto) {
+		logger.info("UPDATE");
+
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		Boolean check = false;
+		
+		int res = 0;
+		
+		//pw를 암호화하여 db에 담기
+		dto.setMypw(passwordEncoder.encode(dto.getMypw()));
+		
+		res = biz.update(dto);
+		
+		if(res>0) {
+			//성공
+			check=true;
+		}else {
+			check=false;
+		}
+
+		map.put("check", check);
+		
+		return map;
+		
+	}
+	
+
+	/**
+	 * 회원탈퇴 후 메인화면 호출
+	 * @param session 
+	 * @param id 
+	 */
+	@RequestMapping("/ajaxEnabledUpdate.do")
+	@ResponseBody
+	public Map<String, Boolean> ajaxEnabledUpdate(Model model, HttpSession session) {
+		logger.info("ENABLEDUPDATE");
+		
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		Boolean check = false;
+		
+		int res = 0;
+		
+		MemberDto dto = new MemberDto();
+		
+		dto.setMyid(session.getAttribute("id").toString());
+		
+		res = biz.enabledUpdate(dto);
+		
+		if(res>0) {
+			//성공
+			session.removeAttribute("id");
+			session.removeAttribute("name");
+			session.removeAttribute("login");
+			session.removeAttribute("role");
+
+			check=true;
+		}else {
+			check=false;
+		}
+
+		map.put("check", check);
+		
+		return map;
+		
+		
+	}
+	
+	
+		
 }
