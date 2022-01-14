@@ -13,6 +13,7 @@ import com.camping.controller.model.camp.dto.ReservationDto;
 import com.camping.controller.model.camp.dto.ReviewDto;
 import com.camping.controller.model.camp.dto.RoomDto;
 import com.camping.controller.model.camp.dto.RoomImageDto;
+import com.camping.controller.model.camp.dto.SearchInfo;
 import com.camping.controller.model.camp.dto.WriterInfo;
 
 @Service
@@ -133,6 +134,11 @@ public class CampBiz {
 	public int viewPlus(int campno) {
 		
 		return dao.viewPlus(campno);
+	}
+	
+	public List<CampDto> searchCamp(SearchInfo dto){
+		
+		return dao.searchCamp(dto);
 	}
 	
 }

@@ -28,6 +28,7 @@ import com.camping.controller.model.camp.dto.CampDto;
 import com.camping.controller.model.camp.dto.ReservationDto;
 import com.camping.controller.model.camp.dto.ReviewDto;
 import com.camping.controller.model.camp.dto.RoomDto;
+import com.camping.controller.model.camp.dto.SearchInfo;
 import com.camping.controller.model.member.dto.MemberDto;
 
 @Controller
@@ -189,6 +190,28 @@ public class CampController {
 		
 		List<RoomDto> roomList = biz.searchRoom(rsDto);
 		return roomList;
+	}
+	
+	@RequestMapping(value="searchCamp.do",method=RequestMethod.POST)
+	public String searchCamp(SearchInfo info,Model model) {
+		System.out.println(info.toString());
+		info.setType_lists();
+		List<String> tmp = info.getType_list();
+		if(!tmp.isEmpty()) {
+			for( int i = 0 ; i <tmp.size();i++) {
+				System.out.println(tmp.get(i));
+			}
+		}
+		
+		List<CampDto> campList = biz.searchCamp(info);
+		if(!campList.isEmpty()) {
+			for(int i = 0 ; i<campList.size();i++) {
+				System.out.println(campList.get(i).toString());
+			}
+		}
+		model.addAttribute("searchInfo", info);
+		model.addAttribute("camplist",campList);
+		 return "camping/camping_list";
 	}
 	
 	@RequestMapping(value="paymentCheck.do",method=RequestMethod.POST)

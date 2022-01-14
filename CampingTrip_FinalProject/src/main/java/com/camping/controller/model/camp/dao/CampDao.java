@@ -14,6 +14,7 @@ import com.camping.controller.model.camp.dto.ReservationDto;
 import com.camping.controller.model.camp.dto.ReviewDto;
 import com.camping.controller.model.camp.dto.RoomDto;
 import com.camping.controller.model.camp.dto.RoomImageDto;
+import com.camping.controller.model.camp.dto.SearchInfo;
 import com.camping.controller.model.camp.dto.WriterInfo;
 
 @Repository
@@ -352,6 +353,19 @@ public class CampDao {
 			System.out.println("[error]: update Totalgrade");
 			e.printStackTrace();
 		}
+		return res;
+	}
+	
+	public List<CampDto> searchCamp(SearchInfo dto){
+		List<CampDto> res = new ArrayList<CampDto>();
+		
+		try {
+			res=sqlSession.selectList(NAMESPACE+"searchCamp",dto);
+		} catch (Exception e) {
+			System.out.println("[error]: search Camp");
+			e.printStackTrace();
+		}
+		
 		return res;
 	}
 }

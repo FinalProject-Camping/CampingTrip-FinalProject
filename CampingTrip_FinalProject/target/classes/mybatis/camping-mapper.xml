@@ -155,4 +155,28 @@
   <select id="newstCampno" resultType="int">
   	SELECT CAMPNO FROM CAMP WHERE ROWNUM=1 ORDER BY CAMPNO DESC
   </select>
+  
+  <select id="searchCamp" parameterType="searchInfo" resultType="campDto">
+  	SELECT * FROM CAMP
+  	WHERE ((NAME LIKE '%'||#{keyword}||'%') OR (TAGS LIKE '%'||#{keyword}||'%')) 
+  	<foreach collection="type_list" item="item">
+  		<if test="item!=null and !item.equals('')">
+  			AND (CAMP_TYPE LIKE '%'||#{item}||'%')
+  		</if>	
+  	</foreach>
+  	
+  	<if test="address!=null and !address.equals('')">
+  		AND (ADDRESS LIKE '%'||#{address}||'%')
+  	</if>
+  	<if test="low_price!=null and !low_price.equals('') and high_price!=null and !high_price.equals('')">
+  		AND (CAST(LOWEST_PRICE AS NUMBER) BETWEEN CAST(#{low_price} AS NUMBER) AND CAST(#{high_price} AS NUMBER) ) 
+  	</if>
+  	<if test="sort!=null and !sort.equals('')">
+  		
+  			<if test='sort.equals("lowest_price")'>ORDER BY LOWEST_PRICE DESC</if>
+  			<if test='sort.equals("view_count")'>ORDER BY VIEW_COUNT DESC</if>
+  			<if test='sort.equals("total_grade")'>ORDER BY TOTAL_GRADE DESC</if>
+  		
+  	</if>
+  </select>
 </mapper>
