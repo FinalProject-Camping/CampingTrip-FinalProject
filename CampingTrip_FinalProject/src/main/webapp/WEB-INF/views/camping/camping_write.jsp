@@ -23,12 +23,10 @@
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style type="text/css">
 @font-face {
-	font-family: 'Cafe24Ssurround';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 html, body {
@@ -37,7 +35,7 @@ html, body {
 }
 
 h4 {
-	font-family: 'Cafe24Ssurround';
+	font-family: 'EliceDigitalBaeum_Bold';
 	font-size: 38px;
 }
 
@@ -56,7 +54,7 @@ h4 {
 .main_right {
 	width: 60%;
 	height: 100%;
-	overflow: hidden;
+	overflow: auto;
 	margin: 0 auto;
 }
 
@@ -70,7 +68,6 @@ h4 {
 
 .main_content {
 	height: 100%;
-	overflow: auto;
 }
 
 .page_nav {
@@ -78,7 +75,7 @@ h4 {
 }
 .badge{
 	color:white;
-	background-color:#198754;
+	background-color:#056bca;
 	margin-right:3px;
 }
 #tags{
@@ -304,7 +301,8 @@ textarea.input2+.focus-input2::after {
 }
 
 .sub_main {
-	font-size: 18px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 20px;
 	font-weight: bold;
 	margin-left: 30px;
 }
@@ -318,14 +316,10 @@ textarea {
 	margin-right: 5%;
 }
 
-#room_list {
-	border: 1px solid gray;
-	border-radius: 3px;
-}
 
 .add_room {
 	margin: 5px;
-	border: 1px solid black;
+	border: 2px solid black;
 	border-radius: 5px;
 	height: 150px;
 	width: 300px;
@@ -335,26 +329,38 @@ textarea {
 	font-size: 25px;
 	cursor: pointer;
 }
-
+.room_content{
+	padding:5px;
+	width:150px;
+}
 .room_element {
 	margin: 5px;
-	border: 1px solid black;
+	border: 2px solid black;
 	border-radius: 5px;
 	height: 150px;
 	width: 300px;
 	font-size: 15px;
-	padding:3px;
+	padding:5px;
 }
 .room_image{
-	width:100px;
+	width:130px;
 	overflow:hidden;
+	border-radius:1em;
 }
-.image_thumbnail{
+.image-thumbnail{
 	position:absolute;
-	width:100%;
-	height:100%;
-	left:-100px;
+	width:130px;
+	height:138px;
 	object-fit:cover;
+}
+.room_name{
+	font-size:20px;
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+.room_price{
+	font-size:20px;
+	font-weight:bold;
+	color:#0574d1;
 }
 .black_overlay{
         display: none;
@@ -385,6 +391,40 @@ textarea {
 	.bootstrap-tagsinput{
 		border:0px;
 		box-shadow: unset;
+	}
+	#addfile{
+		color:black;
+	}
+	#addfile:hover{
+	
+	}
+	.file-btn{
+		display:inline-block;
+	}
+	.ck_column{
+		display:inline-block;
+		font-size:14px;
+		color:black;
+		font-weight:bold;
+		margin-bottom:20px;
+		padding-right:10px;
+	}
+	.file_element{
+		display:flex;
+		margin-bottom:5px;
+	}
+	.fwidth{
+		width:80%;
+	}
+	.file_delete{
+		margin-left:10px;
+		padding-top:8px;
+		text-decoration:none;
+		color:black;
+		font-weight:bold;
+	}
+	.exp{
+		border-bottom:0px;
 	}
 </style>
 <script type="text/javascript">
@@ -462,7 +502,7 @@ textarea {
 	
 	//file 추가,삭제 함수
 	function addFile(){
-		var str="<div class='file-group'><input type='file' name='camp_image'><a href='#this' name='file-delete'>삭제</a></div>";
+		var str="<div class='file_element'><input class='form-control fwidth' type='file' name='camp_image'><a href=''#this' class='file_delete' name='file-delete'>삭제</a></div>";
 		$("#file-list").append(str);
 		$("a[name='file-delete']").on("click",function(e){
 			e.preventDefault();
@@ -472,6 +512,41 @@ textarea {
 	function deleteFile(obj){
 		obj.parent().remove();
 	}
+	
+	function validateInputChk(page){
+		if(page == "A"){
+			if(!$("input[name=name]").val()){
+				alert("캠핑지명을 입력해주세요.");
+				$("input[name=name]").focus();
+			}else if(!$("input[name=address]").val()){
+				alert("캠핑지 주소를 입력해주세요");
+				$("input[name=address]").focus();
+			}else if(!$("input[name=address_detail]").val()){
+				alert("캠핑지 상세주소를 입력해주세요");
+				$("input[name=address_detail]").focus();
+			}
+			else if($("input[name=camp_type]:checkbox:checked").length < 1){
+				alert("캠핑지 종류를 하나이상 선택해주세요");
+				$("input[name=camp_type]").focus();
+			}else{
+				movePhase('B');
+			}
+		} else if(page=="B"){
+			if(!$("textarea[name=intro]").val()){
+				alert("캠핑지 소개글을 입력해주세요.");
+				$("textarea[name=intro]").focus();
+			} else if(!$("textarea[name=service]").val()){
+				alert("이용가능 서비스를 입력해주세요.");
+				$("textarea[name=service]").focus();
+			} else if(!$("textarea[name=rule]").val()){
+				alert("캠핑지내 이용규칙을 입력해주세요.");
+				$("textarea[name=rule]").focus();
+			} else{
+				movePhase('C');
+			}
+		}
+	}
+	
 </script>
 </head>
 <body>
@@ -510,6 +585,9 @@ textarea {
 							<span class="focus-input2" data-placeholder="캠핑지 이름"></span>
 						</div>
 					</div>
+					
+				</div>
+				<div class="row">
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="address_input d-flex justify-content-center">
 							<div class="wrap-input2 flex-fill validate-input"
@@ -551,18 +629,23 @@ textarea {
 								class="focus-input2" id="span_type" data-placeholder="캠핑지 종류"></span>
 						</div>
 					</div>
-					<div class="col-md-12 d-flex justify-content-center">
+					<div class="col-md-12 d-flex justify-content-center exp">
 						<div class="form-group wrap-input2" id="file-list">
-							<a href="#this" onclick="addFile()">이미지추가</a>
+							<span class="ck_column">이미지추가</span><span class="file-btn"><a id="addfile" href="#this" onclick="addFile()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+</svg></a></span>
 							<div class="file-group">
-								<input type="file" name="camp_image"><a href="#this" name="file-delete">삭제</a>
+								<div class="file_element">
+								<input class="form-control fwidth" type="file" name="camp_image"><a href="#this" class="file_delete" name="file-delete">삭제</a>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 d-flex justify-content-center">
-						<button type="button" class="btn2" onclick="movePhase('B')">다음단계</button>
+						<button type="button" class="btn2" onclick="validateInputChk('A')">다음단계</button>
+						
 					</div>
 				</div>
 
@@ -618,7 +701,7 @@ textarea {
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
-							<span>태그입력</span>
+							<span class="ck_column">태그입력</span>
 							<input class="input2" type="text" id="tags" name="tags" data-role="tagsinput">
 						</div>
 					</div>
@@ -626,7 +709,7 @@ textarea {
 				<div class="row">
 					<div class="col-md-12 d-flex justify-content-center">
 						<button type="button" class="btn2" onclick="movePhase('A')">이전단계</button>
-						<button type="button" class="btn2" onclick="movePhase('C')">다음단계</button>
+						<button type="button" class="btn2" onclick="validateInputChk('B')">다음단계</button>
 					</div>
 				</div>
 			</div>
@@ -644,12 +727,8 @@ textarea {
 				<div id="room_list" class="row d-flex">
 					<div class="add_room col-md-6"
 						onclick="openWindowPop('roominsertform.do','roomadd')">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-							fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-  <path
-								d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-  <path
-								d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
 </svg>
 					</div>
 				</div>
@@ -669,5 +748,6 @@ textarea {
 		</div>
 	</div>
 	
+
 </body>
 </html>
