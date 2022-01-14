@@ -9,6 +9,8 @@
 		FROM MYMEMBER
 		WHERE MYID = #{myid}
 	</select>
+	
+	
 	<!-- 
 		invaild오류 원인
 		1. myenabled를 myenable이라고 입력하는 실수
@@ -23,11 +25,10 @@
 	</insert>
 	
 	
-	
-	
 	<select id="idChk" parameterType="String" resultType="int">
 	  	SELECT count(1) as idCnt FROM MYMEMBER WHERE MYID = #{myid}
 	</select>
+	
 	
 	<!-- 회원정보로 ID 조회 -->
 	<select id="findId" parameterType="memberDto" resultType="String">
@@ -38,8 +39,8 @@
 		     AND MYPHONE = #{myphone}
 	</select>
 	
-	<!-- 회원정보 일치할때 비밀번호를 ID와 같게 초기화 -->
 	
+	<!-- 회원정보 일치할 때 ID와 같은 값으로 비밀번호 초기화 -->
 	<update id="resetPw" parameterType="memberDto">
 		UPDATE MYMEMBER 
 		SET mypw = #{mypw}
@@ -48,6 +49,26 @@
 		     AND MYBIRTH BETWEEN TO_DATE(#{mybirth},'YYYYMMDD') AND TO_DATE(#{mybirth},'YYYYMMDD')
 		     AND MYPHONE = #{myphone}
 	</update>
+	
+	
+	<!-- ID로 회원정보 조회 -->
+	<select id="select" parameterType="String" resultType="memberDto">
+		SELECT 
+			myno, myid, myname, myaddr, myphone, myemail, mybirth, mysex
+		FROM MYMEMBER
+		WHERE MYID = #{myid}
+	</select>
+	
+	<!-- no로 회원정보 수정 -->
+	<update id="update" parameterType="memberDto">
+		UPDATE MYMEMBER
+		SET mypw = #{mypw},
+			myphone = #{myphone},
+			myemail = #{myemail},
+			myaddr = #{myaddr}
+		WHERE MYNO = #{myno}		
+	</update>
+
 	
 	
 </mapper>

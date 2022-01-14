@@ -99,7 +99,7 @@ var preUrl;
 						</div>
 						
 						<div class="d-grid gap-2 col-15 mx-auto">
-							<button class="btn text-white" style="background-color: #008000;" type="button" onclick='login();' value="login">로그인</button>
+							<button class="btn text-white" style="background-color: #198754;" type="button" onclick='login();' value="login">로그인</button>
 							<button id="loginChk" class="btn text-black" style="background-color: lightgrey;" " type="button"  onclick="location.href='registerform.do'";>회원가입</button>
 						</div>
 					</div>
@@ -124,7 +124,7 @@ var preUrl;
 			</div>
 			
 			<div class="d-grid gap-2 col-15 mx-auto">
-				<button class="btn text-white" style="background-color: #008000;" type="button" onclick='login();' value="login">로그인</button>
+				<button class="btn text-white" style="background-color: #198754;" type="button" onclick='login();' value="login">로그인</button>
 				<button id="loginChk" class="btn text-black" style="background-color: lightgrey;" " type="button"  onclick="location.href='registerform.do'";>회원가입</button>
 			</div>
 			<br>

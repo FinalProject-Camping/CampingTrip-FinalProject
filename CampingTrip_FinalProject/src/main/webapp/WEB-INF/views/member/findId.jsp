@@ -74,7 +74,7 @@
 			
 			
 			<div class="d-grid gap-2 col-15 mx-auto">
-				<button class="btn text-white" style="background-color: #008000;" type="button" onclick="ajaxFindId();" value="login">ID찾기</button>
+				<button class="btn text-white" style="background-color: #198754;" type="button" onclick="ajaxFindId();" value="login">ID찾기</button>
 			</div>
 			<br>
 			<br>

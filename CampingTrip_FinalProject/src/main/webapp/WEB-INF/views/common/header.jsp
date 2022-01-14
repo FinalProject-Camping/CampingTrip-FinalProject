@@ -154,6 +154,8 @@ a {
 	                <li><a href="">마이페이지</a></li>
 	                <li>|</li>
 	                <li><a href="sessionLogout.do" onclick="">로그아웃</a></li>
+             		<li><a href="memberDetail.do" onclick="">회원정보보기</a></li>
+             	
              	</c:when>
              	<c:otherwise>
 	             	<li><a href="loginform.do">로그인</a></li>

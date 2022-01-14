@@ -151,7 +151,7 @@
 		}else if($('#myemail').val() =="" || $('#myemail').val() ==null ){
 			alert("이메일을 확인하세요.");
 		//주소 체크
-		}else if($('#myaddr').val() =="" || $('#myemail').val() ==null){
+		}else if($('#myaddr').val() =="" || $('#myaddr').val() ==null){
 			alert("주소를 확인하세요.");
 		}else{
 				var myid = $('form[name=memberInfoForm]').find('[name=myid]').val();
@@ -226,31 +226,34 @@
 				<div id="id-validate" class="validate-false" style="text-align:right; font-size: 8pt; color:red; display:none; width:60%; float:left; ">*이미 존재하는 ID 입니다</div>
 					<input type="text" id="myid" onkeyup="idevent(this);" name="myid" title="n" style="float:left; width:210px; height: 40px; font-size: 10pt;">
 					<input type="button" id="idchkbtn" value="중복확인" onclick="idChk();" style="float:right; width:80px; height: 40px; font-size: 10pt; " required disabled="true">
-			
 			</div>
 			</p>
+			
 			<p>
 			<div style="text-align:left; font-size: 12pt;">비밀번호</div>
 				<input type="password" id="pw" name="mypw" onkeyup="keyevent();" style="width:300px; height: 40px; font-size: 10pt;" required>
 			</p>
+			
 			<p>
 			<div style="text-align:left; font-size: 12pt; width:40%; float:left; ">비밀번호 재확인</div>
 			<div id="pw-validate" class="validate-false" style="text-align:right; font-size: 8pt; color:red; display:none;  width:60%; float:left; ">*일치하지 않습니다</div>
 				<input type="password" id="repw" onkeyup="keyevent();"  style="width:300px; height: 40px; font-size: 10pt;"	 required>
 			</p>
+			
 			<p>
 			<div style="text-align:left; font-size: 12pt;">휴대전화</div>
 				<input type="text" id="myphone" name="myphone" class="number"  style="width:300px; height: 40px; font-size: 10pt;" maxlength="11" required numberOnly >
 			</p>
-			
-			<!-- <div class="d-md-flex justify-content-md-end">
-			  <button class="btn text-white" style="background-color: #008000; width:100px;" type="button" onclick="reregistForm();">다음</button>
+<!--
+			<div class="d-md-flex justify-content-md-end">
+			  <button class="btn text-white" style="background-color: #198754; width:100px;" type="button" onclick="reregistForm();">다음</button>
 			</div>
-			 -->
+-->
 			<p>
 			<div style="text-align:left; font-size: 12pt;">이름</div>
 				<input type="text" placeholder="이름을 입력하세요." id='myname' name="myname"  style="width:300px; height: 40px; font-size: 10pt;" required>
 			</p>
+			
 			<p>
 			<div>
 				<div style="width:60%; height:50px; float:left;">
@@ -263,24 +266,35 @@
 				</div>
 			</div>
 			</p>
+			
 			<p>
 			<div style="text-align:left; font-size: 12pt;">이메일</div>
 				<input type="text" placeholder="example@naver.com" id="myemail" name="myemail"  style="width:300px; height: 40px; font-size: 10pt;" required>
 			</p>
+			
 			<p>
 			<div style="text-align:left; font-size: 12pt;">주소</div>
 				<input type="text" name="myaddr" id="myaddr" style="width:300px; height: 40px; font-size: 10pt;" required>
 			</p>
 			
-		<!-- 	<div class="d-md-flex justify-content-md-end" style= "float:left;">
+			<p>
+			<div style="width:40%; height:50px; float:left; margin-top:30px;" align="center" >
+				<input type="radio" name="mysex" value="사용자" checked='checked'>남 &nbsp;
+				<input type="radio" name="mysex" value="판매자">여
+			</div>
+			</p>
+<!--			
+		 	<div class="d-md-flex justify-content-md-end" style= "float:left;">
 				<button class="btn text-black" style= "background-color:lightgrey; width:100px;" type="button" onclick="registForm();">이전</button>
-			</div> -->
+			</div>
+-->
 			<p>
 		</form>	
 			<div class="d-md-flex justify-content-md-end" style="float:right; display:inline-block;">
-				<button  class="btn text-white" style="background-color:#008000; width:100px;" onclick="ajaxJoin();"> 가입</button>
+				<button  class="btn text-white" style="background-color:#198754; width:100px;" onclick="ajaxJoin();"> 가입</button>
 			</div>
 			</p>
+			
 			<br>
 			<br>
 			<br>

@@ -37,4 +37,14 @@ public class MemberBizImpl implements MemberBiz {
 	public Integer resetPw(MemberDto dto) {
 		return dao.resetPw(dto);
 	}
+	
+	@Override
+	public MemberDto select(String memberId) {
+		return dao.select(memberId);
+	}
+	
+	@Override
+	public int update(MemberDto dto) {
+		return dao.update(dto);
+	}
 }
