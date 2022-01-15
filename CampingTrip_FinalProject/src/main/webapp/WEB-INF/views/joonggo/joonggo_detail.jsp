@@ -277,7 +277,7 @@ const sessionid = '${sessiondto.myid}';
 			method: "post",
 			success:function(data){ 
 				if(data.data === true){
-					popup("joonggo_chatform.do?seq=${dto.seq}&writer=${dto.id}&chatid=${sessiondto.myid}", "채팅하기",450,720);
+					popup("joonggo_chatform.do?joonggoseq=${dto.seq}&writer=${dto.id}&userid=${sessiondto.myid}", "채팅하기",450,620);
 				}else{
 					alert('로그인이 필요합니다.');
 					location.href='loginform.do';

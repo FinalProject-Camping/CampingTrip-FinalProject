@@ -50,6 +50,24 @@
 		<result property="admintext" column="ADMINTEXT" />
 	</resultMap>
 	
+	<resultMap type="chatroomDto" id="chatroomMap">
+		<result property="roomseq" column="ROOMSEQ"/>
+		<result property="joonggoseq" column="JOONGGOSEQ"/>
+		<result property="title" column="TITLE"/>
+		<result property="imglist" column="IMGLIST"/>
+		<result property="userid" column="USERID"/>
+		<result property="writer" column="WRITER"/>
+		<result property="createdate" column="CREATEDATE"/>
+	</resultMap>
+	
+	<resultMap type="chatDto" id="chatMap">
+		<result property="roomseq" column="ROOMSEQ"/>
+		<result property="chatseq" column="CHATSEQ"/>
+		<result property="sender" column="SENDER"/>
+		<result property="content" column="CONTENT"/>
+		<result property="senddate" column="SENDDATE"/>
+	</resultMap>
+	
 	
 	<select id="selectList" parameterType="String" resultMap="joonggoMap">
 		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT, PLACE 
@@ -279,6 +297,35 @@
 		VALUES(REPORTSEQ.NEXTVAL, SYSDATE, #{reportid}, #{reportcontent}, #{filepath}, #{joonggoseq}, #{writer})
 	</insert>
 	
+	<select id="getroom" parameterType="chatroomDto" resultMap="chatroomMap">
+		SELECT ROOMSEQ
+		FROM JOONGGO_CHAT
+		WHERE JOONGGOSEQ = #{joonggoseq}
+		AND ((USERID = #{userid} AND WRITER = #{writer}) OR (USERID = #{writer} AND WRITER = #{writer})) 
+	</select>
+	
+	<insert id="createroom" parameterType="chatroomDto">
+		<selectKey keyProperty="roomseq" resultType="int" order="BEFORE">
+			SELECT CHATROOMSEQ.NEXTVAL FROM DUAL		
+		</selectKey>
+		INSERT ALL
+			INTO JOONGGO_CHAT VALUES(#{roomseq}, #{joonggoseq}, #{userid}, #{writer}, SYSDATE)
+			INTO JOONGGO_CHAT_DETAIL(ROOMSEQ, CHATSEQ, CONTENT, SENDDATE) VALUES(#{roomseq}, CHATSEQ.NEXTVAL, '거래는 판매자와 충분히 상의 후 진행해주세요.', SYSDATE)
+		SELECT * 
+		FROM DUAL
+	</insert>
+	
+	<select id="chatlist" parameterType="int" resultMap="chatMap">
+		SELECT *
+		FROM JOONGGO_CHAT_DETAIL
+		WHERE ROOMSEQ = #{roomseq}
+		ORDER BY CHATSEQ
+	</select>
+	
+	<insert id="sendMessage" parameterType="chatDto">
+		INSERT INTO JOONGGO_CHAT_DETAIL
+		VALUES(#{roomseq},CHATSEQ.NEXTVAL,#{sender},#{content},SYSDATE)
+	</insert>
 	
 </mapper>
 

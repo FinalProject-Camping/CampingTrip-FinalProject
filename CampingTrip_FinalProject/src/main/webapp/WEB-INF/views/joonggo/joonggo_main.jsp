@@ -117,6 +117,7 @@ body{background-color : #f8f9fa;}
 	word-wrap: break-word;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
+	 word-break:break-all;
 	/* webkit 엔진을 사용하지 않는 브라우저를 위한 속성. */
 	/* height = line-height * line = 1.2em * 3 = 3.6em  */
 }
@@ -405,12 +406,28 @@ let km = '';
 		var m = parseInt(timegap/60000);
 		
 		switch(true){
-			case (d > 7):return date.split(' ')[0]; 
+			case (d > 7): return dateFormat(new Date(date)).split(' ')[0]; 
 			case (d >= 1): return d+'일 전';
 			case (t >= 1): return t+'시간 전';
 			case (m >= 1): return m+'분 전';
 			default: return '방금 전';
 		}
+	}
+	
+	function dateFormat(date) {
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+
+        month = month >= 10 ? month : '0' + month;
+        day = day >= 10 ? day : '0' + day;
+        hour = hour >= 10 ? hour : '0' + hour;
+        minute = minute >= 10 ? minute : '0' + minute;
+        second = second >= 10 ? second : '0' + second;
+
+        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
 	}
 	
 	function convertPrice(price){
@@ -423,7 +440,7 @@ let km = '';
 		}
 		var child = arr[count];
 		
-		$(child).animate({opacity:'1'}, 110, ()=>{
+		$(child).animate({opacity:'1'}, 100, ()=>{
 			effect(count + 1, arr);
 		});
 	}
