@@ -28,4 +28,6 @@ public interface biz {
 	public List<chat> chatConfirm(chatroom room);
 	public List<chat> chatlist(int roomseq);
 	public int sendMessage(chat chat);
+	
+	public List<chatroom> getchatlist(String sessionid);
 }
