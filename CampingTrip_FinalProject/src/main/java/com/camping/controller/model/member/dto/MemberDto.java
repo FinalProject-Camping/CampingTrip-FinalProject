@@ -1,5 +1,7 @@
 package com.camping.controller.model.member.dto;
 
+import com.camping.controller.model.joonggo.dto.report;
+
 public class MemberDto {
 	private int myno;
 	private String myid;
@@ -12,15 +14,22 @@ public class MemberDto {
 	private String mysex;
 	private String myenabled;
 	private String myrole;
-	private int mypenalty;	
+	private int mypenalty;
+	
+	// 쿼리로 join할 dto(마이페이지 회원리스트)
+	private report report;
 	
 	
 	public MemberDto() {
 		super();
 	}
 		
+	
+	
+	// report 추가
 	public MemberDto(int myno, String myid, String mypw, String myname, String myaddr, String myphone, String myemail,
-			String mybirth, String mysex, String myenabled, String myrole, int mypenalty) {
+			String mybirth, String mysex, String myenabled, String myrole, int mypenalty,
+			com.camping.controller.model.joonggo.dto.report report) {
 		super();
 		this.myno = myno;
 		this.myid = myid;
@@ -34,7 +43,26 @@ public class MemberDto {
 		this.myenabled = myenabled;
 		this.myrole = myrole;
 		this.mypenalty = mypenalty;
+		this.report = report;
 	}
+
+
+	
+	
+
+	// report 추가
+	public report getReport() {
+		return report;
+	}
+	public void setReport(report report) {
+		this.report = report;
+	}
+
+	
+	
+	
+	
+
 
 	public int getMyno() {
 		return myno;
