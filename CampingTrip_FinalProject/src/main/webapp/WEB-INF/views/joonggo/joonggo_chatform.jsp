@@ -19,49 +19,240 @@
 
 <style type="text/css">
 body{font-family: NanumBarunGothic;}
+
 .chat-header{
-	height:50px;
 	width:100%;
 	background-color: #d49466;
 	color:white;
 	font-size:20px;
+	padding:10px 0px 10px 0px;
 }
+.chat-body{
+	width : 100%;
+	height: 500px;
+	padding:10px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.chat-footer{
+}
+hr{
+	margin:0;
+}
+.left{
+	border-top-left-radius: 0px !important;
+	border-radius: 22px;
+	background-color: lightgray;
+	padding: 10px;
+	max-width: 70%;
+	height: auto;
+	word-break:break-all;
+	float:left;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:5px;
+}
+.left-div{
+	float:left;
+	height:100%; 
+	width:20%; 
+	position:relative;
+}
+.time-left{
+	position:absolute; 
+	top:100%; 
+	left:0%; 
+	font-size:70%; 
+	transform: translate(0%, -100%);
+}
+
+.right{
+	border-bottom-right-radius: 0px !important;
+	border-radius: 22px;
+	background-color: lightgray;
+	padding: 10px;
+	max-width: 70%;
+	height:auto;
+	float:right;
+	word-break: break-all;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-right:5px;
+}
+.right-div{
+	float:right;
+	height:100%; 
+	width:20%; 
+	position:relative;
+}
+.time-right{
+	position:absolute; 
+	top:100%; 
+	right:0%;
+	font-size:70%; 
+	transform: translate(0, -100%);
+}
+
 </style>
 
 </head>
 <body>
-
-	<div class="container-fluid">
-		<div class="chat-header">
-				${writer }님과의 채팅
-		</div>
-		
-		<div class="chat-body">
-				<div class="row" style="">
-					<div class="col-12" style="" >
-						<div style='width:100%; height:500px; border-radius: 5px; background-color: rgb(99, 170, 255); padding:5px;'>
-							ㅇ라ㅓㅣㄴ아러먀ㅣㅈ더리나어랴미더리ㅓㄴ야ㅣ러ㅣㄴ야러미냥러ㅣㅁ야너림냥러ㅣㄴ아러ㅣ냐더sdfslkdfjlskdfjsldifslieflsiesfldkflasdfsdfsefse
-						</div>
-					</div>
-
-				</div>
-		
-		
-		
-		
-		</div>
-	
-		<div class="chat-footer">
-				<div class="row" style="--bs-gutter-x: 0; height: 100%;">
-						<div class="col-10"><textarea style="border:none; display:block; outline:none; width:100%; height:100%; resize: none;"></textarea></div>
-						<div class="col-2">
-							<button type="button" style="outline:none; border:none; width:100%; height:100%; background-color: rgb(99, 170, 255); color:white;"><span class="fas fa-paper-plane fa-2x"></span></button>
-						</div>
-				</div>	
-		
-		</div>
-	
+	<div class="chat-header">
+		&nbsp;&nbsp;${writer }
 	</div>
+		<div class="chat-body">
+		
+		</div>
+		
+	<div><hr></div>
+		
+	<div class="container-fluid">
+		<div class="chat-footer">
+			<form class="box" action="javascript:sendmessage(document.getElementById('content').value)">
+			<div style="position: relative; width:100%; ">
+				<input autocomplete="off" id="content" type="text" placeholder="메세지를 입력하세요." style="border-radius:18px; outline:none; border:none; width:89%; height:65px; resize: none;">
+				<button type="submit" style="float:right; position:absolute; top:0%; left:90%; width:10%; height:65px; outline:none; border:none; background-color:white; color:darkgray;"><span class="align-middle fas fa-paper-plane fa-lg"></span></button>
+			</div>
+			</form>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		var userid = '${userid}';
+		var writer = '${writer}';
+		var roomseq;
+		console.log('userid' + userid);
+		console.log('writer' + writer);
+	
+		var createLeft = (content, date) => {
+			var html = 
+				'<div class="row">' +
+				'<div class="col-12">' +
+				'<div class="left">'+content+'</div>' +
+				'<div class="left-div"><span class="time-left">'+date+'</span></div>' +
+				'</div></div>';
+			return html;
+		}
+		
+		var createRight = (content, date) => {
+			var html = 
+				'<div class="row">' +
+				'<div class="col-12">' +
+				'<div class="right">'+content+'</div>' +
+				'<div class="right-div"><span class="time-right">'+date+'</span></div>'
+				'</div></div>';
+			return html;
+		}
+		
+		var getTime = (chattime) => {
+			var time = chattime.substring(0, chattime.lastIndexOf(':'));
+			var times = chattime.split(':');
+			if(parseInt(times[0]) >= 12){
+				var t = parseInt(times[0])%12 === 0? 12 : parseInt(times[0])%12;
+				times[0] = '오후 ' + t;
+			}else{
+				var t = parseInt(times[0]) === 0? 12 : parseInt(times[0]); 
+				times[0] = '오전 ' + t;
+			}
+			return times[0] + ':' + times[1]; 
+		}
+		
+		function dateFormat(date) {
+	        let month = date.getMonth() + 1;
+	        let day = date.getDate();
+	        let hour = date.getHours();
+	        let minute = date.getMinutes();
+	        let second = date.getSeconds();
+
+	        month = month >= 10 ? month : '0' + month;
+	        day = day >= 10 ? day : '0' + day;
+	        hour = hour >= 10 ? hour : '0' + hour;
+	        minute = minute >= 10 ? minute : '0' + minute;
+	        second = second >= 10 ? second : '0' + second;
+
+	        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+		}
+		
+		function sendmessage(val){
+			var trimVal = val.trim();
+			if(trimVal === ''){return;}
+			
+			$.ajax({
+				url:"joonggo_sendmessage.do",
+				data:{"roomseq":roomseq,
+					  "sender":userid,
+					  "content":trimVal},
+				method: "post",
+				success:function(data){ 
+					if(data.data === true){
+						
+						var datalist = $.parseJSON(data.list);
+						document.querySelector('.chat-body').innerHTML = '';
+						let currdate = '';
+						
+						datalist.forEach(chat => {
+														
+							var chatdate = dateFormat(new Date(chat.senddate)).split(' ')[0];
+							var chattime = getTime(dateFormat(new Date(chat.senddate)).split(' ')[1]);
+							if(chatdate != currdate){
+								$('.chat-body').append('<div style="font-size:90%; text-align:center; color:gray; width:100%;">'+chatdate+'</div>')
+								currdate = chatdate;
+							}
+							
+							if(chat.sender === null){
+								$('.chat-body').append('<div style="text-align:center; color:gray; width:100%;">'+chat.content+'</div>')
+							}else if(chat.sender === '${userid}'){
+								$('.chat-body').append(createRight(chat.content, chattime))
+							}else{
+								$('.chat-body').append(createLeft(chat.content, chattime))
+							}
+							
+						});
+						
+						//포커스
+						document.querySelector('#content').value = '';
+						document.querySelector('.chat-body').scrollTop = document.querySelector('.chat-body').scrollHeight;
+						
+					}else{
+						location.href='error.do';
+					}
+				}
+			})
+		}
+	
+		$(function(){
+			var list = ${list};
+			let currdate = '';
+			
+			list.forEach(chat => {
+				var chatdate = dateFormat(new Date(chat.senddate)).split(' ')[0];
+				var chattime = getTime(dateFormat(new Date(chat.senddate)).split(' ')[1]);
+				if(chatdate != currdate){
+					$('.chat-body').append('<div style="font-size:90%; text-align:center; color:gray; width:100%;">'+chatdate+'</div>')
+					currdate = chatdate;
+				}
+				
+				if(chat.sender === null){
+					$('.chat-body').append('<div style="text-align:center; color:gray; width:100%;">'+chat.content+'</div>')
+					roomseq = chat.roomseq;
+					console.log(roomseq);
+					
+				}else if(chat.sender === '${userid}'){
+					$('.chat-body').append(createRight(chat.content, chattime))
+				}else{
+					$('.chat-body').append(createLeft(chat.content, chattime))
+				}
+				
+			});
+			
+			//포커스
+			document.querySelector('.chat-body').scrollTop = document.querySelector('.chat-body').scrollHeight;
+			
+		})
+		
+	
+	</script>
+	
 </body>
 </html>
 
