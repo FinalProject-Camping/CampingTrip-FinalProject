@@ -22,6 +22,12 @@ public class ReservationDto {
 	private String status;
 	private Date create_date;
 	
+	
+	// 쿼리로 join할 dto(마이페이지 캠핑 예약 정보)
+	private RoomDto myRoomdto;
+	private CampDto myCampDto;
+	
+	
 	public ReservationDto() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -29,8 +35,10 @@ public class ReservationDto {
 	
 	
 
+	// myRoomdto, myCampDto 추가
 	public ReservationDto(int reservno, int campno, int roomno, String userid, String user_name, String user_contact,
-			int guest_number, Date check_in, Date check_out, String status, Date create_date) {
+			int guest_number, Date check_in, Date check_out, String status, Date create_date, RoomDto myRoomdto,
+			CampDto myCampDto) {
 		super();
 		this.reservno = reservno;
 		this.campno = campno;
@@ -43,8 +51,28 @@ public class ReservationDto {
 		this.check_out = check_out;
 		this.status = status;
 		this.create_date = create_date;
+		this.myRoomdto = myRoomdto;
+		this.myCampDto = myCampDto;
 	}
 
+	
+	// myRoomdto, myCampDto 추가
+	public RoomDto getMyRoomdto() {
+		return myRoomdto;
+	}
+	public void setMyRoomdto(RoomDto myRoomdto) {
+		this.myRoomdto = myRoomdto;
+	}
+
+	public CampDto getMyCampDto() {
+		return myCampDto;
+	}
+	public void setMyCampDto(CampDto myCampDto) {
+		this.myCampDto = myCampDto;
+	}
+
+	
+	
 
 
 	public int getCampno() {
@@ -142,17 +170,17 @@ public class ReservationDto {
 		return simpleDateFormat.format(create_date);
 	}
 
+	
+	
 
-
+	// myRoomdto, myCampDto 추가
 	@Override
 	public String toString() {
 		return "ReservationDto [reservno=" + reservno + ", campno=" + campno + ", roomno=" + roomno + ", userid="
 				+ userid + ", user_name=" + user_name + ", user_contact=" + user_contact + ", guest_number="
 				+ guest_number + ", check_in=" + check_in + ", check_out=" + check_out + ", status=" + status
-				+ ", create_date=" + create_date + "]";
+				+ ", create_date=" + create_date + ", myRoomdto=" + myRoomdto + ", myCampDto=" + myCampDto + "]";
 	}
-
-	
 
 	
 }

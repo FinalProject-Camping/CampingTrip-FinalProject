@@ -9,8 +9,6 @@
 		<typeAlias type="com.camping.controller.model.joonggo.dto.joonggo" alias="joonggoDto"/>
 		<typeAlias type="com.camping.controller.model.joonggo.dto.renew" alias="renewDto"/>
 		<typeAlias type="com.camping.controller.model.joonggo.dto.heart" alias="heartDto"/>
-		<typeAlias type="com.camping.controller.model.joonggo.dto.chatroom" alias="chatroomDto"/>
-		<typeAlias type="com.camping.controller.model.joonggo.dto.chat" alias="chatDto"/>
 
     	<typeAlias type="com.camping.controller.model.camp.dto.CampDto" alias="campDto"/>
     	<typeAlias type="com.camping.controller.model.camp.dto.CampImageDto" alias="campImageDto"/>
@@ -21,27 +19,31 @@
     	<typeAlias type="com.camping.controller.model.camp.dto.WriterInfo" alias="writerInfo"/>
 		<typeAlias type="com.camping.controller.model.camp.dto.SearchInfo" alias="searchInfo"/>
 		<typeAlias type="com.camping.controller.model.joonggo.dto.report" alias="reportDto"/>
-    	<typeAlias type="com.camping.controller.model.camp.dto.CampDto" alias="campDto"/>
+    <typeAlias type="com.camping.controller.model.camp.dto.CampDto" alias="campDto"/>
     
-
-    	<!-- login -->
-	  	<typeAlias type="com.camping.controller.model.member.dto.MemberDto" alias="memberDto"/>
-	  	
-	  	<!-- event -->
-	  	<typeAlias type="com.camping.controller.model.event.dto.eventDto" alias="eventDto"/>
-
    
 	  	<typeAlias type="com.camping.controller.model.member.dto.MemberDto" alias="memberDto"/>
-
+	  	
+	  	
+	  <!-- mypage -->	
+	  <typeAlias type="com.camping.controller.model.camp.dto.CampDto" alias="myCampDto"/>
+	  <typeAlias type="com.camping.controller.model.member.dto.MemberDto" alias="myMemberDto"/>
+	  <typeAlias type="com.camping.controller.model.joonggo.dto.report" alias="report"/>
+	  <typeAlias type="com.camping.controller.model.camp.dto.RoomDto" alias="myRoomdto"/>
+	  <typeAlias type="com.camping.controller.model.camp.dto.ReservationDto" alias="myReservDto"/>
+	  <typeAlias type="com.camping.controller.model.joonggo.dto.joonggo" alias="myJoonggoDto"/>
+	  <typeAlias type="com.camping.controller.model.joonggo.dto.heart" alias="myHeartDto"/>
+	  <typeAlias type="com.camping.controller.model.event.dto.eventDto" alias="myPointDto"/>
 	</typeAliases>
 	
 	<mappers> <!-- mybatis mapper 등록 -->
 		<mapper resource="/mybatis/joonggo-mapper.xml"/>
-    	<mapper resource="/mybatis/camping-mapper.xml"/>
-    	<!-- login -->
-  		<mapper resource="/mybatis/member-mapper.xml" />
-  		<!-- event -->
-  		<mapper resource="/mybatis/event-mapper.xml"/> 
+    <mapper resource="/mybatis/camping-mapper.xml"/>
+    <!-- login -->
+  	<mapper resource="/mybatis/member-mapper.xml" />
+  	
+  	<!-- mypage -->
+  	<mapper resource="/mybatis/mypage-mapper.xml" />
 	</mappers>
 
 </configuration>

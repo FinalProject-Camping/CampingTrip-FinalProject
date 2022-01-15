@@ -22,13 +22,20 @@ public class joonggo {
 	private int heart;
 	private String imglist;
 	
+	
+	// 쿼리로 join할 dto(마이페이지 찜리스트)
+	private heart myHeartDto;
+	
+	
 	public joonggo() {
 		super();
 	}
 
+	// myHeartDto 추가
 	public joonggo(int seq, String id, String phone, String email, Date regdate, String title, String content,
 			String category, int price, String place, String tag, String quality, String delivery, String agree,
-			String trade, int hit, int heart, String imglist) {
+			String trade, int hit, int heart, String imglist,
+			com.camping.controller.model.joonggo.dto.heart myHeartDto) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -48,7 +55,23 @@ public class joonggo {
 		this.hit = hit;
 		this.heart = heart;
 		this.imglist = imglist;
+		this.myHeartDto = myHeartDto;
 	}
+	
+	
+	// myHeartDto 추가
+	public heart getMyHeartDto() {
+		return myHeartDto;
+	}
+	public void setMyHeartDto(heart myHeartDto) {
+		this.myHeartDto = myHeartDto;
+	}
+	
+	
+	
+	
+	
+	
 
 	public int getSeq() {
 		return seq;

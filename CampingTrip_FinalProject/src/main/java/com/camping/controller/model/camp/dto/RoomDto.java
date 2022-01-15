@@ -11,14 +11,20 @@ public class RoomDto {
 	private String guest_number;
 	private String room_content;
 	private String thumbnail;
+	
+	// 쿼리로 join할 dto(마이페이지 캠핑지 정보)
+	private CampDto myCampDto;
+	
 
 	public RoomDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	// myCampDto 추가
 	public RoomDto(int roomno, int campno, String room_name, String room_price, String guest_number,
-			String room_content, String thumbnail) {
+			String room_content, String thumbnail, CampDto myCampDto) {
 		super();
 		this.roomno = roomno;
 		this.campno = campno;
@@ -27,8 +33,25 @@ public class RoomDto {
 		this.guest_number = guest_number;
 		this.room_content = room_content;
 		this.thumbnail = thumbnail;
+		this.myCampDto = myCampDto;
 	}
 
+	
+	
+	// myCampDto 추가
+	public CampDto getMyCampDto() {
+		return myCampDto;
+	}
+	public void setMyCampDto(CampDto myCampDto) {
+		this.myCampDto = myCampDto;
+	}
+
+
+	
+	
+	
+	
+	
 	public String getThumbnail() {
 		return thumbnail;
 	}
