@@ -21,6 +21,7 @@
 	crossorigin="anonymous"></script>
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="http://kit.fontawesome.com/2d323a629b.js"></script>
 <style type="text/css">
 @font-face {
     font-family: 'EliceDigitalBaeum_Bold';
@@ -426,6 +427,19 @@ textarea {
 	.exp{
 		border-bottom:0px;
 	}
+	.logo{
+		position:absolute;
+		top:50%;
+		left:18%;
+		color:white;
+		font-weight:bold;
+		font-size:40px;
+		transform:translate(-50%,-50%);
+	}
+	.logo a{
+		text-decoration:none;
+		color:white;
+	}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -553,6 +567,7 @@ textarea {
 	<div class="main_wrap">
 		<div class="main_left">
 			<div class="main_img"></div>
+			<div class="logo"><a href="index.jsp"><i class="fas fa-campground"></i>CampingTrip</a></div>
 		</div>
 		
 		<div class="main_right">

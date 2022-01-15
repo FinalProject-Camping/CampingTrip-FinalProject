@@ -182,7 +182,7 @@ public class CampController {
 		if(res>0) {
 			response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script> alert('리뷰가 등록되었습니다.'); window.close();</script>");
+            out.println("<script> alert('리뷰가 등록되었습니다.'); opener.parent.refreshPage(); window.close();</script>");
             out.flush();
 
 			return "camping/review_write";
@@ -200,8 +200,9 @@ public class CampController {
 	}
 	
 	@RequestMapping(value="reviewlistajax.do",method=RequestMethod.POST)
-	public List<ReviewDto> reviewList(int campno){
-		List<ReviewDto> reviewList = biz.selectAllReview(campno);
+	@ResponseBody
+	public List<ReviewDto> reviewList(@RequestBody CampDto campno){
+		List<ReviewDto> reviewList = biz.selectAllReview(campno.getCampno());
 		return reviewList;
 	}
 	

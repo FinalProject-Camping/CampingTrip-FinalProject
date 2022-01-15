@@ -93,6 +93,7 @@
 	font-weight: bold;
 	color: black;
 	font-size: 20px;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .nav-link active {
@@ -194,6 +195,10 @@
 }
 .camping_name{
 	font-family: 'EliceDigitalBaeum_Bold';
+}
+.review_grade{
+	display:inline-block;
+	width:180px;
 }
 </style>
 <script type="text/javascript">
@@ -408,7 +413,7 @@
 	}
 	
 	function openWindowPop(url, name) {
-		var options = 'top=10, left=10, width=1000, height=645, status=no, menubar=no, toolbar=no, resizable=no';
+		var options = 'top=10, left=10, width=1000, height=570, status=no, menubar=no, toolbar=no, resizable=no';
 		window.open(url, name, options);
 	}
 	function openReviewWrite(campno){
@@ -418,7 +423,9 @@
 	function priceLocale(price){
 		return price.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 	}
-	
+	function refreshPage(){
+		window.location.reload();
+	}
 	function searchRoom(){
 		
 		var check_in = $("#check-in").val();
@@ -510,6 +517,9 @@
 			}
 		})
 	}
+	function moveToLogin(){
+		location.href = 'loginform.do';
+	}
 	function moveToReviewForm(campno) {
 		//로그인이 없거나 페널티가 있는경우 안되게
 		$.ajax({
@@ -529,25 +539,28 @@
 		})
 	}
 	function refreshReviewlist(){
+		var campno = {"campno" : ${campDto.campno}};
 		$.ajax({
-			type:"post",
+			
 			url:"reviewlistajax.do",
-			data:{campno : ${campDto.campno}},
+			type:"post",
+			data:JSON.stringify(campno),
 			contentType:"application/json",
 			success:function(result){
 				var comments="";
+				alert("성공");
 				$(result).each(function(){
-					var rPrice = (this.room_price).format();
+					console.log(typeof(this.create_date));
 					comments +='<div class="review_element row">';
 					comments +='<div class="review_profile col-2">';
 					comments +='<img class="rounded-circle img-fluid" src="/resources/img/'+this.thumbnail+'"></div>';
 					comments +='<div class="review_content_part col-10">';
 					comments +='<div class="review_top d-flex justify-content-between">';
-					comments +='<span class="review_title">'+this.title+'</span> <span><spanclass="star-rating"><span style="width:'+ (this.total)*20+'%"></span></span>('+this.total+'점)</span>';
+					comments +='<span class="review_title">'+this.title+'</span> <span class="review_grade"><span class="star-rating"><span style="width:'+ (this.total)*20+'%"></span></span>('+this.total+'점)</span>';
 					comments +='</div>';
 					comments +='<div class="review_content">'+this.content+'</div>';
 					comments +='<div class="review_date d-flex justify-content-end align-items-end">';
-					comments +='<span class="date">'+this.date+'</span></div></div></div>';
+					comments +='<span class="date">'+this.create_date+'</span></div></div></div>';
 				});
 				
 				$("#review_ajaxList").empty();
@@ -680,7 +693,7 @@
 							<div class="col-md-6">
 
 								<button class="btn btn-success" style="float: right;"
-									id="chatting_btn" onclick="refreshReviewlist()">채팅하기</button>
+									id="chatting_btn" onclick="resizeWindow()">채팅하기</button>
 							</div>
 						</div>
 						<div class="room_list row">
@@ -782,7 +795,7 @@
 									&nbsp;위치
 								</div>
 								<div class="sub_content">
-									<div id="map" style="width: 100%; height: 400px;"></div>
+									 <div id="map" style="width: 100%; height: 400px;"></div>
 								</div>
 							</div>
 						</div>
@@ -862,6 +875,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

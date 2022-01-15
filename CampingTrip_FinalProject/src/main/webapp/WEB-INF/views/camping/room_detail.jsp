@@ -121,7 +121,27 @@ a {
     	  
     	  window.close();
       }
-      
+      function moveToReservation(roomno) {
+  		//로그인이 없거나 페널티가 있는경우 안되게
+  		$.ajax({
+  			url : "loginChk.do",
+  			method : "post",
+  			success : function(data) {
+  				if (data.data === true) {
+  					window.resizeTo(1000,645);
+  					location.href="reservationform.do?roomno="+roomno;
+  				} else {
+  					if (confirm("로그인이 필요한 작업입니다. 로그인 하시겠습니까?")) {
+						
+  						opener.parent.moveToLogin();
+  						window.close();
+  					} else {
+
+  					}
+  				}
+  			}
+  		})
+  	}
     </script>
 
 </head>
@@ -205,7 +225,7 @@ a {
 		<div class="row mt-5">
 			<div class="col-md-12 d-flex justify-content-center">
 				<button type="button" class="btn2"
-					onclick="moveToResrv(${roomDto.roomno})">예약</button>
+					onclick="moveToReservation('${roomDto.roomno}')">예약</button>
 				<button type="button" class="btn2" onclick="window.close()">취소</button>
 			</div>
 		</div>

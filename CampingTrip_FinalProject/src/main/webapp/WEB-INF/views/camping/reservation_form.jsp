@@ -209,6 +209,14 @@ document.addEventListener('DOMContentLoaded', function() {
 				return false;
 		}
 	}
+	function sendData(){
+		if(!$("input[name=check_in]").val()){
+			alert("체크인 날짜를 선택해주세요");
+			$("input[name=]").focus();
+		}
+		window.resizeTo(600,645);
+		document.getElementById('rsvForm').submit();
+	}
 </script>
 </head>
 <body>
@@ -222,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		<div id="middle"></div>
 		<div id="right">
 			<div class="container">
-				<form action="reservationres.do" method="post">
+				<form action="reservationres.do" method="post" id="rsvForm">
 					<input type="hidden" name="roomno" value="${roomDto.roomno}">
 					<input type="hidden" name="campno" value="${roomDto.campno}">
 					<c:set var="loginId" value='<%=session.getAttribute("id")%>' />
@@ -271,8 +279,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 					<div class="row mt-5">
 						<div class="col-md-12 d-flex justify-content-center">
-							<input type="submit" class="btn2" value="예약">
-							<button class="btn2" onclick="window.close()">취소</button>
+							<button type="button" class="btn2" onclick="sendData()">예약</button>
+							<button type="button" class="btn2" onclick="window.close()">취소</button>
 						</div>
 					</div>
 				</form>

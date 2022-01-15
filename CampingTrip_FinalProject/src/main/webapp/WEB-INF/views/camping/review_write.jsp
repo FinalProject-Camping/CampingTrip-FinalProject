@@ -98,6 +98,10 @@ textarea {
     	$('#score'+index).empty();
     	$('#score'+index).append(target.value);
   }
+
+	function resizeWindow(){
+		window.resizeTo(1400, 740);
+	}
 </script>
 </head>
 <body>
