@@ -1,0 +1,125 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
+<% response.setContentType("text/html; charset=UTF-8"); %> 
+
+
+ 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" type="text/css" href="resources/css/webfont.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	var sessionid = 'camp';
+	
+	function createRow(title, imglist, seq, userid, writer, roomseq){
+		
+		
+		var html = 
+			'<div class="row">'+
+			'<div class="col-12">'+
+			'<span><img src="'+imglist.split(',')[0]+'" width="100" height="100"></span>'+
+			'<span onclick="location.href=`joonggo_selectone.do?seq='+seq+'`">'+title+'</span>'+
+			'<button onclick="chat(this)" seq='+seq+' userid="'+userid+'" writer="'+writer+'" roomseq="'+roomseq+'">채팅확인</button>'+
+			'</div></div>';
+		
+		return html;
+	}
+	
+	function chat(ele){
+		var seq = ele.getAttribute('seq');
+		var userid = ele.getAttribute('userid');
+		var writer = ele.getAttribute('writer');
+		var roomseq = ele.getAttribute('roomseq');
+		$.ajax({
+			url:"confirmsession.do",
+			method: "post",
+			success:function(data){ 
+				if(data.data === true){
+					popup("joonggo_myroom.do?joonggoseq="+seq+"&writer="+writer+"&userid="+sessionid+"&roomseq="+roomseq, "채팅하기",450,620);
+				}else{
+					alert('로그인이 필요합니다.');
+					location.href='loginform.do';
+				}
+			}
+		})
+	}
+	
+	function popup(url, name, width, height){
+	    var _width = width;
+	    var _height = height;
+	 
+	    // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
+	    var _left = Math.ceil(( window.screen.width - _width )/2);
+	    var _top = Math.ceil(( window.screen.height - _height )/2); 
+	 
+	    window.open(url, name, 'width='+ _width +', height='+ _height +', left=' + _left + ', top='+ _top +',status=no, toolbar=no, scrollbars=no, resizable=no');
+	}
+	
+	
+	$(function(){
+		$.ajax({
+			url:"mychatlist.do",
+			data:{"sessionid":sessionid},
+			method: "post",
+			success:function(data){
+				if(data.data === false){
+					location.href='error.do';
+				}else{
+					var list = document.getElementById('list');
+					var roomlist = $.parseJSON(data.roomlist);
+					roomlist.forEach( room => {
+						list.innerHTML += (createRow(room.title, room.imglist, parseInt(room.joonggoseq), room.userid, room.writer, room.roomseq));
+					});
+					
+				}
+			}
+		})
+	})
+</script>
+
+</head>
+<body>
+	<div class="container-fluid" id="list">
+
+	
+	
+	
+	</div>
+	
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

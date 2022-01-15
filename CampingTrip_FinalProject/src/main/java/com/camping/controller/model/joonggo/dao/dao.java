@@ -38,4 +38,6 @@ public interface dao {
 	public chatroom getroom(chatroom room);
 	public int createroom(chatroom room);
 	public int sendMessage(chat chat);
+	
+	public List<chatroom> getchatlist(String sessionid);
 }
