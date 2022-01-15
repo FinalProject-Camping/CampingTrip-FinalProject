@@ -15,7 +15,7 @@
 <title>중고 물품등록</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="resources/css/webfont.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -27,38 +27,11 @@
 
 
 <style type="text/css">
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
-}
-
-.nanumbarungothic * {
- font-family: 'NanumBarunGothic', sans-serif;
-}
-
-@media screen and (max-width: 767px) { #mainbody { font-size: 14px; } .title{font-size: 13pt;} }
-@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody { font-size: 16px; } .title{font-size: 14pt;} }
-@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody { font-size: 16px; } .title{font-size: 15pt;} #mainbody > div {margin-left:10%; margin-right:10%;}}
-@media screen and (min-width: 1200px) { #mainbody { font-size: 18px; } .title{font-size: 16pt;} .container{width:893px;}}
+@media screen and (max-width: 767px) { #mainbody { font-size: 18px; } .title{font-size: 20px;} }
+@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody { font-size: 18px; } .title{font-size: 20px;} }
+@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody { font-size: 16px; } .title{font-size: 15pt;} #mainbody{width:750px;}}
+@media screen and (min-width: 1200px) { #mainbody { font-size: 18px; } .title{font-size: 16pt;} #mainbody{width:893px;}}
+ .container-fluid{padding-right:0; padding-left:0;}
 
 body{background-color: #f8f9fa;}
 #mainbody{font-family: NanumBarunGothic;}
@@ -67,10 +40,10 @@ body{background-color: #f8f9fa;}
 .green{color:rgb(1, 176, 3);}
 .gray{color:gray;}
 .lightgray{color:lightgray;}
-.star{color:rgb(0, 191, 121); margin-left: 1%; font-weight: bold;}
+.star{color:#198754; margin-left: 1%; font-weight: bold;}
 .message{display:none; margin-top: 1.5%;}
-.title{margin-bottom: 1%;}
-#maintitle{color:rgb(0, 191, 121);}
+.title{margin-bottom: 1%; font-family: EliceDigitalBaeum_Bold;}
+#maintitle{color:#198754; font-family: EliceDigitalBaeum_Bold;}
 
 
 #address{display:none; margin-top: 1%;}
@@ -83,8 +56,8 @@ body{background-color: #f8f9fa;}
 .tag-span{display:inline-block; background-color: rgb(74, 231, 154); border: solid 1px rgb(74, 231, 154); border-radius: 20px; padding-left:2%; padding-right:2%; padding-top:2px; padding-bottom:2px; color: white; font-weight: bold; margin-right: 1%;}
 
 
-#submitbtn{background-color: white; border: solid 1px rgb(0, 191, 121); border-radius: 5px; padding: 2%; padding-right:3%; padding-left:3%; color :rgb(0, 191, 121); font-weight: bold;}
-#submitbtn:hover{background-color: rgb(0, 191, 121); border: solid 1px rgb(0, 191, 121); color: white; transition: all 0.3s;}
+#submitbtn{background-color: white; border: solid 1px #198754; border-radius: 5px; padding: 2%; padding-right:3%; padding-left:3%; color :#198754; font-weight: bold;}
+#submitbtn:hover{background-color: #198754; border: solid 1px #198754; color: white; transition: all 0.3s;}
 #title, #select, #tag {width: 100%; border:none;  outline: none;}
 .group{margin-bottom: 3%;}
 .check{margin-right: 0.5%;}
@@ -274,7 +247,7 @@ body{background-color: #f8f9fa;}
 </head>
 <body>
 	<br>
-	<div class="container" id="mainbody">
+	<div class="container-fluid" id="mainbody">
 		<div class="mainbody-inner  shadow-lg">
 	<!-- 폼 시작 -->
 		<form action="joonggo_insert.do" method="post" name="form">
@@ -442,7 +415,7 @@ body{background-color: #f8f9fa;}
 				</div>
 				<div class="gray">판매자 정보는 판매기간 동안 멤버에게만 보입니다.</div>
 				<!---->
-				<p style="color:rgb(0, 191, 121)">본인인증이 완료되었습니다.</p>
+				<p style="color:#198754">본인인증이 완료되었습니다.</p>
 				<!---->
 			</div>
 		</div>

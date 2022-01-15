@@ -3,6 +3,8 @@ package com.camping.controller.model.joonggo.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.camping.controller.model.joonggo.dto.chat;
+import com.camping.controller.model.joonggo.dto.chatroom;
 import com.camping.controller.model.joonggo.dto.heart;
 import com.camping.controller.model.joonggo.dto.joonggo;
 import com.camping.controller.model.joonggo.dto.renew;
@@ -31,4 +33,9 @@ public interface dao {
 	public List<joonggo> person(String id);
 	public List<joonggo> selectlist_main();
 	public int report(report report);
+	public List<joonggo> setAddress(Map<String,Object> map);
+	public List<chat> chatlist(int roomseq);
+	public chatroom getroom(chatroom room);
+	public int createroom(chatroom room);
+	public int sendMessage(chat chat);
 }

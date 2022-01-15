@@ -18,49 +18,20 @@
 <title>상세보기</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" type="text/css" href="resources/css/webfont.css">
 <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
 
 <style type="text/css">
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
+@media screen and (max-width: 767px) { #mainbody,#seeAddr,#seeLink { font-size: 20px; } .popular-title , .price, .popular-addr{ font-size: 20px !important;} #user-circle{font-size:40px;} .titleandprice{font-size:20px;} .slider-1{height:450px;} .popularimgdiv{height:400px !important;}  .btns, .btns-n{margin-top:5px; width:99% !important; font-size:17px !important; height:80px !important;} #btn-heart, .btn-heart-n, .btn-del, .btn-update, .btn-share{margin-top:5px; width:49% !important; font-size:17px !important; height:80px !important;} .categorydiv{font-size:20px !important;}}
+@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody,#seeAddr,#seeLink{ font-size: 21px ;} .popular-title , .price, .popular-addr{ font-size: 21px !important;} #user-circle{font-size:50px;} .titleandprice{font-size:21px;} .slider-1{height:550px;} .popularimgdiv{height:430px !important;} .btns, .btns-n{margin-top:5px; width:99% !important; font-size:18px !important; height:80px !important;} #btn-heart, .btn-heart-n, .btn-del, .btn-update, .btn-share{margin-top:5px; width:49% !important; font-size:18px !important; height:80px !important;} .categorydiv{font-size:21px !important;}}
+@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody,#seeAddr,#seeLink { font-size: 14px; }  #mainbody{width:750px;} .btns, .btns-n{width:50%} #user-circle{font-size:30px;}  .titleandprice{font-size:22px;} .slider-1{height:460px;}}
+@media screen and (min-width: 1200px) { #mainbody,#seeAddr,#seeLink { font-size: 15px; }  #mainbody{width:825px;}  .btns, .btns-n{width:50%} #user-circle{font-size:35px;} .titleandprice{font-size:23px;} .slider-1{height:500px;}}  
 
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
-}
-
-.nanumbarungothic * {
- font-family: 'NanumBarunGothic', sans-serif;
-}
-
-@media screen and (max-width: 767px) { #mainbody,#seeAddr,#seeLink { font-size: 13px; }  .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:50%}  #user-circle{font-size:30px;} .titleandprice{font-size:21px;} .slider-1{height:350px;}}
-@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody,#seeAddr,#seeLink { font-size: 13px; }  #mainbody > .row{margin-left:5%; margin-right:5%;} .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:50%} #user-circle{font-size:30px;} .titleandprice{font-size:21px;} .slider-1{height:400px;}}
-@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody,#seeAddr,#seeLink { font-size: 14px; }  #mainbody > .row{margin-left:12%; margin-right:12%;} .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:50%} #user-circle{font-size:30px;}  .titleandprice{font-size:22px;} .slider-1{height:460px;}}
-@media screen and (min-width: 1200px) and (max-width: 1399px) { #mainbody,#seeAddr,#seeLink { font-size: 15px; }  #mainbody > .row{margin-left:15%; margin-right:15%;}  .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:50%} #user-circle{font-size:35px;} .titleandprice{font-size:23px;} .slider-1{height:480px;}}
-@media screen and (min-width: 1400px) { #mainbody,#seeAddr,#seeLink { font-size: 15px; }  #mainbody > .row{margin-left:18%; margin-right:18%;}  .btn-suggest, .btns, .btns-n, .btn-suggest-n{width:50%} #user-circle{font-size:35px;} .titleandprice{font-size:23px;} .slider-1{height:500px;}}  
-
-#mainbody, .modal{font-family: NanumBarunGothic;}
+#mainbody{font-family: NanumBarunGothic;}
 .hr{color: gray; }
 .bold{font-weight: bold;}
 .gray{color:gray;}
@@ -69,13 +40,13 @@
 .message{display:none; margin-top:1.5%;}
 a{text-decoration: none; color:black;}
 
-.place-btn{background-color: rgb(0, 191, 121); border: solid 2px rgb(0, 191, 121); border-radius: 15px; padding-right:12px; padding-left:12px; color : white; font-weight: bold; margin-right:8px;}
+.place-btn{background-color: #198754; border: solid 2px #198754; border-radius: 15px; padding-right:12px; padding-left:12px; color : white; font-weight: bold; margin-right:8px;}
 
-.btns{background-color: #FFFFFF; border: solid 1px rgb(0, 191, 121); border-radius: 4px; padding-right:3%; padding-left:3%; color : rgb(0, 191, 121); font-weight: bold; height: 50px;}
+.btns{background-color: #FFFFFF; border: solid 1px #198754; border-radius: 4px; padding-right:3%; padding-left:3%; color : #198754; font-weight: bold; height: 50px;}
 .btns:hover{
 	transition: all 0.3s;
-	border: solid 1px rgb(0, 191, 121);
-	background-color: rgb(0, 191, 121);
+	border: solid 1px #198754;
+	background-color: #198754;
 	color : white;
 }
 .btns-n{cursor:default !important; background-color: lightgray; border: solid 1px lightgray; border-radius: 5px; padding-right:3%; padding-left:3%; color : white; font-weight: bold; height: 50px;}
@@ -92,22 +63,13 @@ a{text-decoration: none; color:black;}
 .heart{color: #000 !important;}
 .btn-heart-n{cursor:default !important; background-color: lightgray !important; border: solid 1px lightgray !important; color : white !important; border-radius: 5px; padding-right:18px !important; padding-left: 18px !important;  font-weight: bold; height: 50px; 	font-size: 13px !important; }
 
-.btn-del{background-color: #FFFFFF; border: solid 1px gray; color : gray; border-radius: 5px; padding-right:3%; padding-left:3%; font-weight: bold; height: 50px;}
+.btn-del{background-color: #FFFFFF; border: solid 1px gray; color : gray; border-radius: 4px; padding-right:3%; padding-left:3%; font-weight: bold; height: 50px;}
 .btn-del:hover{
 	transition: all 0.3s;
 	border: solid 1px gray;
 	background-color: gray;
 	color : white;
 }
-
-.btn-suggest{background-color: #FFFFFF; border: solid 1px #ff8a3d; color : #ff8a3d; border-radius: 5px;  font-weight: bold; height: 50px;}
-.btn-suggest:hover{
-	transition: all 0.3s;
-	border: solid 1px #ff8a3d;
-	background-color: #ff8a3d;
-	color : white;
-}
-.btn-suggest-n{cursor:default !important; background-color: lightgray; border: solid 2px lightgray; color : white; border-radius: 5px;  font-weight: bold; height: 50px;}
 
 .btn-update{background-color: #FFFFFF; border: solid 1px #ff9c78; color : #ff9c78; border-radius: 4px;  font-weight: bold; height: 50px;}
 .btn-update:hover{
@@ -117,10 +79,7 @@ a{text-decoration: none; color:black;}
 	color : white;
 }
 
-.btn-share{background-color: #FFFFFF; border: solid 1px gray; color : gray; border-radius: 4px;  font-weight: bold; height: 50px; width:23%;}
-
-#suggestModal .modal-header{background-color: #ff8a3d; color:white;}
-#suggestprice {outline: none;}
+.btn-share{background-color: #FFFFFF; border: solid 1px gray; color : gray; border-radius: 4px;  font-weight: bold; height: 50px; width:23.5%;}
 
 #user-circle{ color:gray; }
 #report{ cursor: pointer;}
@@ -159,7 +118,7 @@ a{text-decoration: none; color:black;}
 
 /*rgb(255, 59, 0)*/
 /* toast */
-.toast-success {background-color: rgb(0, 191, 121) !important;}
+.toast-success {background-color: #198754 !important;}
 .toast-error {background-color: #BD362F !important;}
 .toast-info {background-color: #2F96B4 !important;}
 .toast-warning {background-color: #F89406 !important;}
@@ -312,6 +271,23 @@ const sessionid = '${sessiondto.myid}';
 	
 	
 	//general user
+	function chat(){
+		$.ajax({
+			url:"confirmsession.do",
+			method: "post",
+			success:function(data){ 
+				if(data.data === true){
+					popup("joonggo_chatform.do?joonggoseq=${dto.seq}&writer=${dto.id}&userid=${sessiondto.myid}", "채팅하기",450,620);
+				}else{
+					alert('로그인이 필요합니다.');
+					location.href='loginform.do';
+				}
+			}
+		})
+	}
+	
+	
+	
 	function report(){
 		$.ajax({
 			url:"confirmsession.do",
@@ -325,29 +301,8 @@ const sessionid = '${sessiondto.myid}';
 				}
 			}
 		})
-		
-		
-
 	}
 
-	function suggest(){
-		if(sessionid ===''){
-			toastr.options.positionClass = "toast-top-right";
-			toastr.options.timeOut = 1000;
-			toastr.warning("로그인이 필요합니다");
-			return;
-		}
-		
-		if(document.getElementById('suggestprice').value === ''){
-			return false;
-		}
-		if(document.getElementsByClassName('message')[0].style.getPropertyValue('display') === 'block'){
-			return false;
-		}
-		alert('제안성공');
-		return false;
-	}
-	
 	function addheart(ele){
 		
 		$.ajax({
@@ -410,31 +365,6 @@ const sessionid = '${sessiondto.myid}';
 		})
 	}
 	
-	document.addEventListener("DOMContentLoaded", ()=>{
-		
-		/* document.getElementById('suggestbtn').addEventListener('click', ()=>{
-			document.getElementsByClassName('message')[0].style.display = 'none';
-			document.getElementById('suggestprice').value = '';
-		}, false); */
-		
-		//가격제안
-		document.getElementById('suggestprice').onkeyup = function(){
- 			this.value = this.value.replace(/,/g,'');
- 			this.value = this.value.replace(/(^0+)|[^0-9]/g,'');
-			var	val = parseInt(this.value);
-			var msg = document.getElementsByClassName('message')[0];
-			var price = parseInt(document.getElementById('price').getAttribute('value'))*0.7;
-			
-			switch(true){
-			case (isNaN(val)): msg.innerHTML='판매가격을 입력해주세요'; msg.style.display = 'block'; break;
-			case (val < price): msg.innerHTML='최소가격은 70%이하일 수 없습니다.'; msg.style.display = 'block'; break;
-			default : msg.style.display = 'none'; break;
-			}
-			this.value = this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		}
-
-	})
-	
 	function getTime(date){
 		var today = new Date();
 		var regdate = new Date(date);
@@ -470,11 +400,11 @@ const sessionid = '${sessiondto.myid}';
 
 	<br>
 
-	<div class="container" id="mainbody">
+	<div class="container-fluid" id="mainbody">
 	
 	    <div class="row">
 	        <div class="col-12">
-	        	<div style="font-size:16px;">
+	        	<div class="categorydiv" style="font-size:16px; font-family: EliceDigitalBaeum_Bold;">
 	        		<span class="bold" style="color:#d49466;">카테고리 > </span><span id=category>${dto.category }</span>
 	        	</div>
 	        	
@@ -621,7 +551,7 @@ const sessionid = '${sessiondto.myid}';
 	        				var issale = document.getElementById('issale');
 	        				if(trade === 'Y'){
 	        					issale.innerHTML = '[판매]';
-	        					issale.style.setProperty('color','rgb(0, 191, 121)');
+	        					issale.style.setProperty('color','#198754');
 	        				}else if(trade === 'N'){
 	        					issale.innerHTML = '[완료]';
 	        					issale.style.setProperty('color','gray');
@@ -718,7 +648,7 @@ const sessionid = '${sessiondto.myid}';
 	        		
 	        	<!-- 유저별 메뉴 -->
 	        		<div>
-	        			<div id="user" style="text-align: right; display:none;">
+	        			<div id="user" style="text-align: center; display:none;">
 	        				<button id="sharebtn" onclick="seeLink();" type="button" class="btn-share"><span class="align-middle far fa-share-square fa-lg"></span></button>
 	        			
 	        				<span class="align-middle">
@@ -745,15 +675,14 @@ const sessionid = '${sessiondto.myid}';
 	        				}	
 	        				</script>
 	        				<span class="align-middle">
-	        					<!-- <button id="suggestbtn" type="button" class="btn-suggest" data-bs-toggle="modal" data-bs-target="#suggestModal"><span class="align-middle fas fa-dollar-sign fa-lg"></span><span class="align-middle"> 가격 제안</span></button> -->
-	        					<button id="chatbtn" onclick="" type="button" class="btns"><span class="align-middle fas fa-comments-dollar fa-lg"></span><span class="align-middle"> 구매 채팅</span></button>
+	        					<button id="chatbtn" onclick="chat()" type="button" class="btns"><span class="align-middle fas fa-comments-dollar fa-lg"></span><span class="align-middle"> 구매 채팅</span></button>
 	        				</span>
 	        			</div>
 	        			
 	        			<div id="owner" style="text-align: right; display:none;">
 	        				<button id="sharebtn" onclick="seeLink();" type="button" class="btn-share"><span class="align-middle far fa-share-square fa-lg"></span></button>
 	        				<button class="btn-del w-25" type="button" onclick="del();"><span class="align-middle fas fa-trash-alt fa-lg"></span><span class="align-middle"> 삭제</span></button>
-	        				<button class="btn-update w-25" type="button" onclick="renewal();"><span class="align-middle fas fa-arrow-up fa-lg"></span><span class="align-middle"> 위로</span></button>
+	        				<button id="renewbtn" class="btn-update w-25" type="button" onclick="renewal();"><span class="align-middle fas fa-arrow-up fa-lg"></span><span class="align-middle"> 위로</span></button>
 	        				<button class="btn-update w-25" type="button" onclick="update();"><span class="align-middle fas fa-pencil-alt fa-lg"></span><span class="align-middle"> 수정</span></button>
 	        			</div>
 	        			
@@ -767,21 +696,22 @@ const sessionid = '${sessiondto.myid}';
 	        			switch(true){
 						case (sessionUserType === 'admin') : document.getElementById('admin').style.display = 'block'; break;
 						case (sessionid === writer) : document.getElementById('owner').style.display = 'block';
+													  if(trade === 'N'){
+														  document.getElementById('renewbtn').classList.remove('btn-update');
+														  document.getElementById('renewbtn').classList.add('btns-n');
+														  document.getElementById('renewbtn').setAttribute('onclick','');
+													  }
 													  break; 
 						default : document.getElementById('user').style.display = 'block';
 			 		  			  document.getElementById('report').style.display = 'block';  
 								  if(trade === 'N'){
 									  var btnheart = document.getElementById('btn-heart');
-									  var btnsuggest = document.getElementById('suggestbtn');
 									  var btnchat = document.getElementById('chatbtn');
 									  
 									  btnheart.classList.add('btn-heart-n');
 									  btnheart.setAttribute('onclick','');
 									  document.querySelector('#btn-heart > #heart').classList.remove('heart');
 									  document.getElementById('heartimg').style.setProperty('color','white');
-									  btnsuggest.classList.remove('btn-suggest');
-									  btnsuggest.classList.add('btn-suggest-n');
-									  btnsuggest.setAttribute('onclick','');
 									  btnchat.classList.remove('btns');
 									  btnchat.classList.add('btns-n');
 									  btnchat.setAttribute('onclick','');
@@ -795,11 +725,11 @@ const sessionid = '${sessiondto.myid}';
 	    </div>
 	    
 <!-- 주의사항 -->
-	    <div class="row">
+	    <div class="row"">
 	    	<div class="col">
-	    		<div style="padding:2%; ">
+	    		<div style="padding:2%; padding-top:0;">
 				<div class="darkgray" style="background-color: rgb(255, 238, 219); border-radius: 8px; padding:2%;">
-		        	<b>📢 아래 사항에 유의해주세요.</b><br><br>
+		        	<b style="font-family: EliceDigitalBaeum_Bold;">📢 아래 사항에 유의해주세요.</b><br><br>
 					- 등록된 판매 물품과 내용은 개별 판매자가 등록한 것으로서, (주)캠핑트립은 등록을 위한 시스템만 제공하며 내용에 대하여 일체의 책임을 지지 않습니다.<br>
 		        	- 구매문의 채팅이나 전화 등을 이용해 연락하고 외부 메신저 이용 및 개인 정보 유출에 주의하세요.<br>
 					- 계좌이체 시 선입금을 유도할 경우 안전한 거래인지 다시 한번 확인하세요.<br>
@@ -813,7 +743,7 @@ const sessionid = '${sessiondto.myid}';
 <!-- 콘텐트-->
 	    <div class="row">
 	    	<div class="col">
-	    		<div style="padding: 2%;" id="content">
+	    		<div style="padding: 2%; padding-top:1.5%;" id="content">
 					${dto.content }
 				</div>
 	    	</div>
@@ -832,7 +762,7 @@ const sessionid = '${sessiondto.myid}';
 		<div class="row">	
 			<div class="col">
 			<div style="padding-left: 2%; padding-right:2%;">
-			<div class="row">
+			<div class="row" style="font-family: EliceDigitalBaeum_Bold;">
 				<div class="col-8">
 					<h3>이런 매물은 어떠세요?</h3>
 					<br>
@@ -852,7 +782,7 @@ const sessionid = '${sessiondto.myid}';
 		
 			<div class="row" id="popular-hit-list" style="margin:0 auto;">
 				<div class="col-12">
-					<h5>최근 많은 회원님들이 조회했어요</h5>
+					<h5 style="font-family: EliceDigitalBaeum_Bold;">최근 많은 회원님들이 조회했어요</h5>
 					<br><br>
 				</div>
 				
@@ -926,12 +856,12 @@ const sessionid = '${sessiondto.myid}';
 							var hitdata = 
 								'<div class="popular-hit-ele col-lg-4 col-6" style="margin-bottom:10px;">'+
 								'<div style="cursor:pointer;" onclick="location.href=`joonggo_selectone.do?seq='+ data.seq +'`" >'+		
-								'<div style="height:270px;">'+
+								'<div class="popularimgdiv" style="height:270px;">'+
 								'<div style="height:70%; border-radius: 8px; background-image:url('+ data.imglist.split(',')[0] +'); background-position: center; background-size: cover;">'+
 								'</div>'+
 								'<div style="height:29%; width:100%;">'+
 								'<div class="popular-title" style="margin-top:5px; font-size:18px;">'+ data.title +'</div>'+
-								'<div class="bold" style="font-size:15px;"><span>'+ data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +'</span> 원<div>'+
+								'<div class="price bold" style="font-size:15px;"><span>'+ data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +'</span> 원<div>'+
 								'<div class="popular-addr">'+
 								'<span class="place" style="color:gray;">'+data.place+'</span>&nbsp;&nbsp;'+
 								'<span class="distance" style="color:#ff8a3d;"></span>'+
@@ -1091,42 +1021,6 @@ const sessionid = '${sessiondto.myid}';
 	</script>
 	
 
-	
-	<!--  modal user-suggest -->
-	<div class="modal fade" id="suggestModal" tabindex="-1" aria-labelledby="reportModal" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	    
-	 	<!-- 폼 -->
-	    <form action="suggest.do" method="post" onsubmit="return suggest()">
-	  	<!-- hidden -->
-	    <input type="hidden" name="seq" value="${seq }">
-	    <input type="hidden" name="suggestid" value="${userid }">
-	    
-	      <div class="modal-header">
-	        <h5 class="modal-title bold" id="exampleModalLabel">가격 제안</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	      	*가격제안은 한번만 가능합니다. 신중하게 제안을 해주세요.<br>
-	      	가격제안은 물품가격의 70%까지만 가능합니다.
-			<br><br>
-            <div>
-            	<input type="text" placeholder="가격을 입력해주세요" class="border-radius" name="suggestprice" id="suggestprice" autocomplete="off"/><span class="won">&nbsp;원</span>
-        	</div>
-        	<div class="message red" id="suggestmessage"></div>
-	      </div>
-	      <div class="modal-footer" style="border:none;">
-	        <button type="button" class="btn-del" data-bs-dismiss="modal">close</button>
-	        <button type="submit" class="btn-suggest">제안하기</button>
-	      </div>
-	    </form>
-	    
-	    </div>
-	  </div>
-	</div>
-	
-	
 
 
 

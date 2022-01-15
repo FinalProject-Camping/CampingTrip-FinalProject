@@ -14,6 +14,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" charset="UTF-8"></script>	
 
+	<link rel="stylesheet" type="text/css" href="resources/css/webfont.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+	
+
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <script type="text/javascript">
@@ -66,20 +70,20 @@
 </head>
 <body>
 	<div class="center" style="width:300px;">
-		<h3 style="text-align:left;">비밀번호찾기</h3>
+		<h3 style="text-align:left; font-family: EliceDigitalBaeum_Bold;">비밀번호찾기</h3>
 		<br>
 			<p>비밀번호를 초기화 합니다.</p>
 			<p>
-			<input type="text" id="myid" name="myid" style="width:300px; height: 30px;"  placeholder='아이디를 입력하세요'>
-			<input type="text" id="myname" name="myname" style="width:300px; height: 30px;"  placeholder='이름을 입력하세요'>
+			<input type="text" id="myid" name="myid" style="width:300px; height: 40px;"  placeholder='아이디를 입력하세요'>
+			<input type="text" id="myname" name="myname" style="width:300px; height: 40px;"  placeholder='이름을 입력하세요'>
 			<input type="date"  min='1899-01-01' max='2000-13-13' id="mybirth"  name="mybirth"  class="birth"  
 					style="float:left; width:170px; height: 40px; font-size: 10pt;" maxlength="8" required numberOnly   placeholder='가입시 입력한 생년월일을 입력하세요'>
-			<input type="text" id="myphone"   name="myphone" style="width:300px; height: 30px;"  placeholder='가입시 입력한 휴대전화 번호를 입력하세요'>
+			<input type="text" id="myphone"   name="myphone" style="width:300px; height: 40px;"  placeholder='가입시 입력한 휴대전화 번호를 입력하세요'>
 			</p>
 			
 			
 			<div class="d-grid gap-2 col-15 mx-auto">
-				<button class="btn text-white" style="background-color: #008000;" type="button" onclick="ajaxFindPw();" value="login">비밀번호초기화</button>
+				<button class="btn text-white" style="background-color: #198754;" type="button" onclick="ajaxFindPw();" value="login">비밀번호초기화</button>
 			</div>
 			<br>
 			<br>

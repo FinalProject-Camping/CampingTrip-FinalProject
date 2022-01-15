@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.camping.controller.model.joonggo.dao.dao;
+import com.camping.controller.model.joonggo.dto.chat;
+import com.camping.controller.model.joonggo.dto.chatroom;
 import com.camping.controller.model.joonggo.dto.joonggo;
 import com.camping.controller.model.joonggo.dto.renew;
 import com.camping.controller.model.joonggo.dto.report;
@@ -141,7 +143,42 @@ public class bizImpl implements biz{
 	public int report(report report) {
 		return dao.report(report);
 	}
+
+	@Override
+	public List<joonggo> setAddress(Map<String, Object> map) {
+		return dao.setAddress(map);
+	}
+
+	@Override
+	public List<chat> chatConfirm(chatroom room) {
+		
+		chatroom res = dao.getroom(room);
+		if(res == null) {
+			//개설된 채팅방이 없음
+			int createres = dao.createroom(room);
+			if(createres == 0) {
+				System.out.println("인서트에러");
+			}else {
+				res = dao.getroom(room);
+			}
+		}
+		
+		List<chat> chatlist = dao.chatlist(res.getRoomseq());
+		
+		return chatlist;
+	}
 	
+	@Override
+	public List<chat> chatlist(int roomseq){
+		List<chat> chatlist = dao.chatlist(roomseq);
+		
+		return chatlist;
+	}
+
+	@Override
+	public int sendMessage(chat chat) {
+		return dao.sendMessage(chat);
+	}
 	
 	
 }

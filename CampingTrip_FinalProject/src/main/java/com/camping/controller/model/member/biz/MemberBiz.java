@@ -8,4 +8,7 @@ public interface MemberBiz {
 	public Integer idChk(String memberId);
 	public String findId(MemberDto dto);
 	public Integer resetPw(MemberDto dto);
+	public MemberDto select(String memberId);
+	public int update(MemberDto dto);
+	public int enabledUpdate(MemberDto dto);
 }

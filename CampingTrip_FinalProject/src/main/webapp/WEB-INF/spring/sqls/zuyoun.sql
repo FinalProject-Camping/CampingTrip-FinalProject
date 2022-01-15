@@ -3,7 +3,7 @@ DROP SEQUENCE MYNOSEQ;
 
 ----------------------------------------------------아래는 종욱님 서버에 등록한 내용----------------------------------------------------------------
 --CREATE TABLE 구문의 MYPENALTY는 서경님이 사용
---pw는 controller에서 암호화 하여 들어가므로 12345 를 암호화 한 $2a$10$omMBom09TwBcFWsw2T3u3OltUwbWFTGVuEtbIyzNuJ6MHuJy6jfaK 로 인서트 해둠
+--pw는 controller에서 암호화 하여 들어가므로 12345 를 암호화 한 $2a$10$omMBom09TwBcFWsw2T3u3OltUwbWFTGVuEtbIyzNuJ6MHuJy6jfaK 로 인서트
 
 
 DROP TABLE MYMEMBER;

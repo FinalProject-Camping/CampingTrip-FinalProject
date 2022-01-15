@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,8 @@
 <title>캠핑지 등록</title>
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/resources/css/tagsinput.css">
+<script src="/resources/js/tagsinput.js" charset="UTF-8"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -20,12 +23,10 @@
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style type="text/css">
 @font-face {
-	font-family: 'Cafe24Ssurround';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 html, body {
@@ -34,7 +35,7 @@ html, body {
 }
 
 h4 {
-	font-family: 'Cafe24Ssurround';
+	font-family: 'EliceDigitalBaeum_Bold';
 	font-size: 38px;
 }
 
@@ -53,7 +54,7 @@ h4 {
 .main_right {
 	width: 60%;
 	height: 100%;
-	overflow: hidden;
+	overflow: auto;
 	margin: 0 auto;
 }
 
@@ -67,13 +68,19 @@ h4 {
 
 .main_content {
 	height: 100%;
-	overflow: auto;
 }
 
 .page_nav {
 	color: #181818;
 }
-
+.badge{
+	color:white;
+	background-color:#056bca;
+	margin-right:3px;
+}
+#tags{
+	display:none;
+}
 /*input style*/
 input {
 	outline: none;
@@ -294,7 +301,8 @@ textarea.input2+.focus-input2::after {
 }
 
 .sub_main {
-	font-size: 18px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 20px;
 	font-weight: bold;
 	margin-left: 30px;
 }
@@ -308,14 +316,10 @@ textarea {
 	margin-right: 5%;
 }
 
-#room_list {
-	border: 1px solid gray;
-	border-radius: 3px;
-}
 
 .add_room {
 	margin: 5px;
-	border: 1px solid black;
+	border: 2px solid black;
 	border-radius: 5px;
 	height: 150px;
 	width: 300px;
@@ -325,34 +329,107 @@ textarea {
 	font-size: 25px;
 	cursor: pointer;
 }
-
+.room_content{
+	padding:5px;
+	width:150px;
+}
 .room_element {
 	margin: 5px;
-	border: 1px solid black;
+	border: 2px solid black;
 	border-radius: 5px;
 	height: 150px;
 	width: 300px;
 	font-size: 15px;
-	padding:3px;
+	padding:5px;
 }
 .room_image{
-	width:100px;
+	width:130px;
 	overflow:hidden;
+	border-radius:1em;
 }
-.image_thumbnail{
+.image-thumbnail{
 	position:absolute;
-	width:100%;
-	height:100%;
-	left:-100px;
+	width:130px;
+	height:138px;
 	object-fit:cover;
 }
-
+.room_name{
+	font-size:20px;
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+.room_price{
+	font-size:20px;
+	font-weight:bold;
+	color:#0574d1;
+}
+.black_overlay{
+        display: none;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        z-index:1001;
+        -moz-opacity: 0.8;
+        opacity:.80;
+        filter: alpha(opacity=80);
+    }
+    .white_content {
+        display: none;
+        position: absolute;
+        top: 25%;
+        left: 25%;
+        width: 50%;
+        height: 50%;
+        padding: 16px;
+        border: 2px solid green;
+        background-color: white;
+        z-index:1002;
+        overflow: auto;
+    }
+	.bootstrap-tagsinput{
+		border:0px;
+		box-shadow: unset;
+	}
+	#addfile{
+		color:black;
+	}
+	#addfile:hover{
+	
+	}
+	.file-btn{
+		display:inline-block;
+	}
+	.ck_column{
+		display:inline-block;
+		font-size:14px;
+		color:black;
+		font-weight:bold;
+		margin-bottom:20px;
+		padding-right:10px;
+	}
+	.file_element{
+		display:flex;
+		margin-bottom:5px;
+	}
+	.fwidth{
+		width:80%;
+	}
+	.file_delete{
+		margin-left:10px;
+		padding-top:8px;
+		text-decoration:none;
+		color:black;
+		font-weight:bold;
+	}
+	.exp{
+		border-bottom:0px;
+	}
 </style>
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						console.log("hi");
+	$(document).ready(function() {
+		console.log("hi");
 
 						/*=====[ Focus Contact2 ]*/
 						$('.input2').each(function() {
@@ -375,58 +452,14 @@ textarea {
 							console.log("hi");
 							$(this).on('')
 						});
-
-						/*==================================================================
-						[ Validate ]*/
-						var name = $('.validate-input input[name="name"]');
-						var email = $('.validate-input input[name="email"]');
-						var message = $('.validate-input textarea[name="message"]');
-
-						$('.validate-form')
-								.on(
-										'submit',
-										function() {
-											var check = true;
-
-											if ($(name).val().trim() == '') {
-												showValidate(name);
-												check = false;
-											}
-
-											if ($(email)
-													.val()
-													.trim()
-													.match(
-															/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
-												showValidate(email);
-												check = false;
-											}
-
-											if ($(message).val().trim() == '') {
-												showValidate(message);
-												check = false;
-											}
-
-											return check;
-										});
-
-						$('.validate-form .input2').each(function() {
-							$(this).focus(function() {
-								hideValidate(this);
-							});
-						});
-
-						function showValidate(input) {
-							var thisAlert = $(input).parent();
-
-							$(thisAlert).addClass('alert-validate');
-						}
-
-						function hideValidate(input) {
-							var thisAlert = $(input).parent();
-
-							$(thisAlert).removeClass('alert-validate');
-						}
+						
+						//화면 첫화면 설정
+						movePhase("A");
+						//file-delete 이벤트 추가
+						$("a[name='file-delete']").on("click", function(e) {
+					          e.preventDefault();
+					         deleteFile($(this));
+					   });
 					});
 
 	function daumAddress() {
@@ -459,12 +492,61 @@ textarea {
 		});
 
 		$('#phase_' + level).show();
+		$('#room_form').hide();
 	}
 	var openWin;
 	function openWindowPop(url, name) {
-		var options = 'top=10, left=10, width=600, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+		var options = 'top=10, left=10, width=528, height=528, status=no, menubar=no, toolbar=no, resizable=no';
 		openWin = window.open(url, name, options);
 	}
+	
+	//file 추가,삭제 함수
+	function addFile(){
+		var str="<div class='file_element'><input class='form-control fwidth' type='file' name='camp_image'><a href=''#this' class='file_delete' name='file-delete'>삭제</a></div>";
+		$("#file-list").append(str);
+		$("a[name='file-delete']").on("click",function(e){
+			e.preventDefault();
+			deleteFile($(this));
+		});
+	}
+	function deleteFile(obj){
+		obj.parent().remove();
+	}
+	
+	function validateInputChk(page){
+		if(page == "A"){
+			if(!$("input[name=name]").val()){
+				alert("캠핑지명을 입력해주세요.");
+				$("input[name=name]").focus();
+			}else if(!$("input[name=address]").val()){
+				alert("캠핑지 주소를 입력해주세요");
+				$("input[name=address]").focus();
+			}else if(!$("input[name=address_detail]").val()){
+				alert("캠핑지 상세주소를 입력해주세요");
+				$("input[name=address_detail]").focus();
+			}
+			else if($("input[name=camp_type]:checkbox:checked").length < 1){
+				alert("캠핑지 종류를 하나이상 선택해주세요");
+				$("input[name=camp_type]").focus();
+			}else{
+				movePhase('B');
+			}
+		} else if(page=="B"){
+			if(!$("textarea[name=intro]").val()){
+				alert("캠핑지 소개글을 입력해주세요.");
+				$("textarea[name=intro]").focus();
+			} else if(!$("textarea[name=service]").val()){
+				alert("이용가능 서비스를 입력해주세요.");
+				$("textarea[name=service]").focus();
+			} else if(!$("textarea[name=rule]").val()){
+				alert("캠핑지내 이용규칙을 입력해주세요.");
+				$("textarea[name=rule]").focus();
+			} else{
+				movePhase('C');
+			}
+		}
+	}
+	
 </script>
 </head>
 <body>
@@ -472,7 +554,12 @@ textarea {
 		<div class="main_left">
 			<div class="main_img"></div>
 		</div>
+		
 		<div class="main_right">
+		<!-- form 태그 시작 -->
+		<form name="fileForm" action="insertcamp.do" method="post" enctype="multipart/form-data">
+			<c:set var="loginId" value='<%=session.getAttribute("id")%>' />
+			<input type="hidden" name="writer" value="${loginId}">
 			<div class="main_content container" id="phase_A">
 				<div class="row mt-3">
 					<div class="col-12 d-flex justify-content-end">
@@ -494,19 +581,22 @@ textarea {
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
-							<input class="input2" type="text" id="name" name="name">
+							<input class="input2" type="text" id="name" name="name" required>
 							<span class="focus-input2" data-placeholder="캠핑지 이름"></span>
 						</div>
 					</div>
+					
+				</div>
+				<div class="row">
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="address_input d-flex justify-content-center">
 							<div class="wrap-input2 flex-fill validate-input"
 								data-validate="Name is required">
 								<input class="input2" type="text" id="address" name="address"
-									readonly onclick="daumAddress()"><span
+									readonly onclick="daumAddress()" required><span
 									class="focus-input2" data-placeholder="캠핑지 주소"></span>
 							</div>
-							<button class="btn btn-outline-dark align-self-baseline mt-2"
+							<button type="button" class="btn btn-outline-dark align-self-baseline mt-2"
 								style="float: right;" onclick="daumAddress()">주소찾기</button>
 						</div>
 					</div>
@@ -514,7 +604,7 @@ textarea {
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
 							<input class="input2" type="text" id="address_detail"
-								name="address_detail"> <span class="focus-input2"
+								name="address_detail" required> <span class="focus-input2"
 								data-placeholder="상세주소"></span>
 						</div>
 					</div>
@@ -524,33 +614,38 @@ textarea {
 							style="border-bottom: 0px;" data-validate="Name is required">
 							<div id="type_blank"></div>
 							<input class="btn-check input2" type="checkbox" name="camp_type"
-								id="price_category1" value="option1"> <label
+								id="price_category1" value="autocamping" > <label
 								class="btn btn-outline-dark" for="price_category1">오토캠핑</label>
 
 							<input class="btn-check" type="checkbox" name="camp_type"
-								id="price_category2" value="option2"> <label
+								id="price_category2" value="glamping"> <label
 								class="btn btn-outline-dark" for="price_category2">글램핑</label> <input
 								class="btn-check" type="checkbox" name="camp_type"
-								id="price_category3" value="option3"> <label
+								id="price_category3" value="caravan"> <label
 								class="btn btn-outline-dark" for="price_category3">카라반</label> <input
 								class="btn-check" type="checkbox" name="camp_type"
-								id="price_category4" value="option4"> <label
+								id="price_category4" value="pension"> <label
 								class="btn btn-outline-dark" for="price_category4">펜션</label> <span
 								class="focus-input2" id="span_type" data-placeholder="캠핑지 종류"></span>
 						</div>
 					</div>
-
-					<div class="col-md-12 d-flex justify-content-center">
-						<div class="wrap-input2 validate-input"
-							style="border-bottom: 0px;">
-							<input class="input2" type="file" id="campfile" name="campimages">
-
+					<div class="col-md-12 d-flex justify-content-center exp">
+						<div class="form-group wrap-input2" id="file-list">
+							<span class="ck_column">이미지추가</span><span class="file-btn"><a id="addfile" href="#this" onclick="addFile()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+</svg></a></span>
+							<div class="file-group">
+								<div class="file_element">
+								<input class="form-control fwidth" type="file" name="camp_image"><a href="#this" class="file_delete" name="file-delete">삭제</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 d-flex justify-content-center">
-						<button class="btn2" onclick="movePhase('B')">다음단계</button>
+						<button type="button" class="btn2" onclick="validateInputChk('A')">다음단계</button>
+						
 					</div>
 				</div>
 
@@ -571,21 +666,21 @@ textarea {
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
-							<textarea class="input2" name="intro"></textarea>
+							<textarea class="input2" name="intro" required></textarea>
 							<span class="focus-input2" data-placeholder="캠핑지 소개"></span>
 						</div>
 					</div>
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
-							<textarea class="input2" name="service"></textarea>
+							<textarea class="input2" name="service" required></textarea>
 							<span class="focus-input2" data-placeholder="이용가능 서비스"></span>
 						</div>
 					</div>
 					<div class="col-md-12 d-flex justify-content-center">
 						<div class="wrap-input2 validate-input"
 							data-validate="Name is required">
-							<textarea class="input2" name="rule"></textarea>
+							<textarea class="input2" name="rule" required></textarea>
 							<span class="focus-input2" data-placeholder="캠핑지 이용수칙"></span>
 						</div>
 					</div>
@@ -596,11 +691,25 @@ textarea {
 								class="focus-input2" data-placeholder="연락처"></span>
 						</div>
 					</div>
+					<div class="col-md-12 d-flex justify-content-center">
+						<div class="wrap-input2 validate-input"
+							data-validate="Name is required">
+							<input class="input2" type="text" name="email"><span
+								class="focus-input2" data-placeholder="이메일"></span>
+						</div>
+					</div>
+					<div class="col-md-12 d-flex justify-content-center">
+						<div class="wrap-input2 validate-input"
+							data-validate="Name is required">
+							<span class="ck_column">태그입력</span>
+							<input class="input2" type="text" id="tags" name="tags" data-role="tagsinput">
+						</div>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 d-flex justify-content-center">
-						<button class="btn2" onclick="movePhase('A')">이전단계</button>
-						<button class="btn2" onclick="movePhase('C')">다음단계</button>
+						<button type="button" class="btn2" onclick="movePhase('A')">이전단계</button>
+						<button type="button" class="btn2" onclick="validateInputChk('B')">다음단계</button>
 					</div>
 				</div>
 			</div>
@@ -617,24 +726,28 @@ textarea {
 				</div>
 				<div id="room_list" class="row d-flex">
 					<div class="add_room col-md-6"
-						onclick="openWindowPop('room_write.jsp','roomadd')">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-							fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-  <path
-								d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-  <path
-								d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+						onclick="openWindowPop('roominsertform.do','roomadd')">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
 </svg>
 					</div>
 				</div>
+				<div id="room_form">
+				</div>
 				<div class="row">
 					<div class="col-md-12 d-flex justify-content-center">
-						<button class="btn2" onclick="movePhase('B')">이전단계</button>
-						<button class="btn2" onclick="movePhase('C')">등록하기</button>
+						<button type="button" class="btn2" onclick="movePhase('B')">이전단계</button>
+						<input type="submit" class="btn2" value="등록하기">
 					</div>
 				</div>
+			
 			</div>
+			
+		</form>
+		<!-- form 태그 종료 -->
 		</div>
 	</div>
+	
+
 </body>
 </html>

@@ -14,6 +14,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" charset="UTF-8"></script>	
 
+	<link rel="stylesheet" type="text/css" href="resources/css/webfont.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+	
+
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <script type="text/javascript">
@@ -76,56 +80,27 @@ var preUrl;
 
 </script>
 </head>
-<body><!-- 가로배치
-<table width='100%'>
-	<tr>
-		<td width='50%'  height='500px'  align='center' >
-				<img src="resources/img/join_event.gif"  height = "100%" alt="event_gif">
-		</td>
-		<td>
-				<div class="center" style="width:300px;">
-					<h3 style="text-align:left;">로그인</h3>
-					<br>
-						<p id='login-validation'></p>
-						<p>
-						<input type="text" name="memberid" style="width:300px; height: 30px;">
-						</p>
-						<input type="password" name="memberpw" style="width:300px; height: 30px;">
-						
-						id찾기, 비밀번호 찾기 만들어야함
-						<div style="text-align: right; font-size: 8pt; color:#000000;">
-						<a href="idfound();" style="color:#000000;">아이디 찾기 | </a>
-						<a href="pwfound();" style="color:#000000;">비밀번호 찾기</a>
-						</div>
-						
-						<div class="d-grid gap-2 col-15 mx-auto">
-							<button class="btn text-white" style="background-color: #008000;" type="button" onclick='login();' value="login">로그인</button>
-							<button id="loginChk" class="btn text-black" style="background-color: lightgrey;" " type="button"  onclick="location.href='registerform.do'";>회원가입</button>
-						</div>
-					</div>
-		</td>
-	</tr>
-</table>
- -->
+<body>
 <!-- 세로배치 -->
 	<div class="center" style="width:300px;">
-		<h3 style="text-align:left;">로그인</h3>
+		<h3 style="text-align:left; font-family: EliceDigitalBaeum_Bold;">로그인</h3>
 		<br>
 			<p id='login-validation'></p>
 			<p>
-			<input type="text" name="memberid" style="width:300px; height: 30px;"  placeholder='ID를입력하세요.'>
+			<input type="text" name="memberid" style="width:300px; height: 40px;"  placeholder='ID를입력하세요.'>
 			</p>
-			<input type="password" name="memberpw" style="width:300px; height: 30px;"  placeholder='PW를입력하세요.'>
+			<input type="password" name="memberpw" style="width:300px; height: 40px;"  placeholder='PW를입력하세요.'>
 			
-			<!-- id찾기, 비밀번호 찾기 만들어야함 -->
+			<p>
 			<div style="text-align: right; font-size: 9pt; color:#000000;">
 			<a href="findId.do" style="color:#000000;">아이디 찾기 | </a>
 			<a href="findPw.do" style="color:#000000;">비밀번호 찾기</a>
 			</div>
+			</p>
 			
 			<div class="d-grid gap-2 col-15 mx-auto">
-				<button class="btn text-white" style="background-color: #008000;" type="button" onclick='login();' value="login">로그인</button>
-				<button id="loginChk" class="btn text-black" style="background-color: lightgrey;" " type="button"  onclick="location.href='registerform.do'";>회원가입</button>
+				<button class="btn text-white" style="background-color: #198754;" type="button" onclick='login();' value="login">로그인</button>
+				<button id="loginChk" class="btn text-white" style="background-color: #d49466;" " type="button"  onclick="location.href='registerform.do'";>회원가입</button>
 			</div>
 			<br>
 			<br>
