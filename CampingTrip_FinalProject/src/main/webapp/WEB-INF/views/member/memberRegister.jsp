@@ -304,7 +304,8 @@
 			
 			<p>
  			<div style="text-align:left; font-size: 12pt; width:100%; float:left;">주소</div>
-				<input type="hidden" id="myaddr" name="myaddr">
+				<input type="text" id="myaddr" name="myaddr" 
+					style="width:300px; height: 40px; font-size: 10pt; display:none;" readOnly disabled>
 				
 				<input type="text" id="sample6_postcode" name="post" placeholder="우편번호" value="${ post }"
 					style="width:190px; height: 40px; float:left; font-size: 10pt;" readOnly>

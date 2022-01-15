@@ -205,14 +205,7 @@
 				<input type="text" id="sample6_extraAddress" name="address3" placeholder="참고항목" value="${ address3 }"
 					style="width:150px; height: 40px; float:left; font-size: 10pt;" readOnly>
  			</p>
-
-
-<%-- 			<p>
-			<div style="text-align:left; font-size: 12pt;">주소</div>
-				<input type="text" name="myaddr" id="myaddr" value='${memberInfo.myaddr}'
-				style="width:300px; height: 40px; font-size: 10pt;" required>
-			</p> --%>
-						
+ 			
 			<p>
 			<div style="display:inline-block;">
 					<div style="text-align:left; font-size: 12pt;">회원구분</div>
