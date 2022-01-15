@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>event</title>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -34,7 +34,74 @@ $(document).ready(function () {
         $("#popup_gift .lottery_present").text(function () { return "축하드립니다." + present[gift] + " 당첨 되셨습니다." + (gift + 1) + " ."; });
         $('<img  src="' + copImg + '" />').prependTo("#popup_gift .lottery_present");
         setTimeout(function () { openPopup("popup_gift"); }, 1000);
+        
+        
+        /* console.log("pointId = " + ${loginId}); */
+		
+        
+		var pointTemp = present[gift]
+        var pointArray = new Array(100, 500, 1000, 2000, 3000, 5000);
+        
+        var value = pointArray[gift];
+        
+		/* console.log("point = " + pointArray[gift]) */
+        
+        $.ajax({
+    		url:"event_insert_point.do",
+			method:"post",
+			dataType: "json",
+			data: {
+				point : value,
+			},
+			success:function(){
+				console.log("success")
+			}
+		});
     }
+            
+        	/*     	POINTID VARCHAR2(50) NOT NULL,			-- 유저 아이디
+        	    	POINTDETAIL VARCHAR2(1000) NOT NULL,	-- 포인트 내역
+        	    	POINTGETDATE DATE NOT NULL,				-- 포인트 획득일
+        	    	GETPOINT NUMBER NOT NULL,				-- 획득 포인트
+        	    	USEPOINT NUMBER NOT NULL,				-- 사용 포인트
+			 */
+        	    	
+        	    	/*
+        	    	1.pointId -> 가져올 수 있음
+        	    	2.pointDetail -> ROULLETTE
+        	    	3.pointGetDate -> 획득했을 때 해당 날짜
+        	    	4.getPoint -> 얻은 포이트 
+        	    	5.usePoint -> 0
+        	    	6.totalPoint -> 0
+        	    	7.pointImg -> copImg
+        	    	
+        	    	이런 필드들을 가지고 eventDto를 만들어서 do 에 넣어주면 됨
+        	    	*/
+        	        
+				/*         
+				$("#popup_gift .lottery_present").text(function () {         	
+        	         	$.ajax({
+        					type:"post",
+        					url:"event_insert_point.do",
+        					data: eventDto				JSON.stringify(mbrInfo),
+        					contentType:"application/json",
+        					dataType:"json",
+        					success:function(msg){
+        						//alert(JSON.stringify(msg));
+        						if(msg.check==true){
+        							alert("회원가입에 성공하였습니다.");
+        							location.href="loginform.do";
+        						}else{
+        							alert("회원가입에 실패하였습니다. 다시 시도해주세요.");
+        							location.href="registerform.do";
+        						}
+        					},
+        					error:function(){
+        						alert("통신 실패");
+        					}
+        				});
+        		}
+				*/
 
     $(".popup .btn").on("click", function () {
         location.reload();
@@ -70,7 +137,6 @@ $(document).ready(function () {
 $(function () {
     var clicked = 0;
     for (i = 1; i < 7; i++) {
-        // 상품쪽 이미지 수정 필요
         var pictures = "<%=request.getContextPath()%>/resources/img/coupon" + i + ".png";
         $(".board_on").append('<img  src="' + pictures + '" />');
     }
@@ -176,14 +242,17 @@ img{width:100%;}
 
 <body>
 	<!-- 페이지 상단 -->
+<c:set var="loginId" value='<%=session.getAttribute("id")%>' />
+<c:set var="loginName" value='<%=session.getAttribute("name")%>' />
+
 	<div class="event_content01">
 		<h1>
 			<i class="fas fa-gifts"></i> EVENT !
 			<div>CampingTrip 룰렛 이벤트</div>
 		</h1>
 		<div class="coupon_box">
-			<div>000 님! <span> 사용 가능한 포인트는 000점 입니다.</span></div><br>
-			<div class="detail_move"><a href="eventdetail.do">상세내역 보러가기>></a></div>
+			<div>${loginName} 님! <span> 룰렛을 돌려 포인트를 획득하세요 !</span></div><br>
+			<div class="detail_move"><a href="eventdetail.do">포인트 내역 보러가기>></a></div>
 		</div>
 		<br>
 
