@@ -22,14 +22,21 @@ public class CampDto {
 	private Date create_date;
 	private String thumbnail;
 	
+	
+	// 쿼리로 join할 dto(마이페이지 캠핑지 정보)
+	private RoomDto myRoomdto;
+	
+	
 	public CampDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	// myRoomdto 추가
 	public CampDto(int campno, String writer, String name, String camp_type, String address, String address_detail,
 			String service, String intro, String rule, String phone, String email, String tags, int view_count,
-			double total_grade, String lowest_price, Date create_date, String thumbnail) {
+			double total_grade, String lowest_price, Date create_date, String thumbnail, RoomDto myRoomdto) {
 		super();
 		this.campno = campno;
 		this.writer = writer;
@@ -48,7 +55,20 @@ public class CampDto {
 		this.lowest_price = lowest_price;
 		this.create_date = create_date;
 		this.thumbnail = thumbnail;
+		this.myRoomdto = myRoomdto;
 	}
+	
+	
+	// myRoomdto 추가
+	public RoomDto getMyRoomdto() {
+		return myRoomdto;
+	}
+	public void setMyRoomdto(RoomDto myRoomdto) {
+		this.myRoomdto = myRoomdto;
+	}
+	
+	
+	
 
 	public String getThumbnail() {
 		return thumbnail;
@@ -200,13 +220,20 @@ public class CampDto {
 		String format = String.format("%,d", tmp);
 		return format;
 	}
+
+
 	
+	
+	// myRoomdto 추가
 	@Override
 	public String toString() {
 		return "CampDto [campno=" + campno + ", writer=" + writer + ", name=" + name + ", camp_type=" + camp_type
 				+ ", address=" + address + ", address_detail=" + address_detail + ", service=" + service + ", intro="
 				+ intro + ", rule=" + rule + ", phone=" + phone + ", email=" + email + ", tags=" + tags
 				+ ", view_count=" + view_count + ", total_grade=" + total_grade + ", lowest_price=" + lowest_price
-				+ ", create_date=" + create_date + ", thumbnail=" + thumbnail + "]";
+				+ ", create_date=" + create_date + ", thumbnail=" + thumbnail + ", myRoomdto=" + myRoomdto + "]";
 	}
+	
+	
+	
 }

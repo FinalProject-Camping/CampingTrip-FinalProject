@@ -327,6 +327,15 @@
 		VALUES(#{roomseq},CHATSEQ.NEXTVAL,#{sender},#{content},SYSDATE)
 	</insert>
 	
+	<select id="getchatlist" parameterType="String" resultMap="chatroomMap">
+		SELECT C.*, J.IMGLIST, J.TITLE
+		FROM JOONGGO_CHAT C, JOONGGO J
+		WHERE C.JOONGGOSEQ = J.SEQ
+		AND (USERID = '${value}'
+		OR WRITER = '${value}')
+		ORDER BY C.CREATEDATE DESC
+	</select>
+	
 </mapper>
 
 

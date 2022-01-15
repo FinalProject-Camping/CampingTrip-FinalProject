@@ -179,6 +179,11 @@ public class bizImpl implements biz{
 	public int sendMessage(chat chat) {
 		return dao.sendMessage(chat);
 	}
+
+	@Override
+	public List<chatroom> getchatlist(String sessionid) {
+		return dao.getchatlist(sessionid);
+	}
 	
 	
 }

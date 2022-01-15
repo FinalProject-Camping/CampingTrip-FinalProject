@@ -374,6 +374,20 @@ public class daoImpl implements dao{
 		
 		return res;
 	}
+
+	@Override
+	public List<chatroom> getchatlist(String sessionid) {
+		
+		List<chatroom> res = null;
+		
+		try {
+			res = sqlSession.selectList(NAMESPACE + "getchatlist", sessionid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 	
 
 
