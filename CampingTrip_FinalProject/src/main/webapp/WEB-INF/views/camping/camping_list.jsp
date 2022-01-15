@@ -19,6 +19,12 @@
 	crossorigin="anonymous"></script>
 
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 .search_category {
 	display: inline-block;
 	width: 100px;
@@ -172,6 +178,36 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 .span_aligns{
 	margin-top:10px;
 	font-weight:bold;
+}
+.empty_result{
+	height:160px;
+	font-size:16px;
+	font-weight:bold;
+	border: 1px solid gray;
+	border-radius:1em;
+	margin:0px;
+}
+.camping_tags{
+	height:48px;
+}
+.camping_header{
+	display:flex;
+	justify-content: space-between;
+}
+.camping_name{
+	font-family:'EliceDigitalBaeum_Bold';
+	font-size:30px;
+}
+.camping_view{
+	font-size:14px;
+	color:gray;
+}
+.tag_style{
+	border: 1px solid gray;
+	border-radius:2em;
+	padding:3px;
+	color:gray;
+	margin-right:3px;
 }
 </style>
 
@@ -575,6 +611,13 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 			</div>
 		</div>
 		<div id="search_camping_list" class="container">
+			<c:choose>
+			<c:when test="${empty camplist }">
+				<div class='empty_result col-12 d-flex align-items-center justify-content-center'>
+						검색한 조건에 해당하는 캠핑지가 존재하지 않습니다.
+				</div>
+			</c:when>
+			<c:otherwise>
 			<c:forEach var="campDto" items="${camplist}">
 				<div
 					class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -585,13 +628,29 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 					<div
 						class="camping_info col p-4 d-flex flex-column position-static"
 						onclick="location.href='campdetail.do?campno=${campDto.campno}'">
-						<h3 class="camping_name mb-0">${campDto.name}</h3>
+						<div class="camping_header">
+						<div class="camping_name mb-0">${campDto.name}</div>
+						<div class="camping_view">조회수 ${campDto.view_count}</div>
+						</div>						
 						<div class="camping_addr mb-1 text-muted">${campDto.address}</div>
-						<br> <br> <span class="camping_price">￦${campDto.lowestprice_tostr()}</span>
+						<div class="camping_tags" id="camp${campDto.campno}">
+						<c:if test="${!empty campDto.tags }">
+							<script>
+								var tags = "${campDto.tags}";
+								var tagarr= tags.split(",");
+								for(var i = 1 ; i <tagarr.length;i++){
+									$("#camp${campDto.campno}").append("<span class='tag_style'>"+tagarr[i]+"</span>");
+								}
+							</script>
+						</c:if>
+						</div> 
+						
+						<span class="camping_price">￦${campDto.lowestprice_tostr()}</span>
 					</div>
 				</div>
 			</c:forEach>
-
+			</c:otherwise>
+			</c:choose>
 			<div id="pagination_div">
 				<ul class="pagination" id="numbers"></ul>
 			</div>

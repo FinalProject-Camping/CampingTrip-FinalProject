@@ -496,7 +496,7 @@ textarea {
 	}
 	var openWin;
 	function openWindowPop(url, name) {
-		var options = 'top=10, left=10, width=600, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+		var options = 'top=10, left=10, width=528, height=528, status=no, menubar=no, toolbar=no, resizable=no';
 		openWin = window.open(url, name, options);
 	}
 	
