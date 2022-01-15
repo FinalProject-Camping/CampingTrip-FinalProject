@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
   });
 	window.onload = function() {
-
+		window.resizeTo(1000,645);
 		document.getElementById('check_in').value = $("#check-in",
 				opener.document).val();
 		document.getElementById('check_out').value = $("#check-out",
@@ -213,9 +213,29 @@ document.addEventListener('DOMContentLoaded', function() {
 		if(!$("input[name=check_in]").val()){
 			alert("체크인 날짜를 선택해주세요");
 			$("input[name=]").focus();
-		}
+			
+		}else if(!$("input[name=check_out]").val()){
+			alert("체크아웃 날짜를 선택해주세요");
+			$("input[name=check_out]").focus();
+			
+		}else if(!$("input[name=user_name]").val()){
+			alert("예약자의 성명을 입력해주세요");
+			$("input[name=user_name]").focus();
+			
+		}else if(!$("input[name=user_contact]").val()){
+			alert("예약자의 연락가능한 전화번호를 입력해주세요.");
+			$("input[name=user_contact]").focus();
+			
+		}else if(!$("input[name=guest_number]").val()){
+			alert("숙박인원을 입력해주세요");
+			$("input[name=guest_number]").focus();
+		}else if($("input[name=guest_number]").val()>${roomDto.guest_number}){
+			alert("숙박인원이 정원을 초과하였습니다");
+			$("input[name=guest_number]").focus();
+		}else{
 		window.resizeTo(600,645);
 		document.getElementById('rsvForm').submit();
+		}
 	}
 </script>
 </head>
@@ -273,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					<div class="row mt-3 reserv_row">
 						<div class="reserv_column">숙박인원</div>
 						<div class="reserv_value">
-							<input type="text" name="guest_number" id="guest_number" required>
+							<input type="text" name="guest_number" id="guest_number" required placeholder="최대 숙박인원 ${roomDto.guest_number} ">
 						</div>
 					</div>
 
