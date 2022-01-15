@@ -10,17 +10,22 @@
 		<typeAlias type="com.camping.controller.model.joonggo.dto.renew" alias="renewDto"/>
 		<typeAlias type="com.camping.controller.model.joonggo.dto.heart" alias="heartDto"/>
 		<typeAlias type="com.camping.controller.model.joonggo.dto.report" alias="reportDto"/>
-    <typeAlias type="com.camping.controller.model.camp.dto.CampDto" alias="campDto"/>
+    	<typeAlias type="com.camping.controller.model.camp.dto.CampDto" alias="campDto"/>
     
-    <!-- login -->
+    	<!-- login -->
 	  	<typeAlias type="com.camping.controller.model.member.dto.MemberDto" alias="memberDto"/>
+	  	
+	  	<!-- event -->
+	  	<typeAlias type="com.camping.controller.model.event.dto.eventDto" alias="eventDto"/>
 	</typeAliases>
 	
 	<mappers> <!-- mybatis mapper 등록 -->
 		<mapper resource="/mybatis/joonggo-mapper.xml"/>
-    <mapper resource="/mybatis/camping-mapper.xml"/>
-    <!-- login -->
-  	<mapper resource="/mybatis/member-mapper.xml" /> 
+    	<mapper resource="/mybatis/camping-mapper.xml"/>
+    	<!-- login -->
+  		<mapper resource="/mybatis/member-mapper.xml" />
+  		<!-- event -->
+  		<mapper resource="/mybatis/event-mapper.xml"/> 
 	</mappers>
 
 </configuration>

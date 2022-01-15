@@ -268,7 +268,7 @@ $(document).ready(function(){
 	<div class="cscenter_content">
 		<h1>
 			<i class="fas fa-headphones"></i> CampingTrip 고객센터
-			<div></div>
+			<div>무엇이든 물어보세요 :D</div>
 		</h1>
 	</div>
 
@@ -379,7 +379,7 @@ $(document).ready(function(){
 				<br>
 				<h5 id="rsvnask1">상단 "예약확인/취소" 혹은 "MYPAGE"에서 가능합니다.</h5>
 
-				<li name="rsvnask2">🔸 2.미성년자도 에약이 가능한가요?</li>
+				<li name="rsvnask2">🔸 2.미성년자도 약이 가능한가요?</li>
 				<br>
 				<h5 id="rsvnask2">미성년자는 예약이 불가하며, 보호자 없이 숙박 시설 이용 불가합니다.</h5>
 

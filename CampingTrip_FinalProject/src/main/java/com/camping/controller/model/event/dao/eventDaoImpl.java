@@ -1,6 +1,7 @@
 package com.camping.controller.model.event.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -16,15 +17,30 @@ public class eventDaoImpl implements eventDao {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public List<eventDto> selectList(String regexp) {
-		List<eventDto> res = new ArrayList<eventDto>();
+	public List<eventDto> selectList() {
+		List<eventDto> list = new ArrayList<eventDto>();
 	
 		try {
-			res = sqlSession.selectList(NAMESPACE + "selectList", regexp);
+			list = sqlSession.selectList(NAMESPACE + "selectList");
 		} catch (Exception e) {
 			System.out.println("[error] : selectList");
 			e.printStackTrace();
 		}
-		return res;
+		return list;
 	}
+
+	@Override
+	public eventDto selectOne(int pointSeq) {
+		return null;
+	}
+
+	@Override
+	public void insertPoint(HashMap<String, Object> pointMap) {
+		try {
+			sqlSession.insert(NAMESPACE + "insertPoint", pointMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

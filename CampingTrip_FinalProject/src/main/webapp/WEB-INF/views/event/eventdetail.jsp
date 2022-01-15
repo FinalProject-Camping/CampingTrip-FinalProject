@@ -3,6 +3,7 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -65,14 +66,22 @@ text-align:center;
 </head>
 <body>
 <!-- 페이지 상단 -->
+<c:set var="loginId" value='<%=session.getAttribute("id")%>' />
+<c:set var="loginName" value='<%=session.getAttribute("name")%>' />
+
 	<div class="eventdetail_content01">
 		<h1>
 			<i class="far fa-file-powerpoint"></i> MY POINT !
-			<div></div>
+			<div>지금까지 획득한 포인트 내역</div>
 		</h1>
+			<c:set var = "total" value = "0" />
+					<c:forEach items="${list }" var="dto">	<!-- for(eventDto dto :list)와 같은 의미 -->
+						<div style='display:none;'>${dto.getPoint }</div>
+					<c:set var= "total" value="${total + dto.getPoint}"/>
+					</c:forEach>
 		<div class="coupon_box">
-			<div><span>000 님!</span></div><br>
-			<div class="detail_point">000 점</div><span>&nbsp;&nbsp;&nbsp;사용 가능합니다.</span>
+			<div>안녕하세요. ${loginName} 님! <span></span></div><br>
+			<div class="detail_point">현재까지 획득한 포인트는 ${total } 점</div><span>&nbsp;&nbsp;&nbsp;입니다.</span>
 			<br>
 
 		</div>
@@ -99,17 +108,39 @@ text-align:center;
 
 			<tr>
 				<th>번호</th>
-				<th width="200">내역</th>
-				<th>획득일</th>
-				<th width="150">획득 및 사용 포인트</th>
-				<th>TOTAL</th>
+				<th>이벤트 내용</th>
+				<th>획득한 날짜</th>
+				<th>획득 포인트</th>
 			</tr>
-			<tr>
+			<c:choose>
+				<c:when test="${empty list }">
+					<tr>
+						<td colspan="6" align="center">---------- 포인트가 없습니다. ----------</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:set var = "total" value = "0" />
+					<c:forEach items="${list }" var="dto">	<!-- for(eventDto dto :list)와 같은 의미 -->
+						<tr>
+							<td>${dto.pointSeq }</td>
+							<td>${dto.pointDetail }</td>
+							<td><fmt:formatDate value="${dto.pointGetDate}" pattern="yyyy-MM-dd"/></td>
+							<td>${dto.getPoint } 점</td>
+						</tr>
+					<c:set var= "total" value="${total + dto.getPoint}"/>
+					</c:forEach>
+						<tr>
+							<td colspan="4">총 포인트는 <font size="5" color="#d49466"><b>${total } 점</b></font> 입니다.</td>
+						<tr>
+				</c:otherwise>
+			</c:choose>
+			<%-- <tr>
 				<td>1</td>
-				<td>이벤트</td>
-				<td>2021.12.16</td>
-				<td>30p</td>
-				<td>30p</td>
+				<td>${dto.pointDetail }</td>
+				<td>${dto.pointGetDate }</td>
+				<td>${dto.getPoint }</td>
+				<td>${dto.usePoint }</td>
+				<td>${dto.totalPoint }</td>
 			</tr>
 
 			<tr>
@@ -118,7 +149,8 @@ text-align:center;
 				<td>2021.12.16</td>
 				<td>30p</td>
 				<td>30p</td>
-			</tr>
+				<td>30p</td>
+			</tr> --%>
 
 		</table>
 	</div>

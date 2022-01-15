@@ -29,7 +29,7 @@ window.onload = function(){
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
-a {
+.navbar a {
 	text-decoration: none;
 	color: white;
 }
