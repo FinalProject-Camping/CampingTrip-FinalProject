@@ -21,7 +21,6 @@ window.onload = function(){
 }
 
 	function ajaxEnabledUpdate(){
-	console.log("fff");
 	//회원정보 변경하기		
 				$.ajax({
 				type:"post",
