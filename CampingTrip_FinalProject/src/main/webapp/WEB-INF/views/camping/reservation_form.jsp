@@ -31,7 +31,7 @@
 .title {
 	font-size: 23px;
 	font-weight: bold;
-	margin:15px;
+	margin: 15px;
 }
 
 a {
@@ -44,6 +44,7 @@ a {
 	widht: 540px;
 	height: 500px;
 }
+
 .btn2 {
 	display: inline-block;
 	background: black;
@@ -95,9 +96,10 @@ input[type=text] {
 #right {
 	width: 47%;
 }
-#middle{
-	width:1px;
-	background-color:black;
+
+#middle {
+	width: 1px;
+	background-color: black;
 }
 </style>
 <script type="text/javascript">
@@ -266,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							<input type="text" name="guest_number" id="guest_number" required>
 						</div>
 					</div>
-					
+
 					<div class="row mt-5">
 						<div class="col-md-12 d-flex justify-content-center">
 							<input type="submit" class="btn2" value="예약">
@@ -276,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				</form>
 			</div>
 		</div>
-		
+
 	</div>
 </body>
 </html>

@@ -166,7 +166,7 @@ public class CampController {
 	}
 	
 	@RequestMapping("reviewwriteres.do")
-	public String insertReview(ReviewDto dto) {
+	public String insertReview(ReviewDto dto,HttpServletResponse response) throws IOException {
 		
 		//랜덤 썸네일 부여
 		Random random = new Random();
@@ -179,7 +179,14 @@ public class CampController {
 		
 		System.out.println(dto.toString());
 		int res = biz.insertReview(dto);
-		
+		if(res>0) {
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script> alert('리뷰가 등록되었습니다.'); window.close();</script>");
+            out.flush();
+
+			return "camping/review_write";
+		}
 		return "camping/review_write";
 	}
 	
@@ -190,6 +197,12 @@ public class CampController {
 		
 		List<RoomDto> roomList = biz.searchRoom(rsDto);
 		return roomList;
+	}
+	
+	@RequestMapping(value="reviewlistajax.do",method=RequestMethod.POST)
+	public List<ReviewDto> reviewList(int campno){
+		List<ReviewDto> reviewList = biz.selectAllReview(campno);
+		return reviewList;
 	}
 	
 	@RequestMapping(value="searchCamp.do",method=RequestMethod.POST)
