@@ -177,7 +177,7 @@ a {
             </div>
 
             <ul class="navbar_menu">
-                <li><a href="">캠핑예약</a></li>
+                <li><a href="camplist.do">캠핑예약</a></li>
                 <li><a href="joonggo_list.do?keyword=">중고거래</a></li>
                 <li><a href="">동행하기</a></li>
                 <li><a href="event.do">이벤트</a></li>

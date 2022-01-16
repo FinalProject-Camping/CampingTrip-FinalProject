@@ -200,9 +200,13 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 	font-family:'EliceDigitalBaeum_Bold';
 	font-size:30px;
 }
-.camping_view{
+.camping_header_tap{
+	display:flex;
+}
+.tap_detail{
 	font-size:14px;
 	color:gray;
+	margin-left:10px;
 }
 .tag_style{
 	border: 1px solid gray;
@@ -505,18 +509,29 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 					<span class="search_category">정렬</span>
 					<div class="btn_element">
 						<input class="btn-check" name="sort" type="radio"
-							id="sort_category1" value="lowest_price"> <label
-							class="btn btn-outline-success" for="sort_category1">가격순</label>
+							id="sort_category1" value="low_price"> <label
+							class="btn btn-outline-success" for="sort_category1">높은 가격순</label>
 					</div>
 					<div class="btn_element">
 						<input class="btn-check" name="sort" type="radio"
-							id="sort_category2" value="total_grade"> <label
-							class="btn btn-outline-success" for="sort_category2">리뷰순</label>
+							id="sort_category2" value="high_price"> <label
+							class="btn btn-outline-success" for="sort_category2">최저 가격순</label>
 					</div>
+					
 					<div class="btn_element">
 						<input class="btn-check" name="sort" type="radio"
 							id="sort_category3" value="view_count"> <label
 							class="btn btn-outline-success" for="sort_category3">조회순</label>
+					</div>
+					<div class="btn_element">
+						<input class="btn-check" name="sort" type="radio"
+							id="sort_category4" value="review_count"> <label
+							class="btn btn-outline-success" for="sort_category4">리뷰순</label>
+					</div>
+					<div class="btn_element">
+						<input class="btn-check" name="sort" type="radio"
+							id="sort_category5" value="total_grade"> <label
+							class="btn btn-outline-success" for="sort_category5">평점순</label>
 					</div>
 				</div>
 
@@ -632,7 +647,10 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 						onclick="location.href='campdetail.do?campno=${campDto.campno}'">
 						<div class="camping_header">
 						<div class="camping_name mb-0">${campDto.name}</div>
-						<div class="camping_view">조회수 ${campDto.view_count}</div>
+						<div class="camping_header_tap">
+						<div class="tap_detail">조회수 ${campDto.view_count}</div>
+						<div class="tap_detail">평점 ${campDto.total_grade}(${campDto.review_count})</div>
+						</div>
 						</div>						
 						<div class="camping_addr mb-1 text-muted">${campDto.address}</div>
 						<div class="camping_tags" id="camp${campDto.campno}">
