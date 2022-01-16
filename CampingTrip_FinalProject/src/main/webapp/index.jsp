@@ -74,105 +74,7 @@ setInterval(function () {
     <div class="main_content01">
         <h1><i class="fab fa-hotjar"></i> HOT ! <div>CampingTrip TOP 캠핑장 !</div>
         </h1>
-        <!--image row start-->
-        <div class="row">
-            <!--image card start-->
-            <div class="image">
-                <img src="resources/img/camping_main01.png" alt="">
-                <div class="details">
-                    <h2>포천시 <span>파인트리 글램핑</span></h2>
-                    <p></p>
-                    <div class="more">
-                        <a href="#" class="read-more">평점 <span id="average_score">5.0 점</span></a>
-                        <div class="icon-links">
-                            <a href="#" class="read-more"><span>예약하기 <i class="fas fa-angle-double-right"></i></span></a>
-                        </div>
-    
-                    </div>
-                </div>
-            </div>
-            <!--image card end-->
-            <!--image card start-->
-            <div class="image">
-                <img src="resources/img/camping_main02.png" alt="">
-                <div class="details">
-                    <h2>가평군 <span>프로미스 캠핑장</span></h2>
-                    <p></p>
-                    <div class="more">
-                        <a href="#" class="read-more">평점 <span id="average_score">4.9 점</span></a>
-                        <div class="icon-links">
-                            <a href="#" class="read-more"><span>예약하기 <i class="fas fa-angle-double-right"></i></span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--image card end-->
-            <!--image card start-->
-            <div class="image">
-                <img src="resources/img/camping_main03.png" alt="">
-                <div class="details">
-                    <h2>양평군 <span>힐링캠프 글램핑</span></h2>
-                    <p></p>
-                    <div class="more">
-                        <a href="#" class="read-more">평점 <span id="average_score">4.7 점</span></a>
-                        <div class="icon-links">
-                            <a href="#" class="read-more"><span>예약하기 <i class="fas fa-angle-double-right"></i></span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--image card end-->
-        </div>
-        <!--image row end-->
-        <!--image row start-->
-        <div class="row">
-            <!--image card start-->
-            <div class="image">
-                <img src="resources/img/camping_main04.png" alt="">
-                <div class="details">
-                    <h2>가평군 <span>아트살롱 글램핑</span></h2>
-                    <p></p>
-                    <div class="more">
-                        <a href="#" class="read-more">평점 <span id="average_score">4.6 점</span></a>
-                        <div class="icon-links">
-                            <a href="#" class="read-more"><span>예약하기 <i class="fas fa-angle-double-right"></i></span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--image card end-->
-            <!--image card start-->
-            <div class="image">
-                <img src="resources/img/camping_main05.png" alt="">
-                <div class="details">
-                    <h2>남양주시 <span>포레스트 카라반</span></h2>
-                    <p></p>
-                    <div class="more">
-                        <a href="#" class="read-more">평점 <span id="average_score">4.7 점</span></a>
-                        <div class="icon-links">
-                            <a href="#" class="read-more"><span>예약하기 <i class="fas fa-angle-double-right"></i></span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--image card end-->
-            <!--image card start-->
-            <div class="image">
-                <img src="resources/img/camping_main06.png" alt="">
-                <div class="details">
-                    <h2>춘천시 <span>아웃오브파크</span></h2>
-                    <p></p>
-                    <div class="more">
-                        <a href="#" class="read-more">평점 <span id="average_score">4.8 점</span></a>
-                        <div class="icon-links">
-                            <a href="#" class="read-more"><span>예약하기 <i class="fas fa-angle-double-right"></i></span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--image card end-->
-        </div>
-        <!--image row end-->
+        
     </div>
     <!--image card layout end-->
     
@@ -219,8 +121,38 @@ setInterval(function () {
 						doc.innerHTML += html;
 					});
 				}
-			});    
-		})    
+			});
+			$.ajax({
+				url:"selectcamp_main.do",
+				async:false,
+				method: "post",
+				success:function(result){ 
+					var comments="<div class='row'>";
+					var cnt = 0;
+					$(result).each(function(){
+						if(cnt == 3){
+							comments+="</div><div class='row'>";
+							
+						}
+						comments+="<div class='image'>";
+						comments+="<img src='"+this.thumbnail+"'>";
+						comments+="<div class='details'>";
+						comments+="<h2><span>"+this.name+"</span></h2>";
+						comments+="<p></p><div class='more'>";
+						comments+='<a href="#" class="read-more">평점 <span id="average_score">'+this.total_grade+' 점</span></a>';
+						comments+='<div class="icon-links">';
+						comments+='<a href="#" class="read-more"><span>예약하기 <i class="fas fa-angle-double-right"></i></span></a>';
+						comments+='</div></div></div></div>';
+						if(cnt == 5){
+							comments+="</div>";
+						}
+						cnt++;
+					});
+					
+					$(".main_content01").append(comments);
+				}
+			});  
+		})
 
     
         function getPageList(totalPages, page, maxLength){

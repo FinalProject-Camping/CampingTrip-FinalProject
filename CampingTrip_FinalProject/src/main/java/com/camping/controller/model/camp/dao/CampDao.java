@@ -380,4 +380,28 @@ public class CampDao {
 		}
 		return res;
 	}
+	
+	public List<CampDto> topCampList(){
+		List<CampDto> res = new ArrayList<CampDto>();
+		
+		try {
+			res=sqlSession.selectList(NAMESPACE+"topCampList");
+		} catch (Exception e) {
+			System.out.println("[error]: select topCampList");
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public List<CampDto> newCampList(){
+		List<CampDto> res = new ArrayList<CampDto>();
+		
+		try {
+			res=sqlSession.selectList(NAMESPACE+"newCampList");
+		} catch (Exception e) {
+			System.out.println("[error]: select newCampList");
+			e.printStackTrace();
+		}
+		return res;
+	}
 }

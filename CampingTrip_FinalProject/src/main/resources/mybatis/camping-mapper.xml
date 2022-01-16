@@ -185,4 +185,11 @@
   <update id="reviewCount" parameterType="int">
   	UPDATE CAMP SET REVIEW_COUNT=(SELECT COUNT(*) FROM REVIEW WHERE CAMPNO=#{campno}) WHERE CAMPNO=#{campno}
   </update>
+  
+  <select id="topCampList" resultType="campDto">
+  	SELECT * FROM CAMP WHERE ROWNUM<![CDATA[ < ]]>5 ORDER BY REVIEW_COUNT DESC
+  </select>
+  <select id="newCampList" resultType="campDto">
+  	SELECT * FROM CAMP WHERE ROWNUM<![CDATA[ < ]]>3 ORDER BY CAMPNO DESC
+  </select>
 </mapper>

@@ -229,6 +229,13 @@
 	margin-top:5px;
 	background-color:white;
 }
+#total_grade_sp{
+	font-family:'EliceDigitalBaeum_Bold';
+	font-size:20px;
+}
+#category_grade,#total_grade_value{
+	font-weight:bold;
+}
 </style>
 <script type="text/javascript">
 	window.addEventListener('load',function() {
@@ -513,7 +520,7 @@
 							comments +='		<div class="card-body">';
 							comments +='			<div class="room_title card-title"><a href="#" onclick="open_roomDetail('+this.roomno+')">'+this.room_name+'</a></div>';
 							comments +='			<div class="room_price">￦'+rPrice+'</div>';
-							comments +='			<div class="room_people">수용인원:'+this.guest_number+'</div>';
+							comments +='			<div class="room_people">정원:'+this.guest_number+'</div>';
 							comments +='			<button type="button" class="btn btn-warning book_btn mb-1"';
 							comments +='			onclick="openWindowPop(\'reservationform.do?roomno='+this.roomno+'\', \'reservform\')">예약하기</button>';
 							comments +='			</div></div></div></div></div>';
@@ -686,7 +693,7 @@
 				</div>
 				<div class="camping_addr mb-1 text-muted">${campDto.address}
 					${campDto.address_detail}</div>
-				<div class="camping_intro mb-0 shadow">소개글소개글소개글소개글소개글소개글소개글소개글소개글소개글소개글소개글소개글</div>
+				<div class="camping_intro mb-0 shadow">${campDto.intro }</div>
 				<div class="camping_tags" id="camp${campDto.campno}">
 				
 						<c:if test="${!empty campDto.tags }">
@@ -726,7 +733,7 @@
 					<!-- 객실정보/예약 -->
 					<div class="tab-pane fade show active" id="room_info"
 						role="tabpanel" aria-labelledby="room-tab">
-						<div class="row mt-5">
+						<div class="row mt-5 mb-5">
 							<div class="col-md-12">
 								<span class="chk_date">체크인</span><span class="chk_date">체크아웃</span>
 							</div>
@@ -746,7 +753,6 @@
 							</div>
 						</div>
 						<div class="room_list row">
-							<div class="row mt-5">
 								<c:forEach items="${roomlist}" var="rdto">
 									<div class="room_info col-md-6 mt-3">
 										<div class="card mb-3" style="max-width: 540px;">
@@ -760,7 +766,7 @@
 														<a href="#" onclick="open_roomDetail('${rdto.roomno}')"><div
 																class="room_title card-title">${rdto.room_name}</div></a>
 														<div class="room_price">￦${rdto.price_tostr()}</div>
-														<div class="room_people">수용인원:${rdto.guest_number}명</div>
+														<div class="room_people">정원:${rdto.guest_number}명</div>
 														<button type="button"
 															class="btn btn-warning book_btn mb-1"
 															onclick="moveToReservation('${rdto.roomno}')">예약하기</button>
@@ -771,7 +777,6 @@
 									</div>
 								</c:forEach>
 
-							</div>
 
 						</div>
 					</div>
@@ -859,19 +864,19 @@
 								<div class="col-12 sub_title mb-5">총 리뷰 수 :
 									${writerInfo.totalcnt}</div>
 								<div class="col-md-6">
-									<h5>총 평점</h5>
-									<span class='star-rating'><span
-										style='width:${writerInfo.total*20}%'></span></span>(${writerInfo.total}점)<br>
+									<span id="total_grade_sp">총 평점</span>
+									<span class='star-rating' id="total_grade_value"><span
+										style='width:${writerInfo.total*20}%'></span></span><span id="total_grade_value">(${writerInfo.total}점)</span><br>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-6" id="category_grade">
 									<span class="review_sub">서비스</span><span class='star-rating'><span
-										style='width: ${writerInfo.service*20}%'></span></span>( ${writerInfo.service}점)<br> <span
+										style='width: ${writerInfo.service*20}%'></span></span> (${writerInfo.service}점)<br> <span
 										class="review_sub">청결도</span><span class='star-rating'><span
-										style='width: ${writerInfo.cleanliness*20}%'></span></span>( ${writerInfo.cleanliness}점)<br>
+										style='width: ${writerInfo.cleanliness*20}%'></span></span> (${writerInfo.cleanliness}점)<br>
 									<span class="review_sub">가성비</span><span class='star-rating'><span
-										style='width: ${writerInfo.cost*20}%'></span></span>( ${writerInfo.cost}점)<br> <span
+										style='width: ${writerInfo.cost*20}%'></span></span> (${writerInfo.cost}점)<br> <span
 										class="review_sub">위치</span><span class='star-rating'><span
-										style='width: ${writerInfo.location*20}%'></span></span>( ${writerInfo.location}점)<br>
+										style='width: ${writerInfo.location*20}%'></span></span> (${writerInfo.location}점)<br>
 								</div>
 								<div class="col-12 sub_title mt-3 mb-5">이용고객 정보</div>
 								<div class="col-md-6">

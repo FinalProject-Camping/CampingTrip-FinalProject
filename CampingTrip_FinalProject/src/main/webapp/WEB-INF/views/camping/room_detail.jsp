@@ -171,7 +171,7 @@ a {
 			<div class="col-6">
 				<div id="title">${roomDto.room_name}</div>
 				<div id="price">${roomDto.room_price}원</div>
-				<div id="people">수용인원 : ${roomDto.guest_number}명</div>
+				<div id="people">정원 : ${roomDto.guest_number}명</div>
 			</div>
 		</div>
 		<div class="row mt-5">
