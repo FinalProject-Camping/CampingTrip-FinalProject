@@ -1,4 +1,4 @@
-package com.camp.dto;
+package com.camping.controller.model.camp.dto;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

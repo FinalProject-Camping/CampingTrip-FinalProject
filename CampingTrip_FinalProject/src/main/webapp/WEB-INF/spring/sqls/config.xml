@@ -37,7 +37,6 @@
 	  <typeAlias type="com.camping.controller.model.joonggo.dto.heart" alias="myHeartDto"/>
 	  <typeAlias type="com.camping.controller.model.event.dto.eventDto" alias="myPointDto"/>
 
-    <typeAlias type="com.camp.dto.CampDto" alias="campDto"/>
 
 	</typeAliases>
 	
