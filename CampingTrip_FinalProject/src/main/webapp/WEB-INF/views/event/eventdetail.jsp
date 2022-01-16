@@ -74,16 +74,12 @@ text-align:center;
 			<i class="far fa-file-powerpoint"></i> MY POINT !
 			<div>지금까지 획득한 포인트 내역</div>
 		</h1>
- 			<c:set var = "total" value = "0" />
-					<c:forEach items="${list }" var="dto">	<!-- for(eventDto dto :list)와 같은 의미 -->
-						<div style='display:none;'>${dto.getPoint }</div>
-					<c:set var= "total" value="${total + dto.getPoint}"/>
-					</c:forEach>
 		<div class="coupon_box">
 			<div>안녕하세요. ${loginName} 님! <span></span></div><br>
-			<div class="detail_point">현재까지 획득한 포인트는 ${total } 점</div><span>&nbsp;&nbsp;&nbsp;입니다.</span>
+			<div class="detail_point">
+			
+			</div>
 			<br>
-
 		</div>
 	</div>
 <br><br><br>
@@ -102,8 +98,8 @@ text-align:center;
 			method:"get",
 			success:function(data){
 				var doc = document.querySelector('.table');
+				var doc2 = document.querySelector('.detail_point');
 				var html = 
-		            '<table class="table" border="1">'+
 		            '<tr>' +
 		            '<th>번호</th>' +
 		            '<th>이벤트 내용</th>' +
@@ -113,16 +109,23 @@ text-align:center;
 		            doc.innerHTML += html;
 		            
 		            
+		            var totalPoint = 0;
 				$.each(data, function(index, value) { // 값이 여러개 일 때는 반복문 사용
-				var html2 =
-					'<tr>' +
-		            '<td>' + value.pointSeq + '</td>' +
-		            '<td>' + value.pointDetail + '</td>' +
-		            '<td>' + value.pointGetDate + '</td>' +
-		            '<td>' + value.getPoint + '</td>' +
-		            '</tr>';
-		            doc.innerHTML += html2;       
+					var html2 =
+						'<tr>' +
+			            '<td>' + value.pointSeq + '</td>' +
+			            '<td>' + value.pointDetail + '</td>' +
+			            '<td>' + value.pointGetDate + '</td>' +
+			            '<td>' + value.getPoint + '</td>' +
+			            '</tr>';
+			            doc.innerHTML += html2;
+			            
+					totalPoint += value.getPoint;
+					
 				})
+				var html4 =
+					'현재까지 획득한 포인트는 ' + totalPoint + '점<span>&nbsp;&nbsp;입니다.</span>';
+					doc2.innerHTML += html4;
 			}
 		});
 		</script>
