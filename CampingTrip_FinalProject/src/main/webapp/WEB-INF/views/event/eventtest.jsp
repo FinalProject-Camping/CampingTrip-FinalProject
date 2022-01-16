@@ -31,7 +31,10 @@ $(document).ready(function () {
         var copImg = "<%=request.getContextPath()%>/resources/img/coupon" + (gift + 1) + ".png";
         console.log("이미지 : " + copImg);
 
-        $("#popup_gift .lottery_present").text(function () { return "축하드립니다." + present[gift] + " 당첨 되셨습니다." + (gift + 1) + " ."; });
+		var pointTemp = present[gift]
+        var pointArray = new Array(100, 500, 1000, 2000, 3000, 5000);
+		
+        $("#popup_gift .lottery_present").text(function () { return "축하드립니다." + pointArray[gift] + "점 당첨 되셨습니다."});
         $('<img  src="' + copImg + '" />').prependTo("#popup_gift .lottery_present");
         setTimeout(function () { openPopup("popup_gift"); }, 1000);
         
@@ -39,8 +42,6 @@ $(document).ready(function () {
         /* console.log("pointId = " + ${loginId}); */
 		
         
-		var pointTemp = present[gift]
-        var pointArray = new Array(100, 500, 1000, 2000, 3000, 5000);
         
         var value = pointArray[gift];
         
