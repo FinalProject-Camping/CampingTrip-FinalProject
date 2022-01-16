@@ -26,8 +26,10 @@
    
 	  	<typeAlias type="com.camping.controller.model.member.dto.MemberDto" alias="memberDto"/>
 	  	
+	  	<!-- event -->
+	  	<typeAlias type="com.camping.controller.model.event.dto.eventDto" alias="eventDto"/>
 	  	
-	  <!-- mypage -->	
+	  <!-- mypage -->
 	  <typeAlias type="com.camping.controller.model.camp.dto.CampDto" alias="myCampDto"/>
 	  <typeAlias type="com.camping.controller.model.member.dto.MemberDto" alias="myMemberDto"/>
 	  <typeAlias type="com.camping.controller.model.joonggo.dto.report" alias="report"/>
@@ -45,7 +47,11 @@
     <mapper resource="/mybatis/camping-mapper.xml"/>
     <!-- login -->
   	<mapper resource="/mybatis/member-mapper.xml" />
-    <!-- mypage -->
+  	
+  	<!-- event -->
+  		<mapper resource="/mybatis/event-mapper.xml"/>
+  	
+  	<!-- mypage -->
   	<mapper resource="/mybatis/mypage-mapper.xml" />
     
 	</mappers>

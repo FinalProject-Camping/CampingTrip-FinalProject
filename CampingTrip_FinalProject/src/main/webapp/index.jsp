@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>CampingTrip_main</title>
 <link type="text/css" rel="stylesheet" href="resources/css/index.css">
+<link href="//font.elice.io/EliceDigitalBaeum.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" charset="UTF-8"></script>
 <script type="text/javascript">
 /* 슬라이드 자바스크립트 코드 */
@@ -19,7 +20,15 @@ setInterval(function () {
     }
 }, 4000);
 </script>
+<style type="text/css">
+.main_content01 h1{
+	font-family: "Elice Digital Baeum",sans-serif;
+}
 
+.main_content02 h1{
+	font-family: "Elice Digital Baeum",sans-serif;
+}
+</style>
 </head>
 <body>
 <!-- slider -->
@@ -72,8 +81,7 @@ setInterval(function () {
     <!-- main (content01 : top 캠핑장, content02 : 중고거래) -->
     <!-- main_content01 start -->
     <div class="main_content01">
-        <h1><i class="fab fa-hotjar"></i> HOT ! <div>CampingTrip TOP 캠핑장 !</div>
-        </h1>
+        <h1><i class="fab fa-hotjar"></i> HOT ! <div>CampingTrip TOP 캠핑장 !</div></h1>
         
     </div>
     <!--image card layout end-->

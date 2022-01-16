@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>event</title>
+<link href="//font.elice.io/EliceDigitalBaeum.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
 <script type="text/javascript">
@@ -31,7 +32,10 @@ $(document).ready(function () {
         var copImg = "<%=request.getContextPath()%>/resources/img/coupon" + (gift + 1) + ".png";
         console.log("이미지 : " + copImg);
 
-        $("#popup_gift .lottery_present").text(function () { return "축하드립니다." + present[gift] + " 당첨 되셨습니다." + (gift + 1) + " ."; });
+		var pointTemp = present[gift]
+        var pointArray = new Array(100, 500, 1000, 2000, 3000, 5000);
+		
+        $("#popup_gift .lottery_present").text(function () { return "축하드립니다." + pointArray[gift] + "점 당첨 되셨습니다."});
         $('<img  src="' + copImg + '" />').prependTo("#popup_gift .lottery_present");
         setTimeout(function () { openPopup("popup_gift"); }, 1000);
         
@@ -39,8 +43,6 @@ $(document).ready(function () {
         /* console.log("pointId = " + ${loginId}); */
 		
         
-		var pointTemp = present[gift]
-        var pointArray = new Array(100, 500, 1000, 2000, 3000, 5000);
         
         var value = pointArray[gift];
         
@@ -143,7 +145,7 @@ $(function () {
 
     $(".join").on("mousedown", function () {
         if (clicked <= 0) { iniGame(Math.floor(Math.random() * 6)); }
-        else if (clicked >= 1) { event.preventDefault(); alert("이벤트에 이미 참여 하셨습니다."); }
+        else if (clicked >= 1) { event.preventDefault(); alert("오늘은 이벤트에 이미 참여 하셨습니다."); }
         clicked++
     });
 })
@@ -154,7 +156,8 @@ $(function () {
 }
 
 .event_content01 h1 {
-	color: red;
+	font-family: "Elice Digital Baeum",sans-serif;
+	color: #d49466;
 	text-align: center;
 	font-size: 40px;
 	margin-top: 100px;
@@ -167,6 +170,7 @@ $(function () {
 }
 
 .coupon_box {
+	font-family: "Elice Digital Baeum",sans-serif;
 	padding: 30px;
 	border: 1px solid #f1f1f1;
 	width: 95%;
@@ -196,7 +200,8 @@ $(function () {
 #wrap #gameContainer{width:508px; height:671px; text-align: center; position: relative;margin:0px auto;}
 /* #wrap #gameContainer h1{} */
 #wrap #gameContainer .obj{position: absolute;}
-#wrap #gameContainer .board_start{  
+#wrap #gameContainer .board_start{
+	font-family: "Elice Digital Baeum",sans-serif;  
     padding: 10px;
     background: #f00;
     text-align: center;
@@ -208,6 +213,7 @@ $(function () {
     text-align: center;
     vertical-align: middle;
     font-weight: bold;
+    font-size: 30px;
 position:absolute; left:165px; top:210px;z-index:9; width:150px; border-radius:100px;}
 #wrap #gameContainer .board_start
 img{width:100%;}
@@ -260,7 +266,7 @@ img{width:100%;}
 		<div id="wrap">
 			<div id="gameContainer">
 				<div class="board_bg"></div>
-				<div class="board_start join">시작버튼</div>
+				<div class="board_start join">START</div>
 				<div class="board_on obj"></div>
 
 			</div>

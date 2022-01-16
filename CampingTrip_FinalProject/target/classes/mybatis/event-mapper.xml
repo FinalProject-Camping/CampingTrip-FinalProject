@@ -13,12 +13,10 @@
 		<result property="usePoint" column="USEPOINT" />
 	</resultMap>
 
-	<select id="selectList" parameterType="String"
-		resultMap="eventMap">
-		SELECT POINTSEQ, POINTID, POINTDETAIL, POINTGETDATE,
-		GETPOINT, USEPOINT
+	<select id="selectList" parameterType="eventDto" resultMap="eventMap">
+		SELECT POINTSEQ, POINTID, POINTDETAIL, POINTGETDATE, GETPOINT, USEPOINT
 		FROM POINT
-		ORDER BY POINTSEQ DESC
+		WHERE POINT.POINTID = #{pointId}
 	</select>
 
 	<insert id="insert" parameterType="eventDto">
@@ -31,9 +29,7 @@
 	</insert>
 
 	<insert id="insertPoint" parameterType="hashmap">
-		
 		INSERT INTO POINT (POINTSEQ, POINTID, POINTGETDATE, GETPOINT)
-		VALUES (POINTSEQ.NEXTVAL, #{pointId}, SYSDATE, #{point})
-		
+		VALUES (POINTSEQ.NEXTVAL, #{pointId}, #{pointGetDate}, #{point})
 	</insert>
 </mapper>
