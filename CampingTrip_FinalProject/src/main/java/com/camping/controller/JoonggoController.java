@@ -823,7 +823,10 @@ public class JoonggoController {
 		if(sessiondto != null) {
 			
 			List<chatroom> roomlist = biz.getchatlist(sessiondto.getMyid());
-			ObjectMapper mapper = new ObjectMapper();
+			for(chatroom room : roomlist) {
+				room.setImglist(room.getImglist().split(",")[0]);
+			}
+			/*
 			String toJson = null;
 			try {
 				toJson = mapper.writeValueAsString(roomlist);
@@ -833,8 +836,9 @@ public class JoonggoController {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
-			model.addAttribute("list", toJson);
+			}*/
+			model.addAttribute("list", roomlist);
+			model.addAttribute("sessionid", sessiondto.getMyid());
 		}else {
 			return "redirect:error.do";
 		}
@@ -963,7 +967,30 @@ public class JoonggoController {
 	}
 	
 	
-
+	@RequestMapping("/joonggo_sendDeletemessage.do")
+	@ResponseBody
+	public Map<String, Object> sendDeletemessage(HttpSession session, chat chat) {
+		logger.info("sendmessage");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		if(sessiondto != null) {
+			if(!sessiondto.getMyid().equals(chat.getSender())) {
+				map.put("data", false);
+			}else {
+				chat.setContent(chat.getSender() + "님이 퇴장하셨습니다.");
+				int res = biz.setDelete(chat);
+				if(res>0) {
+					map.put("data", true);
+				}else {
+					map.put("data", false);
+				}
+			}
+		}else {
+			map.put("data", false);
+		}
+		return map;
+	}
 	
 	
 	

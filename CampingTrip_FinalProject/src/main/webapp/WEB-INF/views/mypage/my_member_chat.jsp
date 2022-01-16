@@ -72,7 +72,6 @@ table.tableChat {
 }
 
 table.tableChat thead th {
-	width: 150px;
 	padding: 10px;
 	font-weight: bold;
 	color: #fff;
@@ -81,12 +80,10 @@ table.tableChat thead th {
 }
 
 table.tableChat tbody th {
-	width: 150px;
 	padding: 10px;
 }
 
 table.tableChat td {
-	width: 350px;
 	padding: 10px;
 }
 
@@ -96,7 +93,7 @@ table.tableChat .even {
 
 .chatDiv {
 	display: flex;
-	margin-left: 80px;
+	text-align: left;
 }
 
 .pcontent {
@@ -108,7 +105,7 @@ table.tableChat .even {
 /* 채팅 말풍선 */
 .balloon {
 	position: relative;
-	width: 450px;
+	width: 200px;
 	height: 50px;
 	background: pink;
 	border-radius: 15px;
@@ -126,11 +123,18 @@ table.tableChat .even {
 	top: -10px;
 	left: 50px;
 }
+.btn_{
+	background-color: white;
+	border-radius: 8px;
+	border: 1px solid gray;
+	margin-bottom: 3px;
+}
+
 </style>
 </head>
 <body>
 <br><br>
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
 			<div class="col-md-2">
 				<nav class="navbar navbar-light" id="navbar">
@@ -155,7 +159,7 @@ table.tableChat .even {
 							<a class="nav-link" href="memberDetail.do">개인정보</a>
 						</li>
 						<li class="nav-item active">
-							<a class="nav-link font-weight-bold" id="active" href="">채팅</a>
+							<a class="nav-link font-weight-bold" id="active" href="mychatlist.do">채팅</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="member_reportlist.do">신고</a>
@@ -173,34 +177,49 @@ table.tableChat .even {
 						<br> <br>
 						<table class="tableChat">
 							<colgroup>
-								<col width="300"><col width="900"><col width="1200">
+								<col width="200"><col width="100"><col width="100"><col width="500"><col width="800">
 							</colgroup>
 							<thead>
 								<tr>
-									<th>NO</th>
-									<th>아이디</th>
-									<th>채팅</th>
+									<th>생성일</th>
+									<th>판매자</th>
+									<th colspan="2">제목</th>
+									<th>채팅보기</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
 									<c:when test="${empty list }">
 										<tr>
-											<td colspan="3" align="center">-------------------- 작성된 글이
-												없습니다--------------------</td>
+											<td colspan="5" align="center">-------------------- 채팅 내역이 없습니다.--------------------</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${list }" var="dto">
 											<tr>
-												<th>${dto.chat_no }</th>
-												<td>${dto.chat_id }</td>
-												<td>
+												<th><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.createdate }"/></th>
+												<td>${dto.writer }</td>
+												<td><img src="${dto.imglist}" width="100" height="100"></td>
+												<td style="float:left">
 													<div class="chatDiv">
-														<p class="pcontent">${dto.chat_title }</p>
-														<p class="text-muted"><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.chat_date }"/></p>
+														<p class="pcontent"><a style="color:black !important;" href="joonggo_selectone.do?seq=${dto.joonggoseq }">${dto.title }</a></p>
 													</div>
-													<div class="balloon">${dto.chat }</div>
+													<div class="balloon">
+															<c:set var="userid" value="${dto.userid }"></c:set>
+															<c:set var="sessionid" value="${sessionid }"></c:set>
+														<c:choose>
+															<c:when test="${userid eq sessionid}">
+																<b>구매 문의</b>
+															</c:when>
+															<c:otherwise>
+																<b>판매 문의</b>														
+															</c:otherwise>
+														</c:choose>
+													</div>
+												</td>
+												<td>
+													<button class="btn_ shadow" onclick="chat(this)" seq="${dto.joonggoseq }" userid="${dto.userid }" writer="${dto.writer }" roomseq="${dto.roomseq }">채팅확인</button>
+													<button class="btn_ shadow" onclick="del(this)" roomseq="${dto.roomseq }" >나가기</button>
 												</td>
 											</tr>
 										</c:forEach>
@@ -212,6 +231,74 @@ table.tableChat .even {
 				</div>
 			</div>
 			
+			<script type="text/javascript">
+			
+				function popup(url, name, width, height){
+				    var _width = width;
+				    var _height = height;
+				 
+				    // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
+				    var _left = Math.ceil(( window.screen.width - _width )/2);
+				    var _top = Math.ceil(( window.screen.height - _height )/2); 
+				 
+				    window.open(url, name, 'width='+ _width +', height='+ _height +', left=' + _left + ', top='+ _top +',status=no, toolbar=no, scrollbars=no, resizable=no');
+				}
+				
+				function chat(ele){
+					var seq = ele.getAttribute('seq');
+					var writer = ele.getAttribute('writer');
+					var roomseq = ele.getAttribute('roomseq');
+					$.ajax({
+						url:"confirmsession.do",
+						method: "post",
+						success:function(data){ 
+							if(data.data === true){
+								popup("joonggo_myroom.do?joonggoseq="+seq+"&writer="+writer+"&userid=${sessionid}&roomseq="+roomseq, "채팅하기",450,620);
+							}else{
+								alert('로그인이 필요합니다.');
+								location.href='loginform.do';
+							}
+						}
+					})
+				}
+				
+				function del(ele){
+					$.ajax({
+						url:"confirmsession.do",
+						method: "post",
+						success:function(data){ 
+							if(data.data === true){
+								var roomseq = ele.getAttribute('roomseq');
+								
+								sendDeletemessage(roomseq, '${sessionid}', ele);
+								
+							}else{
+								alert('로그인이 필요합니다.');
+								location.href='loginform.do';
+							}
+						}
+					})
+				}
+				
+				function sendDeletemessage(roomseq, sessionid, ele){
+					$.ajax({
+						url:"joonggo_sendDeletemessage.do",
+						data:{"roomseq":roomseq,
+							  "sender":sessionid,
+							  "content":sessionid},
+						method: "post",
+						success:function(data){ 
+							if(data.data === true){
+								$(ele).closest('tr').remove();
+							}else{
+								location.href='error.do';
+							}
+						}
+					})
+				}
+			
+			</script>
+			
 			
 		</div>
 	</div>
@@ -219,3 +306,29 @@ table.tableChat .even {
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

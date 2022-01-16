@@ -301,7 +301,7 @@
 		SELECT ROOMSEQ
 		FROM JOONGGO_CHAT
 		WHERE JOONGGOSEQ = #{joonggoseq}
-		AND ((USERID = #{userid} AND WRITER = #{writer}) OR (USERID = #{writer} AND WRITER = #{writer})) 
+		AND (USERID = #{userid} AND WRITER = #{writer})
 	</select>
 	
 	<insert id="createroom" parameterType="chatroomDto">
@@ -342,6 +342,22 @@
 		WHERE ROOMSEQ = #{roomseq}
 		AND SENDDATE > TO_DATE(#{finaldate}, 'YYYY-MM-DD HH24:MI:SS')
 	</select>
+	
+	<update id="setDelete" parameterType="chatDto">
+		UPDATE JOONGGO_CHAT
+		SET USERID =
+		CASE
+			WHEN USERID LIKE #{sender} THEN ''
+			ELSE USERID
+		END
+		,
+		WRITER = 
+		CASE
+			WHEN WRITER LIKE #{sender} THEN ''
+			ELSE WRITER
+		END
+		WHERE ROOMSEQ = #{roomseq}
+	</update>
 	
 </mapper>
 

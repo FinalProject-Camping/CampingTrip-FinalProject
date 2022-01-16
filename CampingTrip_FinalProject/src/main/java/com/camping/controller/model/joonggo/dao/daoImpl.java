@@ -402,6 +402,20 @@ public class daoImpl implements dao{
 		
 		return res;
 	}
+
+	@Override
+	public int setDelete(chat chat) {
+
+		int res = 0;
+		
+		try {
+			res = sqlSession.update(NAMESPACE + "setDelete", chat);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 	
 
 

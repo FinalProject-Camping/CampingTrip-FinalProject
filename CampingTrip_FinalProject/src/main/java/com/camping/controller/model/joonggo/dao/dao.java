@@ -41,4 +41,6 @@ public interface dao {
 	
 	public List<chatroom> getchatlist(String sessionid);
 	public List<chat> chatRefresh(Map<String,Object> map);
+	public int setDelete(chat chat);
+	
 }

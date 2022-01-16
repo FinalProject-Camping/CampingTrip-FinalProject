@@ -190,6 +190,19 @@ public class bizImpl implements biz{
 		
 		return dao.chatRefresh(map);
 	}
+
+	@Override
+	public int setDelete(chat chat) {
+		
+		int res = dao.setDelete(chat);
+		if(res > 0) {
+			chat.setSender("exit");
+			return dao.sendMessage(chat);
+		}else {
+			return 0;
+		}
+		
+	}
 	
 	
 }

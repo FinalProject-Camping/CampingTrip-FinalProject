@@ -93,6 +93,20 @@ hr{
 	font-size:70%; 
 	transform: translate(0, -100%);
 }
+.date{
+	margin:0 auto; 
+	margin-top:5px;
+	margin-bottom:5px;
+	font-size:90%; 
+	text-align:center; 
+	color:black; 
+	width:150px;  
+	padding-top:3px;
+	padding-left:10px; 
+	padding-right:10px; 
+	background-color:lightgray; 
+	border-radius:20px;
+}
 
 </style>
 
@@ -175,7 +189,7 @@ hr{
 	        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
 		}
 		
-		function longpolling(){
+		var longpolling = ()=> {
 			$.ajax({
 				url:"longpolling.do",
 				data:{"roomseq":roomseq,
@@ -195,12 +209,16 @@ hr{
 							var chatdate = dateFormat(new Date(chat.senddate)).split(' ')[0];
 							var chattime = getTime(dateFormat(new Date(chat.senddate)).split(' ')[1]);
 							if(chatdate != currdate){
-								$('.chat-body').append('<div style="font-size:90%; text-align:center; color:gray; width:60%;">'+chatdate+'</div>')
+								$('.chat-body').append('<div class="date">'+chatdate+'</div>')
 								currdate = chatdate;
 							}
 							
-							if(chat.sender === null){
+							if(chat.sender === null || chat.sender === 'exit'){
 								$('.chat-body').append('<div style="text-align:center; color:gray; width:100%;">'+chat.content+'</div>')
+								if(chat.sender === 'exit'){
+									document.getElementById('content').readOnly = true;
+									longpolling = null;
+								}
 							}else if(chat.sender === '${userid}'){
 								$('.chat-body').append(createRight(chat.content, chattime))
 							}else{
@@ -251,14 +269,17 @@ hr{
 				var chatdate = dateFormat(new Date(chat.senddate)).split(' ')[0];
 				var chattime = getTime(dateFormat(new Date(chat.senddate)).split(' ')[1]);
 				if(chatdate != currdate){
-					$('.chat-body').append('<div style="font-size:90%; text-align:center; color:gray; width:100%;">'+chatdate+'</div>')
+					$('.chat-body').append('<div class="date">'+chatdate+'</div>')
 					currdate = chatdate;
 				}
 				
-				if(chat.sender === null){
+				if(chat.sender === null || chat.sender === 'exit'){
 					$('.chat-body').append('<div style="text-align:center; color:gray; width:100%;">'+chat.content+'</div>')
 					roomseq = chat.roomseq;
 					console.log(roomseq);
+					if(chat.sender === 'exit'){
+						document.getElementById('content').readOnly = true;
+					}
 					
 				}else if(chat.sender === '${userid}'){
 					$('.chat-body').append(createRight(chat.content, chattime))
