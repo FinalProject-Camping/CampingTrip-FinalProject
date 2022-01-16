@@ -139,9 +139,9 @@ setInterval(function () {
 						comments+="<div class='details'>";
 						comments+="<h2><span>"+this.name+"</span></h2>";
 						comments+="<p></p><div class='more'>";
-						comments+='<a href="#" class="read-more">평점 <span id="average_score">'+this.total_grade+' 점</span></a>';
+						comments+='<a href="campdetail.do?campno='+this.campno+'" class="read-more">평점 <span id="average_score">'+this.total_grade+' 점</span></a>';
 						comments+='<div class="icon-links">';
-						comments+='<a href="#" class="read-more"><span>예약하기 <i class="fas fa-angle-double-right"></i></span></a>';
+						comments+='<a href="campdetail.do?campno='+this.campno+'" class="read-more"><span>예약하기 <i class="fas fa-angle-double-right"></i></span></a>';
 						comments+='</div></div></div></div>';
 						if(cnt == 5){
 							comments+="</div>";

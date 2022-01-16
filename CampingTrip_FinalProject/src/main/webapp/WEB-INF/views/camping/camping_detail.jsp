@@ -134,7 +134,7 @@
 .review_element {
 	padding-top: 10px;
 	padding-bottom: 10px;
-	border: 1px solid gray;
+	border: 1px solid #e9ecef;
 	border-radius: 1em;
 	margin-bottom: 30px;
 }
@@ -173,7 +173,7 @@
 .room_price {
 	font-size: 20px;
 	font-weight: bold;
-	color: rgb(51, 103, 214);
+	color: rgb(255, 138, 61);
 }
 
 .room_people {
@@ -190,6 +190,9 @@
 	border: 1px solid gray;
 	border-radius:1em;
 	margin:0px;
+}
+#review_ajaxList{
+	margin-top:55px;
 }
 .card-body button{
 	font-weight:bold;
@@ -235,6 +238,31 @@
 }
 #category_grade,#total_grade_value{
 	font-weight:bold;
+}
+.pagination {
+	justify-content: center;
+	margin-bottom:20px;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+    border-radius:50%;
+}
+.page-link:hover{
+	background-color:#19875475;
+	border-radius:50%;
+	color:white;
+}
+.page-item{
+	margin-left:5px;
+	margin-right:5px;
+}
+
+.page-link {
+	color:#198754;
+	border:0px;
 }
 </style>
 <script type="text/javascript">
@@ -453,7 +481,7 @@
 		window.open(url, name, options);
 	}
 	function openReviewWrite(campno){
-		var options = 'top=10, left=10, width=600, height=645, status=no, menubar=no, toolbar=no, resizable=no';
+		var options = 'top=10, left=10, width=585, height=645, status=no, menubar=no, toolbar=no, resizable=no';
 		window.open('reviewwrite.do?campno='+campno, 'reviewwrite', options);
 	}
 	function priceLocale(price){
@@ -510,7 +538,7 @@
 						$(result).each(function(){
 							var rPrice = (this.room_price).format();
 							comments +='<div class="room_info col-md-6 mt-3">';
-							comments +='<div class="card mb-3" style="max-width: 540px;">';							
+							comments +='<div class="card shadow mb-3" style="max-width: 540px;">';							
 							comments +='<div class="row g-0">';
 							comments +='	<div class="col-md-4">';
 							comments +='		<img src="'+this.thumbnail+'"';
@@ -607,6 +635,78 @@
 			}
 		});
 	}
+	//페이징 처리 함수
+	function getPageList(totalPages, page, maxLength){
+        function range(start, end){
+          return Array.from(Array(end - start + 1), (_, i) => i + start);
+        }
+      
+        var sideWidth = maxLength < 9 ? 1 : 2;
+        var leftWidth = (maxLength - sideWidth * 2 - 3) >> 1;
+        var rightWidth = (maxLength - sideWidth * 2 - 3) >> 1;
+      
+        if(totalPages <= maxLength){
+          return range(1, totalPages);
+        }
+      
+        if(page <= maxLength - sideWidth - 1 - rightWidth){
+          return range(1, maxLength - sideWidth - 1).concat(0, range(totalPages - sideWidth + 1, totalPages));
+        }
+      
+        if(page >= totalPages - sideWidth - 1 - rightWidth){
+          return range(1, sideWidth).concat(0, range(totalPages- sideWidth - 1 - rightWidth - leftWidth, totalPages));
+        }
+      
+        return range(1, sideWidth).concat(0, range(page - leftWidth, page + rightWidth), 0, range(totalPages - sideWidth + 1, totalPages));
+      }
+      
+      $(function(){
+        var numberOfItems = $("#review_ajaxList .review_element").length;
+        var limitPerPage = 3; //How many card items visible per a page
+        var totalPages = Math.ceil(numberOfItems / limitPerPage);
+        var paginationSize = 7; //How many page elements visible in the pagination
+        var currentPage;
+      
+        function showPage(whichPage){
+          if(whichPage < 1 || whichPage > totalPages) return false;
+      
+          currentPage = whichPage;
+      
+          $("#review_ajaxList .review_element").hide().slice((currentPage - 1) * limitPerPage, currentPage * limitPerPage).show();
+      
+          $(".pagination li").slice(1, -1).remove();
+      
+          getPageList(totalPages, currentPage, paginationSize).forEach(item => {
+            $("<li>").addClass("page-item").addClass(item ? "current-page" : "dots")
+            .toggleClass("active", item === currentPage).append($("<a>").addClass("page-link")
+            .attr({href: "javascript:void(0)"}).text(item || "...")).insertBefore(".next-page");
+          });
+      
+          $(".previous-page").toggleClass("disable", currentPage === 1);
+          $(".next-page").toggleClass("disable", currentPage === totalPages);
+          return true;
+        }
+      
+        $(".pagination").append(
+          $("<li>").addClass("page-item").addClass("previous-page").append($("<a>").addClass("page-link side").attr({href: "javascript:void(0)"}).append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">  <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg>')),
+          $("<li>").addClass("page-item").addClass("next-page").append($("<a>").addClass("page-link side").attr({href: "javascript:void(0)"}).append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/> </svg>'))
+        );
+      
+        $(".card-content").show();
+        showPage(1);
+      
+        $(document).on("click", ".pagination li.current-page:not(.active)", function(){
+          return showPage(+$(this).text());
+        });
+      
+        $(".next-page").on("click", function(){
+          return showPage(currentPage + 1);
+        });
+      
+        $(".previous-page").on("click", function(){
+          return showPage(currentPage - 1);
+        });
+      });
 </script>
 </head>
 <body>
@@ -755,7 +855,7 @@
 						<div class="room_list row">
 								<c:forEach items="${roomlist}" var="rdto">
 									<div class="room_info col-md-6 mt-3">
-										<div class="card mb-3" style="max-width: 540px;">
+										<div class="card shadow mb-3" style="max-width: 540px;">
 											<div class="row g-0">
 												<div class="col-md-4">
 													<img src="${rdto.thumbnail}"
@@ -902,7 +1002,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${reviewlist}" var="review">
-											<div class="review_element row">
+											<div class="review_element row shadow">
 												<div class="review_profile col-2">
 													<img class="rounded-circle img-fluid"
 														src="/resources/img/${review.thumbnail }">
@@ -921,6 +1021,16 @@
 										</c:forEach>
 									</c:otherwise>
 								</c:choose>
+								<div class="pagination">
+                    <li class="page-item previous-page disable"><a class="page-link side"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">  <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></a></li>
+                    <li class="page-item current-page active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item current-page"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item current-page"><a class="page-link" href="#">6</a></li>
+                    <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item current-page"><a class="page-link" href="#">10</a></li>
+                    <li class="page-item next-page"><a class="page-link side"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/> </svg></a></li>
+             </div>
 								</div>
 							</div>
 						</div>

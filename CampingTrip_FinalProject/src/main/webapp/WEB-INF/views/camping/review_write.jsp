@@ -18,13 +18,22 @@
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 .column {
+	font-family: 'EliceDigitalBaeum_Bold';
 	font-size: 20px;
 	font-weight: bold;
 	margin-bottom: 5px;
+	background-color:#f3f3df;
 }
 
 .grade {
+	font-family: 'EliceDigitalBaeum_Bold';
 	font-size: 18px;
 	font-weight: bold;
 	margin-bottom: 5px;
@@ -36,6 +45,7 @@
 	padding-bottom:15px;
 }
 .title {
+	font-family: 'EliceDigitalBaeum_Bold';
 	font-size: 25px;
 	font-weight: bold;
 }
@@ -93,14 +103,17 @@ textarea {
 }
 </style>
 <script type="text/javascript">
+	$(function(){
+		resizeWindow();
+	})
 	function drawStar(target,index){		
     	$('#'+index).css('width',target.value*20+'%');
     	$('#score'+index).empty();
     	$('#score'+index).append(target.value);
-  }
+  	}
 
 	function resizeWindow(){
-		window.resizeTo(1400, 740);
+		window.resizeTo(535, 680);
 	}
 </script>
 </head>
@@ -134,7 +147,7 @@ textarea {
 				<span class="star">★★★★★<span id="1">★★★★★</span>
 				<input	type="range" name="service" oninput="drawStar(this,1)" value="1" step="0.5" min="0" max="5">
 				</span>
-				(<span id="score1"></span>)
+				(<span id="score1">0</span>)
 			</div>
 		</div>
 		<div class="row mt-1 d-flex">
@@ -143,7 +156,7 @@ textarea {
 				<span class="star">★★★★★<span id="2">★★★★★</span>
 				<input	type="range" name="cleanliness" oninput="drawStar(this,2)" value="1" step="0.5" min="0" max="5">
 				</span>
-				(<span id="score2"></span>)
+				(<span id="score2">0</span>)
 			</div>
 		</div>
 		<div class="row mt-1 d-flex">
@@ -152,7 +165,7 @@ textarea {
 				<span class="star">★★★★★<span id="3">★★★★★</span>
 				<input	type="range" name="cost" oninput="drawStar(this,3)" value="1" step="0.5" min="0" max="5">
 				</span>
-				(<span id="score3"></span>)
+				(<span id="score3">0</span>)
 			</div>
 		</div>
 		<div class="row mt-1 d-flex">
@@ -161,7 +174,7 @@ textarea {
 				<span class="star">★★★★★<span id="4">★★★★★</span>
 				<input	type="range" name="location" oninput="drawStar(this,4)" value="1" step="0.5" min="0" max="5">
 				</span>
-				(<span id="score4"></span>)
+				(<span id="score4">0</span>)
 			</div>
 		</div>
 		<div class="row mt-3">

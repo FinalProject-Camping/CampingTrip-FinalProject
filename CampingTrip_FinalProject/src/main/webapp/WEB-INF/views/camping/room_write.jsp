@@ -24,10 +24,16 @@
 	display: flex;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	
 }
 .title{
 	font-family:'EliceDigitalBaeum_Bold';
 	font-size:30px;
+}
+.title_style{
+	
+	background-color:#006bff7a;
+	color:white;
 }
 .room_column {
 	width: 100px;
@@ -253,35 +259,35 @@ textarea {
 </head>
 <body>
 	<div class="container">
-		<div class="room_row mt-3 mb-3">
+		<div class="room_row mt-3 mb-3 title_style row">
 			<span class="title">숙소 등록하기</span>
 		</div>
 		<form>
-			<div class="room_row">
+			<div class="room_row row">
 				<div class="room_column">숙소이름</div>
 				<div class="room_value">
 					<input type="text" name="room_name" id="room_name" required>
 				</div>
 			</div>
-			<div class="room_row">
+			<div class="room_row row">
 				<div class="room_column">숙박가격</div>
 				<div class="room_value">
 					<input type="text" name="room_price" id="room_price" required>
 				</div>
 			</div>
-			<div class="room_row">
+			<div class="room_row row">
 				<div class="room_column">숙박인원</div>
 				<div class="room_value">
 					<input type="text" name="guest_number" id="guest_number" required>
 				</div>
 			</div>
-			<div class="room_row">
+			<div class="room_row row">
 				<div class="room_column">상세설명</div>
 				<div class="room_value">
 					<textarea name="room_content" id="room_content" required></textarea>
 				</div>
 			</div>
-			<div class="room_row">
+			<div class="room_row row">
 				<div class="room_column">사진추가</div>
 				<div class="room_value" id="test">
 					<div class="form-group wrap-input2" id="file-list">
