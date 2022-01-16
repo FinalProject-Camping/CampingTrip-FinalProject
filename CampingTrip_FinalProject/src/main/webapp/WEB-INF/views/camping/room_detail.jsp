@@ -21,9 +21,19 @@
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 .column {
+	font-family: 'EliceDigitalBaeum_Bold';
 	font-size: 23px;
 	font-weight: bold;
+	background-color:#d49466;
+	color:white;
+	margin-bottom:10px;
 }
 
 a {
@@ -60,8 +70,8 @@ a {
 
 .column_content {
 	min-height: 200px;
-	background-color: rgb(194 194 195/ 42%);
-	margin: 5px;
+	background-color: rgb(212 148 102 / 16%);
+	
 	padding: 8px;
 	border-radius: 1em;
 }
@@ -87,6 +97,12 @@ a {
 .slide_images{
 	width:540px;
 	height:300px;
+}
+.column_img{
+	padding:0px;
+}
+.thumbnail{
+	border-radius:8px;
 }
 </style>
 <script>
@@ -148,7 +164,8 @@ a {
 <body>
 	<div class='container'>
 		<div class="row d-flex mt-5">
-			<div class="col-6">
+			<div class="col-12 column">객실정보</div>
+			<div class="col-6 thumbnail_img">
 				<img src="${roomDto.thumbnail }" class="thumbnail">
 			</div>
 			<div class="col-6">
@@ -158,14 +175,14 @@ a {
 			</div>
 		</div>
 		<div class="row mt-5">
-			<div class="col-12 column">객실설명</div>
+			<div class="col-12 column">상세설명</div>
 			<div class="col-12 column_content">${roomDto.room_content}</div>
 		</div>
 
 		<c:if test="${not empty imgList}">
 			<div class="row mt-5">
 				<div class="col-12 column">객실 이미지</div>
-				<div class="col-12">
+				<div class="col-12 column_img">
 					<div id="carouselExampleIndicators" class="carousel slide"
 						data-bs-ride="carousel">
 						<div class="carousel-indicators">
