@@ -11,38 +11,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="http://kit.fontawesome.com/2d323a629b.js"></script>
 </head>
 <body>
-	<!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-<!-- Buttons -->
-<button type="button" data-toggle="modal" data-target="#myModal">Open Modal</button>
- 
-<!-- Links -->
-<a data-toggle="modal" href="#myModal">Open Modal</a>
- 
-<!-- Other elements -->
-<p data-toggle="modal" data-target="#myModal">Open Modal</p>
-<div class="navbar_logo">
-                <a href="index.jsp"><i class="fas fa-campground"></i>CampingTrip</a>
-            </div>
+	<i class="fas fa-campground"></i>
 </body>
 </html>

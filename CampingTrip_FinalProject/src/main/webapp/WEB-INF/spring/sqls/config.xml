@@ -36,6 +36,9 @@
 	  <typeAlias type="com.camping.controller.model.joonggo.dto.joonggo" alias="myJoonggoDto"/>
 	  <typeAlias type="com.camping.controller.model.joonggo.dto.heart" alias="myHeartDto"/>
 	  <typeAlias type="com.camping.controller.model.event.dto.eventDto" alias="myPointDto"/>
+
+    <typeAlias type="com.camp.dto.CampDto" alias="campDto"/>
+
 	</typeAliases>
 	
 	<mappers> <!-- mybatis mapper 등록 -->
@@ -43,9 +46,9 @@
     <mapper resource="/mybatis/camping-mapper.xml"/>
     <!-- login -->
   	<mapper resource="/mybatis/member-mapper.xml" />
-  	
-  	<!-- mypage -->
+    <!-- mypage -->
   	<mapper resource="/mybatis/mypage-mapper.xml" />
+    
 	</mappers>
 
 </configuration>

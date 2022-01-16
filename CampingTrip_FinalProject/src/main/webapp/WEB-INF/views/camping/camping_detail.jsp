@@ -33,13 +33,20 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=52cf2e3096a1ac308c542aa15c92feed&libraries=services"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 .main, .detail_content {
 	margin-top: 100px;
 }
 
 .main {
-	border: 1px solid gray;
+	border: 1px solid #e9ecef;
 	border-radius: 1em;
+	max-width:1100px;
 }
 
 .camping_intro {
@@ -69,6 +76,7 @@
 }
 
 .sub_title {
+	font-family: 'EliceDigitalBaeum_Bold';
 	font-weight: bold;
 	font-size: 24px;
 	display: flex;
@@ -85,6 +93,7 @@
 	font-weight: bold;
 	color: black;
 	font-size: 20px;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .nav-link active {
@@ -149,15 +158,15 @@
 	font-weight: bold;
 }
 
-a {
+.room_list a {
 	color: black;
 	text-decoration: none;
 	font-weight: bold;
 }
 
 .room_title {
-	font-size: 25px;
-	font-weight: bold;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 28px;
 }
 
 .room_price {
@@ -180,6 +189,16 @@ a {
 	border: 1px solid gray;
 	border-radius:1em;
 	margin:0px;
+}
+.card-body button{
+	font-weight:bold;
+}
+.camping_name{
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+.review_grade{
+	display:inline-block;
+	width:180px;
 }
 </style>
 <script type="text/javascript">
@@ -394,7 +413,7 @@ a {
 	}
 	
 	function openWindowPop(url, name) {
-		var options = 'top=10, left=10, width=1000, height=645, status=no, menubar=no, toolbar=no, resizable=no';
+		var options = 'top=10, left=10, width=1000, height=570, status=no, menubar=no, toolbar=no, resizable=no';
 		window.open(url, name, options);
 	}
 	function openReviewWrite(campno){
@@ -404,7 +423,9 @@ a {
 	function priceLocale(price){
 		return price.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 	}
-	
+	function refreshPage(){
+		window.location.reload();
+	}
 	function searchRoom(){
 		
 		var check_in = $("#check-in").val();
@@ -419,7 +440,24 @@ a {
 		if(check_in == null || check_in =="" || check_out==null || check_out==""){
 			alert("체크인, 체크아웃 날짜를 확인해주세요");
 		}else{
-			
+			Number.prototype.format = function(){
+			    if(this==0) return 0;
+			 
+			    var reg = /(^[+-]?\d+)(\d{3})/;
+			    var n = (this + '');
+			 
+			    while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+			 
+			    return n;
+			};
+			 
+			// 문자열 타입에서 쓸 수 있도록 format() 함수 추가
+			String.prototype.format = function(){
+			    var num = parseFloat(this);
+			    if( isNaN(num) ) return "0";
+			 
+			    return num.format();
+			};
 			$.ajax({
 				type:"post",
 				url:"searchRoom.do",
@@ -434,6 +472,7 @@ a {
 						comments+="</div>";
 					}else{
 						$(result).each(function(){
+							var rPrice = (this.room_price).format();
 							comments +='<div class="room_info col-md-6 mt-3">';
 							comments +='<div class="card mb-3" style="max-width: 540px;">';							
 							comments +='<div class="row g-0">';
@@ -444,7 +483,7 @@ a {
 							comments +='	<div class="col-md-8">';
 							comments +='		<div class="card-body">';
 							comments +='			<div class="room_title card-title"><a href="#" onclick="open_roomDetail('+this.roomno+')">'+this.room_name+'</a></div>';
-							comments +='			<div class="room_price">'+this.room_price+'원</div>';
+							comments +='			<div class="room_price">￦'+rPrice+'</div>';
 							comments +='			<div class="room_people">수용인원:'+this.guest_number+'</div>';
 							comments +='			<button type="button" class="btn btn-warning book_btn mb-1"';
 							comments +='			onclick="openWindowPop(\'reservationform.do?roomno='+this.roomno+'\', \'reservform\')">예약하기</button>';
@@ -460,11 +499,83 @@ a {
 			});
 		}
 	}
+	function moveToReservation(roomno) {
+		//로그인이 없거나 페널티가 있는경우 안되게
+		$.ajax({
+			url : "loginChk.do",
+			method : "post",
+			success : function(data) {
+				if (data.data === true) {
+					openWindowPop('reservationform.do?roomno='+roomno, 'reservform');
+				} else {
+					if (confirm("로그인이 필요한 작업입니다. 로그인 하시겠습니까?")) {
+						location.href = 'loginform.do';
+					} else {
+
+					}
+				}
+			}
+		})
+	}
+	function moveToLogin(){
+		location.href = 'loginform.do';
+	}
+	function moveToReviewForm(campno) {
+		//로그인이 없거나 페널티가 있는경우 안되게
+		$.ajax({
+			url : "loginChk.do",
+			method : "post",
+			success : function(data) {
+				if (data.data === true) {
+					openReviewWrite(campno);
+				} else {
+					if (confirm("로그인이 필요한 작업입니다. 로그인 하시겠습니까?")) {
+						location.href = 'loginform.do';
+					} else {
+
+					}
+				}
+			}
+		})
+	}
+	function refreshReviewlist(){
+		var campno = {"campno" : ${campDto.campno}};
+		$.ajax({
+			
+			url:"reviewlistajax.do",
+			type:"post",
+			data:JSON.stringify(campno),
+			contentType:"application/json",
+			success:function(result){
+				var comments="";
+				alert("성공");
+				$(result).each(function(){
+					console.log(typeof(this.create_date));
+					comments +='<div class="review_element row">';
+					comments +='<div class="review_profile col-2">';
+					comments +='<img class="rounded-circle img-fluid" src="/resources/img/'+this.thumbnail+'"></div>';
+					comments +='<div class="review_content_part col-10">';
+					comments +='<div class="review_top d-flex justify-content-between">';
+					comments +='<span class="review_title">'+this.title+'</span> <span class="review_grade"><span class="star-rating"><span style="width:'+ (this.total)*20+'%"></span></span>('+this.total+'점)</span>';
+					comments +='</div>';
+					comments +='<div class="review_content">'+this.content+'</div>';
+					comments +='<div class="review_date d-flex justify-content-end align-items-end">';
+					comments +='<span class="date">'+this.create_date+'</span></div></div></div>';
+				});
+				
+				$("#review_ajaxList").empty();
+				$("#review_ajaxList").append(comments);
+			},
+			error:function(){
+				alert("통신실패");
+			}
+		});
+	}
 </script>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-	<div class="main container mb-5">
+	<div class="main container shadow mb-5">
 		<div class="camping_info row mt-3">
 			<div class="col-md-6">
 				<div id="carouselExampleIndicators" class="carousel slide"
@@ -540,7 +651,7 @@ a {
 				<h1 class="camping_name mb-0">${campDto.name }</h1>
 				<div class="camping_addr mb-1 text-muted">${campDto.address}
 					${campDto.address_detail}</div>
-				<div class="camping_intro mb-0">편안하고 아늑한 서비스</div>
+				<div class="camping_intro mb-0 shadow"></div>
 			</div>
 		</div>
 		<div class="detail_content row">
@@ -582,7 +693,7 @@ a {
 							<div class="col-md-6">
 
 								<button class="btn btn-success" style="float: right;"
-									id="chatting_btn">채팅하기</button>
+									id="chatting_btn" onclick="resizeWindow()">채팅하기</button>
 							</div>
 						</div>
 						<div class="room_list row">
@@ -599,11 +710,11 @@ a {
 													<div class="card-body">
 														<a href="#" onclick="open_roomDetail('${rdto.roomno}')"><div
 																class="room_title card-title">${rdto.room_name}</div></a>
-														<div class="room_price">${rdto.room_price}원</div>
+														<div class="room_price">￦${rdto.price_tostr()}</div>
 														<div class="room_people">수용인원:${rdto.guest_number}명</div>
 														<button type="button"
 															class="btn btn-warning book_btn mb-1"
-															onclick="openWindowPop('reservationform.do?roomno=${rdto.roomno}', 'reservform')">예약하기</button>
+															onclick="moveToReservation('${rdto.roomno}')">예약하기</button>
 													</div>
 												</div>
 											</div>
@@ -684,7 +795,7 @@ a {
 									&nbsp;위치
 								</div>
 								<div class="sub_content">
-									<div id="map" style="width: 100%; height: 400px;"></div>
+									 <div id="map" style="width: 100%; height: 400px;"></div>
 								</div>
 							</div>
 						</div>
@@ -725,9 +836,10 @@ a {
 								<div class="row sub_title mt-3">이용후기</div>
 								<div class="d-flex justify-content-end mb-2">
 									<button type="button" class="btn btn-success"
-										onclick="openReviewWrite(${campDto.campno})"
+										onclick="moveToReviewForm(${campDto.campno})"
 										style="width: 100px; float: right;" id="chatting_btn">리뷰작성</button>
 								</div>
+								<div id="review_ajaxList">
 								<c:choose>
 									<c:when test="${empty reviewlist }">
 										<div class='empty_result mb-3 col-12 d-flex align-items-center justify-content-center'>
@@ -755,6 +867,7 @@ a {
 										</c:forEach>
 									</c:otherwise>
 								</c:choose>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -762,6 +875,7 @@ a {
 			</div>
 		</div>
 	</div>
+	
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

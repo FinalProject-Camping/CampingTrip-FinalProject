@@ -31,7 +31,9 @@
 	font-weight: bold;
 	line-height: 38px;
 }
-
+.main{
+	max-width:1100px;
+}
 .row {
 	padding-top: 5px;
 }
@@ -464,8 +466,8 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 	<br>
 	<br>
 	<br>
-	<div class="container">
-		<div id="search_condition">
+	<div class="main container">
+		<div id="search_condition" class="shadow">
 			<form action="searchCamp.do" method="post">
 				<div class="category_div">
 					<span class="search_category">캠핑구분</span>
@@ -620,7 +622,7 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 			<c:otherwise>
 			<c:forEach var="campDto" items="${camplist}">
 				<div
-					class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+					class="camping_element row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow h-md-250 position-relative">
 					<div class="camping_pic col-auto d-none d-lg-block">
 						<img class="bd-placeholder-img" width="350" height="250"
 							src="${campDto.thumbnail }">

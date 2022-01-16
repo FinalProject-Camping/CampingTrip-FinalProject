@@ -31,7 +31,7 @@
 .title {
 	font-size: 23px;
 	font-weight: bold;
-	margin:15px;
+	margin: 15px;
 }
 
 a {
@@ -44,6 +44,7 @@ a {
 	widht: 540px;
 	height: 500px;
 }
+
 .btn2 {
 	display: inline-block;
 	background: black;
@@ -95,9 +96,10 @@ input[type=text] {
 #right {
 	width: 47%;
 }
-#middle{
-	width:1px;
-	background-color:black;
+
+#middle {
+	width: 1px;
+	background-color: black;
 }
 </style>
 <script type="text/javascript">
@@ -125,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
   });
 	window.onload = function() {
-
+		window.resizeTo(1000,645);
 		document.getElementById('check_in').value = $("#check-in",
 				opener.document).val();
 		document.getElementById('check_out').value = $("#check-out",
@@ -207,6 +209,34 @@ document.addEventListener('DOMContentLoaded', function() {
 				return false;
 		}
 	}
+	function sendData(){
+		if(!$("input[name=check_in]").val()){
+			alert("체크인 날짜를 선택해주세요");
+			$("input[name=]").focus();
+			
+		}else if(!$("input[name=check_out]").val()){
+			alert("체크아웃 날짜를 선택해주세요");
+			$("input[name=check_out]").focus();
+			
+		}else if(!$("input[name=user_name]").val()){
+			alert("예약자의 성명을 입력해주세요");
+			$("input[name=user_name]").focus();
+			
+		}else if(!$("input[name=user_contact]").val()){
+			alert("예약자의 연락가능한 전화번호를 입력해주세요.");
+			$("input[name=user_contact]").focus();
+			
+		}else if(!$("input[name=guest_number]").val()){
+			alert("숙박인원을 입력해주세요");
+			$("input[name=guest_number]").focus();
+		}else if($("input[name=guest_number]").val()>${roomDto.guest_number}){
+			alert("숙박인원이 정원을 초과하였습니다");
+			$("input[name=guest_number]").focus();
+		}else{
+		window.resizeTo(600,645);
+		document.getElementById('rsvForm').submit();
+		}
+	}
 </script>
 </head>
 <body>
@@ -220,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		<div id="middle"></div>
 		<div id="right">
 			<div class="container">
-				<form action="reservationres.do" method="post">
+				<form action="reservationres.do" method="post" id="rsvForm">
 					<input type="hidden" name="roomno" value="${roomDto.roomno}">
 					<input type="hidden" name="campno" value="${roomDto.campno}">
 					<c:set var="loginId" value='<%=session.getAttribute("id")%>' />
@@ -263,20 +293,20 @@ document.addEventListener('DOMContentLoaded', function() {
 					<div class="row mt-3 reserv_row">
 						<div class="reserv_column">숙박인원</div>
 						<div class="reserv_value">
-							<input type="text" name="guest_number" id="guest_number" required>
+							<input type="text" name="guest_number" id="guest_number" required placeholder="최대 숙박인원 ${roomDto.guest_number} ">
 						</div>
 					</div>
-					
+
 					<div class="row mt-5">
 						<div class="col-md-12 d-flex justify-content-center">
-							<input type="submit" class="btn2" value="예약">
-							<button class="btn2" onclick="window.close()">취소</button>
+							<button type="button" class="btn2" onclick="sendData()">예약</button>
+							<button type="button" class="btn2" onclick="window.close()">취소</button>
 						</div>
 					</div>
 				</form>
 			</div>
 		</div>
-		
+
 	</div>
 </body>
 </html>

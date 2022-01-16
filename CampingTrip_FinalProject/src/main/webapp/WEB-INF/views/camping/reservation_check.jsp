@@ -144,7 +144,7 @@ textarea {
 					<c:when test="${resrvDto.status eq 'Y'}">
 					<div class="col-md-12 d-flex justify-content-center">
 						<button type="button" class="btn2" onclick="requestPay()">결제</button>
-						<button class="btn2" onclick="window.close()">취소</button>
+						<button class="btn2" onclick="window.close()">닫기</button>
 					</div>
 					</c:when>
 					<c:otherwise>

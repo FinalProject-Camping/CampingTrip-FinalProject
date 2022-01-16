@@ -107,5 +107,10 @@ public class RoomDto {
 	public void setGuest_number(String guest_number) {
 		this.guest_number = guest_number;
 	}
-
+	
+	public String price_tostr() {
+		int tmp = Integer.parseInt(room_price);
+		String format = String.format("%,d", tmp);
+		return format;
+	}
 }
