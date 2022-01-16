@@ -103,8 +103,10 @@ public class CampBiz {
 	}
 	
 	public int insertReview(ReviewDto dto) {
-		int res = dao.updateTotalgrade(dto.getCampno());
 		return dao.insertReview(dto);
+	}
+	public int updateTotalgrade(int campno) {
+		return dao.updateTotalgrade(campno);
 	}
 	
 	public  WriterInfo collectWriterInfo(int campno){
@@ -152,4 +154,13 @@ public class CampBiz {
 	public List<CampDto> newCampList(){
 		return dao.newCampList();
 	}
+	
+	public int updateCamp(CampDto dto) {
+		return dao.updateCamp(dto);
+	}
+	
+	public int deleteCamp(int campno) {
+		return dao.deleteCamp(campno);
+	}
+	
 }

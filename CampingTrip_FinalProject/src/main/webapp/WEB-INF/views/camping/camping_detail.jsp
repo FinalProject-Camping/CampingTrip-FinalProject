@@ -39,7 +39,7 @@
     font-weight: normal;
     font-style: normal;
 }
-.main, .detail_content {
+.main{
 	margin-top: 100px;
 }
 
@@ -55,7 +55,12 @@
 	border-radius: 1em;
 	padding:10px;
 }
-
+.writer_area{
+	display:flex;
+	align-content:center;
+	justify-content:flex-end;
+	height:100px;
+}
 .input-group {
 	width: 300px;
 }
@@ -264,6 +269,13 @@
 	color:#198754;
 	border:0px;
 }
+.writer_btn{
+	width:115px;
+	height:50px;
+	font-weight:bold;
+	margin-left:10px;
+	margin-right:10px;
+}
 </style>
 <script type="text/javascript">
 	window.addEventListener('load',function() {
@@ -391,7 +403,7 @@
 					'#FF6D6E'
 				],
 				borderWidth:0,
-				data: [(${writerInfo.man}/${writerInfo.total})*100,(${writerInfo.woman}/${writerInfo.total})*100] }] 
+				data: [(${writerInfo.man}/(${writerInfo.man}+${writerInfo.woman}))*100,(${writerInfo.woman}/(${writerInfo.man}+${writerInfo.woman}))*100] }] 
 		}, 
 		// Configuration options go here 
 		options:{
@@ -661,7 +673,11 @@
       }
       
       $(function(){
+    
         var numberOfItems = $("#review_ajaxList .review_element").length;
+        if(numberOfItems < 1){
+        	numberOfItems =1;
+        }
         var limitPerPage = 3; //How many card items visible per a page
         var totalPages = Math.ceil(numberOfItems / limitPerPage);
         var paginationSize = 7; //How many page elements visible in the pagination
@@ -707,12 +723,23 @@
           return showPage(currentPage - 1);
         });
       });
+      function updateCamp(){
+    	  if(confirm("캠핑지 수정페이지로 이동하시겠습니까?")){
+    		  location.href="updateCampForm.do?campno="+${campDto.campno};
+    	  }
+      }
+
+      function deleteCamp(){
+    	  if(confirm("해당 캠핑지를 삭제하시겠습니까?")){
+    		  location.href="deleteCamp.do?campno="+${campDto.campno};
+    	  }
+      }
 </script>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<div class="main container shadow mb-5">
-		<div class="camping_info row mt-3">
+		<div class="camping_info row mt-5">
 			<div class="col-md-6">
 				<div id="carouselExampleIndicators" class="carousel slide"
 					data-bs-ride="carousel">
@@ -809,6 +836,15 @@
 						</c:if>
 						</div> 
 			</div>
+		</div>
+		<div class="row writer_area">
+			<c:choose>
+				<c:when test="${loginId eq campDto.writer}">
+				
+				<button type="button" class="btn btn-warning writer_btn" onclick="updateCamp()">게시글 수정</button>
+				<button type="button" class="btn btn-warning writer_btn" onclick="deleceCamp()">게시글 삭제</button>
+				</c:when>
+			</c:choose>
 		</div>
 		<div class="detail_content row">
 			<div class="col-md-12">
@@ -1030,7 +1066,7 @@
                     <li class="page-item dots"><a class="page-link" href="#">...</a></li>
                     <li class="page-item current-page"><a class="page-link" href="#">10</a></li>
                     <li class="page-item next-page"><a class="page-link side"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/> </svg></a></li>
-             </div>
+             					</div>
 								</div>
 							</div>
 						</div>

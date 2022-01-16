@@ -96,7 +96,33 @@ public class CampController {
 		 
 		 return "camping/room_write";
 	}
-	
+	@RequestMapping("/updateCampForm.do")
+	public String updateCampForm(Model model,int campno) {
+		model.addAttribute("campDto", biz.selectOneCamp(campno));
+		return "camping/camping_update";
+	}
+	@RequestMapping("/campUpdateRes.do")
+	public String updateCampRes(CampDto dto, HttpServletResponse response) throws IOException {
+		int res=biz.updateCamp(dto);
+		if(res>0) {
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('성공적으로 수정되었습니다.'); location.href='campdetail.do?campno="+dto.getCampno()+"'</script>");
+            out.flush();
+		}
+		return "";
+	}
+	@RequestMapping("/deleteCamp.do")
+	public String deleteCamp(int campno, HttpServletResponse response) throws IOException {
+		int res=biz.deleteCamp(campno);
+		if(res>0) {
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('성공적으로 삭제되었습니다.'); location.href='camplist.do'; </script>");
+            out.flush();
+		}
+		return "";
+	}
 	@RequestMapping("/camplist.do")
 	public String campList(Model model){
 		 model.addAttribute("camplist",biz.selectAllCamp());
@@ -190,6 +216,7 @@ public class CampController {
 		
 		System.out.println(dto.toString());
 		int res = biz.insertReview(dto);
+		int res1 = biz.updateTotalgrade(dto.getCampno());
 		int res2 = biz.reviewCount(dto.getCampno());
 		if(res>0) {
 			response.setContentType("text/html; charset=UTF-8");

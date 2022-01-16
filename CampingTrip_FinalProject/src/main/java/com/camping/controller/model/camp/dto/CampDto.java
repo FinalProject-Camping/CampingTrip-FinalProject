@@ -236,7 +236,38 @@ public class CampDto {
 		return format;
 	}
 
-
+	public String camptype_tostr() {
+		String[] tmp = this.camp_type.split(",");
+		String campType="";
+		for(int i =0 ; i < tmp.length;i++) {
+			if(tmp[i].equals("autocamping")) {
+				if(campType.length()==0) {
+					campType+="오토캠핑";
+				} else {
+					campType+=", 오토캠핑";
+				}
+			}else if(tmp[i].equals("glamping")) {
+				if(campType.length()==0) {
+					campType+="글램핑";
+				} else {
+					campType+=", 글램핑";
+				}
+			}else if(tmp[i].equals("caravan")) {
+				if(campType.length()==0) {
+					campType+="카라반";
+				} else {
+					campType+=", 카라반";
+				}
+			}else if(tmp[i].equals("pension")) {
+				if(campType.length()==0) {
+					campType+="펜션";
+				} else {
+					campType+=", 펜션";
+				}
+			}
+		}
+		return campType;
+	}
 	
 	
 	// myRoomdto 추가

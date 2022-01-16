@@ -69,6 +69,7 @@
 	flex-direction:column;
 	max-height:1444px;
 	min-height:600px;
+	padding:0px;
 }
 .camping_price {
 	font-weight: bold;
@@ -526,16 +527,18 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
         });
       });
 	function moveToCampwrite() {
-
+		var chk ='<%=session.getAttribute("role") %>';
 		//로그인이 없거나 페널티가 있는경우 안되게
 		$.ajax({
 			url : "loginChk.do",
 			method : "post",
 			success : function(data) {
 				if (data.data === true) {
-
-					location.href = 'insertform_camp.do';
-
+					if(chk==='판매자'){
+						location.href = 'insertform_camp.do';
+					}else{
+						alert("판매자인 회원만 이용가능한 서비스입니다.");
+					}
 				} else {
 					if (confirm("로그인이 필요한 작업입니다. 로그인 하시겠습니까?")) {
 						location.href = 'loginform.do';
@@ -761,6 +764,7 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 			</c:forEach>
 			</c:otherwise>
 			</c:choose>
+			
 			 <div class="pagination">
                     <li class="page-item previous-page disable"><a class="page-link side"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">  <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></a></li>
                     <li class="page-item current-page active"><a class="page-link" href="#">1</a></li>

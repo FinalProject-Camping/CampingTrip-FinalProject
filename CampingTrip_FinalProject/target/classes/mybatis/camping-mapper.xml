@@ -21,7 +21,7 @@
   	</resultMap>
   	
   <select id="selectAllCamp" resultType="campDto">
-    SELECT * FROM CAMP
+    SELECT * FROM CAMP ORDER BY CAMPNO DESC
   </select>
   
   <select id="selectOneCamp" parameterType="int" resultType="campDto">
@@ -192,4 +192,12 @@
   <select id="newCampList" resultType="campDto">
   	SELECT * FROM CAMP WHERE ROWNUM<![CDATA[ < ]]>3 ORDER BY CAMPNO DESC
   </select>
+  
+  <update id="updateCamp" parameterType="campDto">
+  	UPDATE CAMP SET INTRO=#{intro},RULE=#{rule},SERVICE=#{service},PHONE=#{phone},EMAIL=#{email},TAGS=#{tags} WHERE CAMPNO=#{campno}
+  </update>
+  
+  <delete id="deleteCamp" parameterType="int">
+  	DELETE FROM CAMP WHERE CAMPNO=#{campno}
+  </delete>
 </mapper>

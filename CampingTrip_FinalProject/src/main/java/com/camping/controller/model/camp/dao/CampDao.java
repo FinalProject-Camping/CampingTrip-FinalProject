@@ -404,4 +404,28 @@ public class CampDao {
 		}
 		return res;
 	}
+	
+	public int updateCamp(CampDto dto) {
+		int res=0;
+		
+		try {
+			res=sqlSession.update(NAMESPACE+"updateCamp",dto);
+		} catch (Exception e) {
+			System.out.println("[error]: update Camp");
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public int deleteCamp(int campno) {
+		int res=0;
+		
+		try {
+			res=sqlSession.delete(NAMESPACE+"deleteCamp",campno);
+		} catch (Exception e) {
+			System.out.println("[error]: delete Camp");
+			e.printStackTrace();
+		}
+		return res;
+	}
 }
