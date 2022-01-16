@@ -115,17 +115,17 @@ td {
 							<a class="text-decoration-none text-body font-weight-bold"
 								 id="mypageText" href="">마이페이지</a></li>
 						<li class="nav-item">
-							<a class="nav-link" href="memberreserve.do">예약 리스트</a>
+							<a class="nav-link" href="member_calendar.do">예약 리스트</a>
 							<ul class="submenu">
-								<li><a class="nav-link" href="">캠핑일정</a>
-								<li><a class="nav-link" href="memberreserve.do">예약완료/취소</a>
+								<li><a class="nav-link" href="member_calendar.do">캠핑일정</a>
+								<li><a class="nav-link" href="member_reservlist.do">예약완료/취소</a>
 							</ul>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="camplist.do">찜 리스트</a>
+							<a class="nav-link" href="member_likelist.do">찜 리스트</a>
 						</li>
 						<li class="nav-item active">
-							<a class="nav-link font-weight-bold" id="active" href="pointlist.do">포인트 현황</a>
+							<a class="nav-link font-weight-bold" id="active" href="member_pointlist.do">포인트 현황</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="memberDetail.do">개인정보</a>
@@ -134,7 +134,7 @@ td {
 							<a class="nav-link" href="chatlist.do">채팅</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="reportlist.do">신고</a>
+							<a class="nav-link" href="member_reportlist.do">신고</a>
 						</li>
 					</ul>
 				</nav>
@@ -147,47 +147,46 @@ td {
 				<div class="row justify-content-center">
 					<div class="col-md-13 order-md-1">
 						<br> <br>
-						<table>
-							<colgroup>
-								<col width="170">
-								<col width="250">
-								<col width="250">
-								<col width="250">
-								<col width="250">
-								<col width="200">
-							</colgroup>
-							<thead>
-								<tr>
-									<th>NO</th>
-									<th>획득 포인트</th>
-									<th>사용 포인트</th>
-									<th>상세내용</th>
-									<th>일자</th>
-									<th>포인트 합계</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:choose>
-									<c:when test="${empty list }">
+						<c:choose>
+							<c:when test="${map.count == 0 }">
+								<td colspan="6" align="center">-------------------- 포인트 내역이 없습니다 --------------------</td>
+							</c:when>
+
+							<c:otherwise>
+								<table border="1">
+									<colgroup>
+										<col width="170">
+										<col width="250">
+										<col width="250">
+										<col width="250">
+										<col width="250">
+										<col width="200">
+									</colgroup>
+									<thead>
+									<tr>
+										<th>NO</th>
+										<th>획득 포인트</th>
+										<th>사용 포인트</th>
+										<th>상세내용</th>
+										<th>일자</th>
+										<th>포인트 합계</th>
+									</tr>
+									</thead>
+									<tbody>
+									<c:forEach items="${map.list }" var="row" varStatus="i">
 										<tr>
-											<td colspan="6" align="center">-------------------- 포인트 내역이 없습니다 --------------------</td>
+											<td>${row.pointSeq }</td>
+											<td>${row.getPoint }</td>
+											<td>${row.usePoint }</td>
+											<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.pointGetDate }"/></td>
+											<td>${row.pointDetail }</td>
+											<td>합계</td>
 										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach items="${list }" var="dto">
-											<tr>
-												<th>${dto.myEventDto.pointSeq }</th>
-												<td>${dto.myEventDto.getPoint }</td>
-												<td>${dto.myEventDto.usePoint }</td>
-												<td>${dto.myEventDto.pointDetail }</td>
-												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.myEventDto.pointGetDate }"/></td>
-												<td>POINTID = ${dto.myEventDto.pointId }<br></td>
-											</tr>
-										</c:forEach>
-									</c:otherwise>
-								</c:choose>
-							</tbody>
-						</table>
+									</c:forEach>
+									</tbody>
+								</table>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>

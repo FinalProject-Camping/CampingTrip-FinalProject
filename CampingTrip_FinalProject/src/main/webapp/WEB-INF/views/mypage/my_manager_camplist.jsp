@@ -139,38 +139,37 @@ tbody a {
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
 					<div class="col-md-12 order-md-1">
-						<table>
-							<colgroup>
-								<col width="250">
-								<col width="1400">
-								<col width="900">
-							</colgroup>
-							<thead>
-								<tr>
-									<th>캠핑지 번호</th>
-									<th>이름</th>
-									<th>객실</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:choose>
-									<c:when test="${empty list }">
+						<c:choose>
+							<c:when test="${map.count == 0 }">
+								<td colspan="3" align="center">-------------------- 등록된 캠핑지가 없습니다 --------------------</td>
+							</c:when>
+
+							<c:otherwise>
+								<table border="1">
+									<colgroup>
+										<col width="250">
+										<col width="1400">
+										<col width="900">
+									</colgroup>
+									<thead>
 										<tr>
-											<td colspan="3" align="center">-------------------- 등록된 캠핑지가 없습니다 --------------------</td>
+											<th>캠핑지 번호</th>
+											<th>이름</th>
+											<th>객실</th>
 										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach items="${list }" var="dto">
-											<tr>
-												<th>${dto.myCampDto.campno }</th>
-												<td>${dto.myCampDto.name }</td>
-												<td><a href="manager_roomdetail.do?roomno=${dto.roomno }">${dto.room_name }</a></td>
-											</tr>
-										</c:forEach>
-									</c:otherwise>
-								</c:choose>
-							</tbody>
-						</table>
+									</thead>
+									<tbody>
+									<c:forEach items="${map.list }" var="row" varStatus="i">
+										<tr>
+											<td>${row.myCampDto.campno }</td>
+											<td>${row.myCampDto.name }</td>
+											<td><a href="manager_roomdetail.do?roomno=${dto.roomno }">${dto.room_name }</a></td>
+										</tr>
+									</c:forEach>
+									</tbody>
+								</table>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>

@@ -29,12 +29,14 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
 
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+
 <style type="text/css">
 #mypageText {
 	font-size: 25px;
 }
 
-.navbar {
+#navbar {
 	height: 530px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
@@ -102,35 +104,36 @@ td {
 </style>
 </head>
 <body>
+<br><br>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2">
-				<nav class="navbar navbar-light">
+				<nav class="navbar navbar-light" id="navbar">
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="text-decoration-none text-body font-weight-bold"
 								 id="mypageText" href="">마이페이지</a></li>
 						<li class="nav-item active">
-							<a class="nav-link font-weight-bold" id="active" href="memberreserve.do">예약 리스트</a>
+							<a class="nav-link font-weight-bold" id="active" href="member_calendar.do">예약 리스트</a>
 							<ul class="submenu">
-								<li><a class="nav-link" href="">캠핑일정</a>
-								<li><a class="nav-link font-weight-bold" id="active" href="memberreserve.do">예약완료/취소</a>
+								<li><a class="nav-link" href="member_calendar.do">캠핑일정</a>
+								<li><a class="nav-link font-weight-bold" id="active" href="member_reservlist.do">예약완료/취소</a>
 							</ul>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="camplist.do">찜 리스트</a>
+							<a class="nav-link" href="member_likelist.do">찜 리스트</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="pointlist.do">포인트 현황</a>
+							<a class="nav-link" href="member_pointlist.do">포인트 현황</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="loginform.do">개인정보</a>
+							<a class="nav-link" href="memberDetail.do">개인정보</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="chatlist.do">채팅</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="reportlist.do">신고</a>
+							<a class="nav-link" href="member_reportlist.do">신고</a>
 						</li>
 					</ul>
 				</nav>
@@ -143,51 +146,55 @@ td {
 				<div class="row justify-content-center">
 					<div class="col-md-12 order-md-1">
 						<br> <br>
-						<table>
-							<colgroup>
-								<col width="170">
-								<col width="1250">
-								<col width="1250">
-								<col width="1250">
-								<col width="1200">
-							</colgroup>
-							<thead>
-								<tr>
-									<th>NO</th>
-									<th>캠핑지</th>
-									<th>객실</th>
-									<th>일자</th>
-									<th>예약 여부</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:choose>
-									<c:when test="${empty list }">
+						<c:choose>
+							<c:when test="${map.count == 0 }">
+								<td colspan="7" align="center">-------------------- 캠핑지 예약내역이 없습니다 --------------------</td>
+							</c:when>
+
+							<c:otherwise>
+								<table border="1">
+									<colgroup>
+										<col width="170">
+										<col width="1250">
+										<col width="1250">
+										<col width="1250">
+										<col width="1250">
+										<col width="1250">
+										<col width="1200">
+									</colgroup>
+									<thead>
+									<tr>
+										<th>예약번호</th>
+										<th>캠핑지</th>
+										<th>객실</th>
+										<th>체크인</th>
+										<th>체크아웃</th>
+										<th>예약인원(명)</th>
+										<th>예약여부</th>
+									</tr>
+									</thead>
+									<tbody>
+									<c:forEach items="${map.list }" var="row" varStatus="i">
 										<tr>
-											<td colspan="5" align="center">-------------------- 작성된 글이
-												없습니다--------------------</td>
+											<td>${row.reservno }</td>
+											<td>${row.campno }</td>
+											<td>${row.roomno }</td>
+											<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.check_in }"/></td>
+											<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.check_out }"/></td>
+											<td>${row.guest_number }</td>
+											<td>${row.status }</td>
 										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach items="${list }" var="dto">
-											<tr>
-												<th>${dto.reserve_no }</th>
-												<td>${dto.reserve_name }</td>
-												<td>${dto.reserve_type }</td>
-												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.reserve_date }"/></td>
-												<td>${dto.reserve }</td>
-											</tr>
-										</c:forEach>
-									</c:otherwise>
-								</c:choose>
-							</tbody>
-						</table>
+									</c:forEach>
+									</tbody>
+								</table>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
-			
-			
 		</div>
 	</div>
-</html>
+<br><br>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+</html>

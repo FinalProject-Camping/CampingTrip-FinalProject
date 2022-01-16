@@ -230,35 +230,37 @@ public class MyCampDaoImpl implements MyCampDao {
 		return list;
 	}
 
-	@Override
-	public List<joonggo> likeList() {
-		List<joonggo> list = new ArrayList<joonggo>();
-		
-		try {
-			list = sqlSession.selectList(NAMESPACE+"likeList");
-		} catch (Exception e) {
-			System.out.println("[error] : like list");
-			e.printStackTrace();
-		}
-		
-		return list;
-	}
 
 	@Override
-	public List<MemberDto> myPointList() {
-		List<MemberDto> list = new ArrayList<MemberDto>();
-
-		try {
-			list = sqlSession.selectList(NAMESPACE + "myPointList");
-		} catch (Exception e) {
-			System.out.println("[error] : point list");
-			e.printStackTrace();
-		}
-
-		return list;
+	public List<eventDto> myPointList(String userId) {
+		return sqlSession.selectList("mypage.myPointList", userId);
 	}
 
 
+	@Override
+	public List<joonggo> likelist(String userId) {
+		return sqlSession.selectList("mypage.likelist", userId);
+	}
+
+	@Override
+	public List<report> myReportList(String userId) {
+		return sqlSession.selectList("mypage.myReportList", userId);
+	}
+
+	@Override
+	public List<ReservationDto> myReservList(String userId) {
+		return sqlSession.selectList("mypage.myReservList", userId);
+	}
+
+//	@Override
+//	public List<ReservationDto> myCalendarList() {
+//		List<ReservationDto> calendar = null;
+//		calendar = sqlSession.selectList(NAMESPACE+"myCalendarList");
+//		return calendar;
+//	}
+
+	
+	
 	
 
 	
