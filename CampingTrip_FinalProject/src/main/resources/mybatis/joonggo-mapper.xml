@@ -336,6 +336,13 @@
 		ORDER BY C.CREATEDATE DESC
 	</select>
 	
+	<select id="chatRefresh" parameterType="hashmap" resultMap="chatMap">
+		SELECT *
+		FROM JOONGGO_CHAT_DETAIL
+		WHERE ROOMSEQ = #{roomseq}
+		AND SENDDATE > TO_DATE(#{finaldate}, 'YYYY-MM-DD HH24:MI:SS')
+	</select>
+	
 </mapper>
 
 

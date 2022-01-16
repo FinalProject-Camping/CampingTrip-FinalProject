@@ -388,6 +388,20 @@ public class daoImpl implements dao{
 		
 		return res;
 	}
+
+	@Override
+	public List<chat> chatRefresh(Map<String, Object> map) {
+
+		List<chat> res = null;
+		
+		try {
+			res = sqlSession.selectList(NAMESPACE + "chatRefresh", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 	
 
 

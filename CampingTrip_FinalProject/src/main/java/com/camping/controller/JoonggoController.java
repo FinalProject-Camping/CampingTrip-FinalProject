@@ -6,6 +6,7 @@ import java.net.SocketException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -813,115 +814,6 @@ public class JoonggoController {
 		}
 	}
 	
-	@RequestMapping("/joonggo_myroom.do")
-	public String myroom(HttpSession session, Model model, chatroom chatroom) {
-		logger.info("myroom");
-		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
-		
-		if(sessiondto != null) {
-			if(!sessiondto.getMyid().equals(chatroom.getUserid())) {
-				return "redirect:error.do";
-			}else {
-				model.addAttribute("userid", chatroom.getUserid());
-				model.addAttribute("writer", chatroom.getWriter());
-				
-				List<chat> list = biz.chatlist(chatroom.getRoomseq());
-				ObjectMapper mapper = new ObjectMapper();
-				String toJson = null;
-				try {
-					toJson = mapper.writeValueAsString(list);
-				} catch (JsonGenerationException e) {
-					e.printStackTrace();
-				} catch (JsonMappingException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				model.addAttribute("list", toJson);
-				return "joonggo/joonggo_chatform";
-			}
-		}else {
-			return "redirect:error.do";
-		}
-	}
-	
-	@RequestMapping("/interval.do")
-	@ResponseBody
-	public Map<String, Object> interval(HttpSession session, Model model, chatroom chatroom) {
-		//logger.info("interval");
-		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
-		Map<String,Object> map = new HashMap<String,Object>();
-		
-		if(sessiondto != null) {
-			if(!sessiondto.getMyid().equals(chatroom.getUserid())) {
-				map.put("data", false);
-			}else {
-				map.put("data", true);
-				model.addAttribute("userid", chatroom.getUserid());
-				
-				List<chat> list = biz.chatlist(chatroom.getRoomseq());
-				ObjectMapper mapper = new ObjectMapper();
-				String toJson = null;
-				try {
-					toJson = mapper.writeValueAsString(list);
-				} catch (JsonGenerationException e) {
-					e.printStackTrace();
-				} catch (JsonMappingException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				model.addAttribute("list", toJson);
-				map.put("list",toJson);
-			}
-		}else {
-			map.put("data", false);
-		}
-		
-		return map;
-	}
-
-	
-	@RequestMapping("/joonggo_sendmessage.do")
-	@ResponseBody
-	public Map<String, Object> sendmessage(HttpSession session, chat chat) {
-		logger.info("sendmessage");
-		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
-		Map<String,Object> map = new HashMap<String,Object>();
-		
-		if(sessiondto != null) {
-			if(!sessiondto.getMyid().equals(chat.getSender())) {
-				map.put("data", false);
-			}else {
-				map.put("data", true);
-				
-				int res = biz.sendMessage(chat);
-				if(res>0) {
-					List<chat> list = biz.chatlist(chat.getRoomseq());
-					ObjectMapper mapper = new ObjectMapper();
-					String toJson = null;
-					try {
-						toJson = mapper.writeValueAsString(list);
-					} catch (JsonGenerationException e) {
-						e.printStackTrace();
-					} catch (JsonMappingException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				    map.put("list",toJson);
-				}else {
-					map.put("data", false);
-				}
-			}
-		}else {
-			map.put("data", "error");
-		}
-		
-		return map;
-	}
-	
-	
 	@RequestMapping("/mychatlist.do")
 	@ResponseBody
 	public Map<String, Object> getchatlist(HttpSession session, String sessionid) {	
@@ -956,6 +848,124 @@ public class JoonggoController {
 		}
 		return map;
 	}
+	
+	
+	@RequestMapping("/joonggo_myroom.do")
+	public String myroom(HttpSession session, Model model, chatroom chatroom) {
+		logger.info("myroom");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		
+		if(sessiondto != null) {
+			if(!sessiondto.getMyid().equals(chatroom.getUserid())) {
+				return "redirect:error.do";
+			}else {
+				model.addAttribute("userid", chatroom.getUserid());
+				model.addAttribute("writer", chatroom.getWriter());
+				
+				List<chat> list = biz.chatlist(chatroom.getRoomseq());
+				ObjectMapper mapper = new ObjectMapper();
+				String toJson = null;
+				try {
+					toJson = mapper.writeValueAsString(list);
+				} catch (JsonGenerationException e) {
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				model.addAttribute("list", toJson);
+				return "joonggo/joonggo_chatform";
+			}
+		}else {
+			return "redirect:error.do";
+		}
+	}
+	
+	@RequestMapping("/longpolling.do")
+	@ResponseBody
+	public Map<String, Object> longpolling(HttpServletRequest request ,HttpSession session, Model model, chatroom chatroom, String finaldate) {
+		logger.info("longpolling");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		Map<String,Object> map = new HashMap<String,Object>();
+		System.out.println(finaldate);
+		
+		if(sessiondto != null) {
+			if(!sessiondto.getMyid().equals(chatroom.getUserid())) {
+				map.put("data", false);
+			}else {
+				
+				map.put("data", true);
+				
+				Map<String,Object> maps = new HashMap<String,Object>();
+				maps.put("finaldate", finaldate);
+				maps.put("roomseq", chatroom.getRoomseq());
+				
+				while(true) {
+					
+					List<chat> list = biz.chatRefresh(maps);
+					if(list.size() != 0) {
+						
+						ObjectMapper mapper = new ObjectMapper();
+						String toJson = null;
+						try {
+							toJson = mapper.writeValueAsString(list);
+						} catch (JsonGenerationException e) {
+							e.printStackTrace();
+						} catch (JsonMappingException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					    map.put("list",toJson);
+						
+						break;
+					}
+					
+					try {
+						Thread.sleep(250);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+				}
+				
+			}
+			
+		}else {
+			map.put("data", false);
+		}
+		
+		return map;
+	}
+
+	
+	@RequestMapping("/joonggo_sendmessage.do")
+	@ResponseBody
+	public Map<String, Object> sendmessage(HttpSession session, chat chat) {
+		logger.info("sendmessage");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		if(sessiondto != null) {
+			if(!sessiondto.getMyid().equals(chat.getSender())) {
+				map.put("data", false);
+			}else {
+				int res = biz.sendMessage(chat);
+				if(res>0) {
+					map.put("data", true);
+				}else {
+					map.put("data", false);
+				}
+			}
+		}else {
+			map.put("data", "error");
+		}
+		return map;
+	}
+	
+	
+
 	
 	
 	
