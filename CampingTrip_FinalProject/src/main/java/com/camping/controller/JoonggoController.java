@@ -816,38 +816,30 @@ public class JoonggoController {
 	
 	//채팅방목록
 	@RequestMapping("/mychatlist.do")
-	@ResponseBody
-	public Map<String, Object> getchatlist(HttpSession session, String sessionid) {	
-	
+	public String getchatlist(HttpSession session, Model model) {	
 		
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
-		Map<String,Object> map = new HashMap<String,Object>();
 		
 		if(sessiondto != null) {
-			if(!sessiondto.getMyid().equals(sessionid)) {
-				map.put("data", false);
-			}else {
-				map.put("data", true);
-				
-				List<chatroom> roomlist = biz.getchatlist(sessionid);
-				ObjectMapper mapper = new ObjectMapper();
-				String toJson = null;
-				try {
-					toJson = mapper.writeValueAsString(roomlist);
-				} catch (JsonGenerationException e) {
-					e.printStackTrace();
-				} catch (JsonMappingException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			    map.put("roomlist",toJson);
-				
+			
+			List<chatroom> roomlist = biz.getchatlist(sessiondto.getMyid());
+			ObjectMapper mapper = new ObjectMapper();
+			String toJson = null;
+			try {
+				toJson = mapper.writeValueAsString(roomlist);
+			} catch (JsonGenerationException e) {
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+			model.addAttribute("list", toJson);
 		}else {
-			map.put("data", false);
+			return "redirect:error.do";
 		}
-		return map;
+		
+		return "mypage/my_member_chat";
 	}
 	
 	//특정 방 클릭 - 마이페이지
