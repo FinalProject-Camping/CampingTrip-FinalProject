@@ -481,6 +481,9 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
       
       $(function(){
         var numberOfItems = $("#search_camping_list .camping_element").length;
+        if(numberOfItems<1){
+        	numberOfItems=1;
+        }
         var limitPerPage = 5; //How many card items visible per a page
         var totalPages = Math.ceil(numberOfItems / limitPerPage);
         var paginationSize = 7; //How many page elements visible in the pagination

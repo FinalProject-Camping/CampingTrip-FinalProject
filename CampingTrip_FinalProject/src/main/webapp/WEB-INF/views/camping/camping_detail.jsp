@@ -971,7 +971,8 @@
 									&nbsp;연락처
 								</div>
 								<div class="sub_content">
-									${campDto.phone }
+									TEL) ${campDto.phone }<br>
+									Email) ${campDto.email }
 								</div>
 							</div>
 							<div class="detail_sub">
