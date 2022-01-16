@@ -3,7 +3,7 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	String[] categories = {"캠핑 > 텐트/타프/매트","캠핑 > 테이블/의자/가구","캠핑 > 캠핑카/카라반/트레일러","캠핑 > 기타 캠핑용품","여행 > 가방/캐리어/용품","여행 > 등산용품","여행 > 낚시용품","자전거","스포츠/레저","홈/생활용품","디지털/가전","의류/잡화","귀금속/주얼리/악세사리","상품권/티켓/쿠폰","기타 잡화","먹거리/무료나눔"};
 	String[] recommends = {"캠핑 난로","캠핑 의자","아이스박스","백팩","캠핑카","캠핑 랜턴","카라반","텐트","바베큐그릴","카페트","캠핑세탁기","히터","낚시 용품"};	
@@ -16,58 +16,28 @@
 <title>중고 거래 메인</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" type="text/css" href="resources/css/webfont.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
 
 <style type="text/css">
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
-}
-
-.nanumbarungothic * {
- font-family: 'NanumBarunGothic', sans-serif;
-}
-/* @media screen and (min-width: 769px) and (max-width: 1239px) { body, html { font-size: 15px; }  }
-@media screen and (min-width: 1240px) and (max-width: 1999px) { body, html { font-size: 17px; } }
-@media screen and (min-width: 2000px) { body, html { font-size: 19px; } } */
-
-@media screen and (max-width: 575px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important; padding:5%; padding-top:0%;} .content { height: auto;} .content-img{height:240px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} #lnb.fixed{ width: 100%;} .heart{float:right;}}
-@media screen and (min-width: 576px) and (max-width: 767px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important; padding:2%; padding-top:0%;} .content { height: 220px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display: none;} #lnb.fixed{ width: 540px;} #suggest{width:448px;}}
-@media screen and (min-width: 768px) and (max-width: 991px) { .mainbody{font-size:16px;} #list{font-size:16px !important; padding-top:0%;} .content { height: 240px;} .content-img{height:100%; width:40%; float:right;} .content-inner{height:100%; width:59%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display:none;}  #lnb.fixed{ width: 720px;} #suggest{width:628px;}}
-@media screen and (min-width: 992px) and (max-width: 1199px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important;} .element{margin-bottom: 1.5%;} .content { height: auto; margin: 2%; margin-top:0%;} .content-img{height:180px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:960px;} #lnb.fixed{ width: 960px;} .heart{float:right;} #suggest{width:868px;}}
-@media screen and (min-width: 1200px) and (max-width: 1399px) { .mainbody{ font-size: 17px; } #list{font-size:15px !important;} .element{margin-bottom: 2%;} .content { height: auto; margin: 3%; margin-top:0%;} .content-img{height:200px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:1070px;} #lnb.fixed{ width: 1070px;} .heart{float:right;} #suggest{width:978px;}}
-@media screen and (min-width: 1400px) { .mainbody{ font-size: 17px; } #list{font-size:16px !important;} .element{margin-bottom: 2.5%;}  .content { height: auto; margin:3.5%; margin-top:0%;} .content-img{height:205px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody{width:1100px;} #lnb.fixed{ width: 1100px;} .heart{float:right;} #suggest{width:1008px;}}
+@media screen and (max-width: 575px) { .mainbody{ font-size: 18px; } #list{font-size:18px !important; padding:2%; padding-top:0%;} .content { height: auto;} .content-img{height:240px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} #lnb.fixed{ width: 100%;} .heart{float:right;}  .maintitleclass{font-size:18px;} }
+@media screen and (min-width: 576px) and (max-width: 767px) { .mainbody{ font-size: 16px; } #list{font-size:16px !important; padding-top:0%;} .content { height: 280px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display: none;} #lnb.fixed{ width: 100%;}  .maintitleclass{font-size:20px} }
+@media screen and (min-width: 768px) and (max-width: 991px) { .mainbody{font-size:18px;} #list{font-size:18px !important; padding-top:0%;} .content { height: 370px;} .content-img{height:100%; width:50%; float:right;} .content-inner{height:100%; width:49%; margin-top: 0%;} .titlegroup{-webkit-line-clamp: 2;} .heart{left: 0; bottom: 0; position: absolute;} .id{display:none;}  #lnb.fixed{ width: 100%;} .maintitleclass{font-size:22px;} }
+@media screen and (min-width: 992px) and (max-width: 1199px) { .mainbody{ font-size: 16px; } #list{font-size:15px !important;} .element{margin-bottom: 1.5%;} .content { height: auto; margin: 2%; margin-top:0%;} .content-img{height:180px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:960px;} #lnb.fixed{ width: 960px;} .heart{float:right;} #suggest{width:868px;} .maintitleclass{font-size:25px;}}
+@media screen and (min-width: 1200px) and (max-width: 1399px) { .mainbody{ font-size: 17px; } #list{font-size:15px !important;} .element{margin-bottom: 2%;} .content { height: auto; margin: 3%; margin-top:0%;} .content-img{height:200px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:1070px;} #lnb.fixed{ width: 1070px;} .heart{float:right;} #suggest{width:978px;} .maintitleclass{font-size:26px;}}
+@media screen and (min-width: 1400px) { .mainbody{ font-size: 17px; } #list{font-size:16px !important;} .element{margin-bottom: 2.5%;}  .content { height: auto; margin:3.5%; margin-top:0%;} .content-img{height:205px; width:100%;} .content-inner{height:auto; width:100%; margin-top: 3%;} .titlegroup{-webkit-line-clamp: 1;} .date{float:right;} .mainbody {width:1100px;} #lnb.fixed{ width: 1100px;} .heart{float:right;} #suggest{width:1008px;} .maintitleclass{font-size:27px;} }
 
 input::-webkit-search-decoration,
 input::-webkit-search-cancel-button,
 input::-webkit-search-results-button,
 input::-webkit-search-results-decoration{display:none;}
 
-body{background-color: #f8f9fa;}
-.mainbody{padding: 30px; padding-left:45px; padding-right:45px; font-family: NanumBarunGothic; background-color: #fff; border: 1px solid #e9ecef; border-radius: 8px; margin-bottom: 21px}
-#listdiv{min-height: 400px;}
+body{background-color : #f8f9fa;}
+.mainbody{padding: 30px; padding-left:45px; padding-right:45px; font-family: NanumBarunGothic; background-color: #fff; border: 1px solid #e9ecef; border-radius: 8px;}
+#listdiv{min-height: 1000px;}
 #suggest > input{margin-top:15px;} 
 
 #search-bar{
@@ -104,47 +74,64 @@ body{background-color: #f8f9fa;}
 }
 
 .select{
-	border: 2px solid darkgray;
+	border: 1px solid darkgray;
 	margin-bottom: 20px;
 	border-radius: 5px;
-	padding-left: 2px;
-	padding-right: 2px;
+	padding-left: 3px;
+	padding-right: 3px;
+	font-family: EliceDigitalBaeum_Bold;
+}
+
+.dropdown-item{
+	font-family: EliceDigitalBaeum_Bold;
 }
 
 .side-btn{
 	background-color: white;
 	border: solid 1px darkgray;
-	border-radius: 10px;
+	border-radius: 25px;
 	padding-right: 10px;
 	padding-left: 10px;
 	height: 40px;
 }
-
-.option-btn{background-color: #ff8a3d; border: solid 1px #ff8a3d; border-radius: 25px; padding-right: 10px; padding-left: 10px; margin-right: 10px; margin-bottom: 15px; color:white; height:30px; font-size:13px;}
-.white-btn{background-color: white; border: solid 1px darkgray; border-radius: 25px; padding-right: 10px; padding-left: 10px; margin-right: 10px; color:gray; height:30px; font-size:13px;}
-.green-btn{background-color: rgb(0, 191, 121); border: solid 1px rgb(0, 191, 121); border-radius: 25px; padding-right: 10px; padding-left: 10px; margin-bottom: 15px; margin-right: 10px; color:white; height:30px; font-size:13px;}
-
 .side-btn:hover{
 	transition: all 0.3s;
-	border: solid 1px rgb(173, 88, 66);
-	background-color: rgb(173, 88, 66);
+	border: solid 1px #d49466;
+	background-color: #d49466;
 	color : white;
 }
+.side-btn-three{font-family: EliceDigitalBaeum_Bold; height:50px; padding-left: 15px; padding-right: 15px;}
+.option-btn{background-color: #ff8a3d; border: solid 1px #ff8a3d; border-radius: 25px; padding-right: 10px; padding-left: 10px; margin-right: 10px; margin-bottom: 15px; color:white; height:30px; font-size:13px;}
+.white-btn{background-color: white; border: solid 1px darkgray; border-radius: 25px; padding-right: 10px; padding-left: 10px; margin-right: 10px; color:gray; height:30px; font-size:13px;}
+.addr-btn{background-color: white; border: solid 1px darkgray; border-radius: 25px; padding-right: 10px; padding-left: 10px; margin-bottom: 15px; margin-right: 10px; color:gray; height:30px; font-size:13px;}
+.green-btn{background-color: #198754; border: solid 1px #198754; border-radius: 25px; padding-right: 10px; padding-left: 10px; margin-bottom: 15px; margin-right: 10px; color:white; height:30px; font-size:13px;}
 
-.side-btn-three{height:50px; padding-left: 15px; padding-right: 15px;}
 .btn-gray{background-color: #FFFFFF; border: solid 2px gray; color : gray; border-radius: 5px; padding-right:3%; padding-left:3%; padding-top:1.5%; padding-bottom:1.5%; font-weight: bold;}
 .btn-gray:hover{transition: all 0.3s; border: solid 2px gray; background-color: gray; color : white;}
 
 .titlegroup{
-	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-top: 3px;
+	margin-bottom: 3px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	word-wrap: break-word;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
+	 word-break:break-all;
 	/* webkit 엔진을 사용하지 않는 브라우저를 위한 속성. */
 	/* height = line-height * line = 1.2em * 3 = 3.6em  */
+}
+.placediv{
+	color:gray;
+	font-size:13px;
+	margin-top: 3px;
+	margin-bottom:3px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
 }
 
 .content{
@@ -202,7 +189,7 @@ body{background-color: #f8f9fa;}
   background:#121212; 
   text-align: center;
 }
-#lnb {padding-top : 12px; padding-bottom : 12px;}
+#lnb {padding-top : 17px; padding-bottom : 17px;}
 
 #lnb.fixed{
   position: fixed;
@@ -210,9 +197,9 @@ body{background-color: #f8f9fa;}
   left:50%;
   transform: translate(-50%, 0%);
   margin: 0 auto;
-  padding-top : 12px;
-  padding-bottom : 12px;
-  z-index: 1;
+  padding-top : 17px;
+  padding-bottom : 17px;
+  z-index: 2;
 }
 
 #fixed{
@@ -224,9 +211,8 @@ body{background-color: #f8f9fa;}
 }
 
 #addrSearch{
-	min-width:300px;
-	width:auto;
-	height:auto;
+	width:450px;
+	height:300px;
 	position: fixed;
 	top: 45%;
 	left:50%;
@@ -234,6 +220,20 @@ body{background-color: #f8f9fa;}
 	padding:30px;
 	background-color: white;
 	border-radius: 8px;
+}
+
+.maintitleclass{
+	position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+	opacity:0;
+	transition: opacity 0.1s;
+	font-family: EliceDigitalBaeum_Bold;
+}
+.active{
+	opacity:1;
+    transition: opacity 1s;
 }
 
 
@@ -254,6 +254,9 @@ let status = '';
 const sessionId = '${sessiondto.userid}'; 
 const sessionUsertype = '${sessiondto.usertype}'; 
 
+let address = '';
+let km = '';
+
 
 	document.addEventListener("DOMContentLoaded", ()=>{
 		//관리자인 경우에 버튼 X
@@ -267,7 +270,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 			document.getElementById('queryKeyword').innerHTML = '전체';
 		}else{
 			document.getElementById('queryKeyword').innerHTML = 
-			'<button type="button" onclick="location.href=`list.do?keyword=`" class="white-btn align-middle"><span class="align-middle fas fa-times"></span><span class="align-middle"> 키워드 : '+ keyword +'</span></button>';;
+			'<button type="button" onclick="location.href=`joonggo_list.do?keyword=`" class="white-btn align-middle"><span class="align-middle fas fa-times"></span><span class="align-middle"> 키워드 : '+ keyword +'</span></button>';
 		}
 		
 		//초기 상품 로드
@@ -279,19 +282,19 @@ const sessionUsertype = '${sessiondto.usertype}';
 	function addProduct(){
 		//로그인이 없거나 페널티가 있는경우 안되게
 		$.ajax({
-			url:"insertConfirm.do",
+			url:"joonggo_insertConfirm.do",
 			method: "post",
 			success:function(data){ 
 				if(data.data === true){
 					if(data.penalty >= 5){
 						toastr.options.positionClass = "toast-top-right";
-						toastr.error("게시글 작성이 불가능한 회원입니다.");
+						toastr.error("페널티 초과로 인해 게시글작성이 불가능합니다.");
 					}else{
-						location.href='insertform.do';
+						location.href='joonggo_insertform.do';
 					}
 				}else{
-					toastr.options.positionClass = "toast-top-right";
-					toastr.warning("로그인 해주세요");
+					alert('로그인이 필요합니다.');
+					location.href='loginform.do';
 				}
 			}
 		})
@@ -299,10 +302,10 @@ const sessionUsertype = '${sessiondto.usertype}';
 	
 	function selectone(seq){
 		history.back();
-		location.href='selectone.do?seq=' + seq;
+		location.href='joonggo_selectone.do?seq=' + seq;
 	}
 
-	function createContent(imgpath, seq, writer, date, trade, title, price, heart, hit){
+	function createContent(imgpath, seq, writer, date, trade, title, price, heart, hit, place){
 		
 		var maindiv = document.createElement('div');
 		maindiv.setAttribute('class', 'element col-lg-4 col-12');
@@ -335,7 +338,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 		trade_span.style.setProperty('font-weight','bold');
 		
 		if(trade == 'Y'){
-			trade_span.style.setProperty('color','rgb(0, 191, 121)');
+			trade_span.style.setProperty('color','#198754');
 			trade_span.innerHTML = '[판매] ';
 		}else if(trade == 'N'){
 			trade_span.style.setProperty('color','gray');
@@ -375,7 +378,12 @@ const sessionUsertype = '${sessiondto.usertype}';
  		if(trade == 'T'){
  			imgdiv.innerHTML += '<span style="position: absolute; top:85%; left:0%; height:15%; width:100%; opacity:0.8; text-align:center; background-color:#ff8a3d; z-index:1; font-weight: bold; color:white;"><span style="position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);">예약중</span></span>';
  		} 
-		innerdiv.append(writer_span, date_span, titlediv, price_span, hearthitspan);
+ 		
+ 		var placediv = document.createElement('div');
+ 		placediv.innerHTML = place == null? '택배 거래' : place;
+ 		placediv.setAttribute('class', 'placediv');
+ 		
+		innerdiv.append(writer_span, date_span, titlediv, placediv, price_span, hearthitspan);
 		div.append(imgdiv, innerdiv);
 		maindiv.append(div);
 		
@@ -398,7 +406,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 		var m = parseInt(timegap/60000);
 		
 		switch(true){
-			case (d > 7):return date.split(' ')[0]; 
+			case (d > 7): return dateFormat(new Date(date)).split(' ')[0]; 
 			case (d >= 1): return d+'일 전';
 			case (t >= 1): return t+'시간 전';
 			case (m >= 1): return m+'분 전';
@@ -406,15 +414,24 @@ const sessionUsertype = '${sessiondto.usertype}';
 		}
 	}
 	
+	function dateFormat(date) {
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+
+        month = month >= 10 ? month : '0' + month;
+        day = day >= 10 ? day : '0' + day;
+        hour = hour >= 10 ? hour : '0' + hour;
+        minute = minute >= 10 ? minute : '0' + minute;
+        second = second >= 10 ? second : '0' + second;
+
+        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+	}
+	
 	function convertPrice(price){
-		let temp = '';
-		for(let ch of price.toString()){temp = ch + temp;}
-		
-		let result = '';
-		for(let ch of temp.match(/.{1,3}/g).join(',')){
-			result = ch + result;
-		}
-		return result; 
+		return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
 	}
 	
 	function effect(count, arr){
@@ -423,7 +440,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 		}
 		var child = arr[count];
 		
-		$(child).animate({opacity:'1'}, 120, ()=>{
+		$(child).animate({opacity:'1'}, 100, ()=>{
 			effect(count + 1, arr);
 		});
 	}
@@ -440,7 +457,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 		}
 		console.log(arr);
 		arr.forEach(data => {
-			ele.appendChild(createContent(data.imglist.split(',')[0], data.seq, data.id, data.regdate, data.trade, data.title, data.price, data.heart, data.hit));
+			ele.appendChild(createContent(data.imglist.split(',')[0], data.seq, data.id, data.regdate, data.trade, data.title, data.price, data.heart, data.hit, data.place));
 		});
 		
 		
@@ -451,7 +468,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 		//redirect
 		var trimVal = val.trim();
 		if(trimVal === ''){return;}
-		location.href='list.do?keyword=' + trimVal;
+		location.href='joonggo_list.do?keyword=' + trimVal;
 	}
 
 	function ajax(url, method, senddata, func1, func2, func3){
@@ -469,7 +486,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 					func2();
 					
 					list.forEach(data => {
-						ele.appendChild(createContent(data.imglist.split(',')[0], data.seq, data.id, data.regdate, data.trade, data.title, data.price, data.heart, data.hit));
+						ele.appendChild(createContent(data.imglist.split(',')[0], data.seq, data.id, data.regdate, data.trade, data.title, data.price, data.heart, data.hit, data.place));
 					});
 					
 					func3();
@@ -477,7 +494,6 @@ const sessionUsertype = '${sessiondto.usertype}';
 					if(datalist.islast){
 						document.getElementById('morediv').style.display = 'none';
 						document.getElementById('listdiv').style.setProperty('border-radius', '8px');
-						document.getElementById('listdiv').style.setProperty('margin-bottom', '21px');
 						if(list.length === 0){
 							var loading = document.getElementById('loading');
 						    loading.classList.remove('rotation');
@@ -487,12 +503,11 @@ const sessionUsertype = '${sessiondto.usertype}';
 						}
 					}else{
 						document.getElementById('morediv').style.display = 'block';
-						document.getElementById('listdiv').style.setProperty('margin-bottom', '0px');
 						document.getElementById('listdiv').style.setProperty('border-bottom-left-radius', '0px');
 						document.getElementById('listdiv').style.setProperty('border-bottom-right-radius', '0px');
 					}
 					
-				}, 600);
+				}, 500);
 				
 			},
 			error: function(){
@@ -507,12 +522,17 @@ const sessionUsertype = '${sessiondto.usertype}';
 
 </head>
 <body>
-	<div id="header">
-   		<h1>헤더 </h1>
-	</div>
-	<div id="gap" style="height:97px; display:none;"></div>
+	<div id="gap" style="height:194.5px; display:none;"></div>
 	
-	<div class="container mainbody" id="lnb">
+	<div class="container-fluid mainbody shadow" id="lnb" style="margin-bottom: 21px; border-top: none; border-top-left-radius: 0; border-top-right-radius: 0;">
+		
+		<div class="row" id="maintitle" style="position:relative; padding-top:25px; padding-bottom:25px; height:87.5px;">
+			<div class="col" style="text-align: center;">
+				<span class="w-100 maintitleclass active"><span class="align-middle fas fa-fire fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;중고거래를 통해 필요한 캠핑용품을 마련해보세요</span>
+				<span class="w-100 maintitleclass"><span class="align-middle far fa-smile-wink fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;안전한 거래문화 함께 만들어요</span>
+				<span class="w-100 maintitleclass"><span class="align-middle fas fa-campground fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;캠핑예약과 캠핑용품구매 모두 캠핑트립에서!</span>
+			</div>		
+		</div>
 		
 		<!-- 검색창 & 버튼 -->
 		<div class="row">
@@ -528,10 +548,9 @@ const sessionUsertype = '${sessiondto.usertype}';
 			<div class="col-lg-6 col-1" style="text-align: right;" id="side-btns">
 				<!-- size lg -->
 				<div class="btn-group" id="side-lg" style="display:none;">
-					<button type="button" class="side-btn side-btn-three" onclick="showAddrSearch()" data-bs-placement="bottom" title="위치를 기반으로 상품을 탐색합니다"><span class="align-middle fas fa-map-marker-alt"></span><span class="align-middle">&nbsp;위치 조회</span></button> &nbsp;
-					<button type="button" class="side-btn side-btn-three" onclick="addProduct();"><span class="align-middle fas fa-plus-circle"></span><span class="align-middle">&nbsp;상품 추가</span></button> &nbsp;
-				
-					<button type="button" class="side-btn side-btn-three dropdown-toggle" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">카테고리 선택</button>
+					<button type="button" class="side-btn side-btn-three" onclick="addProduct();"><span class="fas fa-plus-circle"></span><span >&nbsp;상품 추가</span></button> &nbsp;
+					<button type="button" class="side-btn side-btn-three" onclick="showAddrSearch()"><span class="fas fa-map-marker-alt"></span><span>&nbsp;위치 설정</span></button> &nbsp;
+					<button type="button" class="side-btn side-btn-three dropdown-toggle" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">카테고리 설정</button>
 					<ul class="dropdown-menu dropdown-menu-end" style="background-color: white;" aria-labelledby="dropdownMenuLink">
 						<li><button class="dropdown-item" type="button" onclick="setAllCategory()">전체 카테고리</button></li>
 						<%
@@ -547,8 +566,8 @@ const sessionUsertype = '${sessiondto.usertype}';
 				<div class="btn-group align-middle h-100" id="side-mobile" style="display:none; text-align: center;">
 					<button type="button" class="h-100" id="dropdownMenuLink2" style="border: none; background-color: white;" data-bs-toggle="dropdown" aria-expanded="false"><span class="align-middle fas fa-bars fa-2x" style="color:darkgray"></span></button>
 					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink2" style="background-color: white;">
-						<li><button class="dropdown-item" type="button" onclick="addProduct();"><span class="align-middle fas fa-plus-circle"></span><span class="align-middle">&nbsp;상품 추가</span></button></li>
-						<li><button class="dropdown-item" type="button" onclick="showAddrSearch()" data-bs-placement="bottom"><span class="align-middle fas fa-map-marker-alt"></span><span class="align-middle">&nbsp;&nbsp;위치 조회</span></button></li>
+						<li><button class="dropdown-item" type="button" onclick="addProduct();"><span class="fas fa-plus-circle"></span><span>&nbsp;상품 추가</span></button></li>
+						<li><button class="dropdown-item" type="button" onclick="showAddrSearch()"><span class="fas fa-map-marker-alt"></span><span>&nbsp;&nbsp;위치 설정</span></button></li>
 						<li><hr class="dropdown-divider"></li>
 						<li><button class="dropdown-item" type="button" onclick="setAllCategory()">전체 카테고리</button></li>
 						<%
@@ -569,7 +588,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 						document.getElementById('side-lg').style.display = 'block';
 					}
 					
-					$(window).resize(function(){
+ 					$(window).resize(function(){
 						if(window.innerWidth < 992){
 							document.getElementById('side-mobile').style.display = 'block';
 							document.getElementById('side-lg').style.display = 'none';
@@ -577,7 +596,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 							document.getElementById('side-mobile').style.display = 'none';
 							document.getElementById('side-lg').style.display = 'block';
 						}
-					});
+					}); 
 				</script>
 
 			</div>
@@ -585,7 +604,8 @@ const sessionUsertype = '${sessiondto.usertype}';
 		
 		<div class="row">
 			<div class="col-xs-12">
-				<div id="suggest" style="padding-top:0px; padding:15px; background-color:white; text-align: left; display:none; position: fixed; z-index: 1;" class="col-lg-12">
+				<div id="suggest" style="width:100%; padding-bottom:0 !important; padding:15px; background-color:white; text-align: left; display:none; z-index: 1;" class="col-lg-12">
+					<hr style="margin:0;">
 					<b>추천 검색어&nbsp;</b>
 					<%
 						for(String s : recommends){
@@ -600,10 +620,10 @@ const sessionUsertype = '${sessiondto.usertype}';
 		
 	</div>
 	
-	<div class="container mainbody" id="listdiv" style="margin-bottom: 0px; padding-bottom: 0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
+	<div class="container-fluid mainbody shadow" id="listdiv" style="margin-bottom: 0px; padding-bottom: 0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
 		<div class="row">
-			<h4 class="col-8 bold">
-				중고거래 > <span id="queryKeyword"></span>
+			<h4 class="col-8 bold" style="font-family: EliceDigitalBaeum_Bold;">
+				<span style="color:#d49466">중고거래&nbsp;>&nbsp;</span><span id="queryKeyword"></span>
 			</h4>
 			<div class="col-4" style="text-align: right;">
 				<select id="select" class="select">
@@ -624,6 +644,9 @@ const sessionUsertype = '${sessiondto.usertype}';
 			function applyChange(func){
 				var ele = document.getElementById('list');
 				var loading = document.getElementById('loading');
+				console.log("address" + address);
+				
+				if(address === ''){
 				ajax("setcategory.do", "post", {"category":category.join(','),
 											    "status":status,
 											    "keyword":keyword},
@@ -633,19 +656,43 @@ const sessionUsertype = '${sessiondto.usertype}';
 											    	loading.style.display = 'block';
 											    	loading.classList.add('rotation');
 											    },()=>{
+													ele.innerHTML = '';	
+											    	page = 1;
+											    	func(); //버튼 삭제/추가
+											    },()=>{
 											    	var loading = document.getElementById('loading');
 											    	loading.classList.remove('rotation');
 											    	loading.style.display = 'none';
-
-											    	func(); //버튼 삭제/추가
-											    	page = 1;
-													ele.innerHTML = '';	
-
-											    }, ()=>{
+											    	window.scrollTo({top:0, left:0, behavior:'instant'});
 											    	document.body.style.setProperty('pointer-events','');
 											    	document.body.style.setProperty('opacity', '');
 											    	effect(0, Array.from(ele.children));
 											    });
+				}else{
+				ajax("addrSearch.do", "post", {"category":category.join(','),
+											    "status":status,
+											    "keyword":keyword,
+											    "address":address,
+											    "km":parseInt(km)},
+											    ()=>{
+											    	document.body.style.setProperty('pointer-events','none');
+											    	document.body.style.setProperty('opacity', '0.7');
+											    	loading.style.display = 'block';
+											    	loading.classList.add('rotation');
+											    },()=>{
+													ele.innerHTML = '';	
+											    	page = 1;
+											    	func(); //버튼 삭제/추가
+											    },()=>{
+											    	var loading = document.getElementById('loading');
+											    	loading.classList.remove('rotation');
+											    	loading.style.display = 'none';
+											    	window.scrollTo({top:0, left:0, behavior:'instant'});
+											    	document.body.style.setProperty('pointer-events','');
+											    	document.body.style.setProperty('opacity', '');
+											    	effect(0, Array.from(ele.children));
+											    });
+				}
 			}
 			
 			function addbtn(value){
@@ -655,7 +702,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 			}
 			
 			function delbtn(ele){
-				if(category.length === 0 && status === ''){document.getElementById('nothing').style.display='block';}
+				if(category.length === 0 && status === '' && address === ''){document.getElementById('nothing').style.display='block';}
 				ele.remove();
 			}
 			
@@ -663,7 +710,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 				Array.from(document.getElementsByClassName('option-btn')).forEach(btn =>{
 					btn.remove();
 				});
-				if(status === ''){document.getElementById('nothing').style.display='block';}
+				if(status === '' && address === ''){document.getElementById('nothing').style.display='block';}
 			}
 		
 			function setCategory(value){
@@ -690,7 +737,7 @@ const sessionUsertype = '${sessiondto.usertype}';
 					btn.remove();
 				});
 				document.getElementById('select').options[0].selected = true;
-				if(category.length === 0){document.getElementById('nothing').style.display='block';}
+				if(category.length === 0 && address ===''){document.getElementById('nothing').style.display='block';}
 			}
 			
 			function delstatus(){
@@ -723,10 +770,10 @@ const sessionUsertype = '${sessiondto.usertype}';
 
 	</div>
 	<!-- 버튼 -->
-	<div class="container mainbody" id="morediv" style="border-top:none; padding:0px; margin-top:0px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
+	<div class="container-fluid mainbody shadow" id="morediv" style="border-top:none; padding:0px; margin-top:0px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
 		<div onclick="moreResult(this);" style="text-align: center; cursor: pointer; padding-top:15px; padding-bottom:15px;">
 			<span class="more-text" style="display: block;">더보기</span>
-			<span class="align-middle fas fa-circle-notch fa-lg" style="display:none; color:#ff8a3d;"></span>
+			<span class="align-middle fas fa-circle-notch fa-lg" style="display:none; color:#d49466;"></span>
 		</div>
 	</div>
 	
@@ -738,6 +785,8 @@ const sessionUsertype = '${sessiondto.usertype}';
 	
 		function moreResult(ele){
 			var list = document.getElementById('list');
+			
+			if(address === ''){
 				ajax("moreresult.do", "post",
 						{"page":page,
 						 "keyword":keyword,
@@ -749,23 +798,48 @@ const sessionUsertype = '${sessiondto.usertype}';
 							 ele.children[1].style.display = 'inline-block';
 							 ele.children[1].classList.add('rotation');							 
 						 },()=>{
+							 page = page + 1;
+						 },()=>{
 							 ele.children[1].classList.remove('rotation');
 							 ele.children[1].style.display = 'none';
 							 ele.children[0].style.display = 'block';
-						 },()=>{
 							 document.body.style.setProperty('pointer-events','');
-							 effect(0 , Array.from(list.children).slice(page * 9));
-							 page = page + 1;
+							 effect(0 , Array.from(list.children).slice((page-1) * 9));
 							 console.log(list.children.length);
 						 }
 	
 				);
-			
+			}else{
+				ajax("addrMore.do", "post",
+						{"page":page,
+						 "keyword":keyword,
+						 "category":category.join(','),
+						 "status":status,
+						 "address":address,
+						 "km":parseInt(km)},
+						 ()=>{
+							 document.body.style.setProperty('pointer-events','none');
+							 ele.children[0].style.display = 'none';
+							 ele.children[1].style.display = 'inline-block';
+							 ele.children[1].classList.add('rotation');							 
+						 },()=>{
+							 page = page + 1;
+						 },()=>{
+							 ele.children[1].classList.remove('rotation');
+							 ele.children[1].style.display = 'none';
+							 ele.children[0].style.display = 'block';
+							 document.body.style.setProperty('pointer-events','');
+							 effect(0 , Array.from(list.children).slice((page-1) * 9));
+							 console.log(list.children.length);
+						 }
+	
+				);
+			}
 		}
 	</script>
 	
 	<!-- top -->
-	<a id="top" href="#"><span id="topspan" style="color:gray; font-size: 30pt;" class="align-middle fas fa-arrow-alt-circle-up"></span></a>
+	<a id="top" href="#"><span id="topspan" style="color:black; font-size: 30pt;" class="align-middle fas fa-arrow-alt-circle-up"></span></a>
 	<script>
     $(function() {
         $(window).scroll(function() {
@@ -792,12 +866,12 @@ const sessionUsertype = '${sessiondto.usertype}';
         		fontSize:"30pt"
         	},200);
         });
-        
-
     });
     
     $(function() {
-    	  var lnb = $("#lnb").offset().top;
+    	  var lnb = $("#lnb").offset().top + 87.5;
+    	  let flag = false;
+    	  let searchflag = false;
     	  
     	  $(window).scroll(function() {
     	   
@@ -805,9 +879,11 @@ const sessionUsertype = '${sessiondto.usertype}';
     	    
     	    if(lnb <= window) {
     	      $("#lnb").addClass("fixed");
+    	      $("#maintitle").hide();
     	      $("#gap").show();
     	    }else{
     	      $("#lnb").removeClass("fixed");
+    	      $("#maintitle").show();
     	      $("#gap").hide();
     	    }
     	  })
@@ -815,30 +891,100 @@ const sessionUsertype = '${sessiondto.usertype}';
     	  
     	  //추천검색어
     	  $("#search-bar").focus(function(){
-        	$("#suggest").slideDown(200); //원래 slidedown
+          	$("#suggest").slideDown(200); //원래 slidedown
           });
     	  $("#search-bar").focusout(function(){
-    		  $("#suggest").slideUp(200);
+    		 if(!flag){$("#suggest").slideUp(200);}
     	  });
+    	  $("#search-bar").on('mouseenter', function(){
+    		  searchflag = true;
+    	  })
+    	  $("#search-bar").on('mouseleave', function(){
+    		  searchflag = false;
+    	  })
+    	  $("#search-btn").on('mouseenter', function(){
+    		  flag = true;
+    	  })
+    	  $("#search-btn").on('mouseleave', function(){
+    		  flag = false;
+    	  })
+    	  $("#suggest").on('mouseenter', function(){
+    		  flag = true;
+    	  })
+    	  $("#suggest").on('mouseleave', function(){
+    		  flag = false;
+    	  })
+    	  $(document.body).on('mousedown', function(){
+    		  if(!searchflag && !flag){$("#suggest").slideUp(200);}
+    	  })
+    	  
+    	  var maintitleOpacity = (idx) => {
+    		  $('.maintitleclass').eq(idx).removeClass('active');
+    		  idx = idx + 1 == 3? 0 : idx + 1;
+    		  $('.maintitleclass').eq(idx).addClass('active');
+    		  setTimeout( ()=>{maintitleOpacity(idx)}, 5500);
+    	  }
+    	  
+    	  setTimeout( ()=>{maintitleOpacity(0)}, 6500);
     	});
 	</script>
 	
 	<!-- addrSearch -->
 	<div id="addrSearch" style="display:none; opacity: 0; z-index: 999" class="shadow-lg">
 		<div class="row">
-			<div class="col-10"><b>위치를 기반으로 상품을 검색하세요</b></div>
+			<div class="col-10"><b>사용자 위치를 기반으로 상품을 탐색합니다</b></div>
 			<div class="col-2" style="text-align:right;"><span style="cursor: pointer;" onclick="closeAddrSearch()" class="fas fa-times fa-lg"></span></div>
-			<br>
-			회원님의 위치를 확인하고 있어요.
-			직접 위치를 입력하시겠습니까?
-			특정 키워드를 입력하시겠습니까?
-			해당 키워드에 대한 범위를 선택해주세요.
+		</div>
+		<div class="row">
 			
-			
+			<div style="text-align: center;" id="page1">
+				<br>
+				<button onclick="geolocation()" class="white-btn" type="button">현재 위치로 설정하기</button>
+				<button onclick="directlocation()" class="white-btn" type="button">직접 설정하기</button>
+				<br><br><br>
+				<span id="addr" style="font-weight:bold; color:#ff8a3d;"></span>
+				<br><br><br>
+				<button type="button" class="white-btn" onclick="next(this)">다음</button>
+			</div>
+			<div style="text-align: center; display:none;" id="page2">
+				<br><br>
+				반경을 선택해주세요.
+				<br>
+				<input type="range" value="1" min="1" max="50" onchange="range(this)">
+				<br>
+				<span id="range" style="color:#ff8a3d;">1</span><span style="color:#ff8a3d;"> km</span>
+				<br><br><br>
+				<button type="button" class="white-btn" onclick="next(this)">다음</button>
+			</div>
+			<div style="text-align:center; display:none;" id="page3">
+				<br><br>
+				결과를 탐색중입니다. 잠시만 기다려주세요.
+				<br><br>
+				<span class="fas fa-spinner fa-2x fa-spin" style="color:#ff8a3d;"></span>
+				<br>
+			</div>
 			
 		
 		</div>
+		
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b1a06c511e7475a92c07a62d70ae0304&libraries=services"></script>
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script type="text/javascript">
+			var geocoder = new kakao.maps.services.Geocoder();
+			var callback = function(result, status){
+				if(status === kakao.maps.services.Status.OK){
+					
+					let addr;
+					if(result[1]){
+						addr = result[1].region_1depth_name + ' ' + result[1].region_2depth_name + ' ' + result[1].region_3depth_name;	
+					}else{
+						addr = result[0].region_1depth_name + ' ' + result[0].region_2depth_name + ' ' + result[0].region_3depth_name;	
+					}
+					document.getElementById('addr').innerHTML = addr;
+				}
+			};
+			let latitude, longitude;
+		
 			var doc = document.getElementById('addrSearch');
 			var showAddrSearch = ()=>{
 				doc.style.display = 'block';
@@ -848,11 +994,129 @@ const sessionUsertype = '${sessiondto.usertype}';
 			var closeAddrSearch = ()=>{
 				doc.style.setProperty('opacity','0');
 				doc.style.display = 'none';
+				$('#addr').html("");
+				$('#range').html('1');
+				$('#page1').show();
+				$('#page2').hide();
+				$('#page3').hide();
 			};
+			
+			function geolocation(){
+				navigator.geolocation.getCurrentPosition(function(pos) {
+				    latitude = pos.coords.latitude;
+				    longitude = pos.coords.longitude;
+					
+					geocoder.coord2RegionCode(longitude, latitude, callback);
+				});
+			}
+			
+			function directlocation(){
+			    new daum.Postcode({
+			        oncomplete: function(data) {
+ 						let res;
+ 						if(data.autoJibunAddress){res = data.autoJibunAddress;}
+ 						else if(data.jibunAddress){res = data.jibunAddress;}
+ 						else if(data.roadAddress){res = data.roadAddress;}
+ 						geocoder.addressSearch(res, callback2);
+			        }
+			    }).open();
+			}
+			
+			var callback2 = function(result, status) {
+			    if (status === kakao.maps.services.Status.OK) {
+			    	geocoder.coord2RegionCode(result[0].x, result[0].y, callback);
+			    }
+			};
+			
+			function next(ele){
+				var index = $(ele).parent().index();
+				if(index === 0){
+					if($('#addr').html() == ''){
+						alert('위치를 설정해주세요.');
+						return;
+					}
+				}else{
+					if($('#range').html() == ''){
+						alert('반경을 설정해주세요.');
+						return;
+					}
+				}
+				
+				$(ele).parent().hide();
+				$(ele).parent().parent().children().eq(index+1).show();
+				
+				if(index === 1){
+					address = $('#addr').html();
+					km = $('#range').html();
+					
+					addAddr(address + ': ' + km + 'km 이내');
+				}
+			}
+			
+			function range(ele){
+				document.getElementById('range').innerHTML = ele.value;
+			}
+
+			
+			function addrSearch(func){
+				var ele = document.getElementById('list');
+				ajax("addrSearch.do", "post", {"category":category.join(','),
+											    "status":status,
+											    "keyword":keyword,
+											    "address":address,
+											    "km":parseInt(km)},
+											    ()=>{
+											    	document.body.style.setProperty('pointer-events','none');
+											    },()=>{
+													ele.innerHTML = '';	
+											    	page = 1;
+											    	func();
+											    },()=>{
+											    	closeAddrSearch();
+											    	window.scrollTo({top:0, left:0, behavior:'instant'});
+											    	document.body.style.setProperty('pointer-events','');
+											    	effect(0, Array.from(ele.children));
+											    });
+			}
+
+			function addAddrbtn(value){
+				document.getElementById('nothing').style.display='none';
+				document.getElementById('option').innerHTML += 
+					'<button type="button" onclick="delAddr(this)" value="'+ value +'" class="addr-btn"><span class="align-middle fas fa-times"></span><span class="align-middle"> '+ value +'</span></button>';				
+			}
+			
+			function addAddr(value){
+				addrSearch(()=>{
+					var btn = document.querySelector('.addr-btn');
+					if(btn){
+						if(category.length === 0 && status === ''){document.getElementById('nothing').style.display='block';}
+						btn.remove();
+					}
+					addAddrbtn(value);
+				});
+			}
+			
+			function delAddrbtn(ele){
+				if(category.length === 0 && status === ''){document.getElementById('nothing').style.display='block';}
+				ele.remove();
+			}
+			
+			function delAddr(ele){
+				address = '';
+				km = '';
+				applyChange(()=>{delAddrbtn(ele)});
+			}
+			
+			
+			
 		</script>
 	</div>
 	
 	
+	
+	
+<br>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
 

@@ -1,5 +1,6 @@
 package com.camp.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CampDto {
@@ -12,17 +13,70 @@ public class CampDto {
 	private String service;
 	private String intro;
 	private String rule;
-	private String phone;
-	private String email;
+	private String phone="";
+	private String email="";
+	private String tags="";
 	private int view_count;
+	private double total_grade;
+	private String lowest_price="0";
 	private Date create_date;
+	private String thumbnail;
+	
+	
+	// 쿼리로 join할 dto(마이페이지 캠핑지 정보)
+	private RoomDto myRoomdto;
+	
 	
 	public CampDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 	
+	
+	// myRoomdto 추가
+	public CampDto(int campno, String writer, String name, String camp_type, String address, String address_detail,
+			String service, String intro, String rule, String phone, String email, String tags, int view_count,
+			double total_grade, String lowest_price, Date create_date, String thumbnail, RoomDto myRoomdto) {
+		super();
+		this.campno = campno;
+		this.writer = writer;
+		this.name = name;
+		this.camp_type = camp_type;
+		this.address = address;
+		this.address_detail = address_detail;
+		this.service = service;
+		this.intro = intro;
+		this.rule = rule;
+		this.phone = phone;
+		this.email = email;
+		this.tags = tags;
+		this.view_count = view_count;
+		this.total_grade = total_grade;
+		this.lowest_price = lowest_price;
+		this.create_date = create_date;
+		this.thumbnail = thumbnail;
+		this.myRoomdto = myRoomdto;
+	}
+	
+	
+	// myRoomdto 추가
+	public RoomDto getMyRoomdto() {
+		return myRoomdto;
+	}
+	public void setMyRoomdto(RoomDto myRoomdto) {
+		this.myRoomdto = myRoomdto;
+	}
+	
+	
+	
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 
 	public int getCampno() {
 		return campno;
@@ -48,38 +102,14 @@ public class CampDto {
 		this.name = name;
 	}
 
-	
-
-	public CampDto(int campno, String writer, String name, String camp_type, String address, String address_detail,
-			String service, String intro, String rule, String phone, String email, int view_count, Date create_date) {
-		super();
-		this.campno = campno;
-		this.writer = writer;
-		this.name = name;
-		this.camp_type = camp_type;
-		this.address = address;
-		this.address_detail = address_detail;
-		this.service = service;
-		this.intro = intro;
-		this.rule = rule;
-		this.phone = phone;
-		this.email = email;
-		this.view_count = view_count;
-		this.create_date = create_date;
-	}
-
-
-
 	public String getCamp_type() {
 		return camp_type;
 	}
 
 
-
 	public void setCamp_type(String camp_type) {
 		this.camp_type = camp_type;
 	}
-
 
 
 	public String getAddress() {
@@ -153,6 +183,57 @@ public class CampDto {
 	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
 	}
+	public String date_tostr() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		return simpleDateFormat.format(create_date);
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+	public double getTotal_grade() {
+		return total_grade;
+	}
+
+	public void setTotal_grade(double total_grade) {
+		this.total_grade = total_grade;
+	}
+
+
+	public String getLowest_price() {
+		return lowest_price;
+	}
+
+	public void setLowest_price(String lowest_price) {
+		this.lowest_price = lowest_price;
+	}
+
+	public String lowestprice_tostr() {
+		int tmp = Integer.parseInt(lowest_price);
+		String format = String.format("%,d", tmp);
+		return format;
+	}
+
+
+	
+	
+	// myRoomdto 추가
+	@Override
+	public String toString() {
+		return "CampDto [campno=" + campno + ", writer=" + writer + ", name=" + name + ", camp_type=" + camp_type
+				+ ", address=" + address + ", address_detail=" + address_detail + ", service=" + service + ", intro="
+				+ intro + ", rule=" + rule + ", phone=" + phone + ", email=" + email + ", tags=" + tags
+				+ ", view_count=" + view_count + ", total_grade=" + total_grade + ", lowest_price=" + lowest_price
+				+ ", create_date=" + create_date + ", thumbnail=" + thumbnail + ", myRoomdto=" + myRoomdto + "]";
+	}
+	
 	
 	
 }

@@ -37,9 +37,40 @@
 		<result property="joonggoseq" column="JOONGGOSEQ"/>
 	</resultMap>
 	
+	<resultMap type="reportDto" id="reportMap">
+		<result property="reportseq" column="REPORTSEQ" />
+		<result property="reportdate" column="REPORTDATE" />
+		<result property="reportid" column="REPORTID" />
+		<result property="reportcontent" column="REPORTCONTENT" />
+		<result property="filepath" column="FILEPATH" />
+		<result property="joonggoseq" column="JOONGGOSEQ" />
+		<result property="writer" column="WRITER" />
+		<result property="status" column="STATUS" />
+		<result property="adminid" column="ADMINID" />
+		<result property="admintext" column="ADMINTEXT" />
+	</resultMap>
+	
+	<resultMap type="chatroomDto" id="chatroomMap">
+		<result property="roomseq" column="ROOMSEQ"/>
+		<result property="joonggoseq" column="JOONGGOSEQ"/>
+		<result property="title" column="TITLE"/>
+		<result property="imglist" column="IMGLIST"/>
+		<result property="userid" column="USERID"/>
+		<result property="writer" column="WRITER"/>
+		<result property="createdate" column="CREATEDATE"/>
+	</resultMap>
+	
+	<resultMap type="chatDto" id="chatMap">
+		<result property="roomseq" column="ROOMSEQ"/>
+		<result property="chatseq" column="CHATSEQ"/>
+		<result property="sender" column="SENDER"/>
+		<result property="content" column="CONTENT"/>
+		<result property="senddate" column="SENDDATE"/>
+	</resultMap>
+	
 	
 	<select id="selectList" parameterType="String" resultMap="joonggoMap">
-		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT 
+		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT, PLACE 
 		FROM ( select * from joonggo order by regdate desc )
 		<where>
 			<if test='regexp != ""'>
@@ -58,7 +89,7 @@
 	</select>
 	
 	<select id="selectCategory" parameterType="hashmap" resultMap="joonggoMap">
-		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT 
+		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT, PLACE  
 		FROM ( select * from joonggo order by regdate desc )
 		<where>
 			<if test='regexp != ""'>
@@ -81,6 +112,34 @@
 			</if>
 			<if test='true'>
 				AND ROWNUM <![CDATA[<=]]> 10
+			</if>
+		</where>
+	</select>
+	
+	<select id="setAddress" parameterType="hashmap" resultMap="joonggoMap">
+		SELECT IMGLIST, SEQ, ID, REGDATE, TRADE, TITLE, PRICE, HEART, HIT, PLACE, DELIVERY  
+		FROM ( select * from joonggo order by regdate desc )
+		<where>
+			<if test='regexp != ""'>
+				(
+				(REGEXP_LIKE(TITLE, #{regexp}))
+				OR
+				(REGEXP_LIKE(CONTENT, #{regexp}))
+				OR
+				(REGEXP_LIKE(TAG, #{regexp}))
+				)
+			</if>
+			<if test='status != ""'>
+				AND TRADE = #{status}
+			</if>
+			<if test='category.size != 0'>
+				AND CATEGORY IN
+				<foreach collection="category" item="item" open="(" close=")" separator=",">
+					#{item}
+				</foreach>
+			</if>
+			<if test='true'>
+				AND DELIVERY != 'C'
 			</if>
 		</where>
 	</select>
@@ -133,7 +192,7 @@
 	</update>
 	
 	<select id="selectone" resultType="joonggoDto" parameterType="int">
-		SELECT J.*, U.MYEMAIL, U.MYPHONE
+		SELECT J.*, U.MYEMAIL EMAIL, U.MYPHONE PHONE
 		FROM JOONGGO J, MYMEMBER U
 		WHERE J.ID = U.MYID
 		AND J.SEQ = #{seq}
@@ -222,9 +281,60 @@
 		ORDER BY REGDATE DESC
 	</select>
 	
+	<select id="selectList_main" resultMap="joonggoMap">
+		SELECT J.* 
+		FROM(
+		SELECT REGDATE, IMGLIST, SEQ, TITLE, PRICE, PLACE
+		FROM JOONGGO
+		WHERE TRADE = 'Y'
+		AND DELIVERY != 'C'
+		ORDER BY REGDATE DESC) J
+		WHERE ROWNUM <![CDATA[<=]]> 18
+	</select>
 	
+	<insert id="report" parameterType="reportDto">
+		INSERT INTO REPORT(REPORTSEQ, REPORTDATE, REPORTID, REPORTCONTENT, FILEPATH, JOONGGOSEQ, WRITER)
+		VALUES(REPORTSEQ.NEXTVAL, SYSDATE, #{reportid}, #{reportcontent}, #{filepath}, #{joonggoseq}, #{writer})
+	</insert>
 	
+	<select id="getroom" parameterType="chatroomDto" resultMap="chatroomMap">
+		SELECT ROOMSEQ
+		FROM JOONGGO_CHAT
+		WHERE JOONGGOSEQ = #{joonggoseq}
+		AND ((USERID = #{userid} AND WRITER = #{writer}) OR (USERID = #{writer} AND WRITER = #{writer})) 
+	</select>
 	
+	<insert id="createroom" parameterType="chatroomDto">
+		<selectKey keyProperty="roomseq" resultType="int" order="BEFORE">
+			SELECT CHATROOMSEQ.NEXTVAL FROM DUAL		
+		</selectKey>
+		INSERT ALL
+			INTO JOONGGO_CHAT VALUES(#{roomseq}, #{joonggoseq}, #{userid}, #{writer}, SYSDATE)
+			INTO JOONGGO_CHAT_DETAIL(ROOMSEQ, CHATSEQ, CONTENT, SENDDATE) VALUES(#{roomseq}, CHATSEQ.NEXTVAL, '거래는 판매자와 충분히 상의 후 진행해주세요.', SYSDATE)
+		SELECT * 
+		FROM DUAL
+	</insert>
+	
+	<select id="chatlist" parameterType="int" resultMap="chatMap">
+		SELECT *
+		FROM JOONGGO_CHAT_DETAIL
+		WHERE ROOMSEQ = #{roomseq}
+		ORDER BY CHATSEQ
+	</select>
+	
+	<insert id="sendMessage" parameterType="chatDto">
+		INSERT INTO JOONGGO_CHAT_DETAIL
+		VALUES(#{roomseq},CHATSEQ.NEXTVAL,#{sender},#{content},SYSDATE)
+	</insert>
+	
+	<select id="getchatlist" parameterType="String" resultMap="chatroomMap">
+		SELECT C.*, J.IMGLIST, J.TITLE
+		FROM JOONGGO_CHAT C, JOONGGO J
+		WHERE C.JOONGGOSEQ = J.SEQ
+		AND (USERID = '${value}'
+		OR WRITER = '${value}')
+		ORDER BY C.CREATEDATE DESC
+	</select>
 	
 </mapper>
 

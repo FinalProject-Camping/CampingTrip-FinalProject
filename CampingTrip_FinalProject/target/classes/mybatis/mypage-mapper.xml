@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mypage">
+
+	<resultMap type="myCampDto" id="myCampMap">
+		<result property="campno" column="CAMPNO"/>
+		<result property="name" column="NAME"/>
+		<result property="camp_type" column="CAMP_TYPE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="address_detail" column="ADDRESS_DETAIL"/>
+		<result property="service" column="SERVICE"/>
+		<result property="intro" column="INTRO"/>
+		<result property="rule" column="RULE"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="tag" column="TAG"/>
+		<result property="view_count" column="VIEW_COUNT"/>
+		<result property="thumsnail" column="THUMSNAIL"/>
+		<result property="create_date" column="CREATE_DATE"/>
+		<collection property="myRoomdto" resultMap="myRoomMap"/>
+	</resultMap>
+	
+	<resultMap type="myRoomdto" id="myRoomMap">
+		<result property="roomno" column="ROOMNO"/>
+		<result property="campno" column="CAMPNO"/>
+		<result property="room_name" column="ROOM_NAME"/>
+		<result property="room_price" column="ROOM_PRICE"/>
+		<result property="guest_number" column="GUEST_NUMBER"/>
+		<result property="room_content" column="ROOM_CONTENT"/>
+		<result property="thumsnail" column="THUMSNAIL"/>
+		<collection property="myCampDto" resultMap="myCampMap"/>
+	</resultMap>
+	
+	<resultMap type="myMemberDto" id="myMemberMap">
+		<result property="myno" column="MYNO"/>
+		<result property="myid" column="MYID"/>
+		<result property="myrole" column="MYROLE"/>
+		<result property="mypenalty" column="MYPENALTY"/>
+		<collection property="report" resultMap="report"/>
+		<collection property="myPointDto" resultMap="myPointMap"/>
+	</resultMap>
+	
+	<resultMap type="report" id="report">
+		<result property="reportseq" column="REPORTSEQ"/>
+		<result property="reportdate" column="REPORTDATE"/>
+		<result property="reportid" column="REPORTID"/>
+		<result property="reportcontent" column="REPORTCONTENT"/>
+		<result property="filepath" column="FILEPATH"/>
+		<result property="joonggoseq" column="JOONGGOSEQ"/>
+		<result property="writer" column="WRITER"/>
+	</resultMap>
+	
+	
+	<resultMap type="myReservDto" id="myReservMap">
+		<result property="reservno" column="RESERVNO"/>
+		<result property="campno" column="CAMPNO"/>
+		<result property="roomno" column="ROOMNO"/>
+		<result property="userid" column="USERID"/>
+		<result property="user_name" column="USER_NAME"/>
+		<result property="user_content" column="USER_CONTENT"/>
+		<result property="guest_number" column="GUEST_NUMBER"/>
+		<result property="check_in" column="CHECK_IN"/>
+		<result property="check_out" column="CHECK_OUT"/>
+		<result property="status" column="STATUS"/>
+		<result property="create_date" column="CREATE_DATE"/>
+		<collection property="myCampDto" resultMap="myCampMap"/>
+		<collection property="myRoomdto" resultMap="myRoomMap"/>
+	</resultMap>
+	
+	
+	
+	
+	
+	<resultMap type="myJoonggoDto" id="myJoonggoMap">
+		<result property="seq" column="SEQ"/>
+		<result property="id" column="ID"/>
+		<result property="regdate" column="REGDATE"/>
+		<result property="title" column="TITLE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="category" column="CATEGORY"/>
+		<result property="price" column="PRICE"/>
+		<result property="place" column="PLACE"/>
+		<result property="tag" column="TAG"/>
+		<result property="quality" column="QUALITY"/>
+		<result property="delivery" column="DELIVERY"/>
+		<result property="agree" column="AGREE"/>
+		<result property="trade" column="TRADE"/>
+		<result property="hit" column="HIT"/>
+		<result property="heart" column="HEART"/>
+		<result property="imglist" column="IMGLIST"/>
+		<collection property="myHeartDto" resultMap="myHeartMap"/>
+	</resultMap>
+	
+	
+	<resultMap type="myHeartDto" id="myHeartMap">
+		<result property="heartdate" column="HEARTDATE"/>
+		<result property="heartid" column="HEARTID"/>
+		<result property="joonggoseq" column="JOONGGOSEQ"/>
+	</resultMap>
+	
+	
+	
+	<resultMap type="myPointDto" id="myPointMap">
+		<result property="pointSeq" column="POINTSEQ"/>
+		<result property="pointId" column="POINTID"/>
+		<result property="pointDetail" column="POINTDETAIL"/>
+		<result property="pointGetDate" column="POINTGETDATE"/>
+		<result property="getPoint" column="GETPOINT"/>
+		<result property="usePoint" column="USEPOINT"/>
+		<result property="totalPoint" column="TOTALPOINT"/>
+		<result property="pointImg" column="POINTIMG"/>
+		<collection property="myMemberDto" resultMap="myMemberMap"/>
+	</resultMap>
+	
+	
+	<!-- member -->
+	<select id="likeList" parameterType="myJoonggoDto" resultMap="myJoonggoMap">
+		SELECT IMGLIST, JOONGGO.TITLE, JOONGGO_HEART.HEARTID
+		FROM JOONGGO
+		JOIN JOONGGO_HEART ON (JOONGGO.SEQ = JOONGGO_HEART.JOONGGOSEQ)
+		WHERE JOONGGO_HEART.HEARTID = 'testmy'
+	</select>
+	
+	<!-- <select id="myPointList" parameterType="myPointDto" resultMap="myPointMap">
+		SELECT POINTSEQ, POINTID, POINTDETAIL, POINTGETDATE, GETPOINT, USEPOINT, MYID
+		FROM POINT
+		JOIN MYMEMBER
+		ON MYMEMBER.MYID = POINT.POINTID
+	</select> -->
+	
+	<select id="myPointList" parameterType="myMemberDto" resultMap="myMemberMap">
+		SELECT POINTSEQ, POINTID, POINTDETAIL, POINTGETDATE, GETPOINT, USEPOINT, MYID
+		FROM MYMEMBER
+		JOIN POINT
+		WHERE POINTID = #{loginId}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 업체 -->
+	<select id="reservList" parameterType="myReservDto" resultMap="myReservMap">
+		SELECT RESERVNO, CAMP.NAME, ROOM.ROOM_NAME, USER_NAME, CHECK_IN, CHECK_OUT, RESERVATION.GUEST_NUMBER, STATUS
+		FROM RESERVATION
+		JOIN CAMP ON (RESERVATION.CAMPNO = CAMP.CAMPNO)
+		JOIN ROOM ON (RESERVATION.ROOMNO = ROOM.ROOMNO)
+		WHERE STATUS = 'Y'
+	</select>
+	
+	<update id="reservUpdate" parameterType="myReservDto">
+		UPDATE RESERVATION
+		SET STATUS = 'N'
+		WHERE RESERVNO = #{reservno}
+	</update>
+	
+	<update id="reservCancel" parameterType="myReservDto">
+		UPDATE RESERVATION
+		SET STATUS = 'C'
+		WHERE RESERVNO = #{reservno}
+	</update>
+	
+	
+	<select id="reservFinish" parameterType="myReservDto" resultMap="myReservMap">
+		SELECT RESERVNO, CAMP.NAME, ROOM.ROOM_NAME, USER_NAME, CHECK_IN, CHECK_OUT, RESERVATION.GUEST_NUMBER, STATUS
+		FROM RESERVATION
+		JOIN CAMP ON (RESERVATION.CAMPNO = CAMP.CAMPNO)
+		JOIN ROOM ON (RESERVATION.ROOMNO = ROOM.ROOMNO)
+		WHERE STATUS = 'N'
+	</select>
+	
+	<select id="myreservCancel" parameterType="myReservDto" resultMap="myReservMap">
+		SELECT RESERVNO, CAMP.NAME, ROOM.ROOM_NAME, USER_NAME, CHECK_IN, CHECK_OUT, RESERVATION.GUEST_NUMBER, STATUS
+		FROM RESERVATION
+		JOIN CAMP ON (RESERVATION.CAMPNO = CAMP.CAMPNO)
+		JOIN ROOM ON (RESERVATION.ROOMNO = ROOM.ROOMNO)
+		WHERE STATUS = 'C'
+	</select>
+	
+	
+	
+	<select id="campInfoList" parameterType="myRoomdto" resultMap="myRoomMap">
+		SELECT CAMP.CAMPNO, ROOM.CAMPNO, ROOM.ROOMNO, CAMP.NAME, ROOM.ROOM_NAME
+		FROM ROOM
+		LEFT JOIN CAMP
+		ON (ROOM.CAMPNO = CAMP.CAMPNO)
+	</select>
+	
+	
+	<select id="selectOne" resultType="myRoomdto" parameterType="int">
+		SELECT CAMP.NAME, CAMP.CAMPNO, ROOM.ROOMNO, ROOM_NAME, ROOM_PRICE, GUEST_NUMBER, ROOM_CONTENT
+		FROM ROOM
+		JOIN CAMP
+		ON (CAMP.CAMPNO = ROOM.CAMPNO)
+		WHERE ROOMNO = #{roomno}
+	</select>
+	
+	<update id="update" parameterType="myRoomdto">
+		UPDATE ROOM
+		SET ROOM_NAME = #{room_name}, ROOM_PRICE = #{room_price}, GUEST_NUMBER = #{guest_number}, ROOM_CONTENT = #{room_content}
+		WHERE ROOMNO = #{roomno}
+	</update>
+	
+	
+	
+	
+	
+	
+	<!-- admin -->
+	
+	<!-- <select id="memberList" parameterType="myMemberDto" resultMap="myMemberMap">
+		SELECT MYNO, MYID, MYROLE, REPORTSEQ, MYPENALTY
+		FROM MYMEMBER
+		JOIN REPORT
+		ON REPORT.REPORTID = MYMEMBER.MYID
+	</select> -->
+	
+	<select id="memberList" parameterType="myMemberDto" resultMap="myMemberMap">
+		SELECT MYNO, MYID, MYROLE, MYPENALTY
+		FROM MYMEMBER
+	</select>
+
+	<delete id="memberDelete" parameterType="int">
+		DELETE MYMEMBER
+		WHERE MYNO=#{myno}
+	</delete>
+	
+	
+	<select id="reportList" parameterType="report" resultType="report">
+		SELECT REPORTSEQ, REPORTDATE, REPORTID, REPORTCONTENT, WRITER
+		FROM REPORT
+	</select>
+	
+	<select id="reportSelectOne" resultType="report" parameterType="int">
+		SELECT REPORTSEQ, REPORTDATE, REPORTID, REPORTCONTENT, FILEPATH, JOONGGOSEQ, WRITER
+		FROM REPORT
+		WHERE REPORTSEQ = #{reportseq}
+	</select>
+	
+	
+	<select id="campList" resultMap="myCampMap">
+		SELECT CAMPNO, NAME, ADDRESS, ADDRESS_DETAIL
+		FROM CAMP
+	</select>
+	
+	<delete id="myCampDelete" parameterType="int">
+		DELETE FROM CAMP
+		WHERE CAMPNO = #{campno}
+	</delete>
+	
+</mapper>
+
+
+

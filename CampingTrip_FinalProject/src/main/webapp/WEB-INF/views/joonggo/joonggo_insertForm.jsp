@@ -3,7 +3,7 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	String[] categories = {"캠핑 > 텐트/타프/매트","캠핑 > 테이블/의자/가구","캠핑 > 캠핑카/카라반/트레일러","캠핑 > 기타 캠핑용품","여행 > 가방/캐리어/용품","여행 > 등산용품","여행 > 낚시용품","자전거","스포츠/레저","홈/생활용품","디지털/가전","의류/잡화","귀금속/주얼리/악세사리","상품권/티켓/쿠폰","기타 잡화","먹거리/무료나눔"};
 %>
@@ -15,7 +15,7 @@
 <title>중고 물품등록</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="resources/css/webfont.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -27,50 +27,23 @@
 
 
 <style type="text/css">
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
-}
-
-.nanumbarungothic * {
- font-family: 'NanumBarunGothic', sans-serif;
-}
-
-@media screen and (max-width: 767px) { #mainbody { font-size: 14px; } .title{font-size: 13pt;} }
-@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody { font-size: 16px; } .title{font-size: 14pt;} }
-@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody { font-size: 16px; } .title{font-size: 15pt;} #mainbody > div {margin-left:10%; margin-right:10%;}}
-@media screen and (min-width: 1200px) { #mainbody { font-size: 18px; } .title{font-size: 16pt;} .container{width:893px;}}
+@media screen and (max-width: 767px) { #mainbody { font-size: 18px; } .title{font-size: 20px;} }
+@media screen and (min-width: 768px) and (max-width: 991px) { #mainbody { font-size: 18px; } .title{font-size: 20px;} }
+@media screen and (min-width: 992px) and (max-width: 1199px) { #mainbody { font-size: 16px; } .title{font-size: 15pt;} #mainbody{width:750px;}}
+@media screen and (min-width: 1200px) { #mainbody { font-size: 18px; } .title{font-size: 16pt;} #mainbody{width:893px;}}
+ .container-fluid{padding-right:0; padding-left:0;}
 
 body{background-color: #f8f9fa;}
-#mainbody{font-family: NanumBarunGothic; }
-.mainbody-inner{background-color: #FFF; padding: 5%;}
+#mainbody{font-family: NanumBarunGothic;}
+.mainbody-inner{background-color: #FFF; padding: 5%; border-radius:8px;}
 .red{color:red;}
 .green{color:rgb(1, 176, 3);}
 .gray{color:gray;}
 .lightgray{color:lightgray;}
-.star{color:rgb(0, 191, 121); margin-left: 1%; font-weight: bold;}
+.star{color:#198754; margin-left: 1%; font-weight: bold;}
 .message{display:none; margin-top: 1.5%;}
-.title{margin-bottom: 1%;}
-#maintitle{color:rgb(1, 176, 3);}
+.title{margin-bottom: 1%; font-family: EliceDigitalBaeum_Bold;}
+#maintitle{color:#198754; font-family: EliceDigitalBaeum_Bold;}
 
 
 #address{display:none; margin-top: 1%;}
@@ -83,8 +56,8 @@ body{background-color: #f8f9fa;}
 .tag-span{display:inline-block; background-color: rgb(74, 231, 154); border: solid 1px rgb(74, 231, 154); border-radius: 20px; padding-left:2%; padding-right:2%; padding-top:2px; padding-bottom:2px; color: white; font-weight: bold; margin-right: 1%;}
 
 
-#submitbtn{background-color: white; border: solid 1px rgb(0, 191, 121); border-radius: 5px; padding: 2%; padding-right:3%; padding-left:3%; color :rgb(0, 191, 121); font-weight: bold;}
-#submitbtn:hover{background-color: rgb(0, 191, 121); border: solid 1px rgb(0, 191, 121); color: white; transition: all 0.3s;}
+#submitbtn{background-color: white; border: solid 1px #198754; border-radius: 5px; padding: 2%; padding-right:3%; padding-left:3%; color :#198754; font-weight: bold;}
+#submitbtn:hover{background-color: #198754; border: solid 1px #198754; color: white; transition: all 0.3s;}
 #title, #select, #tag {width: 100%; border:none;  outline: none;}
 .group{margin-bottom: 3%;}
 .check{margin-right: 0.5%;}
@@ -274,12 +247,12 @@ body{background-color: #f8f9fa;}
 </head>
 <body>
 	<br>
-	<div class="container" id="mainbody">
+	<div class="container-fluid" id="mainbody">
 		<div class="mainbody-inner  shadow-lg">
 	<!-- 폼 시작 -->
-		<form action="insert.do" method="post" name="form">
+		<form action="joonggo_insert.do" method="post" name="form">
 		
-		<input type="hidden" value="${sessiondto.userid }" name="id">
+		<input type="hidden" value="${sessiondto.myid }" name="id">
 		<input type="hidden" value="" name="imglist">
 		<input type="hidden" value="" name="tag">
 		<input type="hidden" value="" name="place">
@@ -363,34 +336,22 @@ body{background-color: #f8f9fa;}
 							console.log(result);
 							
 							let addr;
-	 						if(result[0].region_3depth_name){
-	 							addr = result[0].region_2depth_name + ' ' + result[0].region_3depth_name;	
+	 						if(result[1]){
+	 							addr = result[1].region_1depth_name + ' ' + result[1].region_2depth_name + ' ' + result[1].region_3depth_name;	
 	 						}else{
-	 							addr = result[1].region_2depth_name + ' ' + result[1].region_3depth_name;	
+	 							addr = result[0].region_1depth_name + ' ' + result[0].region_2depth_name + ' ' + result[0].region_3depth_name;	
 	 						}
-				            var btns = document.getElementById('addr-regist-list').children;
-				            var b = true;
-				            if(btns.length > 0){
-				            	Array.from(btns).forEach(btn =>{
-				            		if(btn.innerHTML === addr){
-				            			alert('이미 등록된 주소와 같습니다.');
-				            			b = false;
-				            		}
-				            	});
-				            }
-				            if(b){
-	 	 						var btn = document.createElement('button');
-		 						btn.classList.add('geocoder-btn');
-		 						btn.setAttribute('onclick', 'this.remove()');
-					            btn.innerHTML = addr;
-					            document.getElementById('addr-regist-list').append(btn);
-				            }
+	 						
+	 	 					var btn = document.createElement('button');
+		 					btn.classList.add('geocoder-btn');
+		 					btn.setAttribute('onclick', 'this.remove()');
+					        btn.innerHTML = addr;
+					        document.getElementById('addr-regist-list').append(btn);
 						}
 					};
 					
 					function addgeolocation(input){
-						if(document.getElementById('addr-regist-list').children.length === 3){
-							alert('주소는 최대 3개 등록할 수 있습니다.');
+						if(document.getElementById('addr-regist-list').children.length === 1){
 							return;
 						}
 						
@@ -411,8 +372,7 @@ body{background-color: #f8f9fa;}
 					}
 					
 					function adddirectlocation(){
-						if(document.getElementById('addr-regist-list').children.length === 3){
-							alert('주소는 최대 3개 등록할 수 있습니다.');
+						if(document.getElementById('addr-regist-list').children.length === 1){
 							return;
 						}
 						
@@ -421,35 +381,19 @@ body{background-color: #f8f9fa;}
 					        	console.log(data);
 					        	
 		 						let addr;
-					            if(data.bname){
-					            	addr = data.sigungu + ' ' + data.bname;
-					            }else{
-					            	addr = data.sigungu + ' ' + data.bname2;
-					            }
-					            var btns = document.getElementById('addr-regist-list').children;
-					            var b = true;
-					            if(btns.length > 0){
-					            	Array.from(btns).forEach(btn =>{
-					            		if(btn.innerHTML === addr) {
-					            			alert('이미 등록된 주소와 같습니다.');
-					            			b = false;
-					            		}
-					            	});
-					            }
-					            if(b){ //ajax 동기식에서는 return 이 안먹는다
-		 	 						var btn = document.createElement('button');
-			 						btn.classList.add('direct-btn');
-			 						btn.setAttribute('onclick', 'this.remove()');
-						            btn.innerHTML = addr;
-						            document.getElementById('addr-regist-list').append(btn);
-					            }
+		 						if(data.autoJibunAddress){addr = data.autoJibunAddress;}
+		 						else if(data.jibunAddress){addr = data.jibunAddress;}
+		 						else if(data.roadAddress){addr = data.roadAddress;}
+		 						geocoder.addressSearch(addr, callback2);
 					        }
 					    }).open();
 					}
 						
-					
-					
-					
+					var callback2 = function(result, status) {
+					    if (status === kakao.maps.services.Status.OK) {
+					    	geocoder.coord2RegionCode(result[0].x, result[0].y, callback);
+					    }
+					};
 					
 					
 					
@@ -465,13 +409,13 @@ body{background-color: #f8f9fa;}
         <div class="group">
 			<div class="title"><span>판매자 정보</span></div>
 			<div class="seller">
-				<span class="info">12343234@naver.com</span>&nbsp;&nbsp;<span class="lightgray">|</span>&nbsp;&nbsp;<span class="info">010-9922-5401</span>
+				<span class="info">${sessiondto.myemail }</span>&nbsp;&nbsp;<span class="lightgray">|</span>&nbsp;&nbsp;<span class="info">${sessiondto.myphone }</span>
 				<div>
 					<input id="agree1" type="checkbox" class="check align-middle" value="Y"><label for="agree1" class="label align-middle">휴대전화번호 노출 동의</label>
 				</div>
 				<div class="gray">판매자 정보는 판매기간 동안 멤버에게만 보입니다.</div>
 				<!---->
-				<p class="green">본인인증이 완료되었습니다.</p>
+				<p style="color:#198754">본인인증이 완료되었습니다.</p>
 				<!---->
 			</div>
 		</div>
@@ -614,6 +558,8 @@ body{background-color: #f8f9fa;}
 		</div>
 	</div>
 	<br>
+	
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 
 

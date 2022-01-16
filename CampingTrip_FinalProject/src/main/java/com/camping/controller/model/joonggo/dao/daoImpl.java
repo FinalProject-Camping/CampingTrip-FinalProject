@@ -8,9 +8,12 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.camping.controller.model.joonggo.dto.chat;
+import com.camping.controller.model.joonggo.dto.chatroom;
 import com.camping.controller.model.joonggo.dto.heart;
 import com.camping.controller.model.joonggo.dto.joonggo;
 import com.camping.controller.model.joonggo.dto.renew;
+import com.camping.controller.model.joonggo.dto.report;
 
 @Repository
 public class daoImpl implements dao{
@@ -275,6 +278,114 @@ public class daoImpl implements dao{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return res;
+	}
+
+	@Override
+	public List<joonggo> selectlist_main() {
+		List<joonggo> res = new ArrayList<joonggo>();
+		
+		try {
+			res = sqlSession.selectList(NAMESPACE + "selectList_main");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	@Override
+	public int report(report report) {
+		
+		int res = 0;
+		
+		try {
+			res = sqlSession.update(NAMESPACE + "report", report);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public List<joonggo> setAddress(Map<String, Object> map) {
+		List<joonggo> res = new ArrayList<joonggo>();
+		
+		try {
+			res = sqlSession.selectList(NAMESPACE + "setAddress", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	@Override
+	public List<chat> chatlist(int roomseq) {
+		
+		List<chat> res = null;
+				
+			try {
+				res = sqlSession.selectList(NAMESPACE + "chatlist", roomseq);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		return res;
+	}
+
+	@Override
+	public chatroom getroom(chatroom room) {
+		
+		chatroom res = null;
+		
+		try {
+			res = sqlSession.selectOne(NAMESPACE + "getroom", room);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int createroom(chatroom room) {
+		
+		int res = 0;
+		
+		try {
+			res = sqlSession.insert(NAMESPACE + "createroom", room);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int sendMessage(chat chat) {
+		
+		int res = 0;
+		
+		try {
+			res = sqlSession.insert(NAMESPACE + "sendMessage", chat);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public List<chatroom> getchatlist(String sessionid) {
+		
+		List<chatroom> res = null;
+		
+		try {
+			res = sqlSession.selectList(NAMESPACE + "getchatlist", sessionid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return res;
 	}
 	
