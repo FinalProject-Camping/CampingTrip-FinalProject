@@ -5,8 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<script src="http://kit.fontawesome.com/2d323a629b.js" crossorigin="anonymous"></script>
+<link href="//font.elice.io/EliceDigitalBaeum.css" rel="stylesheet">
+<script src="http://kit.fontawesome.com/2d323a629b.js"></script>
 <script type="text/javascript">
 /* header */
 window.onload = function(){
@@ -66,71 +66,92 @@ window.onload = function(){
 <style type="text/css">
 /* header */
 
-.body {
+html, body{
+	width: 100%;
+	height: 100%;
 	margin: 0;
-	font-family: 'Source Sans Pro', sans-serif;
+	padding: 0;
 }
 
-a {
+header .body {
+	font-family: "Elice Digital Baeum",sans-serif;
+}
+
+header a {
 	text-decoration: none;
 	color: white;
 }
 
-.navbar {
+header .navbar {
+	font-family: "Elice Digital Baeum",sans-serif;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	background-color: #d49466;
+	padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
-.navbar_logo {
+header .navbar_logo {
 	font-size: 20px;
 	color: white;
 	white-space: nowrap;
 }
 
-.navbar_logo a {
+header .navbar_logo a {
 	margin-left: 20px;
-	color: #D5FFC4;
+	color: #198754;
 	font-weight: bold;
 }
 
-.navbar_logo i {
+header .navbar_logo .fa-campground {
 	color: #F22C2C;
 	margin-right: 10px;
 }
 
-.navbar_menu {
+header .navbar_menu {
 	display: flex;
 	list-style: none;
 	padding-left: 0;
-	font-size: large;
+	font-size: 20px;
 	white-space: nowrap;
+	
+	margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
 }
 
-.navbar_menu li {
+header .navbar_menu li {
 	padding: 8px 12px;
 }
 
-.navbar_menu li:hover {
+header .navbar_menu li:hover {
 	background-color: #68AB4D;
+	color: white;
 	border-radius: 10px;
 }
 
-.navbar_login {
+header .navbar_login {
 	list-style: none;
 	color: white;
 	display: flex;
 	padding-left: 0;
 	margin-right: 20px;
 	white-space: nowrap;
+	margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 10px;
+    padding-inline-start: 40px;
 }
 
-.navbar_login li {
+header .navbar_login li {
 	padding: 8px 12px;
 }
 
-.navbar_toggleBtn {
+header .navbar_toggleBtn {
 	display: none;
 	position: absolute;
 	right: 32px;
@@ -139,30 +160,30 @@ a {
 }
 
 @media screen and (max-width: 768px) {
-	.navbar {
+	header .navbar {
 		flex-direction: column;
 		align-items: flex-start;
 		padding: 8px 24px;
 	}
-	.navbar_menu {
+	header .navbar_menu {
 		display: none;
 		flex-direction: column;
 		align-items: center;
 		width: 100%;
 	}
-	.navbar_menu li {
+	header .navbar_menu li {
 		width: 100%;
 		text-align: center;
 	}
-	.navbar_login {
+	header .navbar_login {
 		display: none;
 		justify-content: center;
 		width: 100%;
 	}
-	.navbar_toggleBtn {
+	header .navbar_toggleBtn {
 		display: block;
 	}
-	.navbar_menu.active, .navbar_icons.active {
+	header .navbar_menu.active, .navbar_icons.active {
 		display: flex;
 	}
 }
@@ -179,7 +200,6 @@ a {
             <ul class="navbar_menu">
                 <li><a href="camplist.do">캠핑예약</a></li>
                 <li><a href="joonggo_list.do?keyword=">중고거래</a></li>
-                <li><a href="">동행하기</a></li>
                 <li><a href="event.do">이벤트</a></li>
                 <li><a href="cscenter.do">고객센터</a></li>
             </ul>

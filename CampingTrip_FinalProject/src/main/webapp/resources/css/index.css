@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url(//font.elice.io/EliceDigitalBaeum.css);
 
 /* slider */
 .slider_start {
@@ -117,10 +118,12 @@
 
 /* main_content01 */
 .main_content01 {
+	font-family: "Elice Digital Baeum",sans-serif;
 	margin: 30px;
 }
 
 .main_content01 h1 {
+	font-family: "Elice Digital Baeum",sans-serif;
 	color: red;
 	text-align: center;
 	font-size: 40px;

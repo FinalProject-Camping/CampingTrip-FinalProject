@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<link href="//font.elice.io/EliceDigitalBaeum.css" rel="stylesheet">
 <script src="http://kit.fontawesome.com/2d323a629b.js" crossorigin="anonymous"></script>
 
 <style type="text/css">
@@ -16,21 +16,24 @@
 }
 
 .footer {
+	font-family: "Elice Digital Baeum",sans-serif;
 	text-align: center;
 	padding: 50px 70px;
 }
 
 .footer a {
-	color: black;
+	text-decoration-line : none;
+	font-family: "Elice Digital Baeum",sans-serif;
+	font-size: 20px;
+	color: #198754;
+	font-weight: bold;
 }
 
 .footer a span {
 	color: black;
-	font-size: 20px;
-	font-weight: bold;
 }
 
-.footer i {
+.footer .fa-campground {
 	color: #F22C2C;
 	margin-right: 10px;
 }
@@ -71,12 +74,12 @@
 		<div class="footer_container">
 			<div class="row">
 				<div class="footer">
-					<a href=""><span><i class="fas fa-campground"></i>CampingTrip</span></a>
+					<a href="index.jsp"><i class="fas fa-campground"></i>CampingTrip</a>
 					<ul>
 						<li>주소 : 서울특별시 캠핑구 캠핑동</li>
 						<li>상호 : CampingTrip</li>
 						<li>전화번호 : 1544-9970</li>
-						<li><a href="#"><strong>고객센터</strong></a></li>
+						<li><a href="cscenter.do"><strong><span>고객센터</span></strong></a></li>
 					</ul>
 					<address>Copyright &copy; CampingTrip All Rights
 						Reserved.</address>

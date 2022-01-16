@@ -1,12 +1,14 @@
 package com.camping.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.JsonGenerationException;
@@ -38,13 +40,17 @@ public class EventController {
 	private eventBiz biz;
 	
 	@RequestMapping("/event.do")
-	public String list(HttpSession session, Model model) {	//model은 데이터 담는 객체 (model & view)
+	public String list(HttpSession session, HttpServletResponse response, Model model) throws IOException {	//model은 데이터 담는 객체 (model & view)
 		logger.info("Roulette event");
 		System.out.println("이벤트 페이지");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		
 		if(sessiondto == null) {
-			return "../../index";
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('로그인이 필요한 서비스입니다.'); </script>");
+            out.flush();
+			return "member/memberLogin";
 		}else {
 			return "event/eventtest";
 		}
