@@ -781,7 +781,7 @@ public class JoonggoController {
 	    return maps;
 	}	
 	
-	
+	//채팅폼 - 채팅신청
 	@RequestMapping("/joonggo_chatform.do")
 	public String chatform(HttpSession session, Model model, chatroom chatroom) {
 		logger.info("chatform");
@@ -814,6 +814,7 @@ public class JoonggoController {
 		}
 	}
 	
+	//채팅방목록
 	@RequestMapping("/mychatlist.do")
 	@ResponseBody
 	public Map<String, Object> getchatlist(HttpSession session, String sessionid) {	
@@ -849,7 +850,7 @@ public class JoonggoController {
 		return map;
 	}
 	
-	
+	//특정 방 클릭 - 마이페이지
 	@RequestMapping("/joonggo_myroom.do")
 	public String myroom(HttpSession session, Model model, chatroom chatroom) {
 		logger.info("myroom");
@@ -863,19 +864,24 @@ public class JoonggoController {
 				model.addAttribute("writer", chatroom.getWriter());
 				
 				List<chat> list = biz.chatlist(chatroom.getRoomseq());
-				ObjectMapper mapper = new ObjectMapper();
-				String toJson = null;
-				try {
-					toJson = mapper.writeValueAsString(list);
-				} catch (JsonGenerationException e) {
-					e.printStackTrace();
-				} catch (JsonMappingException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
+				
+				if(list.size()==0) {
+					return "redirect:error.do";
+				}else {
+					ObjectMapper mapper = new ObjectMapper();
+					String toJson = null;
+					try {
+						toJson = mapper.writeValueAsString(list);
+					} catch (JsonGenerationException e) {
+						e.printStackTrace();
+					} catch (JsonMappingException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					model.addAttribute("list", toJson);
+					return "joonggo/joonggo_chatform";
 				}
-				model.addAttribute("list", toJson);
-				return "joonggo/joonggo_chatform";
 			}
 		}else {
 			return "redirect:error.do";
@@ -959,7 +965,7 @@ public class JoonggoController {
 				}
 			}
 		}else {
-			map.put("data", "error");
+			map.put("data", false);
 		}
 		return map;
 	}

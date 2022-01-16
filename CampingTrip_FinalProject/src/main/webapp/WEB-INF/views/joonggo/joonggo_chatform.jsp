@@ -232,11 +232,7 @@ hr{
 				method: "post",
 				success:function(data){ 
 					if(data.data === true){
-						
-						//포커스
 						document.querySelector('#content').value = '';
-						document.querySelector('.chat-body').scrollTop = document.querySelector('.chat-body').scrollHeight;
-						
 					}else{
 						location.href='error.do';
 					}

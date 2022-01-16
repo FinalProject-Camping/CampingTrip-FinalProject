@@ -665,10 +665,10 @@ const sessionid = '${sessiondto.myid}';
 		        					method: "post",
 		        					success:function(data){ 
 		        						if(data.data){
-		        							var ele = document.getElementById('btn-heart');
-		        							ele.children[0].classList.remove('far');
-		        							ele.children[0].classList.add('fas');
-		        							ele.setAttribute('onclick', 'rmheart(this)');
+		        							var ele = document.getElementById('heartimg');
+		        							ele.classList.remove('far');
+		        							ele.classList.add('fas');
+		        							document.getElementById('btn-heart').setAttribute('onclick', 'rmheart(this)');
 		        						}
 		        					}
 		        				})
