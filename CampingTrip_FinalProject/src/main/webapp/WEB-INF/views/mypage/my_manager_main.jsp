@@ -141,6 +141,8 @@ td {
 						</li>
 						<li class="nav-item"><a class="nav-link" href="manager_camplist.do">캠핑장 정보수정</a></li>
 						<li class="nav-item"><a class="nav-link" href="memberDetail.do">개인정보</a></li>
+						<li class="nav-item"><a class="nav-link" href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
+						
 					</ul>
 				</nav>
 			</div>

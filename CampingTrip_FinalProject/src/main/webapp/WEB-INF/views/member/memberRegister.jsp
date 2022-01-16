@@ -176,7 +176,7 @@
 				var mysex = $('form[name=memberInfoForm]').find('input[name=mysex]:checked').val();
 				var myemail = $('form[name=memberInfoForm]').find('[name=myemail]').val();
 				var myaddr = $('form[name=memberInfoForm]').find('[name=myaddr]').val();
-				var myrole = $('form[name=memberInfoForm]').find('[name=myrole]').val();
+				var myrole = $('form[name=memberInfoForm]').find('input[name=myrole]:checked').val();
 				const mbrInfo = {
 						myid: myid,
 						mypw: mypw,
@@ -214,10 +214,11 @@
 	}
 
 	
-	//전화번호에 숫자만 입력되도록
-	$(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).val().replace(/[^0-9]/gi,"") );})
+//전화번호에 숫자만 입력되도록
+$(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).val().replace(/[^0-9]/gi,"") );})
 	
 
+//사용자, 판매자 라디오버튼 값을 출력
 	
 </script>
 </head>
