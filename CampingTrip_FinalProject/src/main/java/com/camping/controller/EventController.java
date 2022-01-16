@@ -1,6 +1,8 @@
 package com.camping.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +63,9 @@ public class EventController {
 		
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		
-		return biz.selectList(sessiondto.getMyid());
+		List<eventDto> dto = biz.selectList(sessiondto.getMyid());
+		
+		return dto; 
 	}
 	
 	@RequestMapping("/cscenter.do")
@@ -79,7 +83,10 @@ public class EventController {
 		
 		logger.info("point=" + point);
 		
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		
 		params.put("pointId", sessiondto.getMyid());
+		params.put("pointGetDate", currentDate);
 		params.put("point", point);
 	
 		biz.insertPoint(params);

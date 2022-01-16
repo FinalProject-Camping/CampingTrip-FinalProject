@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.camping.controller.model.event.dto.eventDto;
 
-
 @Repository
 public class eventDaoImpl implements eventDao {
 	@Autowired

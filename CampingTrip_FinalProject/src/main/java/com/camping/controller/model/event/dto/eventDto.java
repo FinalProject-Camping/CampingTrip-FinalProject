@@ -6,7 +6,7 @@ public class eventDto {
 	private int pointSeq;
 	private String pointId;
 	private String pointDetail;
-	private Date pointGetDate;
+	private String pointGetDate;
 	private int getPoint;
 	private int usePoint;
 	
@@ -14,7 +14,7 @@ public class eventDto {
 		super();
 	}
 	
-	public eventDto(int pointSeq, String pointId, String pointDetail, Date pointGetDate, int getPoint, int usePoint,
+	public eventDto(int pointSeq, String pointId, String pointDetail, String pointGetDate, int getPoint, int usePoint,
 			int totalPoint, String pointImg) {
 		super();
 		this.pointSeq = pointSeq;
@@ -49,11 +49,11 @@ public class eventDto {
 		this.pointDetail = pointDetail;
 	}
 
-	public Date getPointGetDate() {
+	public String getPointGetDate() {
 		return pointGetDate;
 	}
 
-	public void setPointGetDate(Date pointGetDate) {
+	public void setPointGetDate(String pointGetDate) {
 		this.pointGetDate = pointGetDate;
 	}
 

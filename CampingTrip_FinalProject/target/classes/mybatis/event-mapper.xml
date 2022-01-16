@@ -15,7 +15,7 @@
 
 	<select id="selectList" parameterType="eventDto" resultMap="eventMap">
 		SELECT POINTSEQ, POINTID, POINTDETAIL, POINTGETDATE, GETPOINT, USEPOINT
-		FROM POINT, MYMEMBER
+		FROM POINT
 		WHERE POINT.POINTID = #{pointId}
 	</select>
 
@@ -29,9 +29,7 @@
 	</insert>
 
 	<insert id="insertPoint" parameterType="hashmap">
-		
 		INSERT INTO POINT (POINTSEQ, POINTID, POINTGETDATE, GETPOINT)
-		VALUES (POINTSEQ.NEXTVAL, #{pointId}, SYSDATE, #{point})
-		
+		VALUES (POINTSEQ.NEXTVAL, #{pointId}, #{pointGetDate}, #{point})
 	</insert>
 </mapper>

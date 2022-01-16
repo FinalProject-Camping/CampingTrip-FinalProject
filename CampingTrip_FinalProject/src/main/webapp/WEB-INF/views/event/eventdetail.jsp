@@ -11,16 +11,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$.ajax({
-	url:"pointList.do",
-	method:"get",
-	success:function(data){
-		
-		console.log("success" + data)
-	}
-});
-</script>
 
 <style type="text/css">
 .eventdetail_content01 {
@@ -96,15 +86,6 @@ text-align:center;
 
 		</div>
 	</div>
-	<!-- <div style="border: 1px solid #f1f1f1; width:800px; height:70px; line-height:25px; background-color:#f1f1f1;">
-<br>
-		<div style="font-size:25px; font-weight:bold; float:left;  margin-left:100px;">
-			MY COUPON
-		</div>
-	000에 ID, 총 포인트 값 가져오기	
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	000 님의 총 포인트는 000점 입니다. 
-</div> -->
 <br><br><br>
 
 	<div class="point_page">
@@ -114,53 +95,39 @@ text-align:center;
 		<br>
 
 		<!-- 테이블 -->
+		
+		<script type="text/javascript">
+			$.ajax({
+			url:"pointList.do",
+			method:"get",
+			success:function(data){
+				var doc = document.querySelector('.table');
+				var html = 
+		            '<table class="table" border="1">'+
+		            '<tr>' +
+		            '<th>번호</th>' +
+		            '<th>이벤트 내용</th>' +
+		            '<th>획득한 날</th>' +
+		            '<th>획득 포인트</th>' +
+		            '</tr>';
+		            doc.innerHTML += html;
+		            
+		            
+				$.each(data, function(index, value) { // 값이 여러개 일 때는 반복문 사용
+				var html2 =
+					'<tr>' +
+		            '<td>' + value.pointSeq + '</td>' +
+		            '<td>' + value.pointDetail + '</td>' +
+		            '<td>' + value.pointGetDate + '</td>' +
+		            '<td>' + value.getPoint + '</td>' +
+		            '</tr>';
+		            doc.innerHTML += html2;       
+				})
+			}
+		});
+		</script>
+
 		<table class="table" border="1">
-
-			<tr>
-				<th>번호</th>
-				<th>이벤트 내용</th>
-				<th>획득한 날짜</th>
-				<th>획득 포인트</th>
-			</tr>
- 			<c:choose>
-				<c:when test="${empty list }">
-					<tr>
-						<td colspan="6" align="center">---------- 포인트가 없습니다. ----------</td>
-					</tr>
-				</c:when>
-				<c:otherwise>
-					<c:set var = "total" value = "0" />
-					<c:forEach items="${list }" var="dto">	<!-- for(eventDto dto :list)와 같은 의미 -->
-						<tr>
-							<td>${dto.pointSeq }</td>
-							<td>${dto.pointDetail }</td>
-							<td><fmt:formatDate value="${dto.pointGetDate}" pattern="yyyy-MM-dd"/></td>
-							<td>${dto.getPoint } 점</td>
-						</tr>
-					<c:set var= "total" value="${total + dto.getPoint}"/>
-					</c:forEach>
-						<tr>
-							<td colspan="4">총 포인트는 <font size="5" color="#d49466"><b>${total } 점</b></font> 입니다.</td>
-						<tr>
-				</c:otherwise>
-			</c:choose>
-			<%-- <tr>
-				<td>1</td>
-				<td>${dto.pointDetail }</td>
-				<td>${dto.pointGetDate }</td>
-				<td>${dto.getPoint }</td>
-				<td>${dto.usePoint }</td>
-				<td>${dto.totalPoint }</td>
-			</tr>
-
-			<tr>
-				<td>2</td>
-				<td>이벤트</td>
-				<td>2021.12.16</td>
-				<td>30p</td>
-				<td>30p</td>
-				<td>30p</td>
-			</tr> --%>
 
 		</table>
 	</div>
