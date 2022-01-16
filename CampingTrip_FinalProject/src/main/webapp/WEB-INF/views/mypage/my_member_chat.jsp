@@ -62,44 +62,69 @@
 	font-size: 17px;
 }
 
-/* 예약 테이블 */
-table {
-	/* 테이블 화면 중앙으로 정렬 */
-	margin: auto;
-	width: 80%;
+/* 채팅 */
+table.tableChat {
 	border-collapse: collapse;
-	line-height: 1.5;
-}
-
-th, td {
-	padding: 10px;
 	text-align: center;
+	line-height: 1.5;
+	border-top: 1px solid #ccc;
+	margin: 20px 10px;
 }
 
-thead th {
+table.tableChat thead th {
+	width: 150px;
 	padding: 10px;
 	font-weight: bold;
-	text-align: center;
-	vertical-align: top;
-	color: #198754;
-	border-bottom: 3px solid #125132;
+	color: #fff;
+	background: #e7708d;
+	margin: 20px 10px;
 }
 
-tbody th {
+table.tableChat tbody th {
 	width: 150px;
-	padidng: 10px;
-	text-align: center;
-	vertical-align: top;
-	border-bottom: 1px solid #ccc;
-	background: #f3f6f7;
+	padding: 10px;
 }
 
-td {
+table.tableChat td {
 	width: 350px;
 	padding: 10px;
-	text-align: center;
-	vertical-align: top;
-	border-bottom: 1px solid #ccc;
+}
+
+table.tableChat .even {
+	background: #fdf3f5;
+}
+
+.chatDiv {
+	display: flex;
+	margin-left: 80px;
+}
+
+.pcontent {
+	font-size: 18px;
+	font-weight: bold;
+	width: 300px;
+}
+
+/* 채팅 말풍선 */
+.balloon {
+	position: relative;
+	width: 450px;
+	height: 50px;
+	background: pink;
+	border-radius: 15px;
+	padding-top: 12px;
+	margin-left: 150px;
+}
+
+.balloon:after {
+	border-top: 0px solid transparent;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid pink;
+	content: "";
+	position: absolute;
+	top: -10px;
+	left: 50px;
 }
 </style>
 </head>
@@ -113,11 +138,11 @@ td {
 						<li class="nav-item">
 							<a class="text-decoration-none text-body font-weight-bold"
 								 id="mypageText" href="">마이페이지</a></li>
-						<li class="nav-item active">
-							<a class="nav-link font-weight-bold" id="active" href="member_calendar.do">예약 리스트</a>
+						<li class="nav-item">
+							<a class="nav-link" href="memberreserve.do">예약 리스트</a>
 							<ul class="submenu">
 								<li><a class="nav-link" href="member_calendar.do">캠핑일정</a>
-								<li><a class="nav-link font-weight-bold" id="active" href="member_reservlist.do">예약완료/취소</a>
+								<li><a class="nav-link" href="member_reservlist.do">예약완료/취소</a>
 							</ul>
 						</li>
 						<li class="nav-item">
@@ -129,8 +154,8 @@ td {
 						<li class="nav-item">
 							<a class="nav-link" href="memberDetail.do">개인정보</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="chatlist.do">채팅</a>
+						<li class="nav-item active">
+							<a class="nav-link font-weight-bold" id="active" href="">채팅</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="member_reportlist.do">신고</a>
@@ -144,54 +169,50 @@ td {
 
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
-					<div class="col-md-12 order-md-1">
+					<div class="col-md-10 order-md-1">
 						<br> <br>
-						<c:choose>
-							<c:when test="${map.count == 0 }">
-								<td colspan="7" align="center">-------------------- 캠핑지 예약내역이 없습니다 --------------------</td>
-							</c:when>
-
-							<c:otherwise>
-								<table border="1">
-									<colgroup>
-										<col width="170">
-										<col width="1250">
-										<col width="1250">
-										<col width="1250">
-										<col width="1250">
-										<col width="1250">
-										<col width="1200">
-									</colgroup>
-									<thead>
-									<tr>
-										<th>예약번호</th>
-										<th>캠핑지</th>
-										<th>객실</th>
-										<th>체크인</th>
-										<th>체크아웃</th>
-										<th>예약인원(명)</th>
-										<th>예약여부</th>
-									</tr>
-									</thead>
-									<tbody>
-									<c:forEach items="${map.list }" var="row" varStatus="i">
+						<table class="tableChat">
+							<colgroup>
+								<col width="300"><col width="900"><col width="1200">
+							</colgroup>
+							<thead>
+								<tr>
+									<th>NO</th>
+									<th>아이디</th>
+									<th>채팅</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty list }">
 										<tr>
-											<td>${row.reservno }</td>
-											<td>${row.campno }</td>
-											<td>${row.roomno }</td>
-											<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.check_in }"/></td>
-											<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.check_out }"/></td>
-											<td>${row.guest_number }</td>
-											<td>${row.status }</td>
+											<td colspan="3" align="center">-------------------- 작성된 글이
+												없습니다--------------------</td>
 										</tr>
-									</c:forEach>
-									</tbody>
-								</table>
-							</c:otherwise>
-						</c:choose>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${list }" var="dto">
+											<tr>
+												<th>${dto.chat_no }</th>
+												<td>${dto.chat_id }</td>
+												<td>
+													<div class="chatDiv">
+														<p class="pcontent">${dto.chat_title }</p>
+														<p class="text-muted"><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.chat_date }"/></p>
+													</div>
+													<div class="balloon">${dto.chat }</div>
+												</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
+			
+			
 		</div>
 	</div>
 <br><br>

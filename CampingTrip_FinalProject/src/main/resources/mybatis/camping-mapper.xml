@@ -72,7 +72,7 @@
   <insert id="insertCamp" parameterType="CampDto">
   	INSERT INTO CAMP
   	VALUES(CAMPSEQ.NEXTVAL,#{writer},#{name},#{camp_type},#{address},#{address_detail},
-  	#{service},#{intro},#{rule},#{phone},#{email},#{tags},0,0,'0','/resources/img/camp_default.png',SYSDATE)
+  	#{service},#{intro},#{rule},#{phone},#{email},#{tags},0,0,'0','/resources/img/camp_default.png',SYSDATE,0)
   </insert>
   
   <insert id="insertfile" parameterType="hashmap">
@@ -173,10 +173,23 @@
   	</if>
   	<if test="sort!=null and !sort.equals('')">
   		
-  			<if test='sort.equals("lowest_price")'>ORDER BY LOWEST_PRICE DESC</if>
+  			<if test='sort.equals("low_price")'>ORDER BY LOWEST_PRICE DESC</if>
+  			<if test='sort.equals("high_price")'>ORDER BY LOWEST_PRICE ASC</if>
   			<if test='sort.equals("view_count")'>ORDER BY VIEW_COUNT DESC</if>
+  			<if test='sort.equals("review_count")'>ORDER BY REVIEW_COUNT DESC</if>
   			<if test='sort.equals("total_grade")'>ORDER BY TOTAL_GRADE DESC</if>
   		
   	</if>
+  </select>
+  
+  <update id="reviewCount" parameterType="int">
+  	UPDATE CAMP SET REVIEW_COUNT=(SELECT COUNT(*) FROM REVIEW WHERE CAMPNO=#{campno}) WHERE CAMPNO=#{campno}
+  </update>
+  
+  <select id="topCampList" resultType="campDto">
+  	SELECT * FROM CAMP WHERE ROWNUM<![CDATA[ < ]]>5 ORDER BY REVIEW_COUNT DESC
+  </select>
+  <select id="newCampList" resultType="campDto">
+  	SELECT * FROM CAMP WHERE ROWNUM<![CDATA[ < ]]>3 ORDER BY CAMPNO DESC
   </select>
 </mapper>

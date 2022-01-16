@@ -36,6 +36,12 @@ public interface MyCampDao {
 	
 	
 	/* member */
-	public List<joonggo> likeList();
-	public List<MemberDto> myPointList();
+	public List<joonggo> likelist(String userId);
+	public List<eventDto> myPointList(String userId);
+	public List<report> myReportList(String userId);
+	public List<ReservationDto> myReservList(String userId);
+	
+//	public List<ReservationDto> myCalendarList();
+	
+	
 }

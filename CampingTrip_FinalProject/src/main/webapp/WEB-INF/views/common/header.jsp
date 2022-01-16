@@ -21,6 +21,7 @@ window.onload = function(){
 }
 
 	function ajaxEnabledUpdate(){
+	console.log("fff");
 	//회원정보 변경하기		
 				$.ajax({
 				type:"post",
@@ -70,7 +71,7 @@ window.onload = function(){
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
-.navbar a {
+a {
 	text-decoration: none;
 	color: white;
 }
@@ -190,15 +191,32 @@ window.onload = function(){
             
              <!-- loginId가 null이 아님 그리고 loginId가 ""이 아니어야 -->
              <c:choose>
-             	<c:when test="${(loginId ne null and loginId ne '')}">
-	             	<li>${loginRole} ${loginName}(${loginId})님 환영합니다.</li>
+             	<c:when test="${(loginId ne null and loginId ne '' and loginRole eq '관리자')}">
+             		<li>${loginRole} ${loginName}(${loginId})님 환영합니다.</li>
 	                <li>|</li>
-	                <li><a href="">마이페이지</a></li>
+	                <li><a href="admin_camplist.do">마이페이지</a></li>
 	                <li>|</li>
 	                <li><a href="sessionLogout.do" onclick="">로그아웃</a></li>
-             		<li><a href="memberDetail.do" onclick="">회원정보보기</a></li>
-             		<li><a href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
-             	
+	             		<li><a href="memberDetail.do" onclick="">회원정보보기</a></li>
+	             		<li><a href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
+             	</c:when>
+             	<c:when test="${(loginId ne null and loginId ne '' and loginRole eq '판매자')}">
+             		<li>${loginRole} ${loginName}(${loginId})님 환영합니다.</li>
+	                <li>|</li>
+	                <li><a href="manager_reservlist.do">마이페이지</a></li>
+	                <li>|</li>
+	                <li><a href="sessionLogout.do" onclick="">로그아웃</a></li>
+	             		<li><a href="memberDetail.do" onclick="">회원정보보기</a></li>
+	             		<li><a href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
+             	</c:when>
+             	<c:when test="${(loginId ne null and loginId ne '' and loginRole eq '사용자')}">
+             		<li>${loginRole} ${loginName}(${loginId})님 환영합니다.</li>
+	                <li>|</li>
+	                <li><a href="member_reservlist.do">마이페이지</a></li>
+	                <li>|</li>
+	                <li><a href="sessionLogout.do" onclick="">로그아웃</a></li>
+	             		<li><a href="memberDetail.do" onclick="">회원정보보기</a></li>
+	             		<li><a href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
              	</c:when>
              	<c:otherwise>
 	             	<li><a href="loginform.do">로그인</a></li>

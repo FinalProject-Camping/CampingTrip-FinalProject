@@ -67,8 +67,8 @@
 .camping_price {
 	font-weight: bold;
 	font-size: 27px;
+	color:rgb(255, 138, 61);
 }
-
 .pagination {
 	margin-left: 45%;
 }
@@ -84,6 +84,7 @@
 	padding-right: 10px;
 	padding-left: 10px;
 	height: 40px;
+	font-weight:bold;
 }
 
 .side-btn:hover {
@@ -190,6 +191,8 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 	margin:0px;
 }
 .camping_tags{
+
+	margin-top:5px;
 	height:48px;
 }
 .camping_header{
@@ -200,16 +203,45 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 	font-family:'EliceDigitalBaeum_Bold';
 	font-size:30px;
 }
-.camping_view{
+.camping_header_tap{
+	display:flex;
+}
+.tap_detail{
 	font-size:14px;
+	width:80px;
 	color:gray;
 }
 .tag_style{
-	border: 1px solid gray;
+	border: 2px solid #198754;
 	border-radius:2em;
 	padding:3px;
-	color:gray;
+	font-weight:bold;
+	color:#198754;
 	margin-right:3px;
+	background-color:white;
+}
+.maintitleclass {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.1s;
+    font-family: EliceDigitalBaeum_Bold;
+}
+.active {
+    opacity: 1;
+    transition: opacity 1s;
+}
+#maintitle{
+
+	height:60px;
+	border:1px solid #e9ecef;
+	border-radius:8px;
+	font-size: 26px;
+	margin-bottom:40px;
+	margin-top:40px;
+	
 }
 </style>
 
@@ -379,7 +411,16 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 							</c:otherwise>
 						</c:choose>
 					})
-
+	$(function(){
+		var maintitleOpacity = (idx) => {
+  		  $('.maintitleclass').eq(idx).removeClass('active');
+  		  idx = idx + 1 == 3? 0 : idx + 1;
+  		  $('.maintitleclass').eq(idx).addClass('active');
+  		  setTimeout( ()=>{maintitleOpacity(idx)}, 5500);
+  	  }
+  	  
+  	  setTimeout( ()=>{maintitleOpacity(0)}, 6500);
+	})
 	function tablePagenation() {
 		/*
 		변수 생성
@@ -463,10 +504,16 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
-	<br>
-	<br>
-	<br>
+
 	<div class="main container">
+		
+		<div class="shadow" id="maintitle" style="position:relative; padding-top:25px; padding-bottom:25px; height:87.5px;">
+			<div class="col" style="text-align: center;">
+				<span class="w-100 maintitleclass active"><span class="align-middle fas fa-fire fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;중고거래를 통해 필요한 캠핑용품을 마련해보세요</span>
+				<span class="w-100 maintitleclass"><span class="align-middle far fa-smile-wink fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;안전한 거래문화 함께 만들어요</span>
+				<span class="w-100 maintitleclass"><span class="align-middle fas fa-campground fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;캠핑예약과 캠핑용품구매 모두 캠핑트립에서!</span>
+			</div>		
+		</div>
 		<div id="search_condition" class="shadow">
 			<form action="searchCamp.do" method="post">
 				<div class="category_div">
@@ -505,18 +552,29 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 					<span class="search_category">정렬</span>
 					<div class="btn_element">
 						<input class="btn-check" name="sort" type="radio"
-							id="sort_category1" value="lowest_price"> <label
-							class="btn btn-outline-success" for="sort_category1">가격순</label>
+							id="sort_category1" value="low_price"> <label
+							class="btn btn-outline-success" for="sort_category1">높은 가격순</label>
 					</div>
 					<div class="btn_element">
 						<input class="btn-check" name="sort" type="radio"
-							id="sort_category2" value="total_grade"> <label
-							class="btn btn-outline-success" for="sort_category2">리뷰순</label>
+							id="sort_category2" value="high_price"> <label
+							class="btn btn-outline-success" for="sort_category2">최저 가격순</label>
 					</div>
+					
 					<div class="btn_element">
 						<input class="btn-check" name="sort" type="radio"
 							id="sort_category3" value="view_count"> <label
 							class="btn btn-outline-success" for="sort_category3">조회순</label>
+					</div>
+					<div class="btn_element">
+						<input class="btn-check" name="sort" type="radio"
+							id="sort_category4" value="review_count"> <label
+							class="btn btn-outline-success" for="sort_category4">리뷰순</label>
+					</div>
+					<div class="btn_element">
+						<input class="btn-check" name="sort" type="radio"
+							id="sort_category5" value="total_grade"> <label
+							class="btn btn-outline-success" for="sort_category5">평점순</label>
 					</div>
 				</div>
 
@@ -632,7 +690,10 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 						onclick="location.href='campdetail.do?campno=${campDto.campno}'">
 						<div class="camping_header">
 						<div class="camping_name mb-0">${campDto.name}</div>
-						<div class="camping_view">조회수 ${campDto.view_count}</div>
+						<div class="camping_header_tap">
+						<div class="tap_detail">조회수 ${campDto.view_count}</div>
+						<div class="tap_detail">평점 ${campDto.total_grade}(${campDto.review_count})</div>
+						</div>
 						</div>						
 						<div class="camping_addr mb-1 text-muted">${campDto.address}</div>
 						<div class="camping_tags" id="camp${campDto.campno}">

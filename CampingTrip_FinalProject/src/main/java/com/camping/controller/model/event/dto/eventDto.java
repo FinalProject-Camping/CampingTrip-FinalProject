@@ -2,6 +2,8 @@ package com.camping.controller.model.event.dto;
 
 import java.util.Date;
 
+import com.camping.controller.model.member.dto.MemberDto;
+
 public class eventDto {
 	private int pointSeq;
 	private String pointId;
@@ -11,12 +13,17 @@ public class eventDto {
 	private int totalPoint;
 	private int usePoint;
 	
+	
+	// 쿼리로 join할 dto(마이페이지 포인트내역)
+	private MemberDto myMemberDto;
+	
 	public eventDto() {
 		super();
 	}
 	
 	public eventDto(int pointSeq, String pointId, String pointDetail, String pointGetDate, int getPoint, int totalPoint,
 			int usePoint) {
+  
 		super();
 		this.pointSeq = pointSeq;
 		this.pointId = pointId;
@@ -25,8 +32,9 @@ public class eventDto {
 		this.getPoint = getPoint;
 		this.totalPoint = totalPoint;
 		this.usePoint = usePoint;
+		this.myMemberDto = myMemberDto;
 	}
-	
+
 	public int getPointSeq() {
 		return pointSeq;
 	}
@@ -69,4 +77,15 @@ public class eventDto {
 	public void setUsePoint(int usePoint) {
 		this.usePoint = usePoint;
 	}
+
+	public MemberDto getMyMemberDto() {
+		return myMemberDto;
+	}
+
+	public void setMyMemberDto(MemberDto myMemberDto) {
+		this.myMemberDto = myMemberDto;
+	}
+	
+	
+	
 }

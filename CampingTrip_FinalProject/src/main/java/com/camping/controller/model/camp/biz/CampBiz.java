@@ -1,5 +1,6 @@
 package com.camping.controller.model.camp.biz;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -140,5 +141,15 @@ public class CampBiz {
 		
 		return dao.searchCamp(dto);
 	}
+	public int reviewCount(int campno) {
+		return dao.reviewCount(campno);
+	}
 	
+	public List<CampDto> topCampList(){
+		return dao.topCampList();
+	}
+	
+	public List<CampDto> newCampList(){
+		return dao.newCampList();
+	}
 }

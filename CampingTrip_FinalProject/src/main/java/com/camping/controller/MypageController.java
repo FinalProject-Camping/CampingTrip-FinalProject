@@ -1,8 +1,11 @@
 package com.camping.controller;
 
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,11 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.camping.controller.model.camp.dto.ReservationDto;
 import com.camping.controller.model.camp.dto.RoomDto;
+import com.camping.controller.model.event.dto.eventDto;
+import com.camping.controller.model.joonggo.dto.joonggo;
+import com.camping.controller.model.joonggo.dto.report;
 import com.camping.controller.model.mypage.biz.MyCampBiz;
-import com.camping.controller.model.mypage.dao.MyCampDao;
 
 @Controller
 public class MypageController {
@@ -24,6 +31,20 @@ public class MypageController {
 	
 	@Autowired
 	private MyCampBiz biz;
+	
+	
+//	@RequestMapping("/mypage.do")
+//	public String myPage(Model model, HttpSession session) {
+//		logger.info("마이페이지 접근");
+//		
+//		String loginId = session.getAttribute("id").toString();
+//
+//		if (loginId == ) {
+//			return "redirect:admin_camplist.do";
+//		} else {
+//			return "redirect:admin_camplist.do";
+//		}
+//	}
 
 	
 	@RequestMapping("/admin_camplist.do")
@@ -195,22 +216,95 @@ public class MypageController {
 	
 	
 	
-	@RequestMapping("/member_likelist.do")
-	public String likeList(Model model) {
-		logger.info("찜리스트");
-		model.addAttribute("list", biz.likeList());
-		
-		return "mypage/my_member_like";
-	}
 	
-	
+
 	@RequestMapping("/member_pointlist.do")
-	public String myPointList(Model model) {
-		logger.info("포인트 리스트");
-		model.addAttribute("list", biz.myPointList());
+	public ModelAndView myPointList(HttpSession session, ModelAndView mav) {
 		
-		return "mypage/my_member_point";
+		// session에 저장된 userId
+		String userId = (String)session.getAttribute("id");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<eventDto> list = biz.myPointList(userId);	// 포인트 정보
+		
+		map.put("list", list);	// 포인트 정보를 map에 저장
+		mav.setViewName("mypage/my_member_point");	// view(jsp)의 이름 저장
+		mav.addObject("map", map);	// map 변수 저장
+		
+		return mav;
+		
 	}
 	
+	// 찜리스트 목록
+	@RequestMapping("/member_likelist.do")
+	public ModelAndView list(HttpSession session, ModelAndView mav) {
+		
+		// session에 저장된 userId
+		String userId = (String)session.getAttribute("id");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<joonggo> list = biz.likelist(userId);	// 찜리스트 정보
+		
+		map.put("list", list);	// 찜리스트 정보를 map에 저장
+		mav.setViewName("mypage/my_member_like");	// view(jsp)의 이름 저장
+		mav.addObject("map", map);	// map 변수 저장
+		
+		return mav;
+	}
+	
+	// 회원 신고 목록
+	@RequestMapping("/member_reportlist.do")
+	public ModelAndView reportlist(HttpSession session, ModelAndView mav) {
+		
+		// session에 저장된 userId
+		String userId = (String)session.getAttribute("id");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<report> list = biz.myReportList(userId);	// 회원 신고 정보
+		
+		map.put("list", list);	// 회원의 신고 정보를 map에 저장
+		mav.setViewName("mypage/my_member_report");	// View 이름 저장
+		mav.addObject("map", map);	// map 변수 저장
+		
+		return mav;
+	}
+	
+	// 회원 캠핑지 예약 목록
+	@RequestMapping("/member_reservlist.do")
+	public ModelAndView myReserveList(HttpSession session, ModelAndView mav) {
+		
+		String userId = (String)session.getAttribute("id");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<ReservationDto> list = biz.myReservList(userId);
+		
+		map.put("list", list);
+		mav.setViewName("mypage/my_member_reserve");
+		mav.addObject("map", map);
+		
+		return mav;
+	}
+	
+	
+	
+	// 캘린더
+//	@RequestMapping(value="/member_calendar", method = RequestMethod.GET)
+//	public ModelAndView getCalendarList(ModelAndView mv, HttpServletRequest request) {
+//		List<ReservationDto> calendar = null;
+//		
+//		try {
+//			calendar = biz.myCalendarList();
+//			request.setAttribute("myCalendarList", calendar);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		mv.setViewName("mypage/my_member_main");
+//		return mv;
+//	}
 	
 }

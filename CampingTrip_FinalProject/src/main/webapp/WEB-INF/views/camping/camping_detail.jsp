@@ -51,8 +51,9 @@
 
 .camping_intro {
 	height: 200px;
-	background-color: #bdecb6;
+	background-color: #d494662e;
 	border-radius: 1em;
+	padding:10px;
 }
 
 .input-group {
@@ -193,12 +194,47 @@
 .card-body button{
 	font-weight:bold;
 }
-.camping_name{
-	font-family: 'EliceDigitalBaeum_Bold';
-}
 .review_grade{
 	display:inline-block;
 	width:180px;
+}
+.camping_header{
+	display:flex;
+	justify-content: space-between;
+}
+.camping_name{
+	font-family:'EliceDigitalBaeum_Bold';
+	font-size:40px;
+}
+.camping_header_tap{
+	display:flex;
+}
+.tap_detail{
+	font-size:14px;
+	color:gray;
+	margin-left:10px;
+}
+.camping_tags{
+	margin-top:10px;
+	display:flex;
+	align-items:center;
+}
+.tag_style{
+	border: 2px solid #198754;
+	border-radius:2em;
+	padding:3px;
+	font-weight:bold;
+	color:#198754;
+	margin-right:3px;
+	margin-top:5px;
+	background-color:white;
+}
+#total_grade_sp{
+	font-family:'EliceDigitalBaeum_Bold';
+	font-size:20px;
+}
+#category_grade,#total_grade_value{
+	font-weight:bold;
 }
 </style>
 <script type="text/javascript">
@@ -484,7 +520,7 @@
 							comments +='		<div class="card-body">';
 							comments +='			<div class="room_title card-title"><a href="#" onclick="open_roomDetail('+this.roomno+')">'+this.room_name+'</a></div>';
 							comments +='			<div class="room_price">￦'+rPrice+'</div>';
-							comments +='			<div class="room_people">수용인원:'+this.guest_number+'</div>';
+							comments +='			<div class="room_people">정원:'+this.guest_number+'</div>';
 							comments +='			<button type="button" class="btn btn-warning book_btn mb-1"';
 							comments +='			onclick="openWindowPop(\'reservationform.do?roomno='+this.roomno+'\', \'reservform\')">예약하기</button>';
 							comments +='			</div></div></div></div></div>';
@@ -648,10 +684,30 @@
 				</div>
 			</div>
 			<div class="camping_brief_info col-md-6">
-				<h1 class="camping_name mb-0">${campDto.name }</h1>
+				<div class="camping_header">
+					<div class="camping_name mb-0">${campDto.name }</div>
+					<div class="camping_header_tap">
+						<div class="tap_detail">조회수 ${campDto.view_count}</div>
+						<div class="tap_detail">평점 ${campDto.total_grade}(${campDto.review_count})</div>
+					</div>
+				</div>
 				<div class="camping_addr mb-1 text-muted">${campDto.address}
 					${campDto.address_detail}</div>
-				<div class="camping_intro mb-0 shadow"></div>
+				<div class="camping_intro mb-0 shadow">${campDto.intro }</div>
+				<div class="camping_tags" id="camp${campDto.campno}">
+				
+						<c:if test="${!empty campDto.tags }">
+							<script>
+
+								$("#camp${campDto.campno}").append('<svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="#198754" class="bi bi-hash" viewBox="0 0 16 16">  <path d="M8.39 12.648a1.32 1.32 0 0 0-.015.18c0 .305.21.508.5.508.266 0 .492-.172.555-.477l.554-2.703h1.204c.421 0 .617-.234.617-.547 0-.312-.188-.53-.617-.53h-.985l.516-2.524h1.265c.43 0 .618-.227.618-.547 0-.313-.188-.524-.618-.524h-1.046l.476-2.304a1.06 1.06 0 0 0 .016-.164.51.51 0 0 0-.516-.516.54.54 0 0 0-.539.43l-.523 2.554H7.617l.477-2.304c.008-.04.015-.118.015-.164a.512.512 0 0 0-.523-.516.539.539 0 0 0-.531.43L6.53 5.484H5.414c-.43 0-.617.22-.617.532 0 .312.187.539.617.539h.906l-.515 2.523H4.609c-.421 0-.609.219-.609.531 0 .313.188.547.61.547h.976l-.516 2.492c-.008.04-.015.125-.015.18 0 .305.21.508.5.508.265 0 .492-.172.554-.477l.555-2.703h2.242l-.515 2.492zm-1-6.109h2.266l-.515 2.563H6.859l.532-2.563z"/> </svg>');
+								var tags = "${campDto.tags}";
+								var tagarr= tags.split(",");
+								for(var i = 1 ; i <tagarr.length;i++){
+									$("#camp${campDto.campno}").append("<span class='tag_style'>"+tagarr[i]+"</span>");
+								}
+							</script>
+						</c:if>
+						</div> 
 			</div>
 		</div>
 		<div class="detail_content row">
@@ -670,14 +726,14 @@
 					<li class="nav-item" role="presentation">
 						<button class="nav-link" id="review-tab" data-bs-toggle="tab"
 							data-bs-target="#review" type="button" role="tab"
-							aria-controls="review" aria-selected="false">방문후기</button>
+							aria-controls="review" aria-selected="false">방문후기(${writerInfo.totalcnt})</button>
 					</li>
 				</ul>
 				<div class="tab-content" id="myTabContent">
 					<!-- 객실정보/예약 -->
 					<div class="tab-pane fade show active" id="room_info"
 						role="tabpanel" aria-labelledby="room-tab">
-						<div class="row mt-5">
+						<div class="row mt-5 mb-5">
 							<div class="col-md-12">
 								<span class="chk_date">체크인</span><span class="chk_date">체크아웃</span>
 							</div>
@@ -697,7 +753,6 @@
 							</div>
 						</div>
 						<div class="room_list row">
-							<div class="row mt-5">
 								<c:forEach items="${roomlist}" var="rdto">
 									<div class="room_info col-md-6 mt-3">
 										<div class="card mb-3" style="max-width: 540px;">
@@ -711,7 +766,7 @@
 														<a href="#" onclick="open_roomDetail('${rdto.roomno}')"><div
 																class="room_title card-title">${rdto.room_name}</div></a>
 														<div class="room_price">￦${rdto.price_tostr()}</div>
-														<div class="room_people">수용인원:${rdto.guest_number}명</div>
+														<div class="room_people">정원:${rdto.guest_number}명</div>
 														<button type="button"
 															class="btn btn-warning book_btn mb-1"
 															onclick="moveToReservation('${rdto.roomno}')">예약하기</button>
@@ -722,7 +777,6 @@
 									</div>
 								</c:forEach>
 
-							</div>
 
 						</div>
 					</div>
@@ -810,19 +864,19 @@
 								<div class="col-12 sub_title mb-5">총 리뷰 수 :
 									${writerInfo.totalcnt}</div>
 								<div class="col-md-6">
-									<h5>총 평점</h5>
-									<span class='star-rating'><span
-										style='width:${writerInfo.total*20}%'></span></span>(${writerInfo.total}점)<br>
+									<span id="total_grade_sp">총 평점</span>
+									<span class='star-rating' id="total_grade_value"><span
+										style='width:${writerInfo.total*20}%'></span></span><span id="total_grade_value">(${writerInfo.total}점)</span><br>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-6" id="category_grade">
 									<span class="review_sub">서비스</span><span class='star-rating'><span
-										style='width: ${writerInfo.service*20}%'></span></span>( ${writerInfo.service}점)<br> <span
+										style='width: ${writerInfo.service*20}%'></span></span> (${writerInfo.service}점)<br> <span
 										class="review_sub">청결도</span><span class='star-rating'><span
-										style='width: ${writerInfo.cleanliness*20}%'></span></span>( ${writerInfo.cleanliness}점)<br>
+										style='width: ${writerInfo.cleanliness*20}%'></span></span> (${writerInfo.cleanliness}점)<br>
 									<span class="review_sub">가성비</span><span class='star-rating'><span
-										style='width: ${writerInfo.cost*20}%'></span></span>( ${writerInfo.cost}점)<br> <span
+										style='width: ${writerInfo.cost*20}%'></span></span> (${writerInfo.cost}점)<br> <span
 										class="review_sub">위치</span><span class='star-rating'><span
-										style='width: ${writerInfo.location*20}%'></span></span>( ${writerInfo.location}점)<br>
+										style='width: ${writerInfo.location*20}%'></span></span> (${writerInfo.location}점)<br>
 								</div>
 								<div class="col-12 sub_title mt-3 mb-5">이용고객 정보</div>
 								<div class="col-md-6">

@@ -45,6 +45,16 @@ public class CampController {
 		return "camping/camping_write";
 	}
 	
+	@RequestMapping(value="selectcamp_main.do",method=RequestMethod.POST)
+	@ResponseBody
+	public List<CampDto> selectcamp_main(){
+		List<CampDto> result=biz.topCampList();
+		List<CampDto> tmp = biz.newCampList();
+		for(int i = 0 ; i<tmp.size();i++) {
+			result.add(tmp.get(i));
+		}
+		return result;
+	}
 	@RequestMapping(value="/insertcamp.do", method=RequestMethod.POST)
 	public String insertCamp(CampDto dto, MultipartHttpServletRequest mRequest, RoomDto rdto) throws Exception {
 		 System.out.println(dto.toString());
@@ -164,6 +174,7 @@ public class CampController {
 		model.addAttribute("campno", campno);
 		return "camping/review_write";
 	}
+
 	
 	@RequestMapping("reviewwriteres.do")
 	public String insertReview(ReviewDto dto,HttpServletResponse response) throws IOException {
@@ -179,6 +190,7 @@ public class CampController {
 		
 		System.out.println(dto.toString());
 		int res = biz.insertReview(dto);
+		int res2 = biz.reviewCount(dto.getCampno());
 		if(res>0) {
 			response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
