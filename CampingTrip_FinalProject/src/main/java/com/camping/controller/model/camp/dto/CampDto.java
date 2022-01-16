@@ -21,8 +21,20 @@ public class CampDto {
 	private String lowest_price="0";
 	private Date create_date;
 	private String thumbnail;
+	private String review_count;
 	
-	
+	public String getReview_count() {
+		return review_count;
+	}
+
+
+	public void setReview_count(String review_count) {
+		this.review_count = review_count;
+	}
+
+
+
+
 	// 쿼리로 join할 dto(마이페이지 캠핑지 정보)
 	private RoomDto myRoomdto;
 	
@@ -33,10 +45,12 @@ public class CampDto {
 	}
 	
 	
-	// myRoomdto 추가
+	
+	
 	public CampDto(int campno, String writer, String name, String camp_type, String address, String address_detail,
 			String service, String intro, String rule, String phone, String email, String tags, int view_count,
-			double total_grade, String lowest_price, Date create_date, String thumbnail, RoomDto myRoomdto) {
+			double total_grade, String lowest_price, Date create_date, String thumbnail, String review_count,
+			RoomDto myRoomdto) {
 		super();
 		this.campno = campno;
 		this.writer = writer;
@@ -55,10 +69,11 @@ public class CampDto {
 		this.lowest_price = lowest_price;
 		this.create_date = create_date;
 		this.thumbnail = thumbnail;
+		this.review_count = review_count;
 		this.myRoomdto = myRoomdto;
 	}
-	
-	
+
+
 	// myRoomdto 추가
 	public RoomDto getMyRoomdto() {
 		return myRoomdto;
