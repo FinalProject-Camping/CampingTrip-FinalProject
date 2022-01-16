@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,12 +73,15 @@ public class kakao {
 	}
 	
 	public static void main(String[] args) {
-		kakao k = new kakao();
-		k.setAddress("송파대로 567");
+		/*
+		 * kakao k = new kakao(); k.setAddress("송파대로 567");
+		 * 
+		 * Map map = k.getResult(); System.out.println(map.get("latitude"));
+		 * System.out.println(map.get("longitude"));
+		 */
 		
-		Map map = k.getResult();
-		System.out.println(map.get("latitude"));
-		System.out.println(map.get("longitude"));
+		Date date = new Date("1642263648000");
+		System.out.println(date);
 	}
 }
 

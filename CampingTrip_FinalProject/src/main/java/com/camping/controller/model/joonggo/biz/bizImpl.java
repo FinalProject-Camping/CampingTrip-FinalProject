@@ -184,6 +184,12 @@ public class bizImpl implements biz{
 	public List<chatroom> getchatlist(String sessionid) {
 		return dao.getchatlist(sessionid);
 	}
+
+	@Override
+	public List<chat> chatRefresh(Map<String, Object> map) {
+		
+		return dao.chatRefresh(map);
+	}
 	
 	
 }

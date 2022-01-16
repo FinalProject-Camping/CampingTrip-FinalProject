@@ -119,10 +119,11 @@ hr{
 	</div>
 	
 	<script type="text/javascript">
-		let row = 0;
 		var userid = '${userid}';
 		var writer = '${writer}';
 		var roomseq;
+		let currdate = '';
+		let finaldate;
 	
 		var createLeft = (content, date, sender) => {
 			var html = 
@@ -174,54 +175,49 @@ hr{
 	        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
 		}
 		
-		function interval(){
+		function longpolling(){
 			$.ajax({
-				url:"interval.do",
+				url:"longpolling.do",
 				data:{"roomseq":roomseq,
-					  "userid":userid},
+					  "userid":userid,
+					  "finaldate":dateFormat(new Date(finaldate))},
 				method: "post",
-				async: false,
+				async: true,
 				success:function(data){ 
 					if(data.data === true){
 						
 						var datalist = $.parseJSON(data.list);
 						
-						if(datalist.length == row){return;}
-						else{
-							document.querySelector('.chat-body').innerHTML = '';
-							let currdate = '';
-							row = 0;
-							datalist.forEach(chat => {
-								row++;				
-								var chatdate = dateFormat(new Date(chat.senddate)).split(' ')[0];
-								var chattime = getTime(dateFormat(new Date(chat.senddate)).split(' ')[1]);
-								if(chatdate != currdate){
-									$('.chat-body').append('<div style="font-size:90%; text-align:center; color:gray; width:100%;">'+chatdate+'</div>')
-									currdate = chatdate;
-								}
-								
-								if(chat.sender === null){
-									$('.chat-body').append('<div style="text-align:center; color:gray; width:100%;">'+chat.content+'</div>')
-								}else if(chat.sender === '${userid}'){
-									$('.chat-body').append(createRight(chat.content, chattime))
-								}else{
-									console.log(chat.sender);
-									$('.chat-body').append(createLeft(chat.content, chattime, chat.sender))
-								}
-								
-							});
-							//포커스
-							document.querySelector('.chat-body').scrollTop = document.querySelector('.chat-body').scrollHeight;
-						}
-						
-						
+						datalist.forEach(chat => {
+							
+							finaldate = chat.senddate;
+							
+							var chatdate = dateFormat(new Date(chat.senddate)).split(' ')[0];
+							var chattime = getTime(dateFormat(new Date(chat.senddate)).split(' ')[1]);
+							if(chatdate != currdate){
+								$('.chat-body').append('<div style="font-size:90%; text-align:center; color:gray; width:60%;">'+chatdate+'</div>')
+								currdate = chatdate;
+							}
+							
+							if(chat.sender === null){
+								$('.chat-body').append('<div style="text-align:center; color:gray; width:100%;">'+chat.content+'</div>')
+							}else if(chat.sender === '${userid}'){
+								$('.chat-body').append(createRight(chat.content, chattime))
+							}else{
+								console.log(chat.sender);
+								$('.chat-body').append(createLeft(chat.content, chattime, chat.sender))
+							}
+							
+						});
+						//포커스
+						document.querySelector('.chat-body').scrollTop = document.querySelector('.chat-body').scrollHeight;
+						longpolling();
 						
 					}else{
 						location.href='error.do';
 					}
 				}
 			})
-			setTimeout( () => {interval()}, 500);
 		}
 		
 		function sendmessage(val){
@@ -237,31 +233,6 @@ hr{
 				success:function(data){ 
 					if(data.data === true){
 						
-						var datalist = $.parseJSON(data.list);
-						document.querySelector('.chat-body').innerHTML = '';
-						let currdate = '';
-						row = 0;
-						
-						datalist.forEach(chat => {
-							row++;			
-							var chatdate = dateFormat(new Date(chat.senddate)).split(' ')[0];
-							var chattime = getTime(dateFormat(new Date(chat.senddate)).split(' ')[1]);
-							if(chatdate != currdate){
-								$('.chat-body').append('<div style="font-size:90%; text-align:center; color:gray; width:100%;">'+chatdate+'</div>')
-								currdate = chatdate;
-							}
-							
-							if(chat.sender === null){
-								$('.chat-body').append('<div style="text-align:center; color:gray; width:100%;">'+chat.content+'</div>')
-							}else if(chat.sender === '${userid}'){
-								$('.chat-body').append(createRight(chat.content, chattime))
-							}else{
-								console.log(chat.sender);
-								$('.chat-body').append(createLeft(chat.content, chattime, chat.sender))
-							}
-							
-						});
-						
 						//포커스
 						document.querySelector('#content').value = '';
 						document.querySelector('.chat-body').scrollTop = document.querySelector('.chat-body').scrollHeight;
@@ -275,10 +246,11 @@ hr{
 	
 		$(function(){
 			var list = ${list};
-			let currdate = '';
+			
 			
 			list.forEach(chat => {
-				row++;
+				
+				finaldate = chat.senddate;
 				
 				var chatdate = dateFormat(new Date(chat.senddate)).split(' ')[0];
 				var chattime = getTime(dateFormat(new Date(chat.senddate)).split(' ')[1]);
@@ -302,8 +274,9 @@ hr{
 			
 			//포커스
 			document.querySelector('.chat-body').scrollTop = document.querySelector('.chat-body').scrollHeight;
+			console.log(finaldate);
 			
-			interval();
+			longpolling();
 		})
 		
 	
