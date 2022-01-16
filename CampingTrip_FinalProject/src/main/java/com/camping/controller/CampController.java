@@ -179,6 +179,7 @@ public class CampController {
 		
 		System.out.println(dto.toString());
 		int res = biz.insertReview(dto);
+		int res2 = biz.reviewCount(dto.getCampno());
 		if(res>0) {
 			response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();

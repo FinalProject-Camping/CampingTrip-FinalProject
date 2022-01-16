@@ -58,7 +58,7 @@ $(document).ready(function () {
 			}
 		});
     }
-            
+            //TEST
         	/*     	POINTID VARCHAR2(50) NOT NULL,			-- 유저 아이디
         	    	POINTDETAIL VARCHAR2(1000) NOT NULL,	-- 포인트 내역
         	    	POINTGETDATE DATE NOT NULL,				-- 포인트 획득일

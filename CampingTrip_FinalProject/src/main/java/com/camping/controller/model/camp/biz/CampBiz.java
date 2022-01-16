@@ -140,5 +140,7 @@ public class CampBiz {
 		
 		return dao.searchCamp(dto);
 	}
-	
+	public int reviewCount(int campno) {
+		return dao.reviewCount(campno);
+	}
 }

@@ -368,4 +368,16 @@ public class CampDao {
 		
 		return res;
 	}
+	
+	public int reviewCount(int campno) {
+		int res = 0 ;
+		
+		try {
+			res=sqlSession.update(NAMESPACE+"reviewCount",campno);
+		} catch (Exception e) {
+			System.out.println("[error]: update reviewCount");
+			e.printStackTrace();
+		}
+		return res;
+	}
 }

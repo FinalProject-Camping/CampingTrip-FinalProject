@@ -28,6 +28,7 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
+
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <style type="text/css">
@@ -61,18 +62,7 @@
 	font-size: 17px;
 }
 
-.card-img-top {
-	background-color: gray;
-	width: 288px;
-	height: 250px;
-}
-
-#card {
-	display: flex;
-}
-
-
-/* 테이블 */
+/* 예약 테이블 */
 table {
 	/* 테이블 화면 중앙으로 정렬 */
 	margin: auto;
@@ -112,9 +102,6 @@ td {
 	border-bottom: 1px solid #ccc;
 }
 </style>
-
-
-
 </head>
 <body>
 <br><br>
@@ -125,7 +112,7 @@ td {
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="text-decoration-none text-body font-weight-bold"
-								 id="mypageText" href="member_calendar.do">마이페이지</a></li>
+								 id="mypageText" href="">마이페이지</a></li>
 						<li class="nav-item">
 							<a class="nav-link" href="member_calendar.do">예약 리스트</a>
 							<ul class="submenu">
@@ -133,8 +120,8 @@ td {
 								<li><a class="nav-link" href="member_reservlist.do">예약완료/취소</a>
 							</ul>
 						</li>
-						<li class="nav-item active">
-							<a class="nav-link font-weight-bold" id="active" href="member_likelist.do">찜 리스트</a>
+						<li class="nav-item">
+							<a class="nav-link" href="member_likelist.do">찜 리스트</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="member_pointlist.do">포인트 현황</a>
@@ -145,8 +132,8 @@ td {
 						<li class="nav-item">
 							<a class="nav-link" href="chatlist.do">채팅</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="member_reportlist.do">신고</a>
+						<li class="nav-item active">
+							<a class="nav-link font-weight-bold" id="active" href="member_reportlist.do">신고</a>
 						</li>
 					</ul>
 				</nav>
@@ -155,99 +142,48 @@ td {
 
 
 
-			<!-- Classic tabs -->
-			<div class="col-md-10">
+			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
-					<div class="col-md-15 order-md-1">
-						<br>
-						<ul class="nav tabs-orange justify-content-center"
-							id="myClassicTabOrange" role="tablist">
-							<li class="nav-item"><a
-								class="nav-link  waves-light active show"
-								id="profile-tab-classic-orange" data-toggle="tab"
-								href="#profile-classic-orange" role="tab"
-								aria-controls="profile-classic-orange" aria-selected="true">
-									<button type="button" class="btn btn-primary btn-lg btn-block">중고물품</button>
-							</a></li>
-							<li class="nav-item"><a class="nav-link waves-light"
-								id="follow-tab-classic-orange" data-toggle="tab"
-								href="#follow-classic-orange" role="tab"
-								aria-controls="follow-classic-orange" aria-selected="false">
-									<button type="button" class="btn btn-primary btn-lg btn-block">중고거래</button>
-							</a></li>
-						</ul>
-						<!-- 탭부분 -->
+					<div class="col-md-12 order-md-1">
+						<br> <br>
+						<c:choose>
+							<c:when test="${map.count == 0 }">
+								<td colspan="4" align="center">-------------------- 포인트 내역이 없습니다 --------------------</td>
+							</c:when>
 
-
-
-						<div class="tab-content card pt-5" id="myClassicTabContentOrange"
-							style="padding: 15px;">
-
-							<div class="tab-pane fade active show"
-								id="profile-classic-orange" role="tabpanel"
-								aria-labelledby="profile-tab-classic-orange">
-								<div class="row">
-									<c:choose>
-										<c:when test="${map.count == 0 }">
-											<p>찜한 중고물품이 없습니다</p>
-										</c:when>
-
-										<c:otherwise>
-											<c:forEach items="${map.list }" var="row" varStatus="i">
-												<div class="col-sm" id="card">
-													<div class="card" style="width: 288px; margin-bottom: 30px;">
-
-														<img class="card-img-top" src="${row.imglist }">
-
-														<div class="card-body">
-															<h4 class="card-title">${row.title }</h4>
-															<a href="#" class="btn btn-primary">보러가기</a>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</div>
-							</div>
-
-
-
-
-							<!-- 중고거래부분 -->
-							<div class="tab-pane fade" id="follow-classic-orange"
-								role="tabpanel" aria-labelledby="follow-tab-classic-orange">
-								<div class="row">
-									<c:choose>
-										<c:when test="${empty list }">
-											<p>찜한 중고상품이 없습니다</p>
-										</c:when>
-
-										<c:otherwise>
-											<c:forEach items="${list }" var="dto">
-												<div class="col-sm" id="card">
-													<div class="card"
-														style="width: 288px; margin-bottom: 30px;">
-
-														<img class="card-img-top" src="img_avatar1.png"
-															alt="Card image">
-
-														<div class="card-body">
-															<h4 class="card-title">${dto.camp_name }</h4>
-															<a href="#" class="btn btn-primary">보러가기</a>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</div>
-							</div>
-						</div>
+							<c:otherwise>
+								<table border="1">
+									<colgroup>
+										<col width="160"><col width="1100"><col width="1300"><col width="1250">
+									</colgroup>
+									<thead>
+									<tr>
+										<th>신고번호</th>
+										<th>아이디</th>
+										<th>신고내용</th>
+										<th>일자</th>
+									</tr>
+									</thead>
+									<tbody>
+									<c:forEach items="${map.list }" var="row" varStatus="i">
+										<tr>
+											<td>${row.reportseq }</td>
+											<td>${row.writer }</td>
+											<td>${row.reportcontent }</td>
+											<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.reportdate }"/></td>
+										</tr>
+									</c:forEach>
+									</tbody>
+								</table>
+							</c:otherwise>
+						</c:choose>
+						
+						
+						
+						
 					</div>
 				</div>
 			</div>
-			<!-- Classic tabs -->
 		</div>
 	</div>
 <br><br>

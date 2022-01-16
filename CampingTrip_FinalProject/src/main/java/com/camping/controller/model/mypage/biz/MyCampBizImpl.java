@@ -92,15 +92,33 @@ public class MyCampBizImpl implements MyCampBiz {
 		return dao.myreservCancel();
 	}
 
+
 	@Override
-	public List<joonggo> likeList() {
-		return dao.likeList();
+	public List<eventDto> myPointList(String userId) {
+		return dao.myPointList(userId);
+	}
+
+
+	@Override
+	public List<joonggo> likelist(String userId) {
+		return dao.likelist(userId);
 	}
 
 	@Override
-	public List<MemberDto> myPointList() {
-		return dao.myPointList();
+	public List<report> myReportList(String userId) {
+		return dao.myReportList(userId);
 	}
+
+	@Override
+	public List<ReservationDto> myReservList(String userId) {
+		return dao.myReservList(userId);
+	}
+
+
+//	@Override
+//	public List<ReservationDto> myCalendarList() {
+//		return dao.myCalendarList();
+//	}
 
 
 }
