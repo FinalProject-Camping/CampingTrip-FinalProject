@@ -31,7 +31,7 @@ window.onload = function(){
 				success:function(msg){
 					if(msg.check==true){
 						alert("회원탈퇴가 완료되었습니다.");
-						location.href="/"					
+						location.href="";
 					}else{
 						alert("회원탈퇴에 실패했습니다.");
 					}
@@ -42,23 +42,6 @@ window.onload = function(){
 			});	
 		
 }	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 </script>
@@ -197,8 +180,6 @@ a {
 	                <li><a href="admin_camplist.do">마이페이지</a></li>
 	                <li>|</li>
 	                <li><a href="sessionLogout.do" onclick="">로그아웃</a></li>
-	             		<li><a href="memberDetail.do" onclick="">회원정보보기</a></li>
-	             		<li><a href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
              	</c:when>
              	<c:when test="${(loginId ne null and loginId ne '' and loginRole eq '판매자')}">
              		<li>${loginRole} ${loginName}(${loginId})님 환영합니다.</li>
@@ -206,8 +187,6 @@ a {
 	                <li><a href="manager_reservlist.do">마이페이지</a></li>
 	                <li>|</li>
 	                <li><a href="sessionLogout.do" onclick="">로그아웃</a></li>
-	             		<li><a href="memberDetail.do" onclick="">회원정보보기</a></li>
-	             		<li><a href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
              	</c:when>
              	<c:when test="${(loginId ne null and loginId ne '' and loginRole eq '사용자')}">
              		<li>${loginRole} ${loginName}(${loginId})님 환영합니다.</li>
@@ -215,8 +194,6 @@ a {
 	                <li><a href="member_reservlist.do">마이페이지</a></li>
 	                <li>|</li>
 	                <li><a href="sessionLogout.do" onclick="">로그아웃</a></li>
-	             		<li><a href="memberDetail.do" onclick="">회원정보보기</a></li>
-	             		<li><a href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
              	</c:when>
              	<c:otherwise>
 	             	<li><a href="loginform.do">로그인</a></li>

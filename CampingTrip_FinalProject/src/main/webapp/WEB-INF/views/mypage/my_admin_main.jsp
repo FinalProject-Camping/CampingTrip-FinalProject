@@ -143,6 +143,7 @@ td {
 						<li class="nav-item"><a class="nav-link" href="admin_memberlist.do">회원 관리</a></li>
 						<li class="nav-item"><a class="nav-link" href="admin_reportlist.do">신고 내역</a></li>
 						<li class="nav-item"><a class="nav-link" href="">관리자 계정 추가</a></li>
+	             		<li class="nav-item"><a class="nav-link" href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
 					</ul>
 				</nav>
 			</div>
