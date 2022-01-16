@@ -923,7 +923,7 @@ public class JoonggoController {
 					}
 					
 					try {
-						Thread.sleep(250);
+						Thread.sleep(150);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
