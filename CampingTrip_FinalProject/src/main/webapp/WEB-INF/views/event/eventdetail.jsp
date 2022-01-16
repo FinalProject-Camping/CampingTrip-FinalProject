@@ -10,7 +10,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$.ajax({
+	url:"pointList.do",
+	method:"get",
+	success:function(data){
+		
+		console.log("success" + data)
+	}
+});
+</script>
 
 <style type="text/css">
 .eventdetail_content01 {
@@ -74,7 +84,7 @@ text-align:center;
 			<i class="far fa-file-powerpoint"></i> MY POINT !
 			<div>지금까지 획득한 포인트 내역</div>
 		</h1>
-			<c:set var = "total" value = "0" />
+ 			<c:set var = "total" value = "0" />
 					<c:forEach items="${list }" var="dto">	<!-- for(eventDto dto :list)와 같은 의미 -->
 						<div style='display:none;'>${dto.getPoint }</div>
 					<c:set var= "total" value="${total + dto.getPoint}"/>
@@ -112,7 +122,7 @@ text-align:center;
 				<th>획득한 날짜</th>
 				<th>획득 포인트</th>
 			</tr>
-			<c:choose>
+ 			<c:choose>
 				<c:when test="${empty list }">
 					<tr>
 						<td colspan="6" align="center">---------- 포인트가 없습니다. ----------</td>

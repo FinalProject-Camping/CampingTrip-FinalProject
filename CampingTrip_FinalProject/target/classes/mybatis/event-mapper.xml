@@ -13,12 +13,10 @@
 		<result property="usePoint" column="USEPOINT" />
 	</resultMap>
 
-	<select id="selectList" parameterType="String"
-		resultMap="eventMap">
-		SELECT POINTSEQ, POINTID, POINTDETAIL, POINTGETDATE,
-		GETPOINT, USEPOINT
-		FROM POINT
-		ORDER BY POINTSEQ DESC
+	<select id="selectList" parameterType="eventDto" resultMap="eventMap">
+		SELECT POINTSEQ, POINTID, POINTDETAIL, POINTGETDATE, GETPOINT, USEPOINT
+		FROM POINT, MYMEMBER
+		WHERE POINT.POINTID = #{pointId}
 	</select>
 
 	<insert id="insert" parameterType="eventDto">

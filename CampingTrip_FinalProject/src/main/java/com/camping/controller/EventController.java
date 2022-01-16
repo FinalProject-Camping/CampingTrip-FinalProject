@@ -37,7 +37,7 @@ public class EventController {
 	
 	@RequestMapping("/event.do")
 	public String list(HttpSession session, Model model) {	//model은 데이터 담는 객체 (model & view)
-		logger.info("SELECT LIST");
+		logger.info("Roulette event");
 		System.out.println("이벤트 페이지");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		
@@ -49,10 +49,19 @@ public class EventController {
 	}
 
 	@RequestMapping("/eventdetail.do")
-	public String detail(Model model) {
-		System.out.println("이벤트 상세페이지");
-		model.addAttribute("list", biz.selectList());
+	public String detail(HttpSession session, Model model) {
+		logger.info("point detail");
+		
 		return "event/eventdetail";
+	}
+	
+	@RequestMapping("/pointList.do")
+	public @ResponseBody List<eventDto> getPointList(HttpSession session) {
+		logger.info("Point List");
+		
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		
+		return biz.selectList(sessiondto.getMyid());
 	}
 	
 	@RequestMapping("/cscenter.do")
@@ -60,23 +69,6 @@ public class EventController {
 		System.out.println("고객센터");
 		return "cscenter/cscenter";
 	}
-	
-//	@ResponseBody
-//	@RequestMapping(value="/event_insert_point.do",method=RequestMethod.POST)
-//	public String insertPoint(HttpSession session, @RequestBody String point){
-//		HashMap<String,Object> params = new HashMap<String,Object>();
-//		
-//		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
-//		
-//		logger.info("point=" + point);
-//		
-//		params.put("pointId", sessiondto.getMyid());
-//		params.put("point", Integer.parseInt(point));
-//	
-//		biz.insertPoint(params);
-//		
-//	    return "SUCCESS";
-//	}
 	
 	@RequestMapping(value="/event_insert_point.do",method=RequestMethod.POST)
 	public @ResponseBody String insertPoint(@RequestParam Map<String, Object> param, HttpSession session){

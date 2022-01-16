@@ -17,11 +17,11 @@ public class eventDaoImpl implements eventDao {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public List<eventDto> selectList() {
+	public List<eventDto> selectList(String pointId) {
 		List<eventDto> list = new ArrayList<eventDto>();
 	
 		try {
-			list = sqlSession.selectList(NAMESPACE + "selectList");
+			list = sqlSession.selectList(NAMESPACE + "selectList", pointId);
 		} catch (Exception e) {
 			System.out.println("[error] : selectList");
 			e.printStackTrace();
