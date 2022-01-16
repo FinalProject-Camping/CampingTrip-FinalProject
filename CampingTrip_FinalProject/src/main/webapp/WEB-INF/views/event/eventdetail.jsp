@@ -10,15 +10,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="//font.elice.io/EliceDigitalBaeum.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style type="text/css">
 .eventdetail_content01 {
+	font-family: "Elice Digital Baeum",sans-serif;
 	margin: 30px;
 }
 
 .eventdetail_content01 h1 {
-	color: red;
+	color: #d49466;
 	text-align: center;
 	font-size: 40px;
 	margin-top: 100px;
@@ -57,10 +59,31 @@
 }
 
 .table{
-border-collapse :collapse;
-width:80%;
-text-align:center;
+	width: 100%;
+	border-collapse :collapse;
+	border-spacing: 0;
+	border-radius: 12px 12px 0 0;
+	overflow: hidden;
+	box-shadow: 0 2px 12px rgba(32,32,32,.3);
+	background: #fafafa;
+	text-align:center;
 }
+
+.table th,td{
+	padding: 12px 15px;
+}
+
+.table th{
+	background: #d49466;
+	color: #fafafa;
+	font-family: "Elice Digital Baeum",sans-serif;
+	font-size: 20px;
+}
+
+.table td{
+	
+}
+
 </style>
 
 </head>
@@ -103,7 +126,7 @@ text-align:center;
 		            '<tr>' +
 		            '<th>번호</th>' +
 		            '<th>이벤트 내용</th>' +
-		            '<th>획득한 날</th>' +
+		            '<th>획득한 날짜</th>' +
 		            '<th>획득 포인트</th>' +
 		            '</tr>';
 		            doc.innerHTML += html;
@@ -116,15 +139,16 @@ text-align:center;
 			            '<td>' + value.pointSeq + '</td>' +
 			            '<td>' + value.pointDetail + '</td>' +
 			            '<td>' + value.pointGetDate + '</td>' +
-			            '<td>' + value.getPoint + '</td>' +
+			            '<td>' + (value.getPoint).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '점 </td>' +
 			            '</tr>';
 			            doc.innerHTML += html2;
-			            
+
 					totalPoint += value.getPoint;
 					
 				})
+				const tp = totalPoint.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 				var html4 =
-					'현재까지 획득한 포인트는 ' + totalPoint + '점<span>&nbsp;&nbsp;입니다.</span>';
+					'현재까지 획득한 포인트는 ' + tp + '점<span>&nbsp;&nbsp;입니다.</span>';
 					doc2.innerHTML += html4;
 			}
 		});
