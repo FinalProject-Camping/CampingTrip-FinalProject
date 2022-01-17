@@ -341,5 +341,85 @@ public class MemberController {
 	}
 	
 	
+	/**
+	 * 회원탈퇴화면이동
+	 * @param session
+	 * @param dto
+	 * @return
+	 */
+	@RequestMapping("/memberPwCheck.do")
+	public String memberPwCheck(HttpSession session,Model model) {
+		logger.info("PWCHECK");
+		String myid = "";
+		//로그인 상태에서 메인으로 이동(리다이렉트)
+		if(session.getAttribute("id") != null && session.getAttribute("id") != "") {
+			myid = session.getAttribute("id").toString();
+		}
+		model.addAttribute("myid",myid);
+		return "member/memberPwCheck";
+	}
+	
+	
+	/**
+	 * 회원정보수정화면이동
+	 * @param session
+	 * @param dto
+	 * @return
+	 */
+	@RequestMapping("/memberDetailCheck.do")
+	public String memberDetailCheck(HttpSession session,Model model) {
+		logger.info("DETAILPWCHECK");
+		String myid = "";
+		//로그인 상태에서 메인으로 이동(리다이렉트)
+		if(session.getAttribute("id") != null && session.getAttribute("id") != "") {
+			myid = session.getAttribute("id").toString();
+		}
+		model.addAttribute("myid",myid);
+		return "member/memberDetailCheck";
+	}
+	
+	/**
+	 * pw검증
+	 * */
+
+
+	/**
+	 * 회원정보로 비밀번호초기화
+	 * @param session
+	 * @param dto
+	 * @return
+	 */
+	@RequestMapping("/ajaxPwCheck.do")
+	@ResponseBody
+	public Map<String, Boolean> ajaxPwCheck(HttpSession session, @RequestBody String mypw) {
+		logger.info("ajaxPwCheck");
+		//@RequestBody : request로 넘어오는 데이터를 java객체
+		//@ResponseBody : java객체를 response에 binding
+		Boolean res = false;
+
+
+		//1.로그인 정보에서 아이디 가져오기
+		String loginId = session.getAttribute("id").toString();
+
+		MemberDto param = new MemberDto();
+		param.setMyid(loginId);
+		//2.받아온 아이디로 회원정보 조회
+		MemberDto dto = biz.login(param);
+		
+		//3.db pw와 사용자가 입력한 pw 둘다 암호화 한 값으로 비교
+//		if(passwordEncoder.matches(dto.getMypw(), passwordEncoder.encode(mypw))) {
+		if(passwordEncoder.matches(mypw,dto.getMypw())) {
+			res = true;
+		}
+		//리턴값을 담을 변수 선언
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		
+		map.put("check", res);
+		
+		return map;
+	}
+	
+	
+	
 		
 }

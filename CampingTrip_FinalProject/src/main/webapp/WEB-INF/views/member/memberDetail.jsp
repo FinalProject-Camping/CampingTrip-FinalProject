@@ -70,7 +70,7 @@
 		}else if($('#myemail').val() =="" || $('#myemail').val() ==null ){
 			alert("이메일을 확인하세요.");
 		//주소 체크
-		}else if($('#myaddr').val() =="" || $('#myaddr').val() ==null){
+		}else if($('#myaddr').val() =="" || $('#myaddr').val() ==null ){
 			alert("주소를 확인하세요.");
 		}else{
 				var myno = $('form[name=memberInfoForm]').find('[name=myno]').val();
@@ -97,10 +97,10 @@
 					success:function(msg){
 						if(msg.check==true){
 							alert("회원정보 변경이 완료되었습니다.");
-							//location.href="loginform.do";
+							location.href="/controller";
 							//나중에 마이페이지로 이동하고 임시로 이전페이지로 이동
-							window.history.back();
-							
+/* 							window.history.back();
+ */							
 						}else{
 							alert("회원정보 변경에 실패했습니다. 다시 시도해주세요.");
 						}
@@ -219,7 +219,7 @@
 			
 			<p>
  			<div class="d-md-flex justify-content-md-end" style= "float:left;">
-				<button class="btn text-white" style= "background-color:#d49466; width:100px;" onclick="window.history.back();">취소</button>
+				<button class="btn text-white" style= "background-color:#d49466; width:100px;" onclick="location.href='/controller'";>취소</button>
 			</div>
 			<div class="d-md-flex justify-content-md-end" style="float:right; display:inline-block;">
 				<button  class="btn text-white" style="background-color:#198754; width:100px;" onclick="ajaxMemberUpdate();">변경하기</button>

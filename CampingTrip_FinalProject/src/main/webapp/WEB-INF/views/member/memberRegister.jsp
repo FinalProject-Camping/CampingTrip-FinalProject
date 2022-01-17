@@ -218,7 +218,6 @@
 $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).val().replace(/[^0-9]/gi,"") );})
 	
 
-//사용자, 판매자 라디오버튼 값을 출력
 	
 </script>
 </head>
@@ -322,7 +321,12 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
  
 			<c:choose>
 				<c:when test="${adminRole eq '관리자'}">
-					<input type="hidden" name="myrole" value="관리자">
+					<p>
+					<div style="text-align:left; font-size: 12pt;">회원구분</div>
+					<div style="width:100%; height:50px; float:left; margin-top:10px;" align="center" >
+						<input type="radio" name="myrole" value="관리자" checked='checked'>관리자
+					</div>
+					</p>
 				</c:when>
 				<c:otherwise>
 					<p>

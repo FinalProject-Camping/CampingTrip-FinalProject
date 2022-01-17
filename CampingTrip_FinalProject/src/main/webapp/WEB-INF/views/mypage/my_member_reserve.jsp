@@ -152,10 +152,15 @@ td {
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="member_reportlist.do">신고</a>
-						</li>
+						<li>
 						<li class="nav-item">
-							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
+						<a class="nav-link" href="memberDetailCheck.do">개인정보</a>
 						</li>
+						<li>
+						<li class="nav-item">
+						<a class="nav-link" href="memberPwCheck.do">회원탈퇴</a>
+						</li>
+
 					</ul>
 				</nav>
 			</div>
