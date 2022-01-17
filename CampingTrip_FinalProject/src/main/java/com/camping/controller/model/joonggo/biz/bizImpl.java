@@ -164,6 +164,10 @@ public class bizImpl implements biz{
 		}
 		
 		List<chat> chatlist = dao.chatlist(res.getRoomseq());
+		if(chatlist.size() == 1) {
+			dao.updateDate(res.getRoomseq());
+			chatlist = dao.chatlist(res.getRoomseq());
+		}
 		
 		return chatlist;
 	}
@@ -189,6 +193,19 @@ public class bizImpl implements biz{
 	public List<chat> chatRefresh(Map<String, Object> map) {
 		
 		return dao.chatRefresh(map);
+	}
+
+	@Override
+	public int setDelete(chat chat) {
+		
+		int res = dao.setDelete(chat);
+		if(res > 0) {
+			chat.setSender("exit");
+			return dao.sendMessage(chat);
+		}else {
+			return 0;
+		}
+		
 	}
 	
 	

@@ -37,7 +37,7 @@ $(function(){
 		<div class="row">
 			<div class="col" style="text-align: center; display:none;" id="no-pop">
 				<h2>error</h2>
-				<h3><a href="joonggo_list.do?keyword=">중고 메인 가기 ></a></h3>			
+				<h3><a href="index.jsp">캠핑트립 메인 가기 ></a></h3>			
 			</div>
 			
 			<div class="col" style="text-align: center; display:none;" id="pop">

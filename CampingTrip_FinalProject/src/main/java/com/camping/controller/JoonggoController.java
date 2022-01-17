@@ -781,7 +781,7 @@ public class JoonggoController {
 	    return maps;
 	}	
 	
-	
+	//채팅폼 - 채팅신청
 	@RequestMapping("/joonggo_chatform.do")
 	public String chatform(HttpSession session, Model model, chatroom chatroom) {
 		logger.info("chatform");
@@ -814,42 +814,37 @@ public class JoonggoController {
 		}
 	}
 	
+	//채팅방목록
 	@RequestMapping("/mychatlist.do")
-	@ResponseBody
-	public Map<String, Object> getchatlist(HttpSession session, String sessionid) {	
-	
+	public String getchatlist(HttpSession session, Model model) {	
 		
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
-		Map<String,Object> map = new HashMap<String,Object>();
 		
 		if(sessiondto != null) {
-			if(!sessiondto.getMyid().equals(sessionid)) {
-				map.put("data", false);
-			}else {
-				map.put("data", true);
-				
-				List<chatroom> roomlist = biz.getchatlist(sessionid);
-				ObjectMapper mapper = new ObjectMapper();
-				String toJson = null;
-				try {
-					toJson = mapper.writeValueAsString(roomlist);
-				} catch (JsonGenerationException e) {
-					e.printStackTrace();
-				} catch (JsonMappingException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			    map.put("roomlist",toJson);
-				
+			
+			List<chatroom> roomlist = biz.getchatlist(sessiondto.getMyid());
+			for(chatroom room : roomlist) {
+				room.setImglist(room.getImglist().split(",")[0]);
 			}
+			
+			List<chatroom> res = new ArrayList<chatroom>();
+			for(chatroom room : roomlist) {
+				List<chat> tmplist = biz.chatlist(room.getRoomseq());
+				if(tmplist.size() > 1) {
+					res.add(room);
+				}
+			}
+
+			model.addAttribute("list", res);
+			model.addAttribute("sessionid", sessiondto.getMyid());
 		}else {
-			map.put("data", false);
+			return "redirect:error.do";
 		}
-		return map;
+		
+		return "mypage/my_member_chat";
 	}
 	
-	
+	//특정 방 클릭 - 마이페이지
 	@RequestMapping("/joonggo_myroom.do")
 	public String myroom(HttpSession session, Model model, chatroom chatroom) {
 		logger.info("myroom");
@@ -863,19 +858,24 @@ public class JoonggoController {
 				model.addAttribute("writer", chatroom.getWriter());
 				
 				List<chat> list = biz.chatlist(chatroom.getRoomseq());
-				ObjectMapper mapper = new ObjectMapper();
-				String toJson = null;
-				try {
-					toJson = mapper.writeValueAsString(list);
-				} catch (JsonGenerationException e) {
-					e.printStackTrace();
-				} catch (JsonMappingException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
+				
+				if(list.size()==0) {
+					return "redirect:error.do";
+				}else {
+					ObjectMapper mapper = new ObjectMapper();
+					String toJson = null;
+					try {
+						toJson = mapper.writeValueAsString(list);
+					} catch (JsonGenerationException e) {
+						e.printStackTrace();
+					} catch (JsonMappingException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					model.addAttribute("list", toJson);
+					return "joonggo/joonggo_chatform";
 				}
-				model.addAttribute("list", toJson);
-				return "joonggo/joonggo_chatform";
 			}
 		}else {
 			return "redirect:error.do";
@@ -884,11 +884,11 @@ public class JoonggoController {
 	
 	@RequestMapping("/longpolling.do")
 	@ResponseBody
-	public Map<String, Object> longpolling(HttpServletRequest request ,HttpSession session, Model model, chatroom chatroom, String finaldate) {
+	public Map<String, Object> longpolling(HttpServletRequest request ,HttpSession session, Model model, chatroom chatroom, int finalseq) {
 		logger.info("longpolling");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		Map<String,Object> map = new HashMap<String,Object>();
-		System.out.println(finaldate);
+		System.out.println(finalseq);
 		
 		if(sessiondto != null) {
 			if(!sessiondto.getMyid().equals(chatroom.getUserid())) {
@@ -898,7 +898,7 @@ public class JoonggoController {
 				map.put("data", true);
 				
 				Map<String,Object> maps = new HashMap<String,Object>();
-				maps.put("finaldate", finaldate);
+				maps.put("finalseq", finalseq);
 				maps.put("roomseq", chatroom.getRoomseq());
 				
 				while(true) {
@@ -923,7 +923,7 @@ public class JoonggoController {
 					}
 					
 					try {
-						Thread.sleep(250);
+						Thread.sleep(125);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -959,13 +959,36 @@ public class JoonggoController {
 				}
 			}
 		}else {
-			map.put("data", "error");
+			map.put("data", false);
 		}
 		return map;
 	}
 	
 	
-
+	@RequestMapping("/joonggo_sendDeletemessage.do")
+	@ResponseBody
+	public Map<String, Object> sendDeletemessage(HttpSession session, chat chat) {
+		logger.info("sendmessage");
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		if(sessiondto != null) {
+			if(!sessiondto.getMyid().equals(chat.getSender())) {
+				map.put("data", false);
+			}else {
+				chat.setContent(chat.getSender() + "님이 퇴장하셨습니다.");
+				int res = biz.setDelete(chat);
+				if(res>0) {
+					map.put("data", true);
+				}else {
+					map.put("data", false);
+				}
+			}
+		}else {
+			map.put("data", false);
+		}
+		return map;
+	}
 	
 	
 	

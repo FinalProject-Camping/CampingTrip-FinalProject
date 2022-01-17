@@ -301,7 +301,7 @@
 		SELECT ROOMSEQ
 		FROM JOONGGO_CHAT
 		WHERE JOONGGOSEQ = #{joonggoseq}
-		AND ((USERID = #{userid} AND WRITER = #{writer}) OR (USERID = #{writer} AND WRITER = #{writer})) 
+		AND (USERID = #{userid} AND WRITER = #{writer})
 	</select>
 	
 	<insert id="createroom" parameterType="chatroomDto">
@@ -316,7 +316,7 @@
 	</insert>
 	
 	<select id="chatlist" parameterType="int" resultMap="chatMap">
-		SELECT *
+		SELECT ROOMSEQ, CHATSEQ, SENDER, CONTENT, SENDDATE 
 		FROM JOONGGO_CHAT_DETAIL
 		WHERE ROOMSEQ = #{roomseq}
 		ORDER BY CHATSEQ
@@ -337,11 +337,35 @@
 	</select>
 	
 	<select id="chatRefresh" parameterType="hashmap" resultMap="chatMap">
-		SELECT *
+		SELECT CHATSEQ, SENDER, CONTENT, SENDDATE 
 		FROM JOONGGO_CHAT_DETAIL
 		WHERE ROOMSEQ = #{roomseq}
-		AND SENDDATE > TO_DATE(#{finaldate}, 'YYYY-MM-DD HH24:MI:SS')
+		AND CHATSEQ > #{finalseq}
+		ORDER BY CHATSEQ
 	</select>
+	
+	<update id="setDelete" parameterType="chatDto">
+		UPDATE JOONGGO_CHAT
+		SET USERID =
+		CASE
+			WHEN USERID LIKE #{sender} THEN ''
+			ELSE USERID
+		END
+		,
+		WRITER = 
+		CASE
+			WHEN WRITER LIKE #{sender} THEN ''
+			ELSE WRITER
+		END
+		WHERE ROOMSEQ = #{roomseq}
+	</update>
+	
+	<update id="updateDate" parameterType="int">
+		UPDATE JOONGGO_CHAT_DETAIL
+		SET SENDDATE = SYSDATE
+		WHERE ROOMSEQ = #{roomseq}
+		AND SENDER = NULL
+	</update>
 	
 </mapper>
 
