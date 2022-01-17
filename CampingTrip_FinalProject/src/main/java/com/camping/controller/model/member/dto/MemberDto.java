@@ -1,5 +1,11 @@
 package com.camping.controller.model.member.dto;
 
+import com.camping.controller.model.camp.dto.CampDto;
+import com.camping.controller.model.camp.dto.ReservationDto;
+import com.camping.controller.model.camp.dto.RoomDto;
+import com.camping.controller.model.event.dto.eventDto;
+import com.camping.controller.model.joonggo.dto.report;
+
 public class MemberDto {
 	private int myno;
 	private String myid;
@@ -15,12 +21,26 @@ public class MemberDto {
 	private int mypenalty;	
 	
 	
+	// 쿼리로 join할 dto(마이페이지)
+	private report report;
+	private eventDto myPointDto;
+	private ReservationDto myReservDto;
+	private CampDto myCampDto;
+	private RoomDto myRoomdto;
+	
+	
 	public MemberDto() {
 		super();
 	}
 		
+	
+	
+	
+
 	public MemberDto(int myno, String myid, String mypw, String myname, String myaddr, String myphone, String myemail,
-			String mybirth, String mysex, String myenabled, String myrole, int mypenalty) {
+			String mybirth, String mysex, String myenabled, String myrole, int mypenalty,
+			com.camping.controller.model.joonggo.dto.report report, eventDto myPointDto, ReservationDto myReservDto,
+			CampDto myCampDto, RoomDto myRoomdto) {
 		super();
 		this.myno = myno;
 		this.myid = myid;
@@ -34,7 +54,63 @@ public class MemberDto {
 		this.myenabled = myenabled;
 		this.myrole = myrole;
 		this.mypenalty = mypenalty;
+		this.report = report;
+		this.myPointDto = myPointDto;
+		this.myReservDto = myReservDto;
+		this.myCampDto = myCampDto;
+		this.myRoomdto = myRoomdto;
 	}
+
+
+
+
+
+	public report getReport() {
+		return report;
+	}
+
+
+	public void setReport(report report) {
+		this.report = report;
+	}
+
+	public eventDto getMyPointDto() {
+		return myPointDto;
+	}
+
+	public void setMyPointDto(eventDto myPointDto) {
+		this.myPointDto = myPointDto;
+	}
+
+
+	public ReservationDto getMyReservDto() {
+		return myReservDto;
+	}
+
+	public void setMyReservDto(ReservationDto myReservDto) {
+		this.myReservDto = myReservDto;
+	}
+
+	public CampDto getMyCampDto() {
+		return myCampDto;
+	}
+
+
+	public void setMyCampDto(CampDto myCampDto) {
+		this.myCampDto = myCampDto;
+	}
+
+	public RoomDto getMyRoomdto() {
+		return myRoomdto;
+	}
+
+	public void setMyRoomdto(RoomDto myRoomdto) {
+		this.myRoomdto = myRoomdto;
+	}
+
+
+
+
 
 	public int getMyno() {
 		return myno;

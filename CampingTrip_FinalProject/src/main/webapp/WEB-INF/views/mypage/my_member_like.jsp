@@ -31,24 +31,46 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h3 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+
 #mypageText {
-	font-size: 25px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 32px;
 }
 
 #navbar {
-	height: 530px;
+	height: 590px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
+	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 13px;
+	font-size: 16px;
 }
 
 .submenu li {
@@ -58,7 +80,7 @@
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 17px;
+	font-size: 20px;
 }
 
 .card-img-top {
@@ -125,19 +147,15 @@ td {
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="text-decoration-none text-body font-weight-bold"
-								 id="mypageText" href="member_calendar.do">마이페이지</a></li>
+								 id="mypageText" href="member_reservlist.do">마이페이지</a></li>
 						<li class="nav-item">
-							<a class="nav-link" href="member_calendar.do">예약 리스트</a>
+							<a class="nav-link" href="member_reservlist.do">예약 리스트</a>
 							<ul class="submenu">
-								<li><a class="nav-link" href="member_calendar.do">캠핑일정</a>
 								<li><a class="nav-link" href="member_reservlist.do">예약완료/취소</a>
 							</ul>
 						</li>
 						<li class="nav-item active">
 							<a class="nav-link font-weight-bold" id="active" href="member_likelist.do">찜 리스트</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="member_pointlist.do">포인트 현황</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="memberDetail.do">개인정보</a>
@@ -147,6 +165,9 @@ td {
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="member_reportlist.do">신고</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
 						</li>
 					</ul>
 				</nav>
@@ -160,25 +181,8 @@ td {
 				<div class="row justify-content-center">
 					<div class="col-md-15 order-md-1">
 						<br>
-						<ul class="nav tabs-orange justify-content-center"
-							id="myClassicTabOrange" role="tablist">
-							<li class="nav-item"><a
-								class="nav-link  waves-light active show"
-								id="profile-tab-classic-orange" data-toggle="tab"
-								href="#profile-classic-orange" role="tab"
-								aria-controls="profile-classic-orange" aria-selected="true">
-									<button type="button" class="btn btn-primary btn-lg btn-block">중고물품</button>
-							</a></li>
-							<li class="nav-item"><a class="nav-link waves-light"
-								id="follow-tab-classic-orange" data-toggle="tab"
-								href="#follow-classic-orange" role="tab"
-								aria-controls="follow-classic-orange" aria-selected="false">
-									<button type="button" class="btn btn-primary btn-lg btn-block">중고거래</button>
-							</a></li>
-						</ul>
-						<!-- 탭부분 -->
-
-
+						<h3 class="mb-3" style="font-weight: bold; margin:auto; width:20%;">${loginId }님 찜리스트</h3>
+						<br>
 
 						<div class="tab-content card pt-5" id="myClassicTabContentOrange"
 							style="padding: 15px;">
@@ -200,41 +204,8 @@ td {
 														<img class="card-img-top" src="${row.imglist }">
 
 														<div class="card-body">
-															<h4 class="card-title">${row.title }</h4>
-															<a href="#" class="btn btn-primary">보러가기</a>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</div>
-							</div>
-
-
-
-
-							<!-- 중고거래부분 -->
-							<div class="tab-pane fade" id="follow-classic-orange"
-								role="tabpanel" aria-labelledby="follow-tab-classic-orange">
-								<div class="row">
-									<c:choose>
-										<c:when test="${empty list }">
-											<p>찜한 중고상품이 없습니다</p>
-										</c:when>
-
-										<c:otherwise>
-											<c:forEach items="${list }" var="dto">
-												<div class="col-sm" id="card">
-													<div class="card"
-														style="width: 288px; margin-bottom: 30px;">
-
-														<img class="card-img-top" src="img_avatar1.png"
-															alt="Card image">
-
-														<div class="card-body">
-															<h4 class="card-title">${dto.camp_name }</h4>
-															<a href="#" class="btn btn-primary">보러가기</a>
+															<h4 class="card-title">${row.title }</h4><br>
+															<a href="joonggo_selectone.do?seq=${row.seq}" class="btn btn-light-green btn-lg btn-block">보러가기</a>
 														</div>
 													</div>
 												</div>

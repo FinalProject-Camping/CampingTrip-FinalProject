@@ -40,6 +40,8 @@
 		<result property="mypenalty" column="MYPENALTY"/>
 		<collection property="report" resultMap="report"/>
 		<collection property="myPointDto" resultMap="myPointMap"/>
+		<collection property="myCampDto" resultMap="myCampMap"/>
+		<collection property="myReservDto" resultMap="myReservMap"/>
 	</resultMap>
 	
 	<resultMap type="report" id="report">
@@ -50,6 +52,7 @@
 		<result property="filepath" column="FILEPATH"/>
 		<result property="joonggoseq" column="JOONGGOSEQ"/>
 		<result property="writer" column="WRITER"/>
+		<collection property="myMemberDto" resultMap="myMemberMap"/>
 	</resultMap>
 	
 	
@@ -59,7 +62,7 @@
 		<result property="roomno" column="ROOMNO"/>
 		<result property="userid" column="USERID"/>
 		<result property="user_name" column="USER_NAME"/>
-		<result property="user_content" column="USER_CONTENT"/>
+		<result property="user_contact" column="USER_CONTACT"/>
 		<result property="guest_number" column="GUEST_NUMBER"/>
 		<result property="check_in" column="CHECK_IN"/>
 		<result property="check_out" column="CHECK_OUT"/>
@@ -109,19 +112,17 @@
 		<result property="pointGetDate" column="POINTGETDATE"/>
 		<result property="getPoint" column="GETPOINT"/>
 		<result property="usePoint" column="USEPOINT"/>
-		<result property="totalPoint" column="TOTALPOINT"/>
-		<result property="pointImg" column="POINTIMG"/>
 		<collection property="myMemberDto" resultMap="myMemberMap"/>
 	</resultMap>
 	
 	
-	<!-- member -->
+	<!-- 사용자 -->
 	<!-- 찜리스트 -->
 	<select id="likelist" resultType="myJoonggoDto">
-		SELECT JOONGGO_HEART.HEARTID, MYMEMBER.MYID, JOONGGO.ID, MYMEMBER.MYNAME, JOONGGO.TITLE, JOONGGO.IMGLIST
+		SELECT JOONGGO_HEART.HEARTID, MYMEMBER.MYID, JOONGGO.ID, MYMEMBER.MYNAME, JOONGGO.TITLE, JOONGGO.IMGLIST, JOONGGO.SEQ
 		FROM MYMEMBER, JOONGGO, JOONGGO_HEART
-		WHERE MYMEMBER.MYID = JOONGGO_HEART.HEARTID
-		AND JOONGGO.ID = JOONGGO_HEART.HEARTID
+		WHERE JOONGGO_HEART.HEARTID = MYMEMBER.MYID
+		AND JOONGGO_HEART.JOONGGOSEQ = JOONGGO.SEQ
 		AND MYMEMBER.MYID = #{userId}
 	</select>
 	
@@ -152,10 +153,6 @@
 	</select>
 	
 	
-	<!-- 캘린더 -->
-	<!-- <select id="myCalendarList" resultMap="myReservDto">
-		SELECT * FROM RESERVATION
-	</select> -->
 	
 	
 	
@@ -165,17 +162,43 @@
 	
 	
 	
+	<!-- 판매자 -->
+	
+	<!-- 메인화면 -->
+	<select id="reservList" resultType="myReservDto">
+		SELECT
+			RESERVATION.USERID,
+			MYMEMBER.MYID,
+			CAMP.WRITER,
+			CAMP.NAME,
+			CAMP.CAMPNO,
+			ROOM.ROOM_NAME,
+			RESERVATION.RESERVNO,
+			CAMP.NAME,
+			RESERVATION.USER_NAME,
+			RESERVATION.CHECK_IN,
+			RESERVATION.CHECK_OUT,
+			RESERVATION.GUEST_NUMBER,
+			RESERVATION.STATUS
+		FROM MYMEMBER
+		JOIN CAMP ON (MYMEMBER.MYID = CAMP.WRITER)
+		JOIN RESERVATION ON (CAMP.CAMPNO = RESERVATION.CAMPNO)
+		JOIN ROOM ON (ROOM.ROOMNO = RESERVATION.ROOMNO)
+		WHERE MYMEMBER.MYID = #{userId}
+		AND STATUS = 'Y'
+	</select>
 	
 	
-	
-	<!-- 업체 -->
-	<select id="reservList" parameterType="myReservDto" resultMap="myReservMap">
-		SELECT RESERVNO, CAMP.NAME, ROOM.ROOM_NAME, USER_NAME, CHECK_IN, CHECK_OUT, RESERVATION.GUEST_NUMBER, STATUS
+	<!-- 예약 detail -->
+	<select id="reservSelectOne" resultType="myReservDto" resultMap="myReservMap" parameterType="int">
+		SELECT RESERVNO, CAMP.NAME, ROOM.ROOM_NAME, USER_NAME, CHECK_IN, CHECK_OUT, RESERVATION.GUEST_NUMBER, STATUS, RESERVATION.CREATE_DATE, RESERVATION.USER_CONTACT
 		FROM RESERVATION
 		JOIN CAMP ON (RESERVATION.CAMPNO = CAMP.CAMPNO)
 		JOIN ROOM ON (RESERVATION.ROOMNO = ROOM.ROOMNO)
-		WHERE STATUS = 'Y'
+		WHERE RESERVATION.RESERVNO = #{reservno}
 	</select>
+	
+	
 	
 	<update id="reservUpdate" parameterType="myReservDto">
 		UPDATE RESERVATION
@@ -190,30 +213,70 @@
 	</update>
 	
 	
-	<select id="reservFinish" parameterType="myReservDto" resultMap="myReservMap">
-		SELECT RESERVNO, CAMP.NAME, ROOM.ROOM_NAME, USER_NAME, CHECK_IN, CHECK_OUT, RESERVATION.GUEST_NUMBER, STATUS
-		FROM RESERVATION
-		JOIN CAMP ON (RESERVATION.CAMPNO = CAMP.CAMPNO)
-		JOIN ROOM ON (RESERVATION.ROOMNO = ROOM.ROOMNO)
-		WHERE STATUS = 'N'
+	<select id="reservFinish" resultType="myReservDto">
+		SELECT
+			RESERVATION.USERID,
+			MYMEMBER.MYID,
+			CAMP.WRITER,
+			CAMP.NAME,
+			CAMP.CAMPNO,
+			ROOM.ROOM_NAME,
+			RESERVATION.RESERVNO,
+			CAMP.NAME,
+			RESERVATION.USER_NAME,
+			RESERVATION.CHECK_IN,
+			RESERVATION.CHECK_OUT,
+			RESERVATION.GUEST_NUMBER,
+			RESERVATION.STATUS
+		FROM MYMEMBER
+		JOIN CAMP ON (MYMEMBER.MYID = CAMP.WRITER)
+		JOIN RESERVATION ON (CAMP.CAMPNO = RESERVATION.CAMPNO)
+		JOIN ROOM ON (ROOM.ROOMNO = RESERVATION.ROOMNO)
+		WHERE MYMEMBER.MYID = #{userId}
+		AND STATUS = 'N'
 	</select>
 	
-	<select id="myreservCancel" parameterType="myReservDto" resultMap="myReservMap">
-		SELECT RESERVNO, CAMP.NAME, ROOM.ROOM_NAME, USER_NAME, CHECK_IN, CHECK_OUT, RESERVATION.GUEST_NUMBER, STATUS
-		FROM RESERVATION
-		JOIN CAMP ON (RESERVATION.CAMPNO = CAMP.CAMPNO)
-		JOIN ROOM ON (RESERVATION.ROOMNO = ROOM.ROOMNO)
-		WHERE STATUS = 'C'
+	<select id="myreservCancel" resultType="myReservDto">
+		SELECT
+			RESERVATION.USERID,
+			MYMEMBER.MYID,
+			CAMP.WRITER,
+			CAMP.NAME,
+			CAMP.CAMPNO,
+			ROOM.ROOM_NAME,
+			RESERVATION.RESERVNO,
+			CAMP.NAME,
+			RESERVATION.USER_NAME,
+			RESERVATION.CHECK_IN,
+			RESERVATION.CHECK_OUT,
+			RESERVATION.GUEST_NUMBER,
+			RESERVATION.STATUS
+		FROM MYMEMBER
+		JOIN CAMP ON (MYMEMBER.MYID = CAMP.WRITER)
+		JOIN RESERVATION ON (CAMP.CAMPNO = RESERVATION.CAMPNO)
+		JOIN ROOM ON (ROOM.ROOMNO = RESERVATION.ROOMNO)
+		WHERE MYMEMBER.MYID = #{userId}
+		AND STATUS = 'C'
 	</select>
 	
 	
+	<!-- 캠핑지 정보수정(판매자 캠핑지 리스트) -->
+	<select id="campInfoList" resultType="myCampDto">
+		SELECT CAMP.CAMPNO, CAMP.NAME, CAMP.ADDRESS
+		FROM CAMP
+		JOIN MYMEMBER ON (MYMEMBER.MYID = CAMP.WRITER)
+		WHERE MYMEMBER.MYID = #{userId}
+	</select>
 	
-	<select id="campInfoList" parameterType="myRoomdto" resultMap="myRoomMap">
-		SELECT CAMP.CAMPNO, ROOM.CAMPNO, ROOM.ROOMNO, CAMP.NAME, ROOM.ROOM_NAME
+	
+	<select id="roomList" resultType="myRoomdto">
+		SELECT ROOM.ROOMNO, ROOM.CAMPNO, ROOM_NAME, ROOM_PRICE, GUEST_NUMBER, ROOM_CONTENT
 		FROM ROOM
-		LEFT JOIN CAMP
-		ON (ROOM.CAMPNO = CAMP.CAMPNO)
+		JOIN CAMP ON (ROOM.CAMPNO = CAMP.CAMPNO)
+		JOIN MYMEMBER ON (MYMEMBER.MYID = CAMP.WRITER)
+		WHERE MYMEMBER.MYID = #{userId}
 	</select>
+	
 	
 	
 	<select id="selectOne" resultType="myRoomdto" parameterType="int">
@@ -235,20 +298,8 @@
 	
 	
 	
-	<!-- admin -->
+	<!-- 관리자 -->
 	
-	<!-- <select id="memberList" parameterType="myMemberDto" resultMap="myMemberMap">
-		SELECT MYNO, MYID, MYROLE, REPORTSEQ, MYPENALTY
-		FROM MYMEMBER
-		JOIN REPORT
-		ON REPORT.REPORTID = MYMEMBER.MYID
-	</select> -->
-	
-	<select id="memberList" parameterType="myMemberDto" resultMap="myMemberMap">
-		SELECT MYNO, MYID, MYROLE, MYPENALTY
-		FROM MYMEMBER
-	</select>
-
 	<delete id="memberDelete" parameterType="int">
 		DELETE MYMEMBER
 		WHERE MYNO=#{myno}
@@ -276,6 +327,121 @@
 		DELETE FROM CAMP
 		WHERE CAMPNO = #{campno}
 	</delete>
+	
+	<update id="myPenalty" parameterType="myMemberDto">
+		UPDATE MYMEMBER
+		SET MYPENALTY = MYPENALTY + 1
+		WHERE MYNO = #{myno}
+	</update>
+	
+	
+	
+	
+	<!-- 게시글 전체목록 조회 및 검색 조회 -->
+	<select id="listAll" resultType="com.camping.controller.model.member.dto.MemberDto">
+		SELECT *
+		FROM MYMEMBER
+		<!-- WHERE절을 include 태그로 삽입 -->
+		<include refid="search"/>
+		ORDER BY MYNO DESC
+	</select>
+	
+	<select id="camplistAll" resultType="com.camping.controller.model.camp.dto.CampDto">
+		SELECT *
+		FROM CAMP
+		<!-- WHERE절을 include 태그로 삽입 -->
+		<include refid="campsearch"/>
+		ORDER BY CAMPNO DESC
+	</select>
+	
+	<select id="reportlistAll" resultType="com.camping.controller.model.joonggo.dto.report">
+		SELECT *
+		FROM REPORT
+		<!-- WHERE절을 include 태그로 삽입 -->
+		<include refid="reportsearch"/>
+		ORDER BY REPORTSEQ DESC
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 게시글 레코드 갯수 -->
+	<select id="countAtricle" resultType="int">
+		SELECT COUNT(*) FROM MYMEMBER
+		<!-- WHERE절을 include 태그로 삽입 -->
+		<include refid="search"/>
+	</select>
+	
+	<select id="campcountAtricle" resultType="int">
+		SELECT COUNT(*) FROM CAMP
+		<!-- WHERE절을 include 태그로 삽입 -->
+		<include refid="campsearch"/>
+	</select>
+	
+	<select id="reportcountAtricle" resultType="int">
+		SELECT COUNT(*) FROM REPORT
+		<!-- WHERE절을 include 태그로 삽입 -->
+		<include refid="reportsearch"/>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- sql code 조각 -->
+	<!-- 반복되는 sql의 일부를 sql태그를 이용하여 따로 빼둘 수 있다 -->
+	<sql id="search">
+		<choose>
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			<when test="searchOption == 'all'">
+				WHERE MYID like '%'||#{keyword}||'%'
+				OR MYROLE like '%'||#{keyword}||'%'
+			</when>
+			<!-- 전체 검색이 아닐 경우 -->
+			<otherwise>
+				WHERE ${searchOption} like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
+	
+	
+	<sql id="campsearch">
+		<choose>
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			<when test="searchOption == 'all'">
+				WHERE ADDRESS like '%'||#{keyword}||'%'
+				OR ADDRESS_DETAIL like '%'||#{keyword}||'%'
+			</when>
+			<!-- 전체 검색이 아닐 경우 -->
+			<otherwise>
+				WHERE ${searchOption} like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
+	
+	
+	<sql id="reportsearch">
+		<choose>
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			<when test="searchOption == 'all'">
+				WHERE REPORTID like '%'||#{keyword}||'%'
+				OR REPORTCONTENT like '%'||#{keyword}||'%'
+				OR WRITER like '%'||#{keyword}||'%'
+			</when>
+			<!-- 전체 검색이 아닐 경우 -->
+			<otherwise>
+				WHERE ${searchOption} like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
+	
+	
 	
 </mapper>
 

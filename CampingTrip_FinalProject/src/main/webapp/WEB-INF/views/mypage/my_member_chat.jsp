@@ -32,24 +32,46 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h3 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+
 #mypageText {
-	font-size: 25px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 32px;
 }
 
 #navbar {
-	height: 530px;
+	height: 590px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
+	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 13px;
+	font-size: 16px;
 }
 
 .submenu li {
@@ -59,7 +81,7 @@
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 17px;
+	font-size: 20px;
 }
 
 /* 채팅 */
@@ -99,18 +121,17 @@ table.tableChat .even {
 .pcontent {
 	font-size: 18px;
 	font-weight: bold;
-	width: 300px;
+	width: 340px;
 }
 
 /* 채팅 말풍선 */
 .balloon {
 	position: relative;
-	width: 200px;
+	width: 350px;
 	height: 50px;
 	background: pink;
 	border-radius: 15px;
 	padding-top: 12px;
-	margin-left: 150px;
 }
 
 .balloon:after {
@@ -134,26 +155,22 @@ table.tableChat .even {
 </head>
 <body>
 <br><br>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2">
 				<nav class="navbar navbar-light" id="navbar">
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="text-decoration-none text-body font-weight-bold"
-								 id="mypageText" href="">마이페이지</a></li>
+								 id="mypageText" href="member_reservlist.do">마이페이지</a></li>
 						<li class="nav-item">
-							<a class="nav-link" href="memberreserve.do">예약 리스트</a>
+							<a class="nav-link" href="member_reservlist.do">예약 리스트</a>
 							<ul class="submenu">
-								<li><a class="nav-link" href="member_calendar.do">캠핑일정</a>
 								<li><a class="nav-link" href="member_reservlist.do">예약완료/취소</a>
 							</ul>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="member_likelist.do">찜 리스트</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="member_pointlist.do">포인트 현황</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="memberDetail.do">개인정보</a>
@@ -164,6 +181,9 @@ table.tableChat .even {
 						<li class="nav-item">
 							<a class="nav-link" href="member_reportlist.do">신고</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
+						</li>
 					</ul>
 				</nav>
 			</div>
@@ -173,11 +193,13 @@ table.tableChat .even {
 
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
-					<div class="col-md-10 order-md-1">
-						<br> <br>
+					<div class="col-md-13 order-md-1">
+						<br>
+						<h3 class="mb-3" style="font-weight: bold; margin:auto; width:20%;">${loginId }님 채팅 리스트</h3>
+						<br>
 						<table class="tableChat">
 							<colgroup>
-								<col width="200"><col width="100"><col width="100"><col width="500"><col width="800">
+								<col width="200"><col width="100"><col width="300"><col width="450"><col width="400">
 							</colgroup>
 							<thead>
 								<tr>

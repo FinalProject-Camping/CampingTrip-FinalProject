@@ -53,24 +53,46 @@
 
 <style type="text/css">
 
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+
 #mypageText {
-	font-size: 25px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 32px;
 }
 
 #navbar {
-	height: 530px;
+	height: 550px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
+	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 13px;
+	font-size: 16px;
 }
 
 .submenu li {
@@ -80,7 +102,12 @@
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 17px;
+	font-size: 20px;
+}
+
+.search {
+	padding-left : 155px;
+	margin-bottom : 20px;
 }
 
 /* 테이블 */
@@ -140,10 +167,12 @@ td {
 						<li class="nav-item active">
 							<a class="nav-link font-weight-bold" id="active" href="admin_camplist.do">캠핑지 등록 리스트</a>
 						</li>
-						<li class="nav-item"><a class="nav-link" href="admin_memberlist.do">회원 관리</a></li>
+						<li class="nav-item"><a class="nav-link" href="admin_list.do">회원 관리</a></li>
 						<li class="nav-item"><a class="nav-link" href="admin_reportlist.do">신고 내역</a></li>
 						<li class="nav-item"><a class="nav-link" href="">관리자 계정 추가</a></li>
-	             		<li class="nav-item"><a class="nav-link" href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
+						</li>
 					</ul>
 				</nav>
 			</div>
@@ -152,6 +181,24 @@ td {
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
 					<div class="col-md-12 order-md-1">
+						<br>
+						<h2 class="mb-3" style="font-weight: bold; margin:auto; width:20%;">캠핑지 등록 리스트</h2>
+						<br>
+						<div class="search">
+						<form name="form1" method="post" action="admin_camplist.do">
+							<select name="searchOption" style="font-family: 'EliceDigitalBaeum_Regular';height:36px;">
+								<!-- 검색조건을 검색처리 후 결과화면에 보여주기 위해 c:out 출력 태그 사용, 삼항연산자 -->
+								<option value="name" <c:out value="${map.searchOption == 'name'?'selected':'' }"/>>이름</option>
+								<option value="all" <c:out value="${map.searchOption == 'all'?'selected':'' }"/>>주소</option>
+							</select>
+							<input name="keyword" value="${map.keyword }" style="height:37px;">
+							<input type="submit" value="조회" class="btn btn-light-green btn-sm btn-block" style="font-family: 'EliceDigitalBaeum_Bold'; font-size:15px;">
+						</form>
+						
+						<!-- 레코드의 갯수를 출력 -->
+						<div style="font-family: 'EliceDigitalBaeum_Regular';">${map.count }개의 캠핑지가 검색되었습니다.</div>
+						</div>
+						
 						<table>
 							<colgroup>
 								<col width="170">
@@ -168,30 +215,21 @@ td {
 								</tr>
 							</thead>
 							<tbody>
-								<c:choose>
-									<c:when test="${empty list }">
-										<tr>
-											<td colspan="4" align="center">---------- 등록된 캠핑지가 없습니다 ----------</td>
-										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach items="${list }" var="dto">
+										<c:forEach var="row" items="${map.list }">
 											<tr>
-												<th>${dto.campno }</th>
-												<td>${dto.name }</td>
-												<td>${dto.address }&nbsp;${dto.address_detail }</td>
+												<th>${row.campno }</th>
+												<td>${row.name }</td>
+												<td>${row.address }&nbsp;${row.address_detail }</td>
 												<td>
 													<div class="buttonDiv">
 														<form action="admin_campdelete.do" method="post">
-															<input type="hidden" name="campno" value="${dto.campno }">
+															<input type="hidden" name="campno" value="${row.campno }">
 														<button type="submit" class="btn btn-danger btn-sm" onclick="campdelete();">삭제</button>
 														</form>
 													</div>
 												</td>
 											</tr>
 										</c:forEach>
-									</c:otherwise>
-								</c:choose>
 							</tbody>
 						</table>
 						<br>

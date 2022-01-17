@@ -21,26 +21,12 @@ public class MyCampBizImpl implements MyCampBiz {
 	@Autowired
 	private MyCampDao dao;
 
-	@Override
-	public List<CampDto> campList() {
-		return dao.campList();
-	}
-
-	@Override
-	public List<MemberDto> memberList() {
-		return dao.memberList();
-	}
 
 	@Override
 	public int memberDelete(int myno) {
 		return dao.memberDelete(myno);
 	}
 
-	@Override
-	public List<report> reportList() {
-		return dao.reportList();
-	}
-	
 	@Override
 	public report reportSelectOne(int reportseq) {
 		return dao.reportSelectOne(reportseq);
@@ -50,10 +36,62 @@ public class MyCampBizImpl implements MyCampBiz {
 	public int myCampDelete(int campno) {
 		return dao.myCampDelete(campno);
 	}
+	
+	@Override
+	public int myPenalty(MemberDto dto) {
+		return dao.myPenalty(dto);
+	}
+	
+	// 게시글 전체 목록 dao.listAll메서드 호출
+	@Override
+	public List<MemberDto> listAll(String searchOption, String keyword) throws Exception {
+		return dao.listAll(searchOption, keyword);
+	}
+	
+	@Override
+	public List<CampDto> camplistAll(String searchOption, String keyword) throws Exception {
+		return dao.camplistAll(searchOption, keyword);
+	}
+	
+	@Override
+	public List<report> reportlistAll(String searchOption, String keyword) throws Exception {
+		return dao.reportlistAll(searchOption, keyword);
+	}
+
+	
+	
+	
+	
+	// 게시글 레코드 갯수 dao.countAtricle 메서드
+	@Override
+	public int countAtricle(String searchOption, String keyword) throws Exception {
+		return dao.countAtricle(searchOption, keyword);
+	}
+	
+	@Override
+	public int campcountAtricle(String searchOption, String keyword) throws Exception {
+		return dao.campcountAtricle(searchOption, keyword);
+	}
+	
+	@Override
+	public int reportcountAtricle(String searchOption, String keyword) throws Exception {
+		return dao.reportcountAtricle(searchOption, keyword);
+	}
+	
+	
+	
+	
+	
+	
 
 	@Override
-	public List<RoomDto> campInfoList() {
-		return dao.campInfoList();
+	public List<CampDto> campInfoList(String userId) {
+		return dao.campInfoList(userId);
+	}
+	
+	@Override
+	public List<RoomDto> roomList(String userId) {
+		return dao.roomList(userId);
 	}
 
 	@Override
@@ -68,8 +106,8 @@ public class MyCampBizImpl implements MyCampBiz {
 	
 	
 	@Override
-	public List<ReservationDto> reservList() {
-		return dao.reservList();
+	public List<ReservationDto> reservList(String userId) {
+		return dao.reservList(userId);
 	}
 
 	@Override
@@ -83,13 +121,13 @@ public class MyCampBizImpl implements MyCampBiz {
 	}
 
 	@Override
-	public List<ReservationDto> reservFinish() {
-		return dao.reservFinish();
+	public List<ReservationDto> reservFinish(String userId) {
+		return dao.reservFinish(userId);
 	}
 
 	@Override
-	public List<ReservationDto> myreservCancel() {
-		return dao.myreservCancel();
+	public List<ReservationDto> myreservCancel(String userId) {
+		return dao.myreservCancel(userId);
 	}
 
 
@@ -114,11 +152,11 @@ public class MyCampBizImpl implements MyCampBiz {
 		return dao.myReservList(userId);
 	}
 
+	@Override
+	public ReservationDto reservSelectOne(int reservno) {
+		return dao.reservSelectOne(reservno);
+	}
 
-//	@Override
-//	public List<ReservationDto> myCalendarList() {
-//		return dao.myCalendarList();
-//	}
 
 
 }

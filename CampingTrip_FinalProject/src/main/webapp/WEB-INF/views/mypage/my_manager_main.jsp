@@ -11,32 +11,42 @@
 <title>마이페이지</title>
 
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 <!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css"
+	rel="stylesheet">
 
 <!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
 
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
 
 
 <script type="text/javascript">
 	function reserve() {
 		alert("예약이 확정되었습니다.");
 	}
-	
+
 	function reserveCancel() {
 		alert("예약이 취소되었습니다.");
 	}
@@ -46,24 +56,46 @@
 
 
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+
 #mypageText {
-	font-size: 25px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 32px;
 }
 
 #navbar {
-	height: 530px;
+	height: 550px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
+	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 13px;
+	font-size: 16px;
 }
 
 .submenu li {
@@ -73,7 +105,7 @@
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 17px;
+	font-size: 20px;
 }
 
 /* 테이블 */
@@ -116,33 +148,43 @@ td {
 	border-bottom: 1px solid #ccc;
 }
 
+tbody a {
+	text-decotation : none;
+	color : black;
+}
+
 .buttonDiv {
 	display: flex;
 }
 </style>
 </head>
 <body>
-<br><br>
+	<br>
+	<br>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2">
 				<nav class="navbar navbar-light" id="navbar">
 					<ul class="navbar-nav">
-						<li class="nav-item">
-							<a class="text-decoration-none text-body font-weight-bold"
-								 id="mypageText" href="manager_reservlist.do">마이페이지</a>
-						</li>
-						<li class="nav-item active">
-							<a class="nav-link font-weight-bold" id="active" href="manager_reservlist.do">예약 현황</a>
+						<li class="nav-item"><a
+							class="text-decoration-none text-body font-weight-bold"
+							id="mypageText" href="manager_reservlist.do">마이페이지</a></li>
+						<li class="nav-item active"><a
+							class="nav-link font-weight-bold" id="active"
+							href="manager_reservlist.do">예약 현황</a>
 							<ul class="submenu">
-								<li><a class="nav-link" href="manager_reservfinishlist.do">예약 완료</a>
-								<li><a class="nav-link" href="manager_reservcancellist.do">예약 취소</a>
-							</ul>
+								<li><a class="nav-link" href="manager_reservfinishlist.do">예약
+										완료</a>
+								<li><a class="nav-link" href="manager_reservcancellist.do">예약
+										취소</a>
+							</ul></li>
+						<li class="nav-item"><a class="nav-link"
+							href="manager_camplist.do">캠핑장 정보수정</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="memberDetail.do">개인정보</a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
 						</li>
-						<li class="nav-item"><a class="nav-link" href="manager_camplist.do">캠핑장 정보수정</a></li>
-						<li class="nav-item"><a class="nav-link" href="memberDetail.do">개인정보</a></li>
-						<li class="nav-item"><a class="nav-link" href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a></li>
-						
 					</ul>
 				</nav>
 			</div>
@@ -150,87 +192,73 @@ td {
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
 					<div class="col-md-13 order-md-1">
-						<br> <br>
-						<table>
-							<colgroup>
-								<col width="350">
-								<col width="1200">
-								<col width="1000">
-								<col width="1000">
-								<col width="1000">
-								<col width="1000">
-								<col width="1000">
-								<col width="1200">
-							</colgroup>
-							<thead>
-								<tr>
-									<th>예약번호</th>
-									<th>캠핑지</th>
-									<th>객실</th>
-									<th>예약자</th>
-									<th>체크인</th>
-									<th>체크아웃</th>
-									<th>인원</th>
-									<th>예약 여부</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:choose>
-									<c:when test="${empty list }">
+						<br>
+						<h2 class="mb-3" style="font-weight: bold; margin:auto; width:30%;">${loginId }님 캠핑지 예약 현황</h2>
+						<br>
+						<c:choose>
+							<c:when test="${map.count == 0 }">
+								<td colspan="7" align="center">-------------------- 예약대기중인 캠핑지가 없습니다 --------------------</td>
+							</c:when>
+
+							<c:otherwise>
+								<table>
+									<colgroup>
+										<col width="400">
+										<col width="1000">
+										<col width="1000">
+										<col width="1000">
+										<col width="1000">
+										<col width="1200">
+										<col width="1000">
+									</colgroup>
+									<thead>
 										<tr>
-											<td colspan="8" align="center">---------- 예약대기중인 캠핑지가 없습니다 ----------</td>
+											<th>예약번호</th>
+											<th>예약자</th>
+											<th>체크인</th>
+											<th>체크아웃</th>
+											<th>인원</th>
+											<th>예약상세보기</th>
+											<th>예약 여부</th>
 										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach items="${list }" var="dto">
+									</thead>
+									<tbody>
+										<c:forEach items="${map.list }" var="row" varStatus="i">
 											<tr>
-												<th>${dto.reservno }</th>
-												<td>${dto.myCampDto.name }</td>
-												<td>${dto.myRoomdto.room_name }</td>
-												<td>${dto.user_name }</td>
-												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.check_in }"/></td>
-												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.check_out }"/></td>
-												<td>${dto.guest_number }</td>
+												<th>${row.reservno }</th>
+												<td>${row.user_name }</td>
+												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.check_in }" /></td>
+												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.check_out }" /></td>
+												<td>${row.guest_number }</td>
+												<td><a href="manager_reservdetail.do?reservno=${row.reservno }"
+												onclick="window.open('manager_reservdetail.do?reservno=${row.reservno }', '예약상세보기','width=700, height=650 top=50, left=400'); return false">상세보기</a></td>
 												<td>
 													<div class="buttonDiv">
 														<form action="manager_reservupdate.do" method="post">
-															<input type="hidden" name="reservno" value="${dto.reservno }">
-															<button type="submit" class="btn btn-primary btn-sm" onclick="reserve();">예약확정</button>
+															<input type="hidden" name="reservno" value="${row.reservno }">
+															<button type="submit" class="btn btn-primary btn-sm"
+																onclick="reserve();">예약확정</button>
 														</form>
 														&nbsp;
 														<form action="manager_reservcancel.do" method="post">
-															<input type="hidden" name="reservno" value="${dto.reservno }">
-															<button type="submit" class="btn btn-danger btn-sm" onclick="reserveCancel();">예약취소</button>
+															<input type="hidden" name="reservno" value="${row.reservno }">
+															<button type="submit" class="btn btn-danger btn-sm"
+																onclick="reserveCancel();">예약취소</button>
 														</form>
 													</div>
 												</td>
 											</tr>
 										</c:forEach>
-									</c:otherwise>
-								</c:choose>
-							</tbody>
-						</table><br>
-						<nav aria-label="Page navigation example">
-							<ul class="pagination pg-blue justify-content-center">
-								<li class="page-item"><a class="page-link"
-									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-										<span class="sr-only">Previous</span>
-								</a></li>
-								<li class="page-item"><a class="page-link">1</a></li>
-								<li class="page-item"><a class="page-link">2</a></li>
-								<li class="page-item"><a class="page-link">3</a></li>
-								<li class="page-item"><a class="page-link"
-									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-										<span class="sr-only">Next</span>
-								</a></li>
-							</ul>
-						</nav>
+									</tbody>
+								</table>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 <br><br>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 </html>

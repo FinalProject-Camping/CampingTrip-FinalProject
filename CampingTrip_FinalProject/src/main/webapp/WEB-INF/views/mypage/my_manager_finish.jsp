@@ -31,24 +31,46 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+
 #mypageText {
-	font-size: 25px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 32px;
 }
 
 #navbar {
-	height: 530px;
+	height: 550px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
+	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 13px;
+	font-size: 16px;
 }
 
 .submenu li {
@@ -58,7 +80,7 @@
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 17px;
+	font-size: 20px;
 }
 
 /* 테이블 */
@@ -101,6 +123,11 @@ td {
 	border-bottom: 1px solid #ccc;
 }
 
+tbody a {
+	text-decoration : none;
+	color : black;
+}
+
 </style>
 </head>
 <body>
@@ -123,6 +150,9 @@ td {
 						</li>
 						<li class="nav-item"><a class="nav-link" href="manager_camplist.do">캠핑지 정보수정</a></li>
 						<li class="nav-item"><a class="nav-link" href="memberDetail.do">개인정보</a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
+						</li>
 					</ul>
 				</nav>
 			</div>
@@ -131,54 +161,53 @@ td {
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
 					<div class="col-md-13 order-md-1">
-						<br> <br>
-						<table>
-							<colgroup>
-								<col width="350">
-								<col width="1200">
-								<col width="1000">
-								<col width="1000">
-								<col width="1000">
-								<col width="1000">
-								<col width="1000">
-								<col width="1200">
-							</colgroup>
-							<thead>
-								<tr>
-									<th>예약번호</th>
-									<th>캠핑지</th>
-									<th>객실</th>
-									<th>예약자</th>
-									<th>체크인</th>
-									<th>체크아웃</th>
-									<th>인원</th>
-									<th>예약 여부</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:choose>
-									<c:when test="${empty list }">
+						<br>
+						<h2 class="mb-3" style="font-weight: bold; margin:auto; width:20%;">캠핑지 예약완료 리스트</h2>
+						<br>
+						<c:choose>
+							<c:when test="${map.count == 0 }">
+								<td colspan="7" align="center">-------------------- 예약이 완료된 캠핑지가 없습니다 --------------------</td>
+							</c:when>
+
+							<c:otherwise>
+								<table>
+									<colgroup>
+										<col width="350">
+										<col width="1000">
+										<col width="1000">
+										<col width="1000">
+										<col width="1000">
+										<col width="1200">
+										<col width="1000">
+									</colgroup>
+									<thead>
 										<tr>
-											<td colspan="8" align="center">---------- 예약 완료된 캠핑지가 없습니다 ----------</td>
+											<th>예약번호</th>
+											<th>예약자</th>
+											<th>체크인</th>
+											<th>체크아웃</th>
+											<th>인원</th>
+											<th>예약상세보기</th>
+											<th>예약 여부</th>
 										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach items="${list }" var="dto">
+									</thead>
+									<tbody>
+										<c:forEach items="${map.list }" var="row" varStatus="i">
 											<tr>
-												<th>${dto.reservno }</th>
-												<td>${dto.myCampDto.name }</td>
-												<td>${dto.myRoomdto.room_name }</td>
-												<td>${dto.user_name }</td>
-												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.check_in }"/></td>
-												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.check_out }"/></td>
-												<td>${dto.guest_number }</td>
-												<td>${dto.status }</td>
+												<th>${row.reservno }</th>
+												<td>${row.user_name }</td>
+												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.check_in }" /></td>
+												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.check_out }" /></td>
+												<td>${row.guest_number }</td>
+												<td><a href="manager_reservdetail.do?reservno=${row.reservno }"
+												onclick="window.open('manager_reservdetail.do?reservno=${row.reservno }', '예약상세보기','width=700, height=650 top=50, left=400'); return false">상세보기</a></td>
+												<td>예약완료</td>
 											</tr>
 										</c:forEach>
-									</c:otherwise>
-								</c:choose>
-							</tbody>
-						</table>
+									</tbody>
+								</table>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>

@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
 <title>마이페이지</title>
 
@@ -47,7 +48,7 @@
 	function memberdelete() {
 		alert("회원 탈퇴를 완료했습니다.");
 	}
-	function memberpenalty() {
+	function penalty() {
 		alert("회원에게 페널티를 부과했습니다.");
 	}
 	
@@ -57,24 +58,46 @@
 
 
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+H2 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+
 #mypageText {
-	font-size: 25px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 32px;
 }
 
 #navbar {
-	height: 530px;
+	height: 550px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
+	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 13px;
+	font-size: 16px;
 }
 
 .submenu li {
@@ -84,7 +107,12 @@
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 17px;
+	font-size: 20px;
+}
+
+.search {
+	padding-left : 140px;
+	margin-bottom : 20px;
 }
 
 /* 테이블 */
@@ -154,9 +182,12 @@ tbody a {
 						<li class="nav-item">
 							<a class="nav-link" href="admin_camplist.do">캠핑지 등록 리스트</a>
 						</li>
-						<li class="nav-item active"><a class="nav-link font-weight-bold" id="active" href="admin_memberlist.do">회원 관리</a></li>
+						<li class="nav-item active"><a class="nav-link font-weight-bold" id="active" href="admin_list.do">회원 관리</a></li>
 						<li class="nav-item"><a class="nav-link" href="admin_reportlist.do">신고 내역</a></li>
 						<li class="nav-item"><a class="nav-link" href="">관리자 계정 추가</a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
+						</li>
 					</ul>
 				</nav>
 			</div>
@@ -165,13 +196,31 @@ tbody a {
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
 					<div class="col-md-11 order-md-1">
+						<br>
+						<H2 class="mb-3" style="font-weight: bold; margin:auto; width:10%;">회원 관리</H2>
+						<br>
+						<div class="search">
+						<form name="form1" method="post" action="admin_list.do">
+							<select name="searchOption" style="font-family: 'EliceDigitalBaeum_Regular';height:36px;">
+								<!-- 검색조건을 검색처리 후 결과화면에 보여주기 위해 c:out 출력 태그 사용, 삼항연산자 -->
+								<option value="all" <c:out value="${map.searchOption == 'all'?'selected':'' }"/>>아이디+등급</option>
+								<option value="myid" <c:out value="${map.searchOption == 'myid'?'selected':'' }"/>>아이디</option>
+								<option value="myrole" <c:out value="${map.searchOption == 'role'?'selected':'' }"/>>등급</option>
+							</select>
+							<input name="keyword" value="${map.keyword }" style="height:37px;">
+							<input type="submit" value="조회" class="btn btn-light-green btn-sm btn-block" style="font-family: 'EliceDigitalBaeum_Bold'; font-size:15px;">
+						</form>
+						
+						<!-- 레코드의 갯수를 출력 -->
+						<div style="font-family: 'EliceDigitalBaeum_Regular';">${map.count }명의 회원이 검색되었습니다.</div>
+						</div>
 						<table>
 							<colgroup>
 								<col width="300">
 								<col width="1000">
 								<col width="1000">
 								<col width="1000">
-								<col width="450">
+								<col width="150">
 							</colgroup>
 							<thead>
 								<tr>
@@ -183,25 +232,21 @@ tbody a {
 								</tr>
 							</thead>
 							<tbody>
-								<c:choose>
-									<c:when test="${empty list }">
-										<tr>
-											<td colspan="5" align="center">---------- 가입된 회원이 없습니다 ----------</td>
-										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach items="${list }" var="dto">
+										<c:forEach var="row" items="${map.list }">
 											<tr>
-												<th>${dto.myno }</th>
-												<td>${dto.myid }</td>
-												<td>${dto.myrole }</td>
-												<td>${dto.mypenalty }</td>
+												<th>${row.myno }</th>
+												<td>${row.myid }</td>
+												<td>${row.myrole }</td>
+												<td>${row.mypenalty }</td>
 												<td>
 													<div class="buttonDiv">
-														<button type="submit" class="btn btn-danger btn-sm"
-															onclick="memberpenalty();">페널티</button>
+														<form action="admin_penalty.do" method="post">
+															<input type="hidden" name="myno" value="${row.myno }">
+															<button type="submit" class="btn btn-danger btn-sm"
+																onclick="penalty();">페널티</button>
+														</form>
 														<form action="admin_memdelete.do" method="post">
-															<input type="hidden" name="myno" value="${dto.myno }">
+															<input type="hidden" name="myno" value="${row.myno }">
 															<button type="submit" class="btn btn-danger btn-sm"
 																onclick="memberdelete();">탈퇴</button>
 														</form>
@@ -209,26 +254,8 @@ tbody a {
 												</td>
 											</tr>
 										</c:forEach>
-									</c:otherwise>
-								</c:choose>
 							</tbody>
 						</table>
-						<br>
-						<nav aria-label="Page navigation example">
-							<ul class="pagination pg-blue justify-content-center">
-								<li class="page-item">
-									<a class="page-link" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-										<span class="sr-only">Previous</span>
-								</a></li>
-								<li class="page-item"><a class="page-link">1</a></li>
-								<li class="page-item"><a class="page-link">2</a></li>
-								<li class="page-item"><a class="page-link">3</a></li>
-								<li class="page-item"><a class="page-link"
-									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-										<span class="sr-only">Next</span>
-								</a></li>
-							</ul>
-						</nav>
 					</div>
 				</div>
 			</div>

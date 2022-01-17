@@ -1,7 +1,9 @@
 package com.camping.controller.model.mypage.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,33 +25,6 @@ public class MyCampDaoImpl implements MyCampDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	@Override
-	public List<CampDto> campList() {
-		List<CampDto> list = new ArrayList<CampDto>();
-
-		try {
-			list = sqlSession.selectList(NAMESPACE + "campList");
-		} catch (Exception e) {
-			System.out.println("[error] : camp list");
-			e.printStackTrace();
-		}
-
-		return list;
-	}
-
-	@Override
-	public List<MemberDto> memberList() {
-		List<MemberDto> list = new ArrayList<MemberDto>();
-		
-		try {
-			list = sqlSession.selectList(NAMESPACE+"memberList");
-		} catch (Exception e) {
-			System.out.println("[error] : member list");
-			e.printStackTrace();
-		}
-		
-		return list;
-	}
 
 	@Override
 	public int memberDelete(int myno) {
@@ -64,21 +39,6 @@ public class MyCampDaoImpl implements MyCampDao {
 		}
 		
 		return res;
-	}
-
-	@Override
-	public List<report> reportList() {
-		List<report> list = new ArrayList<report>();
-		
-		try {
-			list = sqlSession.selectList(NAMESPACE+"reportList");
-		} catch (Exception e) {
-			System.out.println("[error] : report list");
-			e.printStackTrace();
-		}
-		
-		return list;
-
 	}
 	
 	
@@ -110,25 +70,108 @@ public class MyCampDaoImpl implements MyCampDao {
 
 		return res;
 	}
-
-	
-	
-
-	
 	
 	@Override
-	public List<RoomDto> campInfoList() {
-		List<RoomDto> list = new ArrayList<RoomDto>();
+	public int myPenalty(MemberDto dto) {
+		int res = 0;
 
 		try {
-			list = sqlSession.selectList(NAMESPACE + "campInfoList");
+			res = sqlSession.update(NAMESPACE + "myPenalty", dto);
 		} catch (Exception e) {
-			System.out.println("[error] : camp info list");
+			System.out.println("[error] : myPenalty update");
 			e.printStackTrace();
 		}
 
-		return list;
+		return res;
 	}
+	
+	
+	// 게시글 전체 목록
+	@Override
+	public List<MemberDto> listAll(String searchOption, String keyword) throws Exception {
+		// 검색옵션, 키워드 맵에 저장
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		
+		return sqlSession.selectList("mypage.listAll", map);
+	}
+	
+	
+	@Override
+	public List<CampDto> camplistAll(String searchOption, String keyword) throws Exception {
+		// 검색옵션, 키워드 맵에 저장
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+
+		return sqlSession.selectList("mypage.camplistAll", map);
+	}
+	
+	
+	
+	@Override
+	public List<report> reportlistAll(String searchOption, String keyword) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+
+		return sqlSession.selectList("mypage.reportlistAll", map);
+	}
+
+	
+	
+	
+	
+
+	// 게시글 레코드 갯수
+	@Override
+	public int countAtricle(String searchOption, String keyword) throws Exception {
+		// 검색옵션, 키워드 맵에 저장
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		
+		return sqlSession.selectOne("mypage.countAtricle", map);
+	}
+	
+	@Override
+	public int campcountAtricle(String searchOption, String keyword) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		
+		return sqlSession.selectOne("mypage.campcountAtricle", map);
+	}
+	
+	
+	@Override
+	public int reportcountAtricle(String searchOption, String keyword) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		
+		return sqlSession.selectOne("mypage.reportcountAtricle", map);
+
+	}
+	
+	
+	
+
+	
+
+	
+	// 캠핑지 정보수정(판매자 캠핑지 리스트)
+	@Override
+	public List<CampDto> campInfoList(String userId) {
+		return sqlSession.selectList("mypage.campInfoList", userId);
+	}
+	
+	@Override
+	public List<RoomDto> roomList(String userId) {
+		return sqlSession.selectList("mypage.roomList", userId);
+	}
+	
 
 	@Override
 	public RoomDto selectOne(int roomno) {
@@ -159,22 +202,31 @@ public class MyCampDaoImpl implements MyCampDao {
 	}
 
 	
-	
+	/* 판매자 메인화면 */
 	@Override
-	public List<ReservationDto> reservList() {
-		List<ReservationDto> list = new ArrayList<ReservationDto>();
-
+	public List<ReservationDto> reservList(String userId) {
+		return sqlSession.selectList("mypage.reservList", userId);
+	}
+	
+	/* 예약 detail */
+	@Override
+	public ReservationDto reservSelectOne(int reservno) {
+		ReservationDto dto = null;
+		
 		try {
-			list = sqlSession.selectList(NAMESPACE + "reservList");
+			dto = sqlSession.selectOne(NAMESPACE+"reservSelectOne", reservno);
 		} catch (Exception e) {
-			System.out.println("[error] : reservation list");
+			System.out.println("[error] : reservation select one");
 			e.printStackTrace();
 		}
-
-		return list;
+		
+		return dto;
 	}
-
 	
+	
+	
+	
+
 	@Override
 	public int reservUpdate(ReservationDto dto) {
 		int res = 0;
@@ -204,30 +256,13 @@ public class MyCampDaoImpl implements MyCampDao {
 	}
 
 	@Override
-	public List<ReservationDto> reservFinish() {
-		List<ReservationDto> list = new ArrayList<ReservationDto>();
-
-		try {
-			list = sqlSession.selectList(NAMESPACE + "reservFinish");
-		} catch (Exception e) {
-			System.out.println("[error] : reservation finish list");
-			e.printStackTrace();
-		}
-
-		return list;
+	public List<ReservationDto> reservFinish(String userId) {
+		return sqlSession.selectList("mypage.reservFinish", userId);
 	}
 
 	@Override
-	public List<ReservationDto> myreservCancel() {
-		List<ReservationDto> list = new ArrayList<ReservationDto>();
-		
-		try {
-			list = sqlSession.selectList(NAMESPACE+"myreservCancel");
-		} catch (Exception e) {
-			System.out.println("[error] : reservation cancel list");
-			e.printStackTrace();
-		}
-		return list;
+	public List<ReservationDto> myreservCancel(String userId) {
+		return sqlSession.selectList("mypage.myreservCancel", userId);
 	}
 
 
@@ -251,19 +286,6 @@ public class MyCampDaoImpl implements MyCampDao {
 	public List<ReservationDto> myReservList(String userId) {
 		return sqlSession.selectList("mypage.myReservList", userId);
 	}
-
-//	@Override
-//	public List<ReservationDto> myCalendarList() {
-//		List<ReservationDto> calendar = null;
-//		calendar = sqlSession.selectList(NAMESPACE+"myCalendarList");
-//		return calendar;
-//	}
-
-	
-	
-	
-
-	
 
 	
 

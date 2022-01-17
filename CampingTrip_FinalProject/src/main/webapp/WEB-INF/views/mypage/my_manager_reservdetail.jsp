@@ -29,14 +29,6 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
 <style type="text/css">
-@font-face {
-    font-family: 'EliceDigitalBaeum_Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
 /* 테이블 */
 table {
 	/* 테이블 화면 중앙으로 정렬 */
@@ -45,10 +37,6 @@ table {
 	border-collapse: collapse;
 	line-height: 1.5;
 }
-
-h3 {
-	font-family: 'EliceDigitalBaeum_Bold';
-}
 </style>
 
 </head>
@@ -56,32 +44,57 @@ h3 {
 	<div class="container-fluid">
 
 		<div class="col-md-14" id="contentDiv">
-		<br><br><br><br>
 			<div class="row justify-content-center">
+				<div class="col-md-5 order-md-1">
 					<br><br><br>
-					<h3 class="mb-3" style="font-weight: bold;">${dto.writer }님 신고접수내역 상세</h3>
+					<h3 class="mb-3" style="font-weight: bold;"></h3>
 					<br>
-
+					${dto.myCampDto.name } 예약 상세내역
 					<table class="table">
 						<tr>
-							<th class="grey lighten-2" scope="row">신고번호</th>
-							<td>${dto.reportseq }</td>
+							<th class="grey lighten-2" scope="row">예약번호</th>
+							<td>${dto.reservno }</td>
 						</tr>
 						<tr>
-							<th class="grey lighten-2" scope="row">신고자(reportid)</th>
-							<td>${dto.reportid }</td>
+							<th class="grey lighten-2" scope="row">예약시간</th>
+							<td><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.create_date }"/></td>
 						</tr>
 						<tr>
-							<th class="grey lighten-2" scope="row">신고내용</th>
-							<td>${dto.reportcontent }</td>
+							<th class="grey lighten-2" scope="row">캠핑지</th>
+							<td>${dto.myCampDto.name }</td>
 						</tr>
 						<tr>
-							<th class="grey lighten-2" scope="row">글 작성자</th>
-							<td>${dto.writer }</td>
+							<th class="grey lighten-2" scope="row">객실</th>
+							<td>${dto.myRoomdto.room_name }</td>
+						</tr>
+						<tr>
+							<th class="grey lighten-2" scope="row">예약자</th>
+							<td>${dto.user_name }</td>
+						</tr>
+						<tr>
+							<th class="grey lighten-2" scope="row">예약자 번호</th>
+							<td>${dto.user_contact }</td>
+						</tr>
+						<tr>
+							<th class="grey lighten-2" scope="row">체크인</th>
+							<td><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.check_in }"/></td>
+						</tr>
+						<tr>
+							<th class="grey lighten-2" scope="row">체크아웃</th>
+							<td><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.check_out }"/></td>
+						</tr>
+						<tr>
+							<th class="grey lighten-2" scope="row">인원</th>
+							<td>${dto.guest_number }</td>
+						</tr>
+						<tr>
+							<th class="grey lighten-2" scope="row">예약상태</th>
+							<td>${dto.status }</td>
 						</tr>
 					</table>
 				</div>
 			</div>
 		</div>
+	</div>
 </body>
 </html>
