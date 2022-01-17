@@ -318,9 +318,7 @@ textarea {
         // 유사배열을 배열로 변환 (forEach문으로 처리하기 위해)
         const fileArr = Array.from(input.files)
         const $colDiv1 = document.createElement("div")
-        const $colDiv2 = document.createElement("div")
         $colDiv1.classList.add("column")
-        $colDiv2.classList.add("column")
         fileArr.forEach((file, index) => {
             const reader = new FileReader()
             const $imgDiv = document.createElement("div")   
@@ -334,22 +332,18 @@ textarea {
             console.log(($img.naturalWidth)+","+($img.naturalHeight))
             reader.onload = e => {
                 $img.src = e.target.result
-                
+                $img.style.object-fit="cover"
                 $imgDiv.style.width = "200px"//($img.naturalWidth) * 0.2 + "px"
                 $imgDiv.style.height = "150px"//($img.naturalHeight) * 0.2 + "px"
+                $imgDiv.style.overflow="hidden"
             }
             
-            console.log(file.name)
-            if(index % 2 == 0) {
-                $colDiv1.appendChild($imgDiv)
-            } else {
-                $colDiv2.appendChild($imgDiv)
-            }
+            $colDiv1.appendChild($imgDiv)
+            
             
             reader.readAsDataURL(file)
         })
         multipleContainer.appendChild($colDiv1)
-        multipleContainer.appendChild($colDiv2)
    	 	}
 	}
 	//const inputMultipleImage = document.getElementById("input-multiple-image")
