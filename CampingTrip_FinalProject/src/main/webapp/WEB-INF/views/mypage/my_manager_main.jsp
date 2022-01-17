@@ -56,46 +56,24 @@
 
 
 <style type="text/css">
-@font-face {
-    font-family: 'EliceDigitalBaeum_Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'EliceDigitalBaeum_Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-h2 {
-	font-family: 'EliceDigitalBaeum_Bold';
-}
-
-
 #mypageText {
-	font-family: 'EliceDigitalBaeum_Bold';
-	font-size: 32px;
+	font-size: 25px;
 }
 
 #navbar {
-	height: 550px;
+	height: 530px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
-	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
-	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 16px;
+	font-size: 13px;
 }
 
 .submenu li {
@@ -105,7 +83,7 @@ h2 {
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 20px;
+	font-size: 17px;
 }
 
 /* 테이블 */
@@ -182,9 +160,6 @@ tbody a {
 							href="manager_camplist.do">캠핑장 정보수정</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="memberDetail.do">개인정보</a></li>
-						<li class="nav-item">
-							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
-						</li>
 					</ul>
 				</nav>
 			</div>
@@ -192,9 +167,7 @@ tbody a {
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
 					<div class="col-md-13 order-md-1">
-						<br>
-						<h2 class="mb-3" style="font-weight: bold; margin:auto; width:30%;">${loginId }님 캠핑지 예약 현황</h2>
-						<br>
+						<br> <br>
 						<c:choose>
 							<c:when test="${map.count == 0 }">
 								<td colspan="7" align="center">-------------------- 예약대기중인 캠핑지가 없습니다 --------------------</td>
@@ -203,7 +176,7 @@ tbody a {
 							<c:otherwise>
 								<table>
 									<colgroup>
-										<col width="400">
+										<col width="350">
 										<col width="1000">
 										<col width="1000">
 										<col width="1000">
@@ -253,6 +226,25 @@ tbody a {
 								</table>
 							</c:otherwise>
 						</c:choose>
+
+
+
+
+						<nav aria-label="Page navigation example">
+							<ul class="pagination pg-blue justify-content-center">
+								<li class="page-item"><a class="page-link"
+									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+										<span class="sr-only">Previous</span>
+								</a></li>
+								<li class="page-item"><a class="page-link">1</a></li>
+								<li class="page-item"><a class="page-link">2</a></li>
+								<li class="page-item"><a class="page-link">3</a></li>
+								<li class="page-item"><a class="page-link"
+									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+										<span class="sr-only">Next</span>
+								</a></li>
+							</ul>
+						</nav>
 					</div>
 				</div>
 			</div>

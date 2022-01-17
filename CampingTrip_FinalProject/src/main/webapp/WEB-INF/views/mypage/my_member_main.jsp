@@ -144,14 +144,11 @@ td {
 							<a class="nav-link" href="memberDetail.do">개인정보</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="mychatlist.do">채팅</a>
+							<a class="nav-link" href="chatlist.do">채팅</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="member_reportlist.do">신고</a>
 						</li>
-						<li class="nav-item">
-	             			<a class="nav-link" href="#" onclick="ajaxEnabledUpdate();">회원탈퇴</a>
-	             		</li>
 					</ul>
 				</nav>
 			</div>

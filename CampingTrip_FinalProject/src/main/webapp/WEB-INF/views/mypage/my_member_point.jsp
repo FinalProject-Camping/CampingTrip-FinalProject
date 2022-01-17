@@ -33,46 +33,24 @@
 
 
 <style type="text/css">
-@font-face {
-    font-family: 'EliceDigitalBaeum_Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'EliceDigitalBaeum_Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-h3 {
-	font-family: 'EliceDigitalBaeum_Bold';
-}
-
-
 #mypageText {
-	font-family: 'EliceDigitalBaeum_Bold';
-	font-size: 32px;
+	font-size: 25px;
 }
 
 #navbar {
-	height: 590px;
+	height: 530px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
-	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
-	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 16px;
+	font-size: 13px;
 }
 
 .submenu li {
@@ -82,9 +60,8 @@ h3 {
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 20px;
+	font-size: 17px;
 }
-
 
 /* 테이블 */
 table {
@@ -136,10 +113,11 @@ td {
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="text-decoration-none text-body font-weight-bold"
-								 id="mypageText" href="member_reservlist.do">마이페이지</a></li>
+								 id="mypageText" href="">마이페이지</a></li>
 						<li class="nav-item">
-							<a class="nav-link" href="member_reservlist.do">예약 리스트</a>
+							<a class="nav-link" href="member_calendar.do">예약 리스트</a>
 							<ul class="submenu">
+								<li><a class="nav-link" href="member_calendar.do">캠핑일정</a>
 								<li><a class="nav-link" href="member_reservlist.do">예약완료/취소</a>
 							</ul>
 						</li>
@@ -153,13 +131,10 @@ td {
 							<a class="nav-link" href="memberDetail.do">개인정보</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="mychatlist.do">채팅</a>
+							<a class="nav-link" href="chatlist.do">채팅</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="member_reportlist.do">신고</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
 						</li>
 					</ul>
 				</nav>
@@ -171,9 +146,7 @@ td {
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
 					<div class="col-md-13 order-md-1">
-						<br>
-						<h3 class="mb-3" style="font-weight: bold; margin:auto; width:20%;">${loginId }님 포인트 내역</h3>
-						<br>
+						<br> <br>
 						<c:choose>
 							<c:when test="${map.count == 0 }">
 								<td colspan="6" align="center">-------------------- 포인트 내역이 없습니다 --------------------</td>
