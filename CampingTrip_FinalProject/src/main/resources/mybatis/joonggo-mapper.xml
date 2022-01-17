@@ -316,7 +316,7 @@
 	</insert>
 	
 	<select id="chatlist" parameterType="int" resultMap="chatMap">
-		SELECT ROOMSEQ, SENDER, CONTENT, SENDDATE 
+		SELECT ROOMSEQ, CHATSEQ, SENDER, CONTENT, SENDDATE 
 		FROM JOONGGO_CHAT_DETAIL
 		WHERE ROOMSEQ = #{roomseq}
 		ORDER BY CHATSEQ
@@ -337,10 +337,11 @@
 	</select>
 	
 	<select id="chatRefresh" parameterType="hashmap" resultMap="chatMap">
-		SELECT SENDER, CONTENT, SENDDATE 
+		SELECT CHATSEQ, SENDER, CONTENT, SENDDATE 
 		FROM JOONGGO_CHAT_DETAIL
 		WHERE ROOMSEQ = #{roomseq}
-		AND SENDDATE > TO_DATE(#{finaldate}, 'YYYY-MM-DD HH24:MI:SS')
+		AND CHATSEQ > #{finalseq}
+		ORDER BY CHATSEQ
 	</select>
 	
 	<update id="setDelete" parameterType="chatDto">

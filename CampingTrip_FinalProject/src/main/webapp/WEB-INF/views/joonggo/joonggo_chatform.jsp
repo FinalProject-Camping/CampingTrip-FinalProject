@@ -137,7 +137,7 @@ hr{
 		var writer = '${writer}';
 		var roomseq;
 		let currdate = '';
-		let finaldate;
+		let finalseq;
 	
 		var createLeft = (content, date, sender) => {
 			var html = 
@@ -194,7 +194,7 @@ hr{
 				url:"longpolling.do",
 				data:{"roomseq":roomseq,
 					  "userid":userid,
-					  "finaldate":dateFormat(new Date(finaldate))},
+					  "finalseq": parseInt(finalseq)},
 				method: "post",
 				async: true,
 				success:function(data){ 
@@ -204,7 +204,7 @@ hr{
 						
 						datalist.forEach(chat => {
 							
-							finaldate = chat.senddate;
+							finalseq = chat.chatseq;
 							
 							var chatdate = dateFormat(new Date(chat.senddate)).split(' ')[0];
 							var chattime = getTime(dateFormat(new Date(chat.senddate)).split(' ')[1]);
@@ -264,7 +264,7 @@ hr{
 			
 			list.forEach(chat => {
 				
-				finaldate = chat.senddate;
+				finalseq = chat.chatseq;
 				
 				var chatdate = dateFormat(new Date(chat.senddate)).split(' ')[0];
 				var chattime = getTime(dateFormat(new Date(chat.senddate)).split(' ')[1]);

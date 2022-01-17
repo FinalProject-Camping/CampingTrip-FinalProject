@@ -826,17 +826,8 @@ public class JoonggoController {
 			for(chatroom room : roomlist) {
 				room.setImglist(room.getImglist().split(",")[0]);
 			}
-			/*
-			String toJson = null;
-			try {
-				toJson = mapper.writeValueAsString(roomlist);
-			} catch (JsonGenerationException e) {
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}*/
+			
+
 			model.addAttribute("list", roomlist);
 			model.addAttribute("sessionid", sessiondto.getMyid());
 		}else {
@@ -886,11 +877,11 @@ public class JoonggoController {
 	
 	@RequestMapping("/longpolling.do")
 	@ResponseBody
-	public Map<String, Object> longpolling(HttpServletRequest request ,HttpSession session, Model model, chatroom chatroom, String finaldate) {
+	public Map<String, Object> longpolling(HttpServletRequest request ,HttpSession session, Model model, chatroom chatroom, int finalseq) {
 		logger.info("longpolling");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		Map<String,Object> map = new HashMap<String,Object>();
-		System.out.println(finaldate);
+		System.out.println(finalseq);
 		
 		if(sessiondto != null) {
 			if(!sessiondto.getMyid().equals(chatroom.getUserid())) {
@@ -900,7 +891,7 @@ public class JoonggoController {
 				map.put("data", true);
 				
 				Map<String,Object> maps = new HashMap<String,Object>();
-				maps.put("finaldate", finaldate);
+				maps.put("finaldate", finalseq);
 				maps.put("roomseq", chatroom.getRoomseq());
 				
 				while(true) {
@@ -925,7 +916,7 @@ public class JoonggoController {
 					}
 					
 					try {
-						Thread.sleep(150);
+						Thread.sleep(125);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
