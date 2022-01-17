@@ -15,8 +15,8 @@ public class eventBizImpl implements eventBiz {
 	private eventDao dao;
 
 	@Override
-	public List<eventDto> selectList() {
-		return dao.selectList();
+	public List<eventDto> selectList(String pointId) {
+		return dao.selectList(pointId);
 	}
 
 	@Override

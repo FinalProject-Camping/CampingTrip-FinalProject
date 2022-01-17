@@ -45,6 +45,16 @@ public class CampController {
 		return "camping/camping_write";
 	}
 	
+	@RequestMapping(value="selectcamp_main.do",method=RequestMethod.POST)
+	@ResponseBody
+	public List<CampDto> selectcamp_main(){
+		List<CampDto> result=biz.topCampList();
+		List<CampDto> tmp = biz.newCampList();
+		for(int i = 0 ; i<tmp.size();i++) {
+			result.add(tmp.get(i));
+		}
+		return result;
+	}
 	@RequestMapping(value="/insertcamp.do", method=RequestMethod.POST)
 	public String insertCamp(CampDto dto, MultipartHttpServletRequest mRequest, RoomDto rdto) throws Exception {
 		 System.out.println(dto.toString());
@@ -86,7 +96,33 @@ public class CampController {
 		 
 		 return "camping/room_write";
 	}
-	
+	@RequestMapping("/updateCampForm.do")
+	public String updateCampForm(Model model,int campno) {
+		model.addAttribute("campDto", biz.selectOneCamp(campno));
+		return "camping/camping_update";
+	}
+	@RequestMapping("/campUpdateRes.do")
+	public String updateCampRes(CampDto dto, HttpServletResponse response) throws IOException {
+		int res=biz.updateCamp(dto);
+		if(res>0) {
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('성공적으로 수정되었습니다.'); location.href='campdetail.do?campno="+dto.getCampno()+"'</script>");
+            out.flush();
+		}
+		return "";
+	}
+	@RequestMapping("/deleteCamp.do")
+	public String deleteCamp(int campno, HttpServletResponse response) throws IOException {
+		int res=biz.deleteCamp(campno);
+		if(res>0) {
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('성공적으로 삭제되었습니다.'); location.href='camplist.do'; </script>");
+            out.flush();
+		}
+		return "";
+	}
 	@RequestMapping("/camplist.do")
 	public String campList(Model model){
 		 model.addAttribute("camplist",biz.selectAllCamp());
@@ -164,6 +200,7 @@ public class CampController {
 		model.addAttribute("campno", campno);
 		return "camping/review_write";
 	}
+
 	
 	@RequestMapping("reviewwriteres.do")
 	public String insertReview(ReviewDto dto,HttpServletResponse response) throws IOException {
@@ -179,6 +216,7 @@ public class CampController {
 		
 		System.out.println(dto.toString());
 		int res = biz.insertReview(dto);
+		int res1 = biz.updateTotalgrade(dto.getCampno());
 		int res2 = biz.reviewCount(dto.getCampno());
 		if(res>0) {
 			response.setContentType("text/html; charset=UTF-8");

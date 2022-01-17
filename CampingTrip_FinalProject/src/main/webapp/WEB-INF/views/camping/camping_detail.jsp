@@ -39,7 +39,7 @@
     font-weight: normal;
     font-style: normal;
 }
-.main, .detail_content {
+.main{
 	margin-top: 100px;
 }
 
@@ -55,7 +55,12 @@
 	border-radius: 1em;
 	padding:10px;
 }
-
+.writer_area{
+	display:flex;
+	align-content:center;
+	justify-content:flex-end;
+	height:100px;
+}
 .input-group {
 	width: 300px;
 }
@@ -134,7 +139,7 @@
 .review_element {
 	padding-top: 10px;
 	padding-bottom: 10px;
-	border: 1px solid gray;
+	border: 1px solid #e9ecef;
 	border-radius: 1em;
 	margin-bottom: 30px;
 }
@@ -173,7 +178,7 @@
 .room_price {
 	font-size: 20px;
 	font-weight: bold;
-	color: rgb(51, 103, 214);
+	color: rgb(255, 138, 61);
 }
 
 .room_people {
@@ -190,6 +195,9 @@
 	border: 1px solid gray;
 	border-radius:1em;
 	margin:0px;
+}
+#review_ajaxList{
+	margin-top:55px;
 }
 .card-body button{
 	font-weight:bold;
@@ -228,6 +236,45 @@
 	margin-right:3px;
 	margin-top:5px;
 	background-color:white;
+}
+#total_grade_sp{
+	font-family:'EliceDigitalBaeum_Bold';
+	font-size:20px;
+}
+#category_grade,#total_grade_value{
+	font-weight:bold;
+}
+.pagination {
+	justify-content: center;
+	margin-bottom:20px;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+    border-radius:50%;
+}
+.page-link:hover{
+	background-color:#19875475;
+	border-radius:50%;
+	color:white;
+}
+.page-item{
+	margin-left:5px;
+	margin-right:5px;
+}
+
+.page-link {
+	color:#198754;
+	border:0px;
+}
+.writer_btn{
+	width:115px;
+	height:50px;
+	font-weight:bold;
+	margin-left:10px;
+	margin-right:10px;
 }
 </style>
 <script type="text/javascript">
@@ -356,7 +403,7 @@
 					'#FF6D6E'
 				],
 				borderWidth:0,
-				data: [(${writerInfo.man}/${writerInfo.total})*100,(${writerInfo.woman}/${writerInfo.total})*100] }] 
+				data: [(${writerInfo.man}/(${writerInfo.man}+${writerInfo.woman}))*100,(${writerInfo.woman}/(${writerInfo.man}+${writerInfo.woman}))*100] }] 
 		}, 
 		// Configuration options go here 
 		options:{
@@ -446,7 +493,7 @@
 		window.open(url, name, options);
 	}
 	function openReviewWrite(campno){
-		var options = 'top=10, left=10, width=600, height=645, status=no, menubar=no, toolbar=no, resizable=no';
+		var options = 'top=10, left=10, width=585, height=645, status=no, menubar=no, toolbar=no, resizable=no';
 		window.open('reviewwrite.do?campno='+campno, 'reviewwrite', options);
 	}
 	function priceLocale(price){
@@ -503,7 +550,7 @@
 						$(result).each(function(){
 							var rPrice = (this.room_price).format();
 							comments +='<div class="room_info col-md-6 mt-3">';
-							comments +='<div class="card mb-3" style="max-width: 540px;">';							
+							comments +='<div class="card shadow mb-3" style="max-width: 540px;">';							
 							comments +='<div class="row g-0">';
 							comments +='	<div class="col-md-4">';
 							comments +='		<img src="'+this.thumbnail+'"';
@@ -513,7 +560,7 @@
 							comments +='		<div class="card-body">';
 							comments +='			<div class="room_title card-title"><a href="#" onclick="open_roomDetail('+this.roomno+')">'+this.room_name+'</a></div>';
 							comments +='			<div class="room_price">￦'+rPrice+'</div>';
-							comments +='			<div class="room_people">수용인원:'+this.guest_number+'</div>';
+							comments +='			<div class="room_people">정원:'+this.guest_number+'</div>';
 							comments +='			<button type="button" class="btn btn-warning book_btn mb-1"';
 							comments +='			onclick="openWindowPop(\'reservationform.do?roomno='+this.roomno+'\', \'reservform\')">예약하기</button>';
 							comments +='			</div></div></div></div></div>';
@@ -600,12 +647,99 @@
 			}
 		});
 	}
+	//페이징 처리 함수
+	function getPageList(totalPages, page, maxLength){
+        function range(start, end){
+          return Array.from(Array(end - start + 1), (_, i) => i + start);
+        }
+      
+        var sideWidth = maxLength < 9 ? 1 : 2;
+        var leftWidth = (maxLength - sideWidth * 2 - 3) >> 1;
+        var rightWidth = (maxLength - sideWidth * 2 - 3) >> 1;
+      
+        if(totalPages <= maxLength){
+          return range(1, totalPages);
+        }
+      
+        if(page <= maxLength - sideWidth - 1 - rightWidth){
+          return range(1, maxLength - sideWidth - 1).concat(0, range(totalPages - sideWidth + 1, totalPages));
+        }
+      
+        if(page >= totalPages - sideWidth - 1 - rightWidth){
+          return range(1, sideWidth).concat(0, range(totalPages- sideWidth - 1 - rightWidth - leftWidth, totalPages));
+        }
+      
+        return range(1, sideWidth).concat(0, range(page - leftWidth, page + rightWidth), 0, range(totalPages - sideWidth + 1, totalPages));
+      }
+      
+      $(function(){
+    
+        var numberOfItems = $("#review_ajaxList .review_element").length;
+        if(numberOfItems < 1){
+        	numberOfItems =1;
+        }
+        var limitPerPage = 3; //How many card items visible per a page
+        var totalPages = Math.ceil(numberOfItems / limitPerPage);
+        var paginationSize = 7; //How many page elements visible in the pagination
+        var currentPage;
+      
+        function showPage(whichPage){
+          if(whichPage < 1 || whichPage > totalPages) return false;
+      
+          currentPage = whichPage;
+      
+          $("#review_ajaxList .review_element").hide().slice((currentPage - 1) * limitPerPage, currentPage * limitPerPage).show();
+      
+          $(".pagination li").slice(1, -1).remove();
+      
+          getPageList(totalPages, currentPage, paginationSize).forEach(item => {
+            $("<li>").addClass("page-item").addClass(item ? "current-page" : "dots")
+            .toggleClass("active", item === currentPage).append($("<a>").addClass("page-link")
+            .attr({href: "javascript:void(0)"}).text(item || "...")).insertBefore(".next-page");
+          });
+      
+          $(".previous-page").toggleClass("disable", currentPage === 1);
+          $(".next-page").toggleClass("disable", currentPage === totalPages);
+          return true;
+        }
+      
+        $(".pagination").append(
+          $("<li>").addClass("page-item").addClass("previous-page").append($("<a>").addClass("page-link side").attr({href: "javascript:void(0)"}).append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">  <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg>')),
+          $("<li>").addClass("page-item").addClass("next-page").append($("<a>").addClass("page-link side").attr({href: "javascript:void(0)"}).append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/> </svg>'))
+        );
+      
+        $(".card-content").show();
+        showPage(1);
+      
+        $(document).on("click", ".pagination li.current-page:not(.active)", function(){
+          return showPage(+$(this).text());
+        });
+      
+        $(".next-page").on("click", function(){
+          return showPage(currentPage + 1);
+        });
+      
+        $(".previous-page").on("click", function(){
+          return showPage(currentPage - 1);
+        });
+      });
+      function updateCamp(){
+    	  if(confirm("캠핑지 수정페이지로 이동하시겠습니까?")){
+    		  location.href="updateCampForm.do?campno="+${campDto.campno};
+    	  }
+      }
+
+      function deleteCamp(){
+    	  if(confirm("해당 캠핑지를 삭제하시겠습니까?")){
+    		  location.href="deleteCamp.do?campno="+${campDto.campno};
+    	  }
+      }
 </script>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<div class="main container shadow mb-5">
-		<div class="camping_info row mt-3">
+		<div class="camping_info row mt-5">
 			<div class="col-md-6">
 				<div id="carouselExampleIndicators" class="carousel slide"
 					data-bs-ride="carousel">
@@ -686,7 +820,7 @@
 				</div>
 				<div class="camping_addr mb-1 text-muted">${campDto.address}
 					${campDto.address_detail}</div>
-				<div class="camping_intro mb-0 shadow">소개글소개글소개글소개글소개글소개글소개글소개글소개글소개글소개글소개글소개글</div>
+				<div class="camping_intro mb-0 shadow">${campDto.intro }</div>
 				<div class="camping_tags" id="camp${campDto.campno}">
 				
 						<c:if test="${!empty campDto.tags }">
@@ -702,6 +836,15 @@
 						</c:if>
 						</div> 
 			</div>
+		</div>
+		<div class="row writer_area">
+			<c:choose>
+				<c:when test="${loginId eq campDto.writer}">
+				
+				<button type="button" class="btn btn-warning writer_btn" onclick="updateCamp()">게시글 수정</button>
+				<button type="button" class="btn btn-warning writer_btn" onclick="deleceCamp()">게시글 삭제</button>
+				</c:when>
+			</c:choose>
 		</div>
 		<div class="detail_content row">
 			<div class="col-md-12">
@@ -726,7 +869,7 @@
 					<!-- 객실정보/예약 -->
 					<div class="tab-pane fade show active" id="room_info"
 						role="tabpanel" aria-labelledby="room-tab">
-						<div class="row mt-5">
+						<div class="row mt-5 mb-5">
 							<div class="col-md-12">
 								<span class="chk_date">체크인</span><span class="chk_date">체크아웃</span>
 							</div>
@@ -746,10 +889,9 @@
 							</div>
 						</div>
 						<div class="room_list row">
-							<div class="row mt-5">
 								<c:forEach items="${roomlist}" var="rdto">
 									<div class="room_info col-md-6 mt-3">
-										<div class="card mb-3" style="max-width: 540px;">
+										<div class="card shadow mb-3" style="max-width: 540px;">
 											<div class="row g-0">
 												<div class="col-md-4">
 													<img src="${rdto.thumbnail}"
@@ -760,7 +902,7 @@
 														<a href="#" onclick="open_roomDetail('${rdto.roomno}')"><div
 																class="room_title card-title">${rdto.room_name}</div></a>
 														<div class="room_price">￦${rdto.price_tostr()}</div>
-														<div class="room_people">수용인원:${rdto.guest_number}명</div>
+														<div class="room_people">정원:${rdto.guest_number}명</div>
 														<button type="button"
 															class="btn btn-warning book_btn mb-1"
 															onclick="moveToReservation('${rdto.roomno}')">예약하기</button>
@@ -771,7 +913,6 @@
 									</div>
 								</c:forEach>
 
-							</div>
 
 						</div>
 					</div>
@@ -830,7 +971,8 @@
 									&nbsp;연락처
 								</div>
 								<div class="sub_content">
-									${campDto.phone }
+									TEL) ${campDto.phone }<br>
+									Email) ${campDto.email }
 								</div>
 							</div>
 							<div class="detail_sub">
@@ -859,19 +1001,19 @@
 								<div class="col-12 sub_title mb-5">총 리뷰 수 :
 									${writerInfo.totalcnt}</div>
 								<div class="col-md-6">
-									<h5>총 평점</h5>
-									<span class='star-rating'><span
-										style='width:${writerInfo.total*20}%'></span></span>(${writerInfo.total}점)<br>
+									<span id="total_grade_sp">총 평점</span>
+									<span class='star-rating' id="total_grade_value"><span
+										style='width:${writerInfo.total*20}%'></span></span><span id="total_grade_value">(${writerInfo.total}점)</span><br>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-6" id="category_grade">
 									<span class="review_sub">서비스</span><span class='star-rating'><span
-										style='width: ${writerInfo.service*20}%'></span></span>( ${writerInfo.service}점)<br> <span
+										style='width: ${writerInfo.service*20}%'></span></span> (${writerInfo.service}점)<br> <span
 										class="review_sub">청결도</span><span class='star-rating'><span
-										style='width: ${writerInfo.cleanliness*20}%'></span></span>( ${writerInfo.cleanliness}점)<br>
+										style='width: ${writerInfo.cleanliness*20}%'></span></span> (${writerInfo.cleanliness}점)<br>
 									<span class="review_sub">가성비</span><span class='star-rating'><span
-										style='width: ${writerInfo.cost*20}%'></span></span>( ${writerInfo.cost}점)<br> <span
+										style='width: ${writerInfo.cost*20}%'></span></span> (${writerInfo.cost}점)<br> <span
 										class="review_sub">위치</span><span class='star-rating'><span
-										style='width: ${writerInfo.location*20}%'></span></span>( ${writerInfo.location}점)<br>
+										style='width: ${writerInfo.location*20}%'></span></span> (${writerInfo.location}점)<br>
 								</div>
 								<div class="col-12 sub_title mt-3 mb-5">이용고객 정보</div>
 								<div class="col-md-6">
@@ -897,7 +1039,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${reviewlist}" var="review">
-											<div class="review_element row">
+											<div class="review_element row shadow">
 												<div class="review_profile col-2">
 													<img class="rounded-circle img-fluid"
 														src="/resources/img/${review.thumbnail }">
@@ -916,6 +1058,16 @@
 										</c:forEach>
 									</c:otherwise>
 								</c:choose>
+								<div class="pagination">
+                    <li class="page-item previous-page disable"><a class="page-link side"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">  <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></a></li>
+                    <li class="page-item current-page active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item current-page"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item current-page"><a class="page-link" href="#">6</a></li>
+                    <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item current-page"><a class="page-link" href="#">10</a></li>
+                    <li class="page-item next-page"><a class="page-link side"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/> </svg></a></li>
+             					</div>
 								</div>
 							</div>
 						</div>

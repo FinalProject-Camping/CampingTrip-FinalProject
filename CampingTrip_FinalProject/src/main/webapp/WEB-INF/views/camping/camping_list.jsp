@@ -64,19 +64,47 @@
 	justify-content: space-between;
 }
 
+#search_camping_list{
+	display:flex;
+	flex-direction:column;
+	max-height:1444px;
+	min-height:600px;
+	padding:0px;
+}
 .camping_price {
 	font-weight: bold;
 	font-size: 27px;
+	color:rgb(255, 138, 61);
+}
+.pagination {
+	justify-content: center;
+	margin-bottom:20px;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+    border-radius:50%;
+}
+.page-link:hover{
+	background-color:#19875475;
+	border-radius:50%;
+	color:white;
+}
+.page-item{
+	margin-left:5px;
+	margin-right:5px;
 }
 
-.pagination {
-	margin-left: 45%;
-}
 
 .camping_info {
 	cursor: pointer;
 }
-
+.page-link {
+	color:#198754;
+	border:0px;
+}
 .side-btn {
 	background-color: white;
 	border: solid 1px darkgray;
@@ -84,6 +112,7 @@
 	padding-right: 10px;
 	padding-left: 10px;
 	height: 40px;
+	font-weight:bold;
 }
 
 .side-btn:hover {
@@ -190,6 +219,8 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 	margin:0px;
 }
 .camping_tags{
+
+	margin-top:5px;
 	height:48px;
 }
 .camping_header{
@@ -205,15 +236,44 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 }
 .tap_detail{
 	font-size:14px;
+	width:80px;
 	color:gray;
-	margin-left:10px;
 }
 .tag_style{
-	border: 1px solid gray;
+	border: 2px solid #198754;
 	border-radius:2em;
 	padding:3px;
-	color:gray;
+	font-weight:bold;
+	color:#198754;
 	margin-right:3px;
+	background-color:white;
+}
+.maintitleclass {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.1s;
+    font-family: EliceDigitalBaeum_Bold;
+}
+.active {
+    opacity: 1;
+    transition: opacity 1s;
+}
+#maintitle{
+
+	height:60px;
+	border:1px solid #e9ecef;
+	border-radius:8px;
+	font-size: 26px;
+	margin-bottom:40px;
+	margin-top:40px;
+	
+}
+.side{
+	border:0px;
+	
 }
 </style>
 
@@ -320,7 +380,7 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 											}
 										});
 
-						tablePagenation();
+						//tablePagenation();
 						
 						Number.prototype.format = function(){
 						    if(this==0) return 0;
@@ -383,75 +443,105 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 							</c:otherwise>
 						</c:choose>
 					})
-
-	function tablePagenation() {
-		/*
-		변수 생성
-		- rowsPerPage페이지당 보여줄 개수 20
-		- rows 가로행 tr 
-		- rowsCount 개수 100
-		- pageCount 페이지네이션 개수 = 100/20
-		- pagenumbers
-		콘솔에서 pageCount 찍어보고
-		 */
-		$("#numbers").empty();
-		var rowsPerPage = 10, rows = $('#search_camping_list .camping_element'), rowsCount = rows.length
-		pageCount = Math.ceil(rowsCount / rowsPerPage), numbers = $('#numbers');
-
-		/* 페이지네이션 li를 생성 반복문*/
-		numbers
-				.append('<li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>');
-		for (var i = 0; i < pageCount; i++) {
-			numbers
-					.append('<li class="page-item"><a class="page-link" href="">'
-							+ (i + 1) + '</a></li>');
-		}
-		numbers
-				.append('<li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a></li>');
-		//#numbers li:first-child a
-		numbers.find('li:nth-child(2) a').addClass('active');
-		numbers.find('li:nth-child(2)').addClass('active');
-
-		//페이지네이션 함수 displayRows
-		function displayRows(idx) {
-
-			var start = (idx) * rowsPerPage;
-			end = start + rowsPerPage;
-
-			rows.hide();
-			numbers.removeClass('active');
-			//해당하는 부분만 보여줌
-			//numbers.find('li:nth-child('+idx+')').addClass('active');
-			rows.slice(start, end).show();
-		}
-
-		displayRows(0);
-		//페이지네이션 클릭시 보여주기
-		/*
-			클릭한 그 a 태그의 active,
-			그 요소의 숫자를 dislplayRows의 매개변수로 지정
-		 */
-		numbers.find('li').click(function(e) {
-			//a태그의 이벤트를 막음
-			e.preventDefault();
-
-			numbers.find('li a').removeClass('active');
-			$(this).find('a').addClass('active');
-			var index = $(this).index();
-			displayRows(index - 1);
-		});
-	}
+	$(function(){
+		var maintitleOpacity = (idx) => {
+  		  $('.maintitleclass').eq(idx).removeClass('active');
+  		  idx = idx + 1 == 3? 0 : idx + 1;
+  		  $('.maintitleclass').eq(idx).addClass('active');
+  		  setTimeout( ()=>{maintitleOpacity(idx)}, 5500);
+  	  }
+  	  
+  	  setTimeout( ()=>{maintitleOpacity(0)}, 6500);
+	})
+	
+	//페이징 처리 함수
+	function getPageList(totalPages, page, maxLength){
+        function range(start, end){
+          return Array.from(Array(end - start + 1), (_, i) => i + start);
+        }
+      
+        var sideWidth = maxLength < 9 ? 1 : 2;
+        var leftWidth = (maxLength - sideWidth * 2 - 3) >> 1;
+        var rightWidth = (maxLength - sideWidth * 2 - 3) >> 1;
+      
+        if(totalPages <= maxLength){
+          return range(1, totalPages);
+        }
+      
+        if(page <= maxLength - sideWidth - 1 - rightWidth){
+          return range(1, maxLength - sideWidth - 1).concat(0, range(totalPages - sideWidth + 1, totalPages));
+        }
+      
+        if(page >= totalPages - sideWidth - 1 - rightWidth){
+          return range(1, sideWidth).concat(0, range(totalPages- sideWidth - 1 - rightWidth - leftWidth, totalPages));
+        }
+      
+        return range(1, sideWidth).concat(0, range(page - leftWidth, page + rightWidth), 0, range(totalPages - sideWidth + 1, totalPages));
+      }
+      
+      $(function(){
+        var numberOfItems = $("#search_camping_list .camping_element").length;
+        if(numberOfItems<1){
+        	numberOfItems=1;
+        }
+        var limitPerPage = 5; //How many card items visible per a page
+        var totalPages = Math.ceil(numberOfItems / limitPerPage);
+        var paginationSize = 7; //How many page elements visible in the pagination
+        var currentPage;
+      
+        function showPage(whichPage){
+          if(whichPage < 1 || whichPage > totalPages) return false;
+      
+          currentPage = whichPage;
+      
+          $("#search_camping_list .camping_element").hide().slice((currentPage - 1) * limitPerPage, currentPage * limitPerPage).show();
+      
+          $(".pagination li").slice(1, -1).remove();
+      
+          getPageList(totalPages, currentPage, paginationSize).forEach(item => {
+            $("<li>").addClass("page-item").addClass(item ? "current-page" : "dots")
+            .toggleClass("active", item === currentPage).append($("<a>").addClass("page-link")
+            .attr({href: "javascript:void(0)"}).text(item || "...")).insertBefore(".next-page");
+          });
+      
+          $(".previous-page").toggleClass("disable", currentPage === 1);
+          $(".next-page").toggleClass("disable", currentPage === totalPages);
+          return true;
+        }
+      
+        $(".pagination").append(
+          $("<li>").addClass("page-item").addClass("previous-page").append($("<a>").addClass("page-link side").attr({href: "javascript:void(0)"}).append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">  <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg>')),
+          $("<li>").addClass("page-item").addClass("next-page").append($("<a>").addClass("page-link side").attr({href: "javascript:void(0)"}).append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/> </svg>'))
+        );
+      
+        $(".card-content").show();
+        showPage(1);
+      
+        $(document).on("click", ".pagination li.current-page:not(.active)", function(){
+          return showPage(+$(this).text());
+        });
+      
+        $(".next-page").on("click", function(){
+          return showPage(currentPage + 1);
+        });
+      
+        $(".previous-page").on("click", function(){
+          return showPage(currentPage - 1);
+        });
+      });
 	function moveToCampwrite() {
-
+		var chk ='<%=session.getAttribute("role") %>';
 		//로그인이 없거나 페널티가 있는경우 안되게
 		$.ajax({
 			url : "loginChk.do",
 			method : "post",
 			success : function(data) {
 				if (data.data === true) {
-
-					location.href = 'insertform_camp.do';
-
+					if(chk==='판매자'){
+						location.href = 'insertform_camp.do';
+					}else{
+						alert("판매자인 회원만 이용가능한 서비스입니다.");
+					}
 				} else {
 					if (confirm("로그인이 필요한 작업입니다. 로그인 하시겠습니까?")) {
 						location.href = 'loginform.do';
@@ -467,10 +557,16 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
-	<br>
-	<br>
-	<br>
+
 	<div class="main container">
+		
+		<div class="shadow" id="maintitle" style="position:relative; padding-top:25px; padding-bottom:25px; height:87.5px;">
+			<div class="col" style="text-align: center;">
+				<span class="w-100 maintitleclass active"><span class="align-middle fas fa-fire fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;중고거래를 통해 필요한 캠핑용품을 마련해보세요</span>
+				<span class="w-100 maintitleclass"><span class="align-middle far fa-smile-wink fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;안전한 거래문화 함께 만들어요</span>
+				<span class="w-100 maintitleclass"><span class="align-middle fas fa-campground fa-2x" style="color:#d49466;"></span>&nbsp;&nbsp;캠핑예약과 캠핑용품구매 모두 캠핑트립에서!</span>
+			</div>		
+		</div>
 		<div id="search_condition" class="shadow">
 			<form action="searchCamp.do" method="post">
 				<div class="category_div">
@@ -671,9 +767,17 @@ input[type="range"]::-webkit-slider-thumb { /* 겹쳐진 두 thumb를 모두 활
 			</c:forEach>
 			</c:otherwise>
 			</c:choose>
-			<div id="pagination_div">
-				<ul class="pagination" id="numbers"></ul>
-			</div>
+			
+			 <div class="pagination">
+                    <li class="page-item previous-page disable"><a class="page-link side"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">  <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></a></li>
+                    <li class="page-item current-page active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item current-page"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item current-page"><a class="page-link" href="#">6</a></li>
+                    <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item current-page"><a class="page-link" href="#">10</a></li>
+                    <li class="page-item next-page"><a class="page-link side"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/> </svg></a></li>
+             </div>
 		</div>
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>

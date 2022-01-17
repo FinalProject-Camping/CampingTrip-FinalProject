@@ -69,10 +69,16 @@ a {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-
+.side{
+	width:200px;
+	margin-right:20px;
+}
 .reserv_column {
-	margin: 5px;
+	margin-top: 5px;
+	margin-bottom:5px;
 	font-weight: bold;
+	background-color:rgb(61 89 255 / 29%);
+	color:black;
 }
 
 input[type=text] {
@@ -80,7 +86,8 @@ input[type=text] {
 }
 
 .reserv_value {
-	margin: 5px;
+	margin-top: 5px;
+	margin-bottom:5px;
 }
 
 #main {
@@ -256,14 +263,14 @@ document.addEventListener('DOMContentLoaded', function() {
 					<c:set var="loginId" value='<%=session.getAttribute("id")%>' />
 					<input type="hidden" name="userid" value="${loginId}">
 					<div class="mt-3 reserv_row d-flex">
-						<div>
+						<div class="side">
 							<div class="reserv_column">체크인</div>
 							<div class="reserv_value">
 								<input type="text" name="check_in" id="check_in" required
 									readonly>
 							</div>
 						</div>
-						<div>
+						<div class="side">
 							<div class="reserv_column">체크아웃</div>
 							<div class="reserv_value">
 								<input type="text" name="check_out" id="check_out" required
@@ -271,26 +278,26 @@ document.addEventListener('DOMContentLoaded', function() {
 							</div>
 						</div>
 					</div>
-					<div class="row mt-3 reserv_row">
+					<div class="mt-3 reserv_row">
 						<div class="reserv_column">객실명</div>
 						<div class="reserv_value">
 							<input type="text" name="room_name" id="room_name"
 								value="${roomDto.room_name }" readonly>
 						</div>
 					</div>
-					<div class="row mt-3 reserv_row">
+					<div class="mt-3 reserv_row">
 						<div class="reserv_column">예약자 이름</div>
 						<div class="reserv_value">
 							<input type="text" name="user_name" id="user_name" required>
 						</div>
 					</div>
-					<div class="row mt-3 reserv_row">
+					<div class="mt-3 reserv_row">
 						<div class="reserv_column">예약자 연락처</div>
 						<div class="reserv_value">
 							<input type="text" name="user_contact" id="user_contact" required>
 						</div>
 					</div>
-					<div class="row mt-3 reserv_row">
+					<div class="mt-3 reserv_row">
 						<div class="reserv_column">숙박인원</div>
 						<div class="reserv_value">
 							<input type="text" name="guest_number" id="guest_number" required placeholder="최대 숙박인원 ${roomDto.guest_number} ">

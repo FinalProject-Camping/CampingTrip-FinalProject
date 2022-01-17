@@ -1,10 +1,14 @@
 package com.camping.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.JsonGenerationException;
@@ -36,23 +40,38 @@ public class EventController {
 	private eventBiz biz;
 	
 	@RequestMapping("/event.do")
-	public String list(HttpSession session, Model model) {	//model은 데이터 담는 객체 (model & view)
-		logger.info("SELECT LIST");
+	public String list(HttpSession session, HttpServletResponse response, Model model) throws IOException {	//model은 데이터 담는 객체 (model & view)
+		logger.info("Roulette event");
 		System.out.println("이벤트 페이지");
 		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
 		
 		if(sessiondto == null) {
-			return "../../index";
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('로그인이 필요한 서비스입니다.'); </script>");
+            out.flush();
+			return "member/memberLogin";
 		}else {
 			return "event/eventtest";
 		}
 	}
 
 	@RequestMapping("/eventdetail.do")
-	public String detail(Model model) {
-		System.out.println("이벤트 상세페이지");
-		model.addAttribute("list", biz.selectList());
+	public String detail(HttpSession session, Model model) {
+		logger.info("point detail");
+		
 		return "event/eventdetail";
+	}
+	
+	@RequestMapping("/pointList.do")
+	public @ResponseBody List<eventDto> getPointList(HttpSession session) {
+		logger.info("Point List");
+		
+		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
+		
+		List<eventDto> dto = biz.selectList(sessiondto.getMyid());
+		
+		return dto; 
 	}
 	
 	@RequestMapping("/cscenter.do")
@@ -60,23 +79,6 @@ public class EventController {
 		System.out.println("고객센터");
 		return "cscenter/cscenter";
 	}
-	
-//	@ResponseBody
-//	@RequestMapping(value="/event_insert_point.do",method=RequestMethod.POST)
-//	public String insertPoint(HttpSession session, @RequestBody String point){
-//		HashMap<String,Object> params = new HashMap<String,Object>();
-//		
-//		MemberDto sessiondto = (MemberDto) session.getAttribute("login");
-//		
-//		logger.info("point=" + point);
-//		
-//		params.put("pointId", sessiondto.getMyid());
-//		params.put("point", Integer.parseInt(point));
-//	
-//		biz.insertPoint(params);
-//		
-//	    return "SUCCESS";
-//	}
 	
 	@RequestMapping(value="/event_insert_point.do",method=RequestMethod.POST)
 	public @ResponseBody String insertPoint(@RequestParam Map<String, Object> param, HttpSession session){
@@ -87,7 +89,10 @@ public class EventController {
 		
 		logger.info("point=" + point);
 		
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		
 		params.put("pointId", sessiondto.getMyid());
+		params.put("pointGetDate", currentDate);
 		params.put("point", point);
 	
 		biz.insertPoint(params);

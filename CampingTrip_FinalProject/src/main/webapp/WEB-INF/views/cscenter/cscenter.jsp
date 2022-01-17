@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>고객센터</title>
+<link href="//font.elice.io/EliceDigitalBaeum.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
@@ -186,6 +187,7 @@ $(document).ready(function(){
 
 <style type="text/css">
 .cscenter_content {
+	font-family: "Elice Digital Baeum",sans-serif;
 	margin: 30px;
 }
 
@@ -204,6 +206,10 @@ $(document).ready(function(){
 
 .cscenter_faq {
 	padding: 50px;
+}
+
+.cscenter_faq h2{
+	font-family: "Elice Digital Baeum",sans-serif;
 }
 
 .cscenter_faq ul {
@@ -257,10 +263,17 @@ $(document).ready(function(){
 	padding: 50px;
 }
 
+.cscenter_guide h2{
+	font-family: "Elice Digital Baeum",sans-serif;
+}
+
 .cscenter_partnership {
 	padding: 50px;
 }
 
+.cscenter_partnership h2{
+	font-family: "Elice Digital Baeum",sans-serif;
+}
 </style>
 </head>
 

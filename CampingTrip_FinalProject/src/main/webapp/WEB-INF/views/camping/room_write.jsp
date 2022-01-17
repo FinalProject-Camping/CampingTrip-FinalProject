@@ -24,10 +24,16 @@
 	display: flex;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	
 }
 .title{
 	font-family:'EliceDigitalBaeum_Bold';
 	font-size:30px;
+}
+.title_style{
+	
+	background-color:#006bff7a;
+	color:white;
 }
 .room_column {
 	width: 100px;
@@ -253,35 +259,35 @@ textarea {
 </head>
 <body>
 	<div class="container">
-		<div class="room_row mt-3 mb-3">
+		<div class="room_row mt-3 mb-3 title_style row">
 			<span class="title">숙소 등록하기</span>
 		</div>
 		<form>
-			<div class="room_row">
+			<div class="room_row row">
 				<div class="room_column">숙소이름</div>
 				<div class="room_value">
 					<input type="text" name="room_name" id="room_name" required>
 				</div>
 			</div>
-			<div class="room_row">
+			<div class="room_row row">
 				<div class="room_column">숙박가격</div>
 				<div class="room_value">
 					<input type="text" name="room_price" id="room_price" required>
 				</div>
 			</div>
-			<div class="room_row">
+			<div class="room_row row">
 				<div class="room_column">숙박인원</div>
 				<div class="room_value">
 					<input type="text" name="guest_number" id="guest_number" required>
 				</div>
 			</div>
-			<div class="room_row">
+			<div class="room_row row">
 				<div class="room_column">상세설명</div>
 				<div class="room_value">
 					<textarea name="room_content" id="room_content" required></textarea>
 				</div>
 			</div>
-			<div class="room_row">
+			<div class="room_row row">
 				<div class="room_column">사진추가</div>
 				<div class="room_value" id="test">
 					<div class="form-group wrap-input2" id="file-list">
@@ -312,9 +318,7 @@ textarea {
         // 유사배열을 배열로 변환 (forEach문으로 처리하기 위해)
         const fileArr = Array.from(input.files)
         const $colDiv1 = document.createElement("div")
-        const $colDiv2 = document.createElement("div")
         $colDiv1.classList.add("column")
-        $colDiv2.classList.add("column")
         fileArr.forEach((file, index) => {
             const reader = new FileReader()
             const $imgDiv = document.createElement("div")   
@@ -328,22 +332,18 @@ textarea {
             console.log(($img.naturalWidth)+","+($img.naturalHeight))
             reader.onload = e => {
                 $img.src = e.target.result
-                
+                $img.style.object-fit="cover"
                 $imgDiv.style.width = "200px"//($img.naturalWidth) * 0.2 + "px"
                 $imgDiv.style.height = "150px"//($img.naturalHeight) * 0.2 + "px"
+                $imgDiv.style.overflow="hidden"
             }
             
-            console.log(file.name)
-            if(index % 2 == 0) {
-                $colDiv1.appendChild($imgDiv)
-            } else {
-                $colDiv2.appendChild($imgDiv)
-            }
+            $colDiv1.appendChild($imgDiv)
+            
             
             reader.readAsDataURL(file)
         })
         multipleContainer.appendChild($colDiv1)
-        multipleContainer.appendChild($colDiv2)
    	 	}
 	}
 	//const inputMultipleImage = document.getElementById("input-multiple-image")

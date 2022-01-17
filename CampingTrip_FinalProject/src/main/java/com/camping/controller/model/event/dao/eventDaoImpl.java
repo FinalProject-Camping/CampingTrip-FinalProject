@@ -10,18 +10,17 @@ import org.springframework.stereotype.Repository;
 
 import com.camping.controller.model.event.dto.eventDto;
 
-
 @Repository
 public class eventDaoImpl implements eventDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public List<eventDto> selectList() {
+	public List<eventDto> selectList(String pointId) {
 		List<eventDto> list = new ArrayList<eventDto>();
 	
 		try {
-			list = sqlSession.selectList(NAMESPACE + "selectList");
+			list = sqlSession.selectList(NAMESPACE + "selectList", pointId);
 		} catch (Exception e) {
 			System.out.println("[error] : selectList");
 			e.printStackTrace();
