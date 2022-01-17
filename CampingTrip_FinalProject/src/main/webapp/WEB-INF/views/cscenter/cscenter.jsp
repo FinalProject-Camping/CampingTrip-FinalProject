@@ -427,7 +427,7 @@ $(document).ready(function(){
 
 	<div class="cscenter_partnership">
 		<h2 style="clear: both;">제휴 문의</h2>
-		닙점문의 /상품관리 문의 등 제휴 고객센터 <br> <br> 입점문의 eoffhddl@gmail.com <br>
+		입점문의 / 상품관리 문의 등 제휴 고객센터 <br> <br> 입점문의 eoffhddl@gmail.com <br>
 		<br> 상품관리 등 제휴사 문의 capingtrip_partner@gmail.com
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
