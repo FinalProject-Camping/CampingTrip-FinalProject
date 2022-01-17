@@ -792,7 +792,8 @@ public class JoonggoController {
 				return "redirect:error.do";
 			}else {
 				model.addAttribute("userid", chatroom.getUserid());
-				model.addAttribute("writer", chatroom.getWriter());
+				model.addAttribute("writer_fix", chatroom.getWriter_fix());
+				model.addAttribute("joonggoseq", chatroom.getJoonggoseq());
 				
 				List<chat> list = biz.chatConfirm(chatroom);
 				ObjectMapper mapper = new ObjectMapper();
@@ -855,7 +856,8 @@ public class JoonggoController {
 				return "redirect:error.do";
 			}else {
 				model.addAttribute("userid", chatroom.getUserid());
-				model.addAttribute("writer", chatroom.getWriter());
+				model.addAttribute("writer_fix", chatroom.getWriter_fix());
+				model.addAttribute("joonggoseq", chatroom.getJoonggoseq());
 				
 				List<chat> list = biz.chatlist(chatroom.getRoomseq());
 				

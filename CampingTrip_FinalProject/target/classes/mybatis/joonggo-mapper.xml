@@ -57,6 +57,7 @@
 		<result property="imglist" column="IMGLIST"/>
 		<result property="userid" column="USERID"/>
 		<result property="writer" column="WRITER"/>
+		<result property="writer_fix" column="WRITER_FIX"/>
 		<result property="createdate" column="CREATEDATE"/>
 	</resultMap>
 	
@@ -301,7 +302,7 @@
 		SELECT ROOMSEQ
 		FROM JOONGGO_CHAT
 		WHERE JOONGGOSEQ = #{joonggoseq}
-		AND (USERID = #{userid} AND WRITER = #{writer})
+		AND (USERID = #{userid}) <!--  AND WRITER = #{writer} -->
 	</select>
 	
 	<insert id="createroom" parameterType="chatroomDto">
@@ -309,7 +310,7 @@
 			SELECT CHATROOMSEQ.NEXTVAL FROM DUAL		
 		</selectKey>
 		INSERT ALL
-			INTO JOONGGO_CHAT VALUES(#{roomseq}, #{joonggoseq}, #{userid}, #{writer}, SYSDATE)
+			INTO JOONGGO_CHAT VALUES(#{roomseq}, #{joonggoseq}, #{userid}, #{writer}, #{writer}, SYSDATE)
 			INTO JOONGGO_CHAT_DETAIL(ROOMSEQ, CHATSEQ, CONTENT, SENDDATE) VALUES(#{roomseq}, CHATSEQ.NEXTVAL, '거래는 판매자와 충분히 상의 후 진행해주세요.', SYSDATE)
 		SELECT * 
 		FROM DUAL

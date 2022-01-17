@@ -9,6 +9,7 @@ public class chatroom {
 	private String imglist;
 	private String userid;
 	private String writer;
+	private String writer_fix;
 	private Date createdate;
 	public chatroom() {
 		super();
@@ -66,6 +67,12 @@ public class chatroom {
 	}
 	public void setCreatedate(Date createdate) {
 		this.createdate = createdate;
+	}
+	public String getWriter_fix() {
+		return writer_fix;
+	}
+	public void setWriter_fix(String writer_fix) {
+		this.writer_fix = writer_fix;
 	}
 	
 	
