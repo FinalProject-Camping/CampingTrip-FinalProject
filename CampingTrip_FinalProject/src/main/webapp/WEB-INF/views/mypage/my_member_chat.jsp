@@ -220,7 +220,7 @@ table.tableChat .even {
 										<c:forEach items="${list }" var="dto">
 											<tr>
 												<th><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.createdate }"/></th>
-												<td>${dto.writer }</td>
+												<td>${dto.writer_fix }</td>
 												<td><img src="${dto.imglist}" width="100" height="100"></td>
 												<td style="float:left">
 													<div class="chatDiv">
@@ -240,7 +240,7 @@ table.tableChat .even {
 													</div>
 												</td>
 												<td>
-													<button class="btn_ shadow" onclick="chat(this)" seq="${dto.joonggoseq }" userid="${dto.userid }" writer="${dto.writer }" roomseq="${dto.roomseq }">채팅확인</button>
+													<button class="btn_ shadow" onclick="chat(this)" seq="${dto.joonggoseq }" userid="${dto.userid }" writer="${dto.writer_fix }" roomseq="${dto.roomseq }">채팅확인</button>
 													<button class="btn_ shadow" onclick="del(this)" roomseq="${dto.roomseq }" >나가기</button>
 												</td>
 											</tr>
@@ -275,7 +275,7 @@ table.tableChat .even {
 						method: "post",
 						success:function(data){ 
 							if(data.data === true){
-								popup("joonggo_myroom.do?joonggoseq="+seq+"&writer="+writer+"&userid=${sessionid}&roomseq="+roomseq, "채팅하기",450,620);
+								popup("joonggo_myroom.do?joonggoseq="+seq+"&writer_fix="+writer+"&userid=${sessionid}&roomseq="+roomseq, "채팅하기",450,620);
 							}else{
 								alert('로그인이 필요합니다.');
 								location.href='loginform.do';

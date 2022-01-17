@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>  
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -113,7 +113,14 @@ hr{
 </head>
 <body>
 	<div class="chat-header">
-		&nbsp;&nbsp;${writer }
+		&nbsp;&nbsp;${writer_fix}
+		<c:set var="userid_" value="${userid}"></c:set>
+		<c:set var="writer_fix" value="${writer_fix}"></c:set>
+		<c:choose>
+			<c:when test="${userid_ ne writer_fix}">
+				<span style="float:right;"><span onclick="report()" style="cursor: pointer; color:white; margin-right: 10px;" class="fas fa-exclamation-triangle h-100 fa-lg"></span></span>
+			</c:when>
+		</c:choose>
 	</div>
 		<div class="chat-body">
 		
@@ -134,7 +141,7 @@ hr{
 	
 	<script type="text/javascript">
 		var userid = '${userid}';
-		var writer = '${writer}';
+		var writer = '${writer_fix}';
 		var roomseq;
 		let currdate = '';
 		let finalseq;
@@ -296,7 +303,32 @@ hr{
 			longpolling();
 		})
 		
-	
+		
+		function report(){
+			$.ajax({
+				url:"confirmsession.do",
+				method: "post",
+				success:function(data){ 
+					if(data.data === true){
+						popup("joonggo_reportform.do?seq=${joonggoseq}&writer=${writer_fix}&reportid=${userid}", "신고하기",450,520);
+					}else{
+						alert('로그인이 필요합니다.');
+						location.href='loginform.do';
+					}
+				}
+			})
+		}
+		
+		function popup(url, name, width, height){
+		    var _width = width;
+		    var _height = height;
+		 
+		    // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
+		    var _left = Math.ceil(( window.screen.width - _width )/2);
+		    var _top = Math.ceil(( window.screen.height - _height )/2); 
+		 
+		    window.open(url, name, 'width='+ _width +', height='+ _height +', left=' + _left + ', top='+ _top +',status=no, toolbar=no, scrollbars=no, resizable=no');
+		}
 	</script>
 	
 </body>
