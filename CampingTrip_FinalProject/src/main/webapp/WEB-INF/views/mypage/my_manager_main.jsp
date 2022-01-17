@@ -56,24 +56,46 @@
 
 
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+
 #mypageText {
-	font-size: 25px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 32px;
 }
 
 #navbar {
-	height: 530px;
+	height: 550px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
+	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 13px;
+	font-size: 16px;
 }
 
 .submenu li {
@@ -83,7 +105,7 @@
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 17px;
+	font-size: 20px;
 }
 
 /* 테이블 */
@@ -134,6 +156,15 @@ tbody a {
 .buttonDiv {
 	display: flex;
 }
+
+tr > th {
+	font-family: 'EliceDigitalBaeum_Regular';
+	font-size : 16px;
+}
+tr > td {
+	font-size : 16px;
+}
+
 </style>
 </head>
 <body>
@@ -160,6 +191,9 @@ tbody a {
 							href="manager_camplist.do">캠핑장 정보수정</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="memberDetail.do">개인정보</a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
+						</li>
 					</ul>
 				</nav>
 			</div>
@@ -167,7 +201,9 @@ tbody a {
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
 					<div class="col-md-13 order-md-1">
-						<br> <br>
+						<br>
+						<h2 class="mb-3" style="font-weight: bold; margin:auto; width:30%;">${loginId }님 캠핑지 예약 현황</h2>
+						<br>
 						<c:choose>
 							<c:when test="${map.count == 0 }">
 								<td colspan="7" align="center">-------------------- 예약대기중인 캠핑지가 없습니다 --------------------</td>
@@ -176,13 +212,13 @@ tbody a {
 							<c:otherwise>
 								<table>
 									<colgroup>
-										<col width="350">
+										<col width="400">
 										<col width="1000">
 										<col width="1000">
 										<col width="1000">
 										<col width="1000">
-										<col width="1200">
-										<col width="1000">
+										<col width="1100">
+										<col width="400">
 									</colgroup>
 									<thead>
 										<tr>
@@ -204,18 +240,19 @@ tbody a {
 												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.check_out }" /></td>
 												<td>${row.guest_number }</td>
 												<td><a href="manager_reservdetail.do?reservno=${row.reservno }"
-												onclick="window.open('manager_reservdetail.do?reservno=${row.reservno }', '예약상세보기','width=700, height=650 top=50, left=400'); return false">상세보기</a></td>
+												onclick="window.open('manager_reservdetail.do?reservno=${row.reservno }', '예약상세보기','width=700, height=650 top=50, left=400'); return false">
+												<button class="btn" style="background-color:#198754; color:white; font-weight:bold;">상세보기</button></a></td>
 												<td>
 													<div class="buttonDiv">
 														<form action="manager_reservupdate.do" method="post">
 															<input type="hidden" name="reservno" value="${row.reservno }">
-															<button type="submit" class="btn btn-primary btn-sm"
+															<button type="submit" class="btn btn-primary btn-sm" style="font-size:14px; width:120px; height:45px;"
 																onclick="reserve();">예약확정</button>
 														</form>
 														&nbsp;
 														<form action="manager_reservcancel.do" method="post">
 															<input type="hidden" name="reservno" value="${row.reservno }">
-															<button type="submit" class="btn btn-danger btn-sm"
+															<button type="submit" class="btn btn-danger btn-sm" style="font-size:14px; width:120px; height:45px;"
 																onclick="reserveCancel();">예약취소</button>
 														</form>
 													</div>
@@ -226,25 +263,6 @@ tbody a {
 								</table>
 							</c:otherwise>
 						</c:choose>
-
-
-
-
-						<nav aria-label="Page navigation example">
-							<ul class="pagination pg-blue justify-content-center">
-								<li class="page-item"><a class="page-link"
-									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-										<span class="sr-only">Previous</span>
-								</a></li>
-								<li class="page-item"><a class="page-link">1</a></li>
-								<li class="page-item"><a class="page-link">2</a></li>
-								<li class="page-item"><a class="page-link">3</a></li>
-								<li class="page-item"><a class="page-link"
-									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-										<span class="sr-only">Next</span>
-								</a></li>
-							</ul>
-						</nav>
 					</div>
 				</div>
 			</div>

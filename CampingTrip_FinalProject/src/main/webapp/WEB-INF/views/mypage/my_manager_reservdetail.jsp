@@ -29,6 +29,25 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
 <style type="text/css">
+
+h2 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* 테이블 */
 table {
 	/* 테이블 화면 중앙으로 정렬 */
@@ -36,6 +55,14 @@ table {
 	width: 80%;
 	border-collapse: collapse;
 	line-height: 1.5;
+	font-size:30px;
+	font-weight : bold;
+}
+tr > th {
+	font-size:16px;
+}
+tr > td {
+	font-size:16px;
 }
 </style>
 
@@ -43,16 +70,13 @@ table {
 <body>
 	<div class="container-fluid">
 
-		<div class="col-md-14" id="contentDiv">
-			<div class="row justify-content-center">
-				<div class="col-md-5 order-md-1">
+		<div class="col-md-12" id="contentDiv">
 					<br><br><br>
-					<h3 class="mb-3" style="font-weight: bold;"></h3>
-					<br>
-					${dto.myCampDto.name } 예약 상세내역
+						<h2 style="font-weight: bold; margin:auto; width:43%;">${dto.myCampDto.name } 예약 상세내역</h2>
+						<br>
 					<table class="table">
 						<tr>
-							<th class="grey lighten-2" scope="row">예약번호</th>
+							<th class="grey lighten-2" scope="row" style="width:200px;">예약번호</th>
 							<td>${dto.reservno }</td>
 						</tr>
 						<tr>
@@ -94,7 +118,5 @@ table {
 					</table>
 				</div>
 			</div>
-		</div>
-	</div>
 </body>
 </html>

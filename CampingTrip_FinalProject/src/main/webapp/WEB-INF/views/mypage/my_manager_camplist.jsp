@@ -34,24 +34,46 @@
 
 <style type="text/css">
 
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+
 #mypageText {
-	font-size: 25px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 32px;
 }
 
 #navbar {
-	height: 530px;
+	height: 550px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
+	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 13px;
+	font-size: 16px;
 }
 
 .submenu li {
@@ -61,7 +83,7 @@
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 17px;
+	font-size: 20px;
 }
 
 /* 테이블 */
@@ -109,6 +131,14 @@ tbody a {
 	color : black;
 }
 
+tr > th {
+	font-family: 'EliceDigitalBaeum_Regular';
+	font-size : 18px;
+}
+tr > td {
+	font-size : 18px;
+}
+
 </style>
 </head>
 <body>
@@ -131,6 +161,9 @@ tbody a {
 						</li>
 						<li class="nav-item active"><a class="nav-link font-weight-bold" id="active" href="manager_camplist.do">캠핑지 정보수정</a></li>
 						<li class="nav-item"><a class="nav-link" href="memberDetail.do">개인정보</a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
+						</li>
 					</ul>
 				</nav>
 			</div>
@@ -139,6 +172,9 @@ tbody a {
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
 					<div class="col-md-12 order-md-1">
+						<br>
+						<h2 class="mb-3" style="font-weight: bold; margin:auto; width:25%;">${loginId }님 캠핑지 리스트</h2>
+						<br>
 						<c:choose>
 							<c:when test="${map.count == 0 }">
 								<td colspan="4" align="center">-------------------- 등록된 캠핑지가 없습니다 --------------------</td>
@@ -166,7 +202,7 @@ tbody a {
 											<td>${row.campno }</td>
 											<td>${row.name }</td>
 											<td>${row.address }</td>
-											<td><a href="manager_roomlist.do?campno=${row.campno }">객실확인</a></td>
+											<td><a href="manager_roomlist.do?campno=${row.campno }"><button class="btn" style="background-color:#198754; color:white; font-weight:bold;">객실확인</button></a></td>
 										</tr>
 									</c:forEach>
 									</tbody>

@@ -31,24 +31,46 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+
 #mypageText {
-	font-size: 25px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 32px;
 }
 
 #navbar {
-	height: 530px;
+	height: 550px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
+	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 13px;
+	font-size: 16px;
 }
 
 .submenu li {
@@ -58,7 +80,7 @@
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 17px;
+	font-size: 20px;
 }
 
 /* 테이블 */
@@ -106,6 +128,14 @@ tbody a {
 	color : black;
 }
 
+tr > th {
+	font-family: 'EliceDigitalBaeum_Regular';
+	font-size : 16px;
+}
+tr > td {
+	font-size : 16px;
+}
+
 </style>
 </head>
 <body>
@@ -128,6 +158,9 @@ tbody a {
 						</li>
 						<li class="nav-item"><a class="nav-link" href="manager_camplist.do">캠핑지 정보수정</a></li>
 						<li class="nav-item"><a class="nav-link" href="memberDetail.do">개인정보</a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
+						</li>
 					</ul>
 				</nav>
 			</div>
@@ -136,7 +169,9 @@ tbody a {
 			<div class="col-md-10" id="contentDiv">
 				<div class="row justify-content-center">
 					<div class="col-md-13 order-md-1">
-						<br> <br>
+						<br>
+						<h2 class="mb-3" style="font-weight: bold; margin:auto; width:20%;">캠핑지 예약완료 리스트</h2>
+						<br>
 						<c:choose>
 							<c:when test="${map.count == 0 }">
 								<td colspan="7" align="center">-------------------- 예약이 완료된 캠핑지가 없습니다 --------------------</td>
@@ -173,8 +208,9 @@ tbody a {
 												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${row.check_out }" /></td>
 												<td>${row.guest_number }</td>
 												<td><a href="manager_reservdetail.do?reservno=${row.reservno }"
-												onclick="window.open('manager_reservdetail.do?reservno=${row.reservno }', '예약상세보기','width=700, height=650 top=50, left=400'); return false">상세보기</a></td>
-												<td>${row.status }</td>
+												onclick="window.open('manager_reservdetail.do?reservno=${row.reservno }', '예약상세보기','width=700, height=650 top=50, left=400'); return false">
+												<button class="btn" style="background-color:#198754; color:white; font-weight:bold;">상세보기</button></a></td>
+												<td>예약완료</td>
 											</tr>
 										</c:forEach>
 									</tbody>

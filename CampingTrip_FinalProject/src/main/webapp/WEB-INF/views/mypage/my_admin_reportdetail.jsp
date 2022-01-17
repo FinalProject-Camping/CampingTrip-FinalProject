@@ -29,6 +29,14 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
 <style type="text/css">
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 /* 테이블 */
 table {
 	/* 테이블 화면 중앙으로 정렬 */
@@ -37,6 +45,17 @@ table {
 	border-collapse: collapse;
 	line-height: 1.5;
 }
+
+h3 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+tr > th {
+	font-size:17px;
+}
+tr > td {
+	font-size:17px;
+}
 </style>
 
 </head>
@@ -44,15 +63,15 @@ table {
 	<div class="container-fluid">
 
 		<div class="col-md-14" id="contentDiv">
+		<br><br><br><br>
 			<div class="row justify-content-center">
-				<div class="col-md-5 order-md-1">
 					<br><br><br>
 					<h3 class="mb-3" style="font-weight: bold;">${dto.writer }님 신고접수내역 상세</h3>
 					<br>
 
 					<table class="table">
 						<tr>
-							<th class="grey lighten-2" scope="row">신고번호</th>
+							<th class="grey lighten-2" scope="row" style="width:200px;">신고번호</th>
 							<td>${dto.reportseq }</td>
 						</tr>
 						<tr>
@@ -64,10 +83,6 @@ table {
 							<td>${dto.reportcontent }</td>
 						</tr>
 						<tr>
-							<th class="grey lighten-2" scope="row">증빙자료</th>
-							<td><img src="${dto.filepath }"></td>
-						</tr>
-						<tr>
 							<th class="grey lighten-2" scope="row">글 작성자</th>
 							<td>${dto.writer }</td>
 						</tr>
@@ -75,6 +90,5 @@ table {
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
 </html>

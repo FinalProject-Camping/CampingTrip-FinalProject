@@ -32,24 +32,46 @@
 
 <style type="text/css">
 
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2 {
+	font-family: 'EliceDigitalBaeum_Bold';
+}
+
+
 #mypageText {
-	font-size: 25px;
+	font-family: 'EliceDigitalBaeum_Bold';
+	font-size: 32px;
 }
 
 #navbar {
-	height: 530px;
+	height: 550px;
 	border-radius: 13px;
 	background-color: #c5e1a5;
+	font-family: 'EliceDigitalBaeum_Regular';
 }
 
 #active {
 	color: #558b2f;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .submenu {
 	list-style: none;
 	margin-left: -30px;
-	font-size: 13px;
+	font-size: 16px;
 }
 
 .submenu li {
@@ -59,7 +81,7 @@
 
 .nav-item {
 	margin-bottom: 10px;
-	font-size: 17px;
+	font-size: 20px;
 }
 
 /* 테이블 */
@@ -69,6 +91,16 @@ table {
 	width: 80%;
 	border-collapse: collapse;
 	line-height: 1.5;
+}
+tr > th {
+	font-family: 'EliceDigitalBaeum_Regular';
+	font-size : 18px;
+}
+tr > td {
+	font-size : 18px;
+}
+textarea {
+	border : none;
 }
 
 </style>
@@ -93,6 +125,9 @@ table {
 						</li>
 						<li class="nav-item active"><a class="nav-link font-weight-bold" id="active" href="manager_camplist.do">캠핑지 정보수정</a></li>
 						<li class="nav-item"><a class="nav-link" href="memberDetail.do">개인정보</a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="ajaxEnabledUpdate.do ">회원탈퇴</a>
+						</li>
 					</ul>
 				</nav>
 			</div>
@@ -102,62 +137,7 @@ table {
 				<div class="row justify-content-center">
 					<div class="col-md-8 order-md-1">
 						<br>
-						<h3 class="mb-3" style="font-weight:bold;">캠핑지 정보수정</h3><br>
-
-						<!--Carousel Wrapper-->
-						<div id="carousel-example-1z" class="carousel slide carousel-fade"
-							data-ride="carousel" data-touch="false" data-interval="false">
-							<!--Indicators-->
-							<ol class="carousel-indicators">
-								<li data-target="#carousel-example-1z" data-slide-to="0"
-									class="active"></li>
-								<li data-target="#carousel-example-1z" data-slide-to="1"></li>
-								<li data-target="#carousel-example-1z" data-slide-to="2"></li>
-							</ol>
-							<!--/.Indicators-->
-							<!--Slides-->
-							<div class="carousel-inner" role="listbox">
-								<!--First slide-->
-								<div class="carousel-item active">
-									<img class="d-block w-100"
-										src="${thumsnail }"
-										alt="First slide">
-								</div>
-								<!--/First slide-->
-								<!--Second slide-->
-								<div class="carousel-item">
-									<img class="d-block w-100"
-										src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).webp"
-										alt="Second slide">
-								</div>
-								<!--/Second slide-->
-								<!--Third slide-->
-								<div class="carousel-item">
-									<img class="d-block w-100"
-										src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).webp"
-										alt="Third slide">
-								</div>
-								<!--/Third slide-->
-							</div>
-							<!--/.Slides-->
-							<!--Controls-->
-							<a class="carousel-control-prev" href="#carousel-example-1z"
-								role="button" data-slide="prev">
-								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-								<span class="sr-only">Previous</span>
-							</a>
-							<a class="carousel-control-next" href="#carousel-example-1z"
-								role="button" data-slide="next"> <span
-								class="carousel-control-next-icon" aria-hidden="true"></span> <span
-								class="sr-only">Next</span>
-							</a>
-							<!--/.Controls-->
-						</div>
-						<!--/.Carousel Wrapper-->
-
-
-						<br>
-						<br> <br>
+						<h2 class="mb-3" style="font-weight:bold;">캠핑지 정보수정</h2><br>
 							<table class="table">
 								<tr>
 									<th class="grey lighten-2" scope="row">객실</th>
@@ -177,8 +157,10 @@ table {
 								</tr>
 							</table>
 							<br>
+							<div>
+							</div>
 							<input type="button" value="수정" onclick="location.href='manager_roomupdateform.do?roomno=${dto.roomno}'"
-							class="btn btn-light-green btn-lg btn-block">
+							class="btn btn-outline-success btn-rounded waves-effect" style="width: 400px; margin-left:350px; font-size:18px;">
 
 					</div>
 				</div>
