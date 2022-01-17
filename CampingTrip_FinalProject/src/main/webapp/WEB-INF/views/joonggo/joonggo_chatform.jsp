@@ -291,7 +291,7 @@ hr{
 			
 			//포커스
 			document.querySelector('.chat-body').scrollTop = document.querySelector('.chat-body').scrollHeight;
-			console.log(finaldate);
+			console.log(finalseq);
 			
 			longpolling();
 		})

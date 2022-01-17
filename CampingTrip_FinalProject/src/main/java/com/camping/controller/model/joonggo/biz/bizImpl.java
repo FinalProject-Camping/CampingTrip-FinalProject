@@ -164,6 +164,10 @@ public class bizImpl implements biz{
 		}
 		
 		List<chat> chatlist = dao.chatlist(res.getRoomseq());
+		if(chatlist.size() == 1) {
+			dao.updateDate(res.getRoomseq());
+			chatlist = dao.chatlist(res.getRoomseq());
+		}
 		
 		return chatlist;
 	}

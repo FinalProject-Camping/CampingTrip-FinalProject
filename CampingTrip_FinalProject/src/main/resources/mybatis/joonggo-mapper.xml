@@ -360,6 +360,13 @@
 		WHERE ROOMSEQ = #{roomseq}
 	</update>
 	
+	<update id="updateDate" parameterType="int">
+		UPDATE JOONGGO_CHAT_DETAIL
+		SET SENDDATE = SYSDATE
+		WHERE ROOMSEQ = #{roomseq}
+		AND SENDER = NULL
+	</update>
+	
 </mapper>
 
 

@@ -827,8 +827,15 @@ public class JoonggoController {
 				room.setImglist(room.getImglist().split(",")[0]);
 			}
 			
+			List<chatroom> res = new ArrayList<chatroom>();
+			for(chatroom room : roomlist) {
+				List<chat> tmplist = biz.chatlist(room.getRoomseq());
+				if(tmplist.size() > 1) {
+					res.add(room);
+				}
+			}
 
-			model.addAttribute("list", roomlist);
+			model.addAttribute("list", res);
 			model.addAttribute("sessionid", sessiondto.getMyid());
 		}else {
 			return "redirect:error.do";
@@ -891,7 +898,7 @@ public class JoonggoController {
 				map.put("data", true);
 				
 				Map<String,Object> maps = new HashMap<String,Object>();
-				maps.put("finaldate", finalseq);
+				maps.put("finalseq", finalseq);
 				maps.put("roomseq", chatroom.getRoomseq());
 				
 				while(true) {

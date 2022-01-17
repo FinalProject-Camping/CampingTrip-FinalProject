@@ -416,6 +416,20 @@ public class daoImpl implements dao{
 		
 		return res;
 	}
+
+	@Override
+	public int updateDate(int roomseq) {
+
+		int res = 0;
+		
+		try {
+			res = sqlSession.update(NAMESPACE + "updateDate", roomseq);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 	
 
 
