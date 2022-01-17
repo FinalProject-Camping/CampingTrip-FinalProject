@@ -1,6 +1,7 @@
 package com.camping.controller.model.joonggo.biz;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -186,7 +187,39 @@ public class bizImpl implements biz{
 
 	@Override
 	public List<chatroom> getchatlist(String sessionid) {
-		return dao.getchatlist(sessionid);
+		
+		List<chatroom> all = dao.getchatlist_all(sessionid);
+		List<chatroom> only = dao.getchatlist(sessionid);
+		System.out.println(all.size());
+		System.out.println(only.size());
+		
+		if(all.size() != only.size()) {
+			
+			for(int i = 0; i < all.size(); i++) {
+				
+				boolean flag = false;
+				for(int j = 0; j < only.size(); j++) {
+					
+					if(all.get(i).getRoomseq() == only.get(j).getRoomseq()) {
+						all.set(i, only.get(j));
+						flag = true;
+						break;
+					}
+					
+				}
+				if(!flag) {
+					all.get(i).setImglist("");
+					all.get(i).setTitle("삭제된 게시글");
+				}
+				
+			}
+			
+			return all;
+			
+			
+		}else {
+			return only;
+		}
 	}
 
 	@Override
