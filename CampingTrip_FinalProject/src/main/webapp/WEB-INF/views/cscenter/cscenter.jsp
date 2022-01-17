@@ -192,7 +192,7 @@ $(document).ready(function(){
 }
 
 .cscenter_content h1 {
-	color: red;
+	color: #d49466;
 	text-align: center;
 	font-size: 40px;
 	margin-top: 100px;
