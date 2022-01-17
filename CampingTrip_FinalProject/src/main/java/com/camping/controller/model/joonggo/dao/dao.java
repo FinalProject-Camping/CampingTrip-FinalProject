@@ -40,6 +40,7 @@ public interface dao {
 	public int sendMessage(chat chat);
 	
 	public List<chatroom> getchatlist(String sessionid);
+	public List<chatroom> getchatlist_all(String sessionid);
 	public List<chat> chatRefresh(Map<String,Object> map);
 	public int setDelete(chat chat);
 	public int updateDate(int roomseq);
